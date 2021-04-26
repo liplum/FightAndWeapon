@@ -14,6 +14,8 @@ import net.minecraft.util.text.StringTextComponent;
 import net.minecraft.util.text.TranslationTextComponent;
 import net.minecraft.world.World;
 
+import java.util.UUID;
+
 public class QuartzSwordItem extends SwordItem implements ITestInterface{
     public QuartzSwordItem() {
         super(TierRegistries.QUARTZ_TIER,
@@ -24,8 +26,10 @@ public class QuartzSwordItem extends SwordItem implements ITestInterface{
 
     @Override
     public ActionResult<ItemStack> use(World world, PlayerEntity player, Hand hand) {
-        /*StringTextComponent str= new StringTextComponent("");
-        player.sendMessage(str);*/
-        return null;
+        if(world.isClientSide) {
+            StringTextComponent str = new StringTextComponent(String.valueOf(Test()));
+            player.sendMessage(str, UUID.randomUUID());
+        }
+        return new ActionResult<>(ActionResultType.SUCCESS,player.getItemInHand(hand));
     }
 }
