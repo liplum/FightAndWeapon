@@ -21,11 +21,11 @@ import org.apache.logging.log4j.Logger;
 import java.util.stream.Collectors;
 
 @Mod(MetaData.MOD_ID)
-public class FAW {
+public class FawMod {
 
     private static final Logger LOGGER = LogManager.getLogger();
 
-    public FAW() {
+    public FawMod() {
         ItemRegistries.ITEMS_LIST.register(FMLJavaModLoadingContext.get().getModEventBus());
         BlockRegistries.BLOCKS_LIST.register(FMLJavaModLoadingContext.get().getModEventBus());
 
