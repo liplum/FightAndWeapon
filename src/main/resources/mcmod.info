@@ -1,0 +1,16 @@
+[
+{
+  "modid": "faw",
+  "name": "Fight And Weapon",
+  "description": "A mod that gives you a lot of new weapons now lets you start the fight!",
+  "version": "0.1.0",
+  "mcversion": "${version}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Li_plum","Frost_Ansel"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
