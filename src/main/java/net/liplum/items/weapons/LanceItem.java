@@ -20,6 +20,7 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
 
     /**
      * The double value of this is the true length of a sprint.
+     *
      * @return
      */
     public float getSprintLength() {
@@ -28,6 +29,7 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
 
     /**
      * The double value of this is the true length of a sprint.
+     *
      * @param dashLength
      */
     public void setSprintLength(float dashLength) {
@@ -57,16 +59,22 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
-        //playerIn.motionY += 0.32;
-        float length = getSprintLength();
-        playerIn.motionX = -MathHelper.sin(playerIn.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(playerIn.rotationPitch / 180.0F * (float) Math.PI) * length;
-        //playerIn.motionX=1;
-        //playerIn.motionZ=1;
-        //playerIn.rotationPitch += 90;
-        playerIn.motionZ = MathHelper.cos(playerIn.rotationYaw / 180.0F * (float) Math.PI) * MathHelper.cos(playerIn.rotationPitch / 180.0F * (float) Math.PI) * length;
-        if (!playerIn.isCreative()) {
-            playerIn.getCooldownTracker().setCooldown(held.getItem(), getCoolDown());
+        boolean isCreative = playerIn.isCreative();
+        int coolDownTime = getCoolDown();
+        EnumActionResult result = EnumActionResult.PASS;
+        //Player can't sprint over the sky.
+        if (playerIn.onGround && playerIn.isSneaking()) {
+            playerIn.motionY += 0.32;
+            float length = getSprintLength();
+            float yawToRadian = playerIn.rotationYaw / 180.0F * (float) Math.PI;
+            float pitchToRadian = playerIn.rotationPitch / 180.0F * (float) Math.PI;
+            playerIn.motionX = -MathHelper.sin(yawToRadian) * MathHelper.cos(pitchToRadian) * length;
+            playerIn.motionZ = MathHelper.cos(yawToRadian) * MathHelper.cos(pitchToRadian) * length;
+            if (!isCreative) {
+                playerIn.getCooldownTracker().setCooldown(held.getItem(), coolDownTime);
+            }
+            result = EnumActionResult.SUCCESS;
         }
-        return new ActionResult<>(EnumActionResult.PASS, held);
+        return new ActionResult<>(result, held);
     }
 }
