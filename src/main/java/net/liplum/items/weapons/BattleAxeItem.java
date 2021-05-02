@@ -1,5 +1,8 @@
 package net.liplum.items.weapons;
 
+import net.liplum.lib.math.MathTool;
+import net.liplum.lib.math.Point;
+import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.weapons.IMeleeWeapon;
 import net.liplum.lib.weapons.ISkillableWeapon;
 import net.liplum.lib.weapons.WeaponBaseItem;
@@ -11,7 +14,9 @@ import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import java.util.List;
@@ -47,17 +52,28 @@ public class BattleAxeItem extends WeaponBaseItem implements IMeleeWeapon, ISkil
         if (!playerIn.isSneaking()) {
             //The MAIN HAND MODE:
             if (handIn == EnumHand.MAIN_HAND) {
+                double r = getSweepRange();
+                AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
                 List<EntityLivingBase> allEntitiesInRange = worldIn
-                        .getEntitiesWithinAABB(EntityLivingBase.class, playerIn.getEntityBoundingBox()
-                                .grow(getSweepRange(), 0.25D, getSweepRange()));
+                        .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(r, 0.25D, r));
+                //Gets player's look vector and turn it to v2d.
+                Vec3d pLook = playerIn.getLookVec();
+                Vector2D pLook2D = new Vector2D(pLook.x,pLook.z);
+                Point pp = new Point(playerIn.posX,playerIn.posZ);
                 for (EntityLivingBase sideEntity : allEntitiesInRange) {
                     //Without player self
                     if (sideEntity != playerIn &&
                             //The side entity is not on the same team with attacker
-                            (!sideEntity.isOnSameTeam(playerIn))
-                    ) {
-                        sideEntity.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), skillDamage);
-                        sideEntity.knockBack(playerIn, 0.5f, knockBackAngleToX, knockBackAngleToY);
+                            (!sideEntity.isOnSameTeam(playerIn) &&
+                                    sideEntity.getDistanceSq(playerIn) < r * r)) {
+                        Point sp = new Point(sideEntity.posX,sideEntity.posZ);
+                        Point spNew = sp.minus(pp);
+                        Vector2D sv = spNew.toV2D();
+                        if (MathTool.belongToCC(0,MathTool.HalfPI,sv.angle(pLook2D)))
+                        {
+                            sideEntity.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), skillDamage);
+                            sideEntity.knockBack(playerIn, 0.5f, knockBackAngleToX, knockBackAngleToY);
+                        }
                     }
                 }
                 //Some effects of attack
