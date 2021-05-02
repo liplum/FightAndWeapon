@@ -8,5 +8,6 @@ public class ObjectNames {
     public static final String TestSwordItem = "test_sword";
     public static final String BattleAxeItem = "battle_axe";
     public static final String LanceItem = "lance";
+    public static final String HarpItem = "harp";
     public static final String Item_Group_Key ="faw_item_group";
 }

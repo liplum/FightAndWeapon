@@ -34,10 +34,11 @@ public class ItemRegistry {
     public static final Item Test_Sword_Item = with(new TestSwordItem(), ObjectNames.TestSwordItem);
     public static final Item Battle_Axe_Item = with(new BattleAxeItem(), ObjectNames.BattleAxeItem);
     public static final Item Lance_Item = with(new LanceItem(), ObjectNames.LanceItem);
+    public static final Item Harp_Item = with(new HarpItem(), ObjectNames.HarpItem);
 
     public static final Item[] Items = new Item[]{
             Ruby_Item, QUARTZ_SWORD_ITEM, Quartz_Axe_Item, Test_Sword_Item,
-            Battle_Axe_Item, Lance_Item
+            Battle_Axe_Item, Lance_Item, Harp_Item
     };
 
     @SubscribeEvent
@@ -46,11 +47,13 @@ public class ItemRegistry {
         items.registerAll(Items);
     }
 
+    @SideOnly(Side.CLIENT)
     private static void registerModel(Item item) {
         ModelResourceLocation modelResourceLocation = new ModelResourceLocation(item.getRegistryName(), "inventory");
         ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
     }
 
+    @SideOnly(Side.CLIENT)
     @SubscribeEvent
     public static void onModelRegistry(ModelRegistryEvent event) {
         for (Item item : Items) {

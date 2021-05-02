@@ -12,6 +12,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.*;
 import net.minecraft.util.math.AxisAlignedBB;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BattleAxeItem extends WeaponBaseItem implements IMeleeWeapon, ISkillableWeapon {
+public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWeapon {
     public BattleAxeItem() {
         super(ToolMaterial.IRON);
     }
@@ -54,25 +55,22 @@ public class BattleAxeItem extends WeaponBaseItem implements IMeleeWeapon, ISkil
             if (handIn == EnumHand.MAIN_HAND) {
                 double r = getSweepRange();
                 AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
-                List<EntityLivingBase> allEntitiesInRange = worldIn
+                List<EntityLivingBase> allInRange = worldIn
                         .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(r, 0.25D, r));
                 //Gets player's look vector and turn it to v2d.
                 Vec3d pLook = playerIn.getLookVec();
-                Vector2D pLook2D = new Vector2D(pLook.x,pLook.z);
-                Point pp = new Point(playerIn.posX,playerIn.posZ);
-                for (EntityLivingBase sideEntity : allEntitiesInRange) {
-                    //Without player self
-                    if (sideEntity != playerIn &&
-                            //The side entity is not on the same team with attacker
-                            (!sideEntity.isOnSameTeam(playerIn) &&
-                                    sideEntity.getDistanceSq(playerIn) < r * r)) {
-                        Point sp = new Point(sideEntity.posX,sideEntity.posZ);
+                Vector2D pLook2D = new Vector2D(pLook.x, pLook.z);
+                Point pp = new Point(playerIn.posX, playerIn.posZ);
+                for (EntityLivingBase e : allInRange) {
+                    if (e != playerIn &&//Without player self
+                            (!e.isOnSameTeam(playerIn) &&//The side entity is not on the same team with attacker
+                                    e.getDistanceSq(playerIn) < r * r)) {
+                        Point sp = new Point(e.posX, e.posZ);
                         Point spNew = sp.minus(pp);
                         Vector2D sv = spNew.toV2D();
-                        if (MathTool.belongToCC(0,MathTool.HalfPI,sv.angle(pLook2D)))
-                        {
-                            sideEntity.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), skillDamage);
-                            sideEntity.knockBack(playerIn, 0.5f, knockBackAngleToX, knockBackAngleToY);
+                        if (MathTool.belongToCC(0, MathTool.HalfPI, sv.angle(pLook2D))) {
+                            e.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), skillDamage);
+                            e.knockBack(playerIn, 0.5f, knockBackAngleToX, knockBackAngleToY);
                         }
                     }
                 }
@@ -97,11 +95,21 @@ public class BattleAxeItem extends WeaponBaseItem implements IMeleeWeapon, ISkil
         return new ActionResult<>(result, held);
     }
 
+    /**
+     * Gets the cool down time of weapon.
+     *
+     * @return The cool down time of weapon(by tick)
+     */
     @Override
     public int getCoolDown() {
         return coolDown;
     }
 
+    /**
+     * Sets the cool down time of weapon
+     *
+     * @param tick cool down time
+     */
     @Override
     public void setCoolDown(int tick) {
         coolDown = tick;
