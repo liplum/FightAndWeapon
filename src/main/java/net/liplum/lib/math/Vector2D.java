@@ -99,10 +99,14 @@ public final class Vector2D {
     }
 
     public Vec3d to3D() {
-        return new Vec3d(x, y, 0);
+        return new Vec3d(x, 0, y);
     }
 
     public Vec3d cross(Vector2D other) {
         return new Vec3d(0, 0, x * other.y - other.x * y);
+    }
+
+    public Point toPoint(){
+        return new Point(x,y);
     }
 }

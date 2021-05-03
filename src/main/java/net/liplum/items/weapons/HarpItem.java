@@ -1,6 +1,7 @@
 package net.liplum.items.weapons;
 
 import net.liplum.lib.weapons.IHarp;
+import net.liplum.lib.weapons.IHarpSkill;
 import net.liplum.lib.weapons.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.monster.EntityGiantZombie;
@@ -21,11 +22,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class HarpItem extends WeaponBaseItem implements IHarp {
     private int coolDown = 20 * 20;//Unit:tick
     private double radius = 8;
+    private List<IHarpSkill> allSkills =new ArrayList<>();
 
     public HarpItem() {
         super(ToolMaterial.WOOD);
@@ -85,7 +88,7 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
         int rangeInt = MathHelper.ceil(r);
         for (int i = -rangeInt; i <= rangeInt; i++) {
             for (int j = -rangeInt; j <= rangeInt; j++) {
-                worldIn.spawnParticle(EnumParticleTypes.HEART, px + i, py, pz + j, 1, 1, 1);
+                worldIn.spawnParticle(EnumParticleTypes.NOTE, px + i, py, pz + j, 1, 1, 1);
             }
         }
         result = EnumActionResult.SUCCESS;
@@ -103,5 +106,15 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
     @Override
     public void setRadius(double newRadius) {
         radius = newRadius;
+    }
+
+    /**
+     * Gets all harp skills of this harp
+     *
+     * @return all harp skills
+     */
+    @Override
+    public List<IHarpSkill> getHarpSkills() {
+        return allSkills;
     }
 }

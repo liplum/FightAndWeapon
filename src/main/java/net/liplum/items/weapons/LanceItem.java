@@ -1,17 +1,23 @@
 package net.liplum.items.weapons;
 
-import net.liplum.lib.math.MathTool;
-import net.liplum.lib.math.V3DHelper;
+import net.liplum.entities.StraightDamageEntity;
+import net.liplum.events.LanceSprintEvent;
 import net.liplum.lib.weapons.ILongReachWeapon;
 import net.liplum.lib.weapons.ISkillableWeapon;
 import net.liplum.lib.weapons.WeaponBaseItem;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
+import java.util.List;
 
 public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkillableWeapon {
     public LanceItem() {
@@ -84,7 +90,33 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
                 playerIn.getCooldownTracker().setCooldown(held.getItem(), coolDownTime);
             }
             result = EnumActionResult.SUCCESS;
+            //Following is some tests.
+            //StraightDamageEntity dmg = new StraightDamageEntity(worldIn, playerIn, 5, 40);
+            //dmg.shoot(playerIn,playerIn.rotationPitch,playerIn.rotationYaw,0,1.5F,1);
+            //MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(playerIn,this,sprintForce));
         }
         return new ActionResult<>(result, held);
     }
+
+/*    *//**
+     * Called each tick while using an item.
+     *
+     * @param stack  The Item being used
+     * @param player The Player using the item
+     * @param count  The amount of time in tick the item has been used for continuously
+     *//*
+    @Override
+    public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
+        EntityPlayer p = (EntityPlayer) player;
+        AxisAlignedBB playerBox = p.getEntityBoundingBox();
+        World world = p.world;
+        List<EntityLivingBase> allInRange = world
+                .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(1, 0.25D, 1));
+        for (EntityLivingBase e : allInRange) {
+            e.attackEntityFrom(DamageSource.causePlayerDamage(p),1
+                    //getAttackDamage()+getDamage(stack)
+                    );
+        }
+    }*/
+
 }
