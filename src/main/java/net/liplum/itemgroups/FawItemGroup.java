@@ -1,7 +1,7 @@
 package net.liplum.itemgroups;
 
 import net.liplum.MetaData;
-import net.liplum.registeies.ItemRegistries;
+import net.liplum.registeies.ItemRegistry;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
 
@@ -13,6 +13,6 @@ public class FawItemGroup extends ItemGroup {
 
     @Override
     public ItemStack createIcon() {
-        return new ItemStack(ItemRegistries.RUBY_ITEM.get());
+        return new ItemStack(ItemRegistry.RUBY_ITEM.get());
     }
 }

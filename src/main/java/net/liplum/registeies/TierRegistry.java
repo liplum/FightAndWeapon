@@ -2,6 +2,6 @@ package net.liplum.registeies;
 
 import net.liplum.tiers.QuartzTier;
 
-public class TierRegistries {
+public class TierRegistry {
     public static QuartzTier QUARTZ_TIER = new QuartzTier();
 }

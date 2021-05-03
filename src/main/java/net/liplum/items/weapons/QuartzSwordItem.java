@@ -1,7 +1,6 @@
 package net.liplum.items.weapons;
 
-import net.liplum.registeies.ItemGroupRegistries;
-import net.liplum.registeies.TierRegistries;
+import net.liplum.registeies.TierRegistry;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.SwordItem;
@@ -15,7 +14,7 @@ import java.util.UUID;
 
 public class QuartzSwordItem extends SwordItem{
     public QuartzSwordItem(Properties properties) {
-        super(TierRegistries.QUARTZ_TIER,
+        super(TierRegistry.QUARTZ_TIER,
                 3,
                 -2.4F,
                 properties);

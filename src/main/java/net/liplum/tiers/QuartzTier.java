@@ -1,6 +1,5 @@
 package net.liplum.tiers;
 
-import net.liplum.registeies.ItemRegistries;
 import net.minecraft.item.*;
 import net.minecraft.item.crafting.Ingredient;
 

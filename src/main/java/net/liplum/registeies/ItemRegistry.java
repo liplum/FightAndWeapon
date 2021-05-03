@@ -12,10 +12,10 @@ import net.minecraftforge.fml.RegistryObject;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 
-public class ItemRegistries {
+public class ItemRegistry {
     public static final DeferredRegister<Item> ITEMS_LIST = DeferredRegister.create(ForgeRegistries.ITEMS, MetaData.MOD_ID);
     public static Item.Properties toFawItemGroup(){
-        return new Item.Properties().group(ItemGroupRegistries.FawItemGroup);
+        return new Item.Properties().group(ItemGroupRegistry.FawItemGroup);
     }
 
     public static final RegistryObject<Item> RUBY_ITEM = ITEMS_LIST.register(ObjectNames.RubyItem, () -> new RubyItem(toFawItemGroup()));
