@@ -95,7 +95,7 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
             //dmg.shoot(playerIn,playerIn.rotationPitch,playerIn.rotationYaw,0,1.5F,1);
             //MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(playerIn,this,sprintForce));
         }
-        return new ActionResult<>(result, held);
+        return ActionResult.newResult(result, held);
     }
 
 /*    *//**

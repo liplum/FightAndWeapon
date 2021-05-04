@@ -92,7 +92,7 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
             }
         }
         result = EnumActionResult.SUCCESS;
-        return new ActionResult<>(result, held);
+        return ActionResult.newResult(result, held);
     }
 
     /**

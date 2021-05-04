@@ -92,7 +92,7 @@ public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWe
                 //nothing
             }
         }
-        return new ActionResult<>(result, held);
+        return ActionResult.newResult(result, held);
     }
 
     /**
