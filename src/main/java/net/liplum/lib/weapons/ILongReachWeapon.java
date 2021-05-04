@@ -1,4 +1,4 @@
 package net.liplum.lib.weapons;
 
-public class ILongReachWeapon {
+public interface ILongReachWeapon {
 }
