@@ -1,6 +1,7 @@
 package net.liplum.items.weapons;
 
-import net.liplum.lib.tools.PhysicsEngine;
+import net.liplum.lib.tools.ItemTool;
+import net.liplum.lib.tools.PhysicsTool;
 import net.liplum.lib.weapons.ILongReachWeapon;
 import net.liplum.lib.weapons.ISkillableWeapon;
 import net.liplum.lib.weapons.WeaponBaseItem;
@@ -53,11 +54,6 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
     }
 
     @Override
-    public void setCoolDown(int coolDown) {
-        this.coolDown = coolDown;
-    }
-
-    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
         boolean isCreative = playerIn.isCreative();
@@ -68,10 +64,8 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
             float length = getSprintLength();
             Vec3d playerFace = playerIn.getLookVec();
             Vec3d sprintForce = playerFace.scale(length);
-            PhysicsEngine.setMotion(playerIn,sprintForce.x,0.32,sprintForce.z);
-            if (!isCreative) {
-                playerIn.getCooldownTracker().setCooldown(held.getItem(), coolDownTime);
-            }
+            PhysicsTool.setMotion(playerIn,sprintForce.x,0.32,sprintForce.z);
+            ItemTool.HeatWeaponIfSurvival(playerIn,held.getItem(),coolDownTime);
             result = EnumActionResult.SUCCESS;
             //Following is some tests.
             //StraightDamageEntity dmg = new StraightDamageEntity(worldIn, playerIn, 5, 40);

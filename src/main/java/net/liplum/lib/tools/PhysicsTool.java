@@ -4,7 +4,7 @@ import net.liplum.lib.math.Vector2D;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
 
-public class PhysicsEngine {
+public class PhysicsTool {
     /**
      * Sets the direction of movement
      * @param e the entity

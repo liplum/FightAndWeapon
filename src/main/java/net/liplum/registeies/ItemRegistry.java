@@ -4,6 +4,7 @@ import net.liplum.MetaData;
 import net.liplum.ObjectNames;
 import net.liplum.items.gemstones.RubyItem;
 import net.liplum.items.weapons.*;
+import net.liplum.items.weapons.harps.HarpCoreType;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -34,7 +35,7 @@ public class ItemRegistry {
     public static final Item Test_Sword_Item = with(new TestSwordItem(), ObjectNames.TestSwordItem);
     public static final Item Battle_Axe_Item = with(new BattleAxeItem(), ObjectNames.BattleAxeItem);
     public static final Item Lance_Item = with(new LanceItem(), ObjectNames.LanceItem);
-    public static final Item Harp_Item = with(new HarpItem(), ObjectNames.HarpItem);
+    public static final Item Harp_Item = with(new HarpItem(HarpCoreType.Normal), ObjectNames.HarpItem);
 
     public static final Item[] Items = new Item[]{
             Ruby_Item, QUARTZ_SWORD_ITEM, Quartz_Axe_Item, Test_Sword_Item,

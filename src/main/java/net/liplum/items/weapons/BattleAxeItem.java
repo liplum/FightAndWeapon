@@ -3,6 +3,7 @@ package net.liplum.items.weapons;
 import net.liplum.lib.math.MathTool;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
+import net.liplum.lib.tools.ItemTool;
 import net.liplum.lib.weapons.IMeleeWeapon;
 import net.liplum.lib.weapons.ISkillableWeapon;
 import net.minecraft.entity.EntityLivingBase;
@@ -43,7 +44,6 @@ public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWe
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
         ItemStack offHeld = playerIn.getHeldItemOffhand();
-        boolean isCreative = playerIn.isCreative();
         int coolDownTime = getCoolDown();
         float knockBackAngleToX = MathHelper.sin(playerIn.rotationYaw * ((float) Math.PI / 180F));
         float knockBackAngleToY = -MathHelper.cos(playerIn.rotationYaw * ((float) Math.PI / 180F));
@@ -68,7 +68,7 @@ public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWe
                         Point sp = new Point(e.posX, e.posZ);
                         Point spNew = sp.minus(pp);
                         Vector2D sv = spNew.toV2D();
-                        if (MathTool.belongToCC(0, MathTool.HalfPI, sv.angle(pLook2D))) {
+                        if (MathTool.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
                             e.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), skillDamage);
                             e.knockBack(playerIn, 0.5f, knockBackAngleToX, knockBackAngleToY);
                         }
@@ -77,8 +77,7 @@ public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWe
                 //Some effects of attack
                 playerIn.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.0f);
                 playerIn.spawnSweepParticles();
-                if (!isCreative) {
-                    playerIn.getCooldownTracker().setCooldown(held.getItem(), coolDownTime);
+                if (ItemTool.HeatWeaponIfSurvival(playerIn,held.getItem(),coolDownTime)) {
                     //When you release the skill, it will make your shield hot.
                     //Don't worry about the EMPTY, if that it'll return Items.AIR (no exception).
                     if (offHeld.getItem() == Items.SHIELD) {
@@ -103,15 +102,5 @@ public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWe
     @Override
     public int getCoolDown() {
         return coolDown;
-    }
-
-    /**
-     * Sets the cool down time of weapon
-     *
-     * @param tick cool down time
-     */
-    @Override
-    public void setCoolDown(int tick) {
-        coolDown = tick;
     }
 }

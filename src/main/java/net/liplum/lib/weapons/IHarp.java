@@ -1,23 +1,24 @@
 package net.liplum.lib.weapons;
 
-import java.util.List;
-
 public interface IHarp extends ISkillableWeapon{
     /**
-     * Gets the radius of the range
-     * @return the radius of the skill.
+     * Gets the core.
+     * @return A core of the harp.
      */
-    double getRadius();
-
+    IHarpCore getHarpCore();
     /**
-     * Sets the radius of the range
-     * @param newRadius the radius of the skill.
+     * Gets the modifier.
+     * @return A modifier of the harp.
      */
-    void setRadius(double newRadius);
-
+    IHarpModifier getHarpModifier();
+    /**
+     * Sets the modifier.
+     * @return A modifier of the harp.
+     */
+    void setHarpModifier(IHarpModifier modifier);
     /**
      * Gets all harp skills of this harp
      * @return all harp skills
      */
-    List<IHarpSkill> getHarpSkills();
+    //List<IHarpSkill> getHarpSkills();
 }

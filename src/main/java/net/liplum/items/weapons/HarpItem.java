@@ -1,15 +1,15 @@
 package net.liplum.items.weapons;
 
-import net.liplum.lib.tools.EntityTool;
+import net.liplum.lib.math.MathTool;
+import net.liplum.lib.tools.ItemTool;
+import net.liplum.lib.tools.JavaTool;
 import net.liplum.lib.weapons.IHarp;
-import net.liplum.lib.weapons.IHarpSkill;
+import net.liplum.lib.weapons.IHarpCore;
+import net.liplum.lib.weapons.IHarpModifier;
 import net.liplum.lib.weapons.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -18,99 +18,70 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-import java.util.ArrayList;
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public class HarpItem extends WeaponBaseItem implements IHarp {
-    private int coolDown = 20 * 20;//Unit:tick
-    private double radius = 8;
-    private List<IHarpSkill> allSkills =new ArrayList<>();
+    //private int coolDown = 20 * 20;//Unit:tick
+    //private double radius = 8;
+    private IHarpCore core;
+    private IHarpModifier modifier;
 
-    public HarpItem() {
+    public HarpItem(@Nonnull IHarpCore core) {
         super(ToolMaterial.WOOD);
-    }
-
-    /**
-     * Gets the cool down time of weapon.
-     *
-     * @return The cool down time of weapon(by tick)
-     */
-    @Override
-    public int getCoolDown() {
-        return coolDown;
-    }
-
-    /**
-     * Sets the cool down time of weapon
-     *
-     * @param tick cool down time
-     */
-    @Override
-    public void setCoolDown(int tick) {
-        coolDown = tick;
+        this.core = core;
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
-        ItemStack offHeld = playerIn.getHeldItemOffhand();
-        boolean isCreative = playerIn.isCreative();
-        int coolDownTime = getCoolDown();
-        double r = getRadius();
-        AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
-        List<EntityLivingBase> allInRange = worldIn
-                .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(r, 0.25D, r));
-        for (EntityLivingBase e : allInRange) {
-            //If friend
-            if (e == playerIn ||
-                    playerIn.isOnSameTeam(e) ||//Player's team member
-                    e instanceof EntityVillager
-            ) {
-                e.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 1));
+        if (playerIn.isSneaking()) {
+            ItemStack offHeld = playerIn.getHeldItemOffhand();
+            int originCoolDown = getCoolDown(), deltaCoolDownTime = modifier != null ? modifier.getCoolDownModifier() : 0;
+            double originR = core.getRadius(), deltaR = modifier != null ? modifier.getSkillRadiusModifier() : 0;
+            double r = MathTool.fixMin(originR + deltaR, 0);
+            int coolDown =MathTool.fixMin( originCoolDown + deltaCoolDownTime,0);
+
+            AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
+            List<EntityLivingBase> allInRange = worldIn
+                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(r, 0.25D, r));
+
+            for (EntityLivingBase e : allInRange) {
+                JavaTool.notNullThenDo(core, (c) -> c.releaseSkill(worldIn, playerIn, handIn, e));
+                JavaTool.notNullThenDo(modifier, (m) -> m.doExtraSkillEffect(worldIn, playerIn, handIn, e));
             }
-            //If enemy
-            else {
-                //Detect whether the entity is a killer of zombies
-                if (EntityTool.isUndeadMob(e)) {
-                    e.addPotionEffect(new PotionEffect(MobEffects.INSTANT_HEALTH, 1, 0));
-                } else {
-                    e.addPotionEffect(new PotionEffect(MobEffects.POISON, 40, 2));
+            double px = playerIn.posX, py = playerIn.posY, pz = playerIn.posZ;
+
+            int rangeInt = MathHelper.ceil(r);
+            for (int i = -rangeInt; i <= rangeInt; i++) {
+                for (int j = -rangeInt; j <= rangeInt; j++) {
+                    worldIn.spawnParticle(EnumParticleTypes.NOTE, px + i, py, pz + j, 1, 1, 1);
                 }
             }
+            ItemTool.HeatWeaponIfSurvival(playerIn,held.getItem(),coolDown);
+            result = EnumActionResult.SUCCESS;
         }
-        double px = playerIn.posX, py = playerIn.posY, pz = playerIn.posZ;
-
-        int rangeInt = MathHelper.ceil(r);
-        for (int i = -rangeInt; i <= rangeInt; i++) {
-            for (int j = -rangeInt; j <= rangeInt; j++) {
-                worldIn.spawnParticle(EnumParticleTypes.NOTE, px + i, py, pz + j, 1, 1, 1);
-            }
-        }
-        result = EnumActionResult.SUCCESS;
         return ActionResult.newResult(result, held);
     }
 
-    /**
-     * @return the range of the skill.
-     */
     @Override
-    public double getRadius() {
-        return radius;
+    public IHarpCore getHarpCore() {
+        return core;
     }
 
     @Override
-    public void setRadius(double newRadius) {
-        radius = newRadius;
+    public IHarpModifier getHarpModifier() {
+        return modifier;
     }
 
-    /**
-     * Gets all harp skills of this harp
-     *
-     * @return all harp skills
-     */
     @Override
-    public List<IHarpSkill> getHarpSkills() {
-        return allSkills;
+    public void setHarpModifier(IHarpModifier modifier) {
+        this.modifier = modifier;
+    }
+
+    @Override
+    public int getCoolDown() {
+        return core.getCoolDown();
     }
 }
