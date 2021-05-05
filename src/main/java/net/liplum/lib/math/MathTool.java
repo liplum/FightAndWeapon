@@ -4,6 +4,7 @@ import com.sun.javafx.geom.Path2D;
 import com.sun.javafx.geom.Shape;
 import com.sun.javafx.geom.Vec3d;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.vector.Vector3d;
 
 
 public class MathTool {
@@ -19,8 +20,8 @@ public class MathTool {
         return cosA > MathHelper.cos((float)radian);
     }
 
-    public static Vec3d toEntityFace(Vec3d v3d){
-        return new Vec3d(-v3d.x, v3d.y,v3d.z);
+    public static Vector3d toEntityFace(Vector3d v3d){
+        return new Vector3d(-v3d.x, v3d.y,v3d.z);
     }
 
     public static boolean belongToOO(double left,double right,double value){
@@ -64,7 +65,7 @@ public class MathTool {
         return false;
     }
 
-    public static Vector2D toV2D(Vec3d v3d){
+    public static Vector2D toV2D(Vector3d v3d){
         return new Vector2D(v3d.x,v3d.z);
     }
 

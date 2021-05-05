@@ -6,4 +6,5 @@ public class ObjectNames {
     public static final String QuartzAxeItem = "quartz_axe";
     public static final String TestSwordItem = "test_sword";
     public static final String BattleAxeItem = "battle_axe";
+    public static final String LanceItem = "lance";
 }

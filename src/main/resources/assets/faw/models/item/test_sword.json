@@ -2,7 +2,7 @@
   "parent":"item/handheld",
   "gui_light": "front",
   "textures":{
-    "layer0":"faw:item/test_sword"
+    "layer0":"faw:items/test_sword"
   },
   "display": {
     "ground": {

@@ -12,8 +12,8 @@ import net.minecraft.util.math.vector.Vector3d;
 import net.minecraft.world.World;
 
 public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkillableWeapon {
-    public LanceItem() {
-        super(new Properties().group());
+    public LanceItem(Properties properties) {
+        super(properties);
     }
 
     private int coolDown = 20 * 6;
