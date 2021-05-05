@@ -19,4 +19,7 @@ public final class V3DHelper {
     public static Vec3d from2D(Vector2D v2d) {
         return new Vec3d(v2d.x, v2d.y, 0);
     }
+    public static Point to2DPoint(Vec3d v3d){
+        return new Point(v3d.x,v3d.z);
+    }
 }

@@ -1,15 +1,11 @@
 package net.liplum.items.weapons;
 
+import net.liplum.lib.tools.EntityTool;
 import net.liplum.lib.weapons.IHarp;
 import net.liplum.lib.weapons.IHarpSkill;
 import net.liplum.lib.weapons.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.monster.EntityGiantZombie;
-import net.minecraft.entity.monster.EntityPigZombie;
-import net.minecraft.entity.monster.EntityZombie;
-import net.minecraft.entity.monster.EntityZombieVillager;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.passive.EntityZombieHorse;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.item.ItemStack;
@@ -76,7 +72,7 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
             //If enemy
             else {
                 //Detect whether the entity is a killer of zombies
-                if (e instanceof EntityZombie || e instanceof EntityZombieVillager || e instanceof EntityPigZombie || e instanceof EntityGiantZombie || e instanceof EntityZombieHorse) {
+                if (EntityTool.isUndeadMob(e)) {
                     e.addPotionEffect(new PotionEffect(MobEffects.INSTANT_HEALTH, 1, 0));
                 } else {
                     e.addPotionEffect(new PotionEffect(MobEffects.POISON, 40, 2));
