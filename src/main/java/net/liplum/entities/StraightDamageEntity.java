@@ -1,40 +1,41 @@
 package net.liplum.entities;
 
-import net.liplum.lib.math.Point;
-import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.math.RayTraceResult;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 
-public class StraightDamageEntity extends EntityThrowable {
+import java.util.List;
+
+public class StraightDamageEntity extends EntityLiving {
 
     private float straightDamage = 0;
-    private int duration = 0;
-    private int current = 0;
+    private EntityPlayer player;
 
     public StraightDamageEntity(World worldIn) {
         super(worldIn);
     }
 
-    public StraightDamageEntity(World worldIn, EntityLivingBase throwerIn, float damage, int duration) {
-        super(worldIn, throwerIn);
+    public StraightDamageEntity(World worldIn, EntityPlayer player, float damage) {
+        super(worldIn);
+        this.player = player;
         this.straightDamage = damage;
-        this.duration = duration;
-    }
-
-    @Override
-    protected void onImpact(RayTraceResult result) {
-        result.entityHit.attackEntityFrom(DamageSource.causePlayerDamage((EntityPlayer) thrower), straightDamage);
     }
 
     @Override
     public void onUpdate() {
         super.onUpdate();
-        current++;
-        if (current >= duration) {
+        AxisAlignedBB playerBox = this.getEntityBoundingBox();
+        List<EntityLivingBase> collided = world
+                .getEntitiesWithinAABB(EntityLivingBase.class, playerBox);
+        for (EntityLivingBase e : collided) {
+            if(e != player){
+                e.attackEntityFrom(DamageSource.causePlayerDamage(player),straightDamage);
+            }
+        }
+        if (motionX == 0 && motionZ == 0) {
             this.setDead();
         }
     }

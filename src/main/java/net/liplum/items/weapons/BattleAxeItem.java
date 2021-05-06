@@ -8,6 +8,7 @@ import net.liplum.lib.weapons.IMeleeWeapon;
 import net.liplum.lib.weapons.ISkillableWeapon;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemAxe;

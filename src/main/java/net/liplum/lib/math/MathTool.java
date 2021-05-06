@@ -1,5 +1,10 @@
 package net.liplum.lib.math;
 
+import cern.colt.matrix.DoubleMatrix1D;
+import cern.colt.matrix.DoubleMatrix2D;
+import cern.colt.matrix.impl.DenseDoubleMatrix1D;
+import cern.colt.matrix.impl.DenseDoubleMatrix2D;
+import cern.colt.matrix.linalg.Algebra;
 import com.sun.javafx.geom.Path2D;
 import com.sun.javafx.geom.Shape;
 import javafx.scene.shape.Polygon;
@@ -8,8 +13,9 @@ import net.minecraft.util.math.Vec3d;
 
 
 public class MathTool {
-    private static double PI_Divide_180 = Math.PI / 180;
-    public static double HalfPI = Math.PI / 2;
+    private static final double PI_Divide_180 = Math.PI / 180;
+    public static final double HalfPI = Math.PI / 2;
+    public static final Vector2D iY = new Vector2D(0, 1);
 
     public static double toRadian(double degrees) {
         return degrees % 360 * PI_Divide_180;
@@ -72,28 +78,27 @@ public class MathTool {
         return new Vector2D(v3d.x, v3d.z);
     }
 
-    /**
-     * @param direction Starts with (0,0).No matter how positive and negative.
-     * @param width     the width of rectangle
-     * @return
-     */
-    public static Shape genRectangleFrom(Vector2D direction, double width) {
-        double halfw = width / 2;
-        Vector2D n = direction.perpendicular(), n_n = direction.reverse();
-        Point Pd = direction.toPoint(), Pn = n.truncate(halfw).toPoint(), Pn_n = n_n.truncate(halfw).toPoint();
-        Point Pn_2 = Pn.add(Pd), Pn_n_2 = Pn_n.add(Pd);
-        Path2D rect = new Path2D();
-        rect.moveTo((float) Pn.x, (float) Pn.y);//Starts with Pn
-        rect.lineTo((float) Pn_2.x, (float) Pn_2.y);//Pn_2
-        rect.lineTo((float) Pn_n_2.x, (float) Pn_n_2.y);//Pn_n_2
-        rect.lineTo((float) Pn_n.x, (float) Pn_n.y);//Pn_n
-        rect.lineTo((float) Pn.x, (float) Pn.y);//Ends with Pn
-        rect.closePath();
-        return rect;
+    public static boolean isInside(Vector2D look, Point player, Point target, double width, double length) {
+        Vector2D look_ = look.normalized();
+        Point deltaP = target.minus(player);
+        double deltaX = deltaP.x, deltaY = deltaP.y;
+        float a = (float) iY.angle(look_);
+        DoubleMatrix1D A = new DenseDoubleMatrix1D(new double[]{target.x, target.y,1});
+        DoubleMatrix1D Result = Algebra.DEFAULT.mult(
+                genRotateMatrix(deltaX,deltaY,a)
+                , A);
+        double halfw = width / 2, x = player.x, y = player.y;
+        return MathTool.belongToCC(x - halfw, x + halfw, Result.get(0)) &&
+                MathTool.belongToCC(y, y + length, Result.get(1));
     }
 
-    public static boolean isInside(Shape figure, Point p) {
-        return figure.contains((float) p.x, (float) p.y);
+    private static DoubleMatrix2D genRotateMatrix(double deltaX, double deltaY, float angleA) {
+        double sina = MathHelper.sin(angleA), cosa = MathHelper.cos(angleA);
+        DoubleMatrix2D T1 = Algebra.DEFAULT.mult(
+                new DenseDoubleMatrix2D(new double[][]{{1, 0, deltaX}, {0, 1, deltaY}, {0, 0, 1}}),
+                new DenseDoubleMatrix2D(new double[][]{{cosa,-sina,0},{sina,cosa,0},{0,0,1}}));
+        return Algebra.DEFAULT.mult(T1,
+                new DenseDoubleMatrix2D(new double[][]{{1,0,-deltaX},{0,1,-deltaY},{0,0,1}}));
     }
 
     public static int fixMax(int value, int max) {

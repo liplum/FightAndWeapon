@@ -1,5 +1,8 @@
 package net.liplum.items.weapons;
 
+import net.liplum.lib.math.MathTool;
+import net.liplum.lib.math.Point;
+import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.tools.ItemTool;
 import net.liplum.lib.tools.PhysicsTool;
 import net.liplum.lib.weapons.ILongReachWeapon;
@@ -56,26 +59,36 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
-        boolean isCreative = playerIn.isCreative();
         int coolDownTime = getCoolDown();
         EnumActionResult result = EnumActionResult.PASS;
-        //Player can't sprint over the sky.
+        //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
             float length = getSprintLength();
             Vec3d playerFace = playerIn.getLookVec();
             Vec3d sprintForce = playerFace.scale(length);
-            PhysicsTool.setMotion(playerIn,sprintForce.x,0.32,sprintForce.z);
-            ItemTool.HeatWeaponIfSurvival(playerIn,held.getItem(),coolDownTime);
+            Point playerP = PhysicsTool.get2DPosition(playerIn);
+            Vector2D playerFace2D = MathTool.toV2D(playerFace);
+            PhysicsTool.setMotion(playerIn, sprintForce.x, 0.32, sprintForce.z);
+            /*playerIn.velocityChanged = true;
+            playerIn.setPositionNonDirty();*/
+            /*AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
+            List<EntityLivingBase> allInRange = worldIn
+                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(length, 0.25D, length));
+            for (EntityLivingBase e : allInRange) {
+                Point ep = PhysicsTool.get2DPosition(e);
+                if (e != playerIn &&
+                        MathTool.isInside(playerFace2D, playerP, ep, 2, length*2)
+                ) {
+                    e.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), 5);
+                }
+            }*/
+            ItemTool.HeatWeaponIfSurvival(playerIn, held.getItem(), coolDownTime);
             result = EnumActionResult.SUCCESS;
-            //Following is some tests.
-            //StraightDamageEntity dmg = new StraightDamageEntity(worldIn, playerIn, 5, 40);
-            //dmg.shoot(playerIn,playerIn.rotationPitch,playerIn.rotationYaw,0,1.5F,1);
-            //MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(playerIn,this,sprintForce));
         }
         return ActionResult.newResult(result, held);
     }
 
-/*    *//**
+    /*    *//**
      * Called each tick while using an item.
      *
      * @param stack  The Item being used
