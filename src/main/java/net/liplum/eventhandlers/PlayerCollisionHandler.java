@@ -21,7 +21,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import javax.annotation.Nullable;
 import java.util.List;
 
-@Mod.EventBusSubscriber
+//@Mod.EventBusSubscriber
 public final class PlayerCollisionHandler {
     /*@SubscribeEvent
     public static void onPlayerCollied(PlayerCollisionEvent e){
@@ -33,7 +33,7 @@ public final class PlayerCollisionHandler {
             }
         }
     }*/
-    @SubscribeEvent
+/*    @SubscribeEvent
     public static void onLanceSprint(PlayerCollisionEvent e){
         EntityPlayer p = e.player;
         World w = p.world;
@@ -43,5 +43,5 @@ public final class PlayerCollisionHandler {
         if(lance != null){
             ItemStack held = ItemTool.getItemStack(lance,mainHeldStack,offHeldStack);
         }
-    }
+    }*/
 }

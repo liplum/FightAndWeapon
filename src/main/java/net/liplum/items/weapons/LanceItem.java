@@ -1,5 +1,8 @@
 package net.liplum.items.weapons;
 
+import net.liplum.coroutine.WaitForTicks;
+import net.liplum.enumerator.Yield;
+import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathTool;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
@@ -8,13 +11,18 @@ import net.liplum.lib.tools.PhysicsTool;
 import net.liplum.lib.weapons.ILongReachWeapon;
 import net.liplum.lib.weapons.ISkillableWeapon;
 import net.liplum.lib.weapons.WeaponBaseItem;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+
+import java.util.List;
 
 public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkillableWeapon {
     public LanceItem() {
@@ -83,6 +91,22 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
                 }
             }*/
             ItemTool.HeatWeaponIfSurvival(playerIn, held.getItem(), coolDownTime);
+            if (!worldIn.isRemote) {
+                CoroutineSystem.Instance().attachCoroutineToPlayer(playerIn, new Yield() {
+                    @Override
+                    protected void task() {
+                        AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
+                        List<EntityLivingBase> allInRange = worldIn
+                                .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
+                        for (EntityLivingBase e : allInRange) {
+                            if (e != playerIn) {
+                                e.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), 5);
+                            }
+                        }
+                        yieldReturn(new WaitForTicks(3));
+                    }
+                }, 80);
+            }
             result = EnumActionResult.SUCCESS;
         }
         return ActionResult.newResult(result, held);
