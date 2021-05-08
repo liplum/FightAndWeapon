@@ -1,10 +1,10 @@
 package net.liplum.items.weapons;
 
-import net.liplum.lib.weapons.WeaponBaseItem;
+import net.liplum.lib.items.WeaponBaseItem;
 
 public class QuartzSwordItem extends WeaponBaseItem {
-    public QuartzSwordItem(ToolMaterial material) {
-        super(material);
+    public QuartzSwordItem() {
+        super();
     }
 
 /*    @Override

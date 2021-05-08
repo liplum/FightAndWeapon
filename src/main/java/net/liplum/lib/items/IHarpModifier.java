@@ -1,4 +1,4 @@
-package net.liplum.lib.weapons;
+package net.liplum.lib.items;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

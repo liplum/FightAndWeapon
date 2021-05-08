@@ -4,6 +4,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 public final class Vector2D {
+    public static final Vector2D ZERO = new Vector2D();
+
     public final double x;
     public final double y;
 
@@ -68,6 +70,9 @@ public final class Vector2D {
     }
 
     public Vector2D normalized() {
+        if (x == 0 && y == 0) {
+            return ZERO;
+        }
         double abs = this.abs();
         return new Vector2D(x / abs, y / abs);
     }

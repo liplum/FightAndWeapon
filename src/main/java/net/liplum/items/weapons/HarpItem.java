@@ -3,10 +3,10 @@ package net.liplum.items.weapons;
 import net.liplum.lib.math.MathTool;
 import net.liplum.lib.tools.ItemTool;
 import net.liplum.lib.tools.JavaTool;
-import net.liplum.lib.weapons.IHarp;
-import net.liplum.lib.weapons.IHarpCore;
-import net.liplum.lib.weapons.IHarpModifier;
-import net.liplum.lib.weapons.WeaponBaseItem;
+import net.liplum.lib.items.IHarp;
+import net.liplum.lib.items.IHarpCore;
+import net.liplum.lib.items.IHarpModifier;
+import net.liplum.lib.items.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -28,7 +28,7 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
     private IHarpModifier modifier;
 
     public HarpItem(@Nonnull IHarpCore core) {
-        super(ToolMaterial.WOOD);
+        super();
         this.core = core;
     }
 

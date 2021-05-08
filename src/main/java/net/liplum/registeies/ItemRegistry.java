@@ -1,7 +1,7 @@
 package net.liplum.registeies;
 
 import net.liplum.MetaData;
-import net.liplum.ObjectNames;
+import net.liplum.Names;
 import net.liplum.items.gemstones.RubyItem;
 import net.liplum.items.weapons.*;
 import net.liplum.items.weapons.harps.HarpCoreType;
@@ -27,15 +27,15 @@ public class ItemRegistry {
     }
 
     public static final Item.ToolMaterial Material_Quartz =
-            EnumHelper.addToolMaterial(ObjectNames.MaterialQuartz, 3, 80, 10.0F, 5.0F, 18);
+            EnumHelper.addToolMaterial(Names.Item.MaterialQuartz, 3, 80, 10.0F, 5.0F, 18);
 
-    public static final Item Ruby_Item = with(new RubyItem(), ObjectNames.RubyItem);
-    public static final Item QUARTZ_SWORD_ITEM = with(new QuartzSwordItem(Item.ToolMaterial.IRON), ObjectNames.QuartzSwordItem);
-    public static final Item Quartz_Axe_Item = with(new QuartzAxeItem(Item.ToolMaterial.IRON), ObjectNames.QuartzAxeItem);
-    public static final Item Test_Sword_Item = with(new TestSwordItem(), ObjectNames.TestSwordItem);
-    public static final Item Battle_Axe_Item = with(new BattleAxeItem(), ObjectNames.BattleAxeItem);
-    public static final Item Lance_Item = with(new LanceItem(), ObjectNames.LanceItem);
-    public static final Item Harp_Item = with(new HarpItem(HarpCoreType.Normal), ObjectNames.HarpItem);
+    public static final Item Ruby_Item = with(new RubyItem(), Names.Item.RubyItem);
+    public static final Item QUARTZ_SWORD_ITEM = with(new QuartzSwordItem(), Names.Item.QuartzSwordItem);
+    public static final Item Quartz_Axe_Item = with(new QuartzAxeItem(Item.ToolMaterial.IRON), Names.Item.QuartzAxeItem);
+    public static final Item Test_Sword_Item = with(new TestSwordItem(), Names.Item.TestSwordItem);
+    public static final Item Battle_Axe_Item = with(new BattleAxeItem(), Names.Item.BattleAxeItem);
+    public static final Item Lance_Item = with(new LanceItem(), Names.Item.LanceItem);
+    public static final Item Harp_Item = with(new HarpItem(HarpCoreType.Normal), Names.Item.HarpItem);
 
     public static final Item[] Items = new Item[]{
             Ruby_Item, QUARTZ_SWORD_ITEM, Quartz_Axe_Item, Test_Sword_Item,

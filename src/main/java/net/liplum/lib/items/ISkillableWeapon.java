@@ -1,7 +1,4 @@
-package net.liplum.lib.weapons;
-
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
+package net.liplum.lib.items;
 
 public interface ISkillableWeapon {
     /**

@@ -1,7 +1,7 @@
 package net.liplum.registeies;
 
 import net.liplum.MetaData;
-import net.liplum.ObjectNames;
+import net.liplum.Names;
 import net.liplum.entities.StraightDamageEntity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -20,7 +20,7 @@ public class EntityRegister {
     }
 
     public static final EntityEntry STRAIGHT_DAMAGE_ENTITY =
-            with(EntityEntryBuilder.create().entity(StraightDamageEntity.class), ObjectNames.StraightDamageEntity, ID++)
+            with(EntityEntryBuilder.create().entity(StraightDamageEntity.class), Names.Entity.StraightDamageEntity, ID++)
                     .tracker(64, 10, true).build();
 
     public static final EntityEntry[] EntityEntries = new EntityEntry[]{
