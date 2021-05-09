@@ -11,8 +11,8 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
-@Mod.EventBusSubscriber
-public class EnchantmentRegistry {
+@Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
+public final class EnchantmentRegistry {
     public static Enchantment with(Enchantment item, String name) {
         return item.setRegistryName(MetaData.MOD_ID + ":" + name).
                 setName(MetaData.MOD_ID + "." + name);

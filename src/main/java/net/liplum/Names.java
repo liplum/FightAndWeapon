@@ -31,4 +31,7 @@ public class Names {
         public static final String Single = "single";
         public static final String Buffier = "buffier";
     }
+    public static class Potion {
+        public static final String UnstoppablePotion = "unstoppable";
+    }
 }

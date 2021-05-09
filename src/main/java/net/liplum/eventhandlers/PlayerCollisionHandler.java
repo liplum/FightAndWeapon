@@ -1,27 +1,6 @@
 package net.liplum.eventhandlers;
 
-import net.liplum.events.PlayerCollisionEvent;
-import net.liplum.items.weapons.LanceItem;
-import net.liplum.lib.tools.ItemTool;
-import net.liplum.lib.tools.JavaTool;
-import net.liplum.registeies.ItemRegistry;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.util.DamageSource;
-import net.minecraft.world.World;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
-
-import javax.annotation.Nullable;
-import java.util.List;
-
-//@Mod.EventBusSubscriber
+//@Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public final class PlayerCollisionHandler {
     /*@SubscribeEvent
     public static void onPlayerCollied(PlayerCollisionEvent e){

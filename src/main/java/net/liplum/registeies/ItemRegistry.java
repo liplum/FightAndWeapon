@@ -3,8 +3,13 @@ package net.liplum.registeies;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.items.gemstones.RubyItem;
-import net.liplum.items.weapons.*;
-import net.liplum.items.weapons.harps.HarpCoreType;
+import net.liplum.items.weapons.QuartzAxeItem;
+import net.liplum.items.weapons.QuartzSwordItem;
+import net.liplum.items.weapons.TestSwordItem;
+import net.liplum.items.weapons.battleaxe.BattleAxeItem;
+import net.liplum.items.weapons.harp.HarpCoreType;
+import net.liplum.items.weapons.harp.HarpItem;
+import net.liplum.items.weapons.lance.LanceItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -17,10 +22,14 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import java.util.LinkedList;
+
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
-public class ItemRegistry {
+public final class ItemRegistry {
+    public static final LinkedList<Item> Items = new LinkedList<>();
 
     public static Item with(Item item, String name) {
+        Items.addLast(item);
         return item.setRegistryName(MetaData.MOD_ID + ":" + name).
                 setUnlocalizedName(MetaData.MOD_ID + "." + name).
                 setCreativeTab(CreativeTabsRegistry.FawItemGroup);
@@ -37,15 +46,12 @@ public class ItemRegistry {
     public static final Item Lance_Item = with(new LanceItem(), Names.Item.LanceItem);
     public static final Item Harp_Item = with(new HarpItem(HarpCoreType.Normal), Names.Item.HarpItem);
 
-    public static final Item[] Items = new Item[]{
-            Ruby_Item, QUARTZ_SWORD_ITEM, Quartz_Axe_Item, Test_Sword_Item,
-            Battle_Axe_Item, Lance_Item, Harp_Item
-    };
-
     @SubscribeEvent
     public static void onItemRegistry(RegistryEvent.Register<Item> event) {
         IForgeRegistry<Item> items = event.getRegistry();
-        items.registerAll(Items);
+        for(Item i :Items){
+            items.register(i);
+        }
     }
 
     @SideOnly(Side.CLIENT)

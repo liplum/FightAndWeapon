@@ -9,7 +9,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 
 //@Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
-public class BlockRegistry {
+public final class BlockRegistry {
     /*@SubscribeEvent
     public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
         IForgeRegistry<Block> blocks = event.getRegistry();

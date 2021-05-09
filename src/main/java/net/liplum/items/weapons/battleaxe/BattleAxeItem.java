@@ -1,4 +1,4 @@
-package net.liplum.items.weapons;
+package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.lib.math.MathTool;
 import net.liplum.lib.math.Point;

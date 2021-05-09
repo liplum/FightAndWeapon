@@ -1,4 +1,4 @@
-package net.liplum.lib.items;
+package net.liplum.lib.weaponcores;
 
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,7 +13,7 @@ public interface IHarpCore {
      */
     double getRadius();
 
-    void releaseSkill(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target);
+    void releaseHarpSkill(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target);
 
     /**
      * Gets the cool down time of weapon.

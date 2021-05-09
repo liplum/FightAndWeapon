@@ -1,4 +1,4 @@
-package net.liplum.items.weapons;
+package net.liplum.items.weapons.lance;
 
 import net.liplum.coroutine.WaitForTicks;
 import net.liplum.enumerator.Yield;
@@ -8,9 +8,11 @@ import net.liplum.lib.tools.PhysicsTool;
 import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.ISkillableWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumActionResult;
@@ -20,7 +22,9 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkillableWeapon {
     public LanceItem() {
@@ -75,20 +79,23 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
             PhysicsTool.setMotion(playerIn, sprintForce.x, 0.32, sprintForce.z);
             ItemTool.HeatWeaponIfSurvival(playerIn, held.getItem(), coolDownTime);
             if (!worldIn.isRemote) {
+                //playerIn.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion,80,1));
                 CoroutineSystem.Instance().attachCoroutineToPlayer(playerIn, new Yield() {
+                    Set<EntityLivingBase> damaged = new HashSet<>();
                     @Override
                     protected void task() {
                         AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
                         List<EntityLivingBase> allInRange = worldIn
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
-                            if (e != playerIn) {
+                            if (e != playerIn && !damaged.contains(e)) {
                                 e.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), 5);
+                                damaged.add(e);
                             }
                         }
-                        yieldReturn(new WaitForTicks(3));
+                        yieldReturn(new WaitForTicks(5));
                     }
-                }, 80);
+                }, 50);
             }
             result = EnumActionResult.SUCCESS;
         }

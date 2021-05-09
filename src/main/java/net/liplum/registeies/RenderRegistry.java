@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 
 //@Mod.EventBusSubscriber
-public class RenderRegistry {
+public final class RenderRegistry {
    /* @SubscribeEvent
     public static void onRegister(){
 

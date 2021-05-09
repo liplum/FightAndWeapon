@@ -1,5 +1,6 @@
 package net.liplum.eventhandlers;
 
+import net.liplum.MetaData;
 import net.liplum.events.PlayerCollisionEvent;
 import net.liplum.lib.coroutine.CoroutineSystem;
 import net.minecraft.entity.Entity;
@@ -12,7 +13,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.List;
 
-@Mod.EventBusSubscriber
+@Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public class PlayerTickHandler {
     @SubscribeEvent
     public static void postPlayerCollisionEvent(TickEvent.PlayerTickEvent e) {
@@ -21,7 +22,7 @@ public class PlayerTickHandler {
         if (!w.isRemote) {
             List<Entity> collided = w
                     .getEntitiesWithinAABB(Entity.class, p.getEntityBoundingBox());
-            if (collided.size() != 1 && collided.get(1) != p) {
+            if (collided.size() != 1 && collided.get(0) != p) {
                 MinecraftForge.EVENT_BUS.post(new PlayerCollisionEvent(p, collided.toArray(new Entity[0])));
             }
         }

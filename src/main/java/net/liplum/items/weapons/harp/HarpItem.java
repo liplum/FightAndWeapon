@@ -1,11 +1,11 @@
-package net.liplum.items.weapons;
+package net.liplum.items.weapons.harp;
 
 import net.liplum.lib.math.MathTool;
 import net.liplum.lib.tools.ItemTool;
 import net.liplum.lib.tools.JavaTool;
 import net.liplum.lib.items.IHarp;
-import net.liplum.lib.items.IHarpCore;
-import net.liplum.lib.items.IHarpModifier;
+import net.liplum.lib.weaponcores.IHarpCore;
+import net.liplum.lib.modifiers.IHarpModifier;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -38,8 +38,8 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
         ItemStack held = playerIn.getHeldItem(handIn);
         if (playerIn.isSneaking()) {
             ItemStack offHeld = playerIn.getHeldItemOffhand();
-            int originCoolDown = getCoolDown(), deltaCoolDownTime = modifier != null ? modifier.getCoolDownModifier() : 0;
-            double originR = core.getRadius(), deltaR = modifier != null ? modifier.getSkillRadiusModifier() : 0;
+            int originCoolDown = getCoolDown(), deltaCoolDownTime = modifier != null ? modifier.getHarpCoolDownModifier() : 0;
+            double originR = core.getRadius(), deltaR = modifier != null ? modifier.getHarpSkillRadiusModifier() : 0;
             double r = MathTool.fixMin(originR + deltaR, 0);
             int coolDown =MathTool.fixMin( originCoolDown + deltaCoolDownTime,0);
 
@@ -48,8 +48,8 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(r, 0.25D, r));
 
             for (EntityLivingBase e : allInRange) {
-                JavaTool.notNullThenDo(core, (c) -> c.releaseSkill(worldIn, playerIn, handIn, e));
-                JavaTool.notNullThenDo(modifier, (m) -> m.doExtraSkillEffect(worldIn, playerIn, handIn, e));
+                JavaTool.notNullThenDo(core, (c) -> c.releaseHarpSkill(worldIn, playerIn, handIn, e));
+                JavaTool.notNullThenDo(modifier, (m) -> m.doHarpExtraSkillEffect(worldIn, playerIn, handIn, e));
             }
             double px = playerIn.posX, py = playerIn.posY, pz = playerIn.posZ;
 

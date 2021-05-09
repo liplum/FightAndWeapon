@@ -1,5 +1,8 @@
 package net.liplum.lib.items;
 
+import net.liplum.lib.modifiers.IHarpModifier;
+import net.liplum.lib.weaponcores.IHarpCore;
+
 public interface IHarp extends ISkillableWeapon{
     /**
      * Gets the core.

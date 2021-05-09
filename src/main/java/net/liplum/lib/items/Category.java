@@ -21,4 +21,5 @@ public class Category {
     public static final Category Buffier = new Category(Names.Category.Buffier);
     public static final Category LongRange = new Category(Names.Category.LongRange);
     public static final Category Single = new Category(Names.Category.Single);
+    public static final Category Tool = new Category(Names.Category.Tool);
 }
