@@ -79,11 +79,11 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
             PhysicsTool.setMotion(playerIn, sprintForce.x, 0.32, sprintForce.z);
             ItemTool.HeatWeaponIfSurvival(playerIn, held.getItem(), coolDownTime);
             if (!worldIn.isRemote) {
-                //playerIn.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion,80,1));
+                playerIn.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion,15,0,false,false));
                 CoroutineSystem.Instance().attachCoroutineToPlayer(playerIn, new Yield() {
                     Set<EntityLivingBase> damaged = new HashSet<>();
                     @Override
-                    protected void task() {
+                    protected void runTask() {
                         AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
                         List<EntityLivingBase> allInRange = worldIn
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
@@ -95,7 +95,7 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
                         }
                         yieldReturn(new WaitForTicks(5));
                     }
-                }, 50);
+                }, 25);
             }
             result = EnumActionResult.SUCCESS;
         }

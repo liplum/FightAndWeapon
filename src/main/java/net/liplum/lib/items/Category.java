@@ -22,4 +22,5 @@ public class Category {
     public static final Category LongRange = new Category(Names.Category.LongRange);
     public static final Category Single = new Category(Names.Category.Single);
     public static final Category Tool = new Category(Names.Category.Tool);
+    public static final Category Weapon = new Category(Names.Category.Weapon);
 }

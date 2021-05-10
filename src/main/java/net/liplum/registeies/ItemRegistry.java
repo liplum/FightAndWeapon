@@ -30,8 +30,8 @@ public final class ItemRegistry {
 
     public static Item with(Item item, String name) {
         Items.addLast(item);
-        return item.setRegistryName(MetaData.MOD_ID + ":" + name).
-                setUnlocalizedName(MetaData.MOD_ID + "." + name).
+        return item.setRegistryName(Names.prefixRegister(name)).
+                setUnlocalizedName(Names.prefixUnloc(name)).
                 setCreativeTab(CreativeTabsRegistry.FawItemGroup);
     }
 

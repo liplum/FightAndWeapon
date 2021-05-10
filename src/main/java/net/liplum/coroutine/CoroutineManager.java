@@ -32,6 +32,10 @@ public class CoroutineManager {
         coroutinesList.remove(coroutine);
     }
 
+    public void StopAll(){
+        coroutinesList.clear();
+    }
+
     public void OnTick() {
         LinkedList<Coroutine> needRemoves = new LinkedList<>();
         for (Coroutine c : coroutinesList) {

@@ -3,14 +3,14 @@ package net.liplum.enumerator;
 
 public abstract class Yield<T> implements IEnumerable<T> {
 
-    protected abstract void task();
+    protected abstract void runTask();
 
     private T current = null;
     private boolean hasNext = false;
 
     private void yieldNext() {
         hasNext = false;
-        task();
+        runTask();
     }
 
     protected final void yieldReturn(T item) {

@@ -14,4 +14,4 @@ itemGroup.faw_item_group=Fight And Weapon
 enchantment.faw.music=Music
 
 #Potions
-effect.faw.unstoppable = Unstoppable
+potion.faw.unstoppable=Unstoppable

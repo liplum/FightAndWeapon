@@ -27,9 +27,12 @@ public class PlayerTickHandler {
             }
         }
     }
+
     @SubscribeEvent
     public static void playerTickCoroutine(TickEvent.PlayerTickEvent e) {
         EntityPlayer p = e.player;
-        CoroutineSystem.Instance().onPlayerTick(p);
+        if (e.phase == TickEvent.Phase.END) {
+            CoroutineSystem.Instance().onPlayerTick(p);
+        }
     }
 }

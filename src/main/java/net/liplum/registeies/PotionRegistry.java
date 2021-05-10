@@ -18,8 +18,8 @@ public final class PotionRegistry {
 
     public static Potion with(Potion potion, String name) {
         Potions.add(potion);
-        return potion.setRegistryName(MetaData.MOD_ID + ":" + name).
-                setPotionName(MetaData.MOD_ID + "." + name);
+        return potion.setRegistryName(Names.prefixRegister(name)).
+                setPotionName(Names.prefixPotionUnloc(name));
     }
 
     public static final Potion Unstoppable_Potion = with(new UnstoppablePotion(), Names.Potion.UnstoppablePotion);

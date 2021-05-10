@@ -30,6 +30,20 @@ public final class CoroutineSystem {
         return cm.startCoroutine(coroutine);
     }
 
+    public Coroutine[] attachCoroutinesToPlayer(EntityPlayer player, Coroutine[] coroutines) {
+        Coroutine[] res = new Coroutine[coroutines.length];
+        for (int i = 0; i < coroutines.length; i++) {
+            res[i]=attachCoroutineToPlayer(player,coroutines[i]);
+        }
+        return res;
+    }
+
+    public void StopAllOfPlayer(EntityPlayer player) {
+        if (playerCoroutines.containsKey(player)) {
+            playerCoroutines.get(player).StopAll();
+        }
+    }
+
     public Coroutine attachCoroutineToPlayer(EntityPlayer player, IEnumerable task, int lifeSpan) {
         return attachCoroutineToPlayer(player, new Coroutine(task, lifeSpan));
     }
