@@ -1,6 +1,6 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.lib.tools.EntityTool;
+import net.liplum.lib.util.EntityUtil;
 import net.liplum.lib.weaponcores.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
@@ -45,7 +45,7 @@ public class HarpCoreType {
             //If enemy
             else {
                 //Detect whether the entity is a killer of zombies
-                if (EntityTool.isUndead(target)) {
+                if (EntityUtil.isUndead(target)) {
                     target.addPotionEffect(new PotionEffect(MobEffects.INSTANT_HEALTH, 1, 0));
                 } else {
                     target.addPotionEffect(new PotionEffect(MobEffects.POISON, 40, 2));

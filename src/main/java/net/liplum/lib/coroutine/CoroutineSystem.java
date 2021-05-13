@@ -10,6 +10,10 @@ import java.util.HashMap;
 public final class CoroutineSystem {
     private static CoroutineSystem instance;
 
+    private CoroutineSystem(){
+
+    }
+
     public static CoroutineSystem Instance() {
         if (instance == null) {
             instance = new CoroutineSystem();

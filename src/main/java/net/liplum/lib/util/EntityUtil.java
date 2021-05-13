@@ -1,4 +1,4 @@
-package net.liplum.lib.tools;
+package net.liplum.lib.util;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -11,7 +11,7 @@ import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
-public class EntityTool {
+public class EntityUtil {
     public static boolean isUndead(@Nonnull EntityLivingBase e) {
         return e instanceof EntityZombie || e instanceof EntityZombieVillager || e instanceof EntityPigZombie || e instanceof EntityGiantZombie || e instanceof EntityZombieHorse ||
                 e instanceof EntitySkeleton || e instanceof EntitySkeletonHorse || e instanceof EntityWither || e instanceof EntityWitherSkeleton || e instanceof EntityHusk || e instanceof EntityStray;

@@ -15,10 +15,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
-public abstract class FAWItem extends Item {
+public abstract class FawItem extends Item {
     public final Set<Category> categories = new HashSet<>();
 
-    public FAWItem(Category... categories) {
+    public FawItem(Category... categories) {
         //Player can only hold ONE Weapon in an item stack.
         setMaxStackSize(1);
         //Player can't repair the weapon in common way(an anvil)
@@ -34,6 +34,10 @@ public abstract class FAWItem extends Item {
 
     public boolean isA(Category category){
         return categories.contains(category);
+    }
+
+    public void addCategory(Category...categories){
+        Collections.addAll(this.categories,categories);
     }
 
     public Category[] getCategories(){

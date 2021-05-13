@@ -5,14 +5,11 @@ import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
-import com.sun.javafx.geom.Path2D;
-import com.sun.javafx.geom.Shape;
-import javafx.scene.shape.Polygon;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
 
-public class MathTool {
+public class MathUtil {
     private static final double PI_Divide_180 = Math.PI / 180;
     public static final double HalfPI = Math.PI / 2;
     public static final Vector2D iY = new Vector2D(0, 1);
@@ -88,8 +85,8 @@ public class MathTool {
                 genRotateMatrix(deltaX,deltaY,a)
                 , A);
         double halfw = width / 2, x = player.x, y = player.y;
-        return MathTool.belongToCC(x - halfw, x + halfw, Result.get(0)) &&
-                MathTool.belongToCC(y, y + length, Result.get(1));
+        return MathUtil.belongToCC(x - halfw, x + halfw, Result.get(0)) &&
+                MathUtil.belongToCC(y, y + length, Result.get(1));
     }
 
     private static DoubleMatrix2D genRotateMatrix(double deltaX, double deltaY, float angleA) {
@@ -147,5 +144,25 @@ public class MathTool {
 
     public static long fixMin(long value, long min) {
         return value < min ? min : value;
+    }
+
+    public static Vec3d from2D(Vector2D v2d) {
+        return new Vec3d(v2d.x, v2d.y, 0);
+    }
+
+    public static Point to2DPoint(Vec3d v3d){
+        return new Point(v3d.x,v3d.z);
+    }
+
+    public static Vec3d minus(Vec3d a, Vec3d b) {
+        return a.addVector(-b.x,-b.y,-b.z);
+    }
+
+    public static Vec3d reserve(Vec3d v3d){
+        return new Vec3d(-v3d.x, -v3d.y ,-v3d.z);
+    }
+
+    public static Vec3d divide(Vec3d v3d, double division) {
+        return new Vec3d(v3d.x / division, v3d.y / division, v3d.z / division);
     }
 }
