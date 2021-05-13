@@ -1,9 +1,9 @@
 package net.liplum.items.weapons.battleaxe;
 
-import net.liplum.lib.math.MathTool;
+import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.tools.ItemTool;
+import net.liplum.lib.util.ItemTool;
 import net.liplum.lib.items.IMeleeWeapon;
 import net.liplum.lib.items.ISkillableWeapon;
 import net.minecraft.entity.EntityLivingBase;
@@ -68,7 +68,7 @@ public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWe
                         Point sp = new Point(e.posX, e.posZ);
                         Point spNew = sp.minus(pp);
                         Vector2D sv = spNew.toV2D();
-                        if (MathTool.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
+                        if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
                             e.attackEntityFrom(DamageSource.causePlayerDamage(playerIn), skillDamage);
                             e.knockBack(playerIn, 0.5f, knockBackAngleToX, knockBackAngleToY);
                         }

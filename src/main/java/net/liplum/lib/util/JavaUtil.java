@@ -1,10 +1,10 @@
-package net.liplum.lib.tools;
+package net.liplum.lib.util;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
-public class JavaTool {
+public class JavaUtil {
     public static <T> void notNullThenDo(@Nullable T a, Consumer<T> delegate) {
         if (a != null) {
             delegate.accept(a);

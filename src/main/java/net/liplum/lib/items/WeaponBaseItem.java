@@ -7,7 +7,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
-public abstract class WeaponBaseItem extends FAWItem {
+public abstract class WeaponBaseItem extends FawItem {
     public WeaponBaseItem() {
         super();
     }
@@ -57,9 +57,6 @@ public abstract class WeaponBaseItem extends FAWItem {
 
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float damage) {
         damage = Math.max(1f, damage / 10f);
-        if(!isA(Category.Weapon)) {
-            damage *= 2;
-        }
         //TODO:This
         //ToolHelper.damageTool(stack, (int) damage, player);
     }

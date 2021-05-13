@@ -9,7 +9,7 @@ public final class Names {
     }
 
     public static String prefixPotionUnloc(String name){
-        return String.format("%s.%s.%s","effect",MetaData.MOD_ID,name);
+        return String.format("%s.%s.%s","potion",MetaData.MOD_ID,name);
     }
 
     public static class Item {
@@ -33,15 +33,12 @@ public final class Names {
 
     public final static class Category {
         public static final String Unknown = "unknown";
-        public static final String Tool = "tool";
         public static final String Melee = "melee";
         public static final String LongRange = "long_range";
-        public static final String Harvest = "harvest";
         public static final String Magic = "magic";
         public static final String AOE = "aoe";
         public static final String Single = "single";
         public static final String Buffier = "buffier";
-        public static final String Weapon = "weapon";
     }
     public final static class Potion {
         public static final String UnstoppablePotion = "unstoppable";
