@@ -101,26 +101,4 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ISkil
         }
         return ActionResult.newResult(result, held);
     }
-
-    /*    *//**
-     * Called each tick while using an item.
-     *
-     * @param stack  The Item being used
-     * @param player The Player using the item
-     * @param count  The amount of time in tick the item has been used for continuously
-     *//*
-    @Override
-    public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
-        EntityPlayer p = (EntityPlayer) player;
-        AxisAlignedBB playerBox = p.getEntityBoundingBox();
-        World world = p.world;
-        List<EntityLivingBase> allInRange = world
-                .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(1, 0.25D, 1));
-        for (EntityLivingBase e : allInRange) {
-            e.attackEntityFrom(DamageSource.causePlayerDamage(p),1
-                    //getAttackDamage()+getDamage(stack)
-                    );
-        }
-    }*/
-
 }
