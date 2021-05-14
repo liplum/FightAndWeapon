@@ -48,8 +48,8 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(r, 0.25D, r));
 
             for (EntityLivingBase e : allInRange) {
-                JavaUtil.notNullThenDo(core, (c) -> c.releaseHarpSkill(worldIn, playerIn, handIn, e));
-                JavaUtil.notNullThenDo(modifier, (m) -> m.doHarpExtraSkillEffect(worldIn, playerIn, handIn, e));
+                core.releaseHarpSkill(worldIn, playerIn, handIn, e);
+                //modifier.doHarpExtraSkillEffect(worldIn, playerIn, handIn, e);
             }
             double px = playerIn.posX, py = playerIn.posY, pz = playerIn.posZ;
 

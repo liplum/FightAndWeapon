@@ -9,6 +9,7 @@ import net.liplum.items.weapons.TestSwordItem;
 import net.liplum.items.weapons.battleaxe.BattleAxeItem;
 import net.liplum.items.weapons.harp.HarpCoreType;
 import net.liplum.items.weapons.harp.HarpItem;
+import net.liplum.items.weapons.lance.LanceCoreType;
 import net.liplum.items.weapons.lance.LanceItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -43,7 +44,7 @@ public final class ItemRegistry {
     public static final Item Quartz_Axe_Item = with(new QuartzAxeItem(Item.ToolMaterial.IRON), Names.Item.QuartzAxeItem);
     public static final Item Test_Sword_Item = with(new TestSwordItem(), Names.Item.TestSwordItem);
     public static final Item Battle_Axe_Item = with(new BattleAxeItem(), Names.Item.BattleAxeItem);
-    public static final Item Lance_Item = with(new LanceItem(), Names.Item.LanceItem);
+    public static final Item Lance_Item = with(new LanceItem(LanceCoreType.Normal), Names.Item.LanceItem);
     public static final Item Harp_Item = with(new HarpItem(HarpCoreType.Normal), Names.Item.HarpItem);
 
     @SubscribeEvent
