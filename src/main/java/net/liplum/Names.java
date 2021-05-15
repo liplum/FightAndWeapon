@@ -1,15 +1,16 @@
 package net.liplum;
 
 public final class Names {
-    public static String prefixRegister(String name){
-        return String.format("%s:%s",MetaData.MOD_ID,name);
-    }
-    public static String prefixUnloc(String name){
-        return String.format("%s.%s",MetaData.MOD_ID,name);
+    public static String prefixRegister(String name) {
+        return String.format("%s:%s", MetaData.MOD_ID, name);
     }
 
-    public static String prefixPotionUnloc(String name){
-        return String.format("%s.%s.%s","potion",MetaData.MOD_ID,name);
+    public static String prefixUnloc(String name) {
+        return String.format("%s.%s", MetaData.MOD_ID, name);
+    }
+
+    public static String prefixPotionUnloc(String name) {
+        return String.format("%s.%s.%s", "potion", MetaData.MOD_ID, name);
     }
 
     public static class Item {
@@ -19,8 +20,15 @@ public final class Names {
         public static final String QuartzAxeItem = "quartz_axe";
         public static final String TestSwordItem = "test_sword";
         public static final String BattleAxeItem = "battle_axe";
-        public static final String LanceItem = "lance";
-        public static final String HarpItem = "harp";
+
+        public static class Lance {
+            public static final String LanceItem = "lance";
+            public static final String KnightLanceItem = "knight_lance";
+        }
+
+        public static class Harp {
+            public static final String HarpItem = "harp";
+        }
     }
 
     public final static class Entity {
@@ -40,6 +48,7 @@ public final class Names {
         public static final String Single = "single";
         public static final String Buffier = "buffier";
     }
+
     public final static class Potion {
         public static final String UnstoppablePotion = "unstoppable";
     }

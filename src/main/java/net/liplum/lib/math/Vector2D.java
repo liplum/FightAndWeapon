@@ -46,8 +46,46 @@ public final class Vector2D {
         return (x * x) + (y * y);
     }
 
+    public boolean isZero() {
+        return x == 0 && y == 0;
+    }
+
+    public Position2D getPosition() {
+        if (this.isZero()) {
+            return Position2D.Zero;
+        }
+        if (x < 0) {
+            if (y == 0) {
+                return Position2D.Negative_X_Axis;
+            }
+            if (y < 0) {
+                return Position2D.Quadrant_Three;
+            }
+            if (y > 0) {
+                return Position2D.Quadrant_Two;
+            }
+        }
+        if (x > 0) {
+            if (y == 0) {
+                return Position2D.Positive_X_Axis;
+            }
+            if (y < 0) {
+                return Position2D.Quadrant_Four;
+            }
+            if (y > 0) {
+                return Position2D.Quadrant_One;
+            }
+        }
+        if (x == 0) {
+            if (y < 0) {
+                return Position2D.Negative_Y_Axis;
+            }
+            return Position2D.Positive_Y_Axis;
+        }
+        return Position2D.Unknown;
+    }
+
     /**
-     *
      * @param other
      * @return the cos of angle which is between this vector and other vector.
      */
@@ -57,6 +95,7 @@ public final class Vector2D {
 
     /**
      * It uses {@link Math#acos(double)} not {@link MathHelper} so that it'll be slower.
+     *
      * @param other
      * @return the angle between this vector and other vector.(unit:radian)
      */
@@ -111,7 +150,7 @@ public final class Vector2D {
         return new Vec3d(0, 0, x * other.y - other.x * y);
     }
 
-    public Point toPoint(){
-        return new Point(x,y);
+    public Point toPoint() {
+        return new Point(x, y);
     }
 }

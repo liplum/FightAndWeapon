@@ -3,6 +3,8 @@ package net.liplum.items.weapons.lance;
 import net.liplum.coroutine.WaitForTicks;
 import net.liplum.enumerator.Yield;
 import net.liplum.lib.coroutine.CoroutineSystem;
+import net.liplum.lib.math.MathUtil;
+import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.util.PhysicsTool;
 import net.liplum.lib.weaponcores.ILanceCore;
 import net.liplum.registeies.PotionRegistry;
@@ -45,9 +47,10 @@ public class LanceCoreType {
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
             PhysicsTool.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
             if (!world.isRemote) {
-                player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion,15,0,false,false));
+                player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
                 CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Yield() {
                     Set<EntityLivingBase> damaged = new HashSet<>();
+
                     @Override
                     protected void runTask() {
                         AxisAlignedBB playerBox = player.getEntityBoundingBox();
@@ -77,6 +80,32 @@ public class LanceCoreType {
         @Override
         public float getSprintLength() {
             return 2F;
+        }
+    };
+    public static final ILanceCore KnightLance = new ILanceCore() {
+        @Override
+        public boolean releaseLanceSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
+            //TODO:There is a bug about the examination of attack range
+            AxisAlignedBB playerBox = player.getEntityBoundingBox();
+            List<EntityLivingBase> allInRange = world
+                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
+            Vector2D look = MathUtil.toV2D(player.getLookVec());
+            for (EntityLivingBase e : allInRange) {
+                if (MathUtil.isInside(look,PhysicsTool.get2DPosition(player),PhysicsTool.get2DPosition(e),1,sprintLength)){
+                    e.attackEntityFrom(DamageSource.causePlayerDamage(player),1);
+                }
+            }
+            return true;
+        }
+
+        @Override
+        public int getCoolDown() {
+            return 5 * 20;
+        }
+
+        @Override
+        public float getSprintLength() {
+            return 5;
         }
     };
 }

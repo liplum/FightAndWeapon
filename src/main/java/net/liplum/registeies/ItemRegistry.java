@@ -44,8 +44,9 @@ public final class ItemRegistry {
     public static final Item Quartz_Axe_Item = with(new QuartzAxeItem(Item.ToolMaterial.IRON), Names.Item.QuartzAxeItem);
     public static final Item Test_Sword_Item = with(new TestSwordItem(), Names.Item.TestSwordItem);
     public static final Item Battle_Axe_Item = with(new BattleAxeItem(), Names.Item.BattleAxeItem);
-    public static final Item Lance_Item = with(new LanceItem(LanceCoreType.Normal), Names.Item.LanceItem);
-    public static final Item Harp_Item = with(new HarpItem(HarpCoreType.Normal), Names.Item.HarpItem);
+    public static final Item Lance_Item = with(new LanceItem(LanceCoreType.Normal), Names.Item.Lance.LanceItem);
+    public static final Item Knight_Lance_Item = with(new LanceItem(LanceCoreType.KnightLance), Names.Item.Lance.KnightLanceItem);
+    public static final Item Harp_Item = with(new HarpItem(HarpCoreType.Normal), Names.Item.Harp.HarpItem);
 
     @SubscribeEvent
     public static void onItemRegistry(RegistryEvent.Register<Item> event) {
