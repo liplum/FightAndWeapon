@@ -109,8 +109,8 @@ public class MathUtil {
         float o = (float) iX.angle(l);
         float a;
         Position2D lp = l.getPosition();
-        if (lp == Position2D.Quadrant_One || lp == Position2D.Quadrant_Two || lp == Position2D.Positive_X_Axis) {
-            a = (float) (o + Math.PI);
+        if (lp == Position2D.Quadrant_One || lp == Position2D.Quadrant_Two || lp == Position2D.Positive_Y_Axis) {
+            a = supplementary(o);
         } else {
             a = o;
         }
@@ -214,5 +214,21 @@ public class MathUtil {
 
     public static Vec3d divide(Vec3d v3d, double division) {
         return new Vec3d(v3d.x / division, v3d.y / division, v3d.z / division);
+    }
+
+    /**
+     * @param angle
+     * @return (Unit : Radius)
+     */
+    public static double supplementary(double angle) {
+        return 2 * Math.PI - angle;
+    }
+
+    /**
+     * @param angle
+     * @return (Unit : Radius)
+     */
+    public static float supplementary(float angle) {
+        return 2 * (float) (Math.PI) - angle;
     }
 }

@@ -85,13 +85,12 @@ public class LanceCoreType {
     public static final ILanceCore KnightLance = new ILanceCore() {
         @Override
         public boolean releaseLanceSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
-            //TODO:There is a bug about the examination of attack range
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
             Vector2D look = MathUtil.toV2D(player.getLookVec());
             for (EntityLivingBase e : allInRange) {
-                if (MathUtil.isInside(look,PhysicsTool.get2DPosition(player),PhysicsTool.get2DPosition(e),1,sprintLength)){
+                if (MathUtil.isInside(look,PhysicsTool.get2DPosition(player),PhysicsTool.get2DPosition(e),1.5,sprintLength)){
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player),1);
                 }
             }
