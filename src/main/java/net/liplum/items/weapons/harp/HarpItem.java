@@ -4,7 +4,7 @@ import net.liplum.lib.items.IHarp;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.modifiers.IHarpModifier;
-import net.liplum.lib.util.ItemTool;
+import net.liplum.lib.utils.ItemTool;
 import net.liplum.lib.weaponcores.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;

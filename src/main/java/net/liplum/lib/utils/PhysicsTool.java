@@ -1,4 +1,4 @@
-package net.liplum.lib.util;
+package net.liplum.lib.utils;
 
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;

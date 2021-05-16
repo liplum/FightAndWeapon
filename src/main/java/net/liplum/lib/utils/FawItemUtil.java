@@ -1,4 +1,4 @@
-package net.liplum.lib.util;
+package net.liplum.lib.utils;
 
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;

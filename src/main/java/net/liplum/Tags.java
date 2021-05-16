@@ -9,24 +9,28 @@ public final class Tags {
     FAWData(Base)-str
         Modifiers(ModifierList)-list(str)
             [
-            Modifier(Modifier)-str
-            Gemergy(Gemergy)-int
+                {
+                    Modifier(Modifier)-str
+                    Gemergy(Gemergy)-int
+                },
+                ...
             ]
-        Unbreaking(Unbreaking)-int
+        Durability(Durability)-int
     */
     private Tags() {
     }
 
     public static final String Base = "FAWData";
 
-    public final static class Base {
+    public final static class BaseSub {
         public static final String ModifierList = "ModifierList";
 
-        public static final class Modifier {
+        public static final class ModifierObject {
             public static final String Modifier = "Modifier";
             public static final String Gemergy = "Gemergy";
         }
 
-        public static final String Unbreaking = "Unbreaking";
+        //Unbreaking
+        public static final String Durability = "Durability";
     }
 }

@@ -3,7 +3,7 @@ package net.liplum.items.weapons.battleaxe;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.util.ItemTool;
+import net.liplum.lib.utils.ItemTool;
 import net.liplum.lib.items.IMeleeWeapon;
 import net.liplum.lib.items.ISkillableWeapon;
 import net.minecraft.entity.EntityLivingBase;

@@ -1,4 +1,4 @@
-package net.liplum.lib.util;
+package net.liplum.lib.utils;
 
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;

@@ -5,7 +5,7 @@ import net.liplum.enumerator.Yield;
 import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.util.PhysicsTool;
+import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.weaponcores.ILanceCore;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;

@@ -3,7 +3,7 @@ package net.liplum.items.weapons.lance;
 import net.liplum.lib.items.ILance;
 import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.util.ItemTool;
+import net.liplum.lib.utils.ItemTool;
 import net.liplum.lib.weaponcores.ILanceCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

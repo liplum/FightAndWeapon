@@ -1,4 +1,4 @@
-package net.liplum.lib.util;
+package net.liplum.lib.utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

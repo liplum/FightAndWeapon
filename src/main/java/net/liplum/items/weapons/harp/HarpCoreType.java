@@ -1,6 +1,6 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.lib.util.EntityUtil;
+import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.weaponcores.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;

@@ -1,4 +1,4 @@
-package net.liplum.lib.util;
+package net.liplum.lib.utils;
 
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
