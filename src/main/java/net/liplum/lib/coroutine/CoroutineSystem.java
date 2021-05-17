@@ -35,16 +35,19 @@ public final class CoroutineSystem {
     }
 
     public Coroutine[] attachCoroutinesToPlayer(EntityPlayer player, Coroutine[] coroutines) {
-        Coroutine[] res = new Coroutine[coroutines.length];
-        for (int i = 0; i < coroutines.length; i++) {
-            res[i]=attachCoroutineToPlayer(player,coroutines[i]);
+        CoroutineManager cm;
+        if (playerCoroutines.containsKey(player)) {
+            cm = playerCoroutines.get(player);
+        } else {
+            cm = new CoroutineManager();
+            playerCoroutines.put(player, cm);
         }
-        return res;
+        return cm.startCoroutines(coroutines);
     }
 
     public void StopAllOfPlayer(EntityPlayer player) {
         if (playerCoroutines.containsKey(player)) {
-            playerCoroutines.get(player).StopAll();
+            playerCoroutines.get(player).stopAll();
         }
     }
 

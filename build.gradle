@@ -5,7 +5,6 @@ buildscript {
         }
         jcenter()
         mavenCentral()
-        gradlePluginPortal()
     }
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
@@ -15,11 +14,14 @@ buildscript {
 plugins {
     id "com.github.johnrengelman.shadow" version "4.0.4"
 }
+
 allprojects {
     repositories {
+        jcenter()
         maven { url 'https://jitpack.io' }
     }
 }
+
 apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
@@ -77,9 +79,8 @@ dependencies {
     // The userdev artifact is a special name and will get all sorts of transformations applied to it.
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2854'
     // https://mvnrepository.com/artifact/org.jenkins-ci.plugins/matrix-project
-    implementation 'com.github.liplum:Coroutine:v1.0'
     implementation 'colt:colt:1.2.0'
-
+    implementation 'com.github.liplum:Coroutine:v1.2'
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
