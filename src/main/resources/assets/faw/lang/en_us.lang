@@ -9,7 +9,8 @@ item.faw.battle_axe.name=Battle Axe
 item.faw.harp.name=Harp
 
 #Item Groups
-itemGroup.faw_item_group=Fight And Weapon
+itemGroup.faw_weapons=FAW's Weapons
+itemGroup.faw_gemstones=FAW's Gemstones
 
 #Enchantments
 enchantment.faw.music=Music

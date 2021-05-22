@@ -1,6 +1,7 @@
 {
   "parent":"item/handheld",
   "textures":{
-    "layer0":"faw:items/battle_axe"
+    "layer0":"faw:items/battleaxe/battle_axe",
+    "layer1":"faw:items/battleaxe/mod_battle_axe"
   }
 }

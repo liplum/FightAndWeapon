@@ -36,7 +36,8 @@ public final class Names {
     }
 
     public final static class ItemGroup {
-        public static final String Item_Group_Key = "faw_item_group";
+        public static final String FawWeapons = "faw_weapons";
+        public static final String FawGemstones = "faw_gemstones";
     }
 
     public final static class Category {
