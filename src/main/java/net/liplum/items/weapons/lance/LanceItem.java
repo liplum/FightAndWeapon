@@ -48,7 +48,7 @@ public class LanceItem extends WeaponBaseItem implements ILongReachWeapon, ILanc
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
             float length = getSprintLength();
-            if(core.releaseLanceSkill(worldIn,playerIn,handIn,length)){
+            if(core.releaseSkill(worldIn,playerIn,handIn,length)){
                 ItemTool.HeatWeaponIfSurvival(playerIn, held.getItem(), coolDownTime);
                 result = EnumActionResult.SUCCESS;
             }

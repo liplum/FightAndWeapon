@@ -9,27 +9,27 @@ import net.minecraft.world.World;
 public final class EmptyModifier {
     public static IHarpModifier EmptyHarpModifier = new IHarpModifier() {
         @Override
-        public double getHarpUseRadiusModifier() {
+        public double getUseRadiusModifier() {
             return 0;
         }
 
         @Override
-        public double getHarpSkillRadiusModifier() {
+        public double getSkillRadiusModifier() {
             return 0;
         }
 
         @Override
-        public int getHarpCoolDownModifier() {
+        public int getCoolDownModifier() {
             return 0;
         }
 
         @Override
-        public void doHarpExtraUseEffect() {
+        public void doExtraUseEffect() {
 
         }
 
         @Override
-        public void doHarpExtraSkillEffect(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target) {
+        public void doExtraSkillEffect(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target) {
 
         }
     };

@@ -1,5 +1,5 @@
 package net.liplum.lib.modifiers;
 
-public interface IBattleAxeModifier {
-    double getBattleAxeSkillRangeModifier();
+public interface IBattleAxeModifier extends IModifier {
+    double getSkillRangeModifier();
 }

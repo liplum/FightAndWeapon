@@ -5,7 +5,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public interface ILanceCore{
-    boolean releaseLanceSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength);
+    boolean releaseSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength);
     /**
      * Gets the cool down time of weapon.
      *

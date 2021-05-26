@@ -25,7 +25,7 @@ import java.util.Set;
 public class LanceCoreType {
     public static final ILanceCore Empty = new ILanceCore() {
         @Override
-        public boolean releaseLanceSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
+        public boolean releaseSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
             return false;
         }
 
@@ -42,7 +42,7 @@ public class LanceCoreType {
 
     public static final ILanceCore Normal = new ILanceCore() {
         @Override
-        public boolean releaseLanceSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
+        public boolean releaseSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
             PhysicsTool.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
@@ -84,7 +84,7 @@ public class LanceCoreType {
     };
     public static final ILanceCore KnightLance = new ILanceCore() {
         @Override
-        public boolean releaseLanceSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
+        public boolean releaseSkill(World world, EntityPlayer player, EnumHand handIn, float sprintLength) {
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));

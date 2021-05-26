@@ -5,14 +5,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public interface IHarpModifier {
-    double getHarpUseRadiusModifier();
+public interface IHarpModifier extends IModifier {
+    double getUseRadiusModifier();
 
-    double getHarpSkillRadiusModifier();
+    double getSkillRadiusModifier();
 
-    int getHarpCoolDownModifier();
+    int getCoolDownModifier();
 
-    void doHarpExtraUseEffect();
+    void doExtraUseEffect();
 
-    void doHarpExtraSkillEffect(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target);
+    void doExtraSkillEffect(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target);
 }

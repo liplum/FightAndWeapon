@@ -1,5 +1,5 @@
 package net.liplum.lib.modifiers;
 
-public interface ILanceModifier {
-    double getLanceRangeModifier();
+public interface ILanceModifier extends IModifier {
+    double getRangeModifier();
 }
