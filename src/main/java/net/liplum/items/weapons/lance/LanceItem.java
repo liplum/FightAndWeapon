@@ -2,7 +2,7 @@ package net.liplum.items.weapons.lance;
 
 import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.modifiers.IModifier;
+import net.liplum.lib.modifiers.Modifier;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.weaponcores.ILanceCore;
 import net.liplum.lib.utils.ItemTool;
@@ -43,7 +43,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
         EnumActionResult result = EnumActionResult.PASS;
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
-            IModifier modifier = FawGemUtil.getModifierFrom(held);
+            Modifier modifier = FawGemUtil.getModifierFrom(held);
             if(modifier != null){
 
             }

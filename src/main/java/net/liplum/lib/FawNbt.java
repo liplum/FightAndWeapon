@@ -64,7 +64,7 @@ public final class FawNbt {
          * @return
          */
         public static NBTTagList getGemstoneList(NBTTagCompound base) {
-            return NbtUtil.getSubListOrCreate(base, Tags.BaseSub.GemstoneList, Tags.Type_String);
+            return NbtUtil.getSubListOrCreate(base, Tags.BaseSub.GemstoneList, Tags.Type_NbtCompound);
         }
     }
 

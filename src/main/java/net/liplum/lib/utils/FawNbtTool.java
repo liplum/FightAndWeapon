@@ -21,12 +21,12 @@ public final class FawNbtTool {
         FawNbt.FawBase.putFawBase(root, fawBase);
     }
 
-    public static void setModifierList(ItemStack itemStack, NBTTagList modifierList) {
+    public static void setGemstoneList(ItemStack itemStack, NBTTagList modifierList) {
         NBTTagCompound fawBase = getFawBaseFromItem(itemStack);
         FawNbt.GemstoneList.putGemstoneList(fawBase, modifierList);
     }
 
-    public static NBTTagList getModifierList(ItemStack itemStack) {
+    public static NBTTagList getGemstoneList(ItemStack itemStack) {
         NBTTagCompound fawBase = getFawBaseFromItem(itemStack);
         NBTTagList modifierList = FawNbt.GemstoneList.getGemstoneList(fawBase);
         return modifierList;

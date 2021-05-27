@@ -7,4 +7,8 @@ public interface IWeaponCore {
      * @return The cool down time of weapon(by tick)
      */
     int getCoolDown();
+
+    default float getStrength(){
+        return 0;
+    }
 }

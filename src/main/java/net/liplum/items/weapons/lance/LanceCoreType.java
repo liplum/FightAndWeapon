@@ -81,6 +81,11 @@ public class LanceCoreType {
         public float getSprintLength() {
             return 2F;
         }
+
+        @Override
+        public float getStrength() {
+            return 5;
+        }
     };
     public static final ILanceCore KnightLance = new ILanceCore() {
         @Override
@@ -105,6 +110,11 @@ public class LanceCoreType {
         @Override
         public float getSprintLength() {
             return 5;
+        }
+
+        @Override
+        public float getStrength() {
+            return 6;
         }
     };
 }

@@ -1,9 +1,11 @@
 package net.liplum;
 
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 
 public final class Tags {
     public static final int Type_String = (new NBTTagString()).getId();
+    public static final int Type_NbtCompound = (new NBTTagCompound()).getId();
 
     /*
     FAWData(Base)-str

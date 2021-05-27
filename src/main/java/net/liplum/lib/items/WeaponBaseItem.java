@@ -1,5 +1,6 @@
 package net.liplum.lib.items;
 
+import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.weaponcores.IWeaponCore;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
@@ -42,6 +43,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
 
     /**
      * Deals damage to a target form the attacker.
+     * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
      * @param stack
      * @param attacker
      * @param target
@@ -54,6 +56,11 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
                 DamageSource.causeMobDamage(attacker);
         return target.attackEntityFrom(source,damage);
 
+    }
+
+    @Override
+    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+        return FawItemUtil.attackEntity(stack,this, player, entity);
     }
 
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float damage) {

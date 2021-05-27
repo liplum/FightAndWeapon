@@ -4,7 +4,7 @@ import net.liplum.Tags;
 import net.liplum.lib.FawNbt;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.items.gemstone.Gemstone;
-import net.liplum.lib.modifiers.IModifier;
+import net.liplum.lib.modifiers.Modifier;
 import net.liplum.lib.registeies.GemstoneRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,7 +20,7 @@ public final class FawGemUtil {
      * @return
      */
     @Nullable
-    public static IModifier getModifierFrom(ItemStack itemStack) {
+    public static Modifier getModifierFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem)) {
             return null;
@@ -52,8 +52,8 @@ public final class FawGemUtil {
         }
         //It's up to how many a weapon can contain gemstones.
         NBTBase gemstoneNbt = gemList.get(0);
-        NBTTagCompound modifierNbt = FawNbt.GemstoneObject.getGemstone((NBTTagCompound) gemstoneNbt);
-        String gemstoneName = modifierNbt.getString(Tags.BaseSub.GemstoneObject.Gemstone);
+        NBTTagCompound gemstoneObj = (NBTTagCompound) gemstoneNbt;
+        String gemstoneName = gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
         //Gets corresponding gemstone by its name.
         return GemstoneRegistry.Instance().getGemstone(gemstoneName);
     }
