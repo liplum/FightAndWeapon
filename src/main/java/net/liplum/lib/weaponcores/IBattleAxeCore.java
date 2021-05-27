@@ -5,6 +5,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public interface IBattleAxeCore {
+public interface IBattleAxeCore extends IWeaponCore{
     void releaseBattleAxeSkill(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target);
 }

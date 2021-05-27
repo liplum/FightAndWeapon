@@ -1,5 +1,8 @@
-package net.liplum.lib.registeies.modifier;
+package net.liplum.lib.registeies;
 
+import net.liplum.lib.weaponcores.IWeaponCore;
+
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,6 +18,7 @@ public class ModifierRegistry<Core, Modifier> {
      *
      * @return the modifier or null if it didn't has a corresponding modifier of the core.
      */
+    @Nullable
     public Modifier getModifier(Core core) {
         if (modifiers.containsKey(core)) {
             return modifiers.get(core);
@@ -24,5 +28,9 @@ public class ModifierRegistry<Core, Modifier> {
 
     public Class<Core> getCoreType() {
         return (Class<Core>) getClass();
+    }
+
+    public boolean isRegistryOf(IWeaponCore core){
+        return getCoreType().isInstance(core);
     }
 }

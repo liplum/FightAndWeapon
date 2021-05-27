@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public interface IHarpCore {
+public interface IHarpCore extends IWeaponCore {
     /**
      * Gets the radius of the range
      *
@@ -14,11 +14,4 @@ public interface IHarpCore {
     double getRadius();
 
     void releaseHarpSkill(World world, EntityPlayer player, EnumHand handIn, EntityLivingBase target);
-
-    /**
-     * Gets the cool down time of weapon.
-     *
-     * @return The cool down time of weapon(by tick)
-     */
-    int getCoolDown();
 }

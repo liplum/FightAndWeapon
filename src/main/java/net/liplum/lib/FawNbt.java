@@ -14,9 +14,9 @@ public final class FawNbt {
     }
 
     /**
-     * Modifiers(ModifierList)-list(str)<br/>
+     * Gemstones(GemstoneList)-list(str)<br/>
      *     [<br/>
-     *         Modifier(Modifier)-str<br/>
+     *         Gemstone(Gemstone)-str<br/>
      *         Gemergy(Gemergy)-int<br/>
      *     ]<br/>
      * Durability(Durability)-int<br/>
@@ -48,14 +48,14 @@ public final class FawNbt {
      *     ...<br/>
      * ]<br/>
      */
-    public static final class ModifierList {
+    public static final class GemstoneList {
         /**
-         * Puts the modifier-list data into the Faw-base data NBT.
+         * Puts the gemstone-list data into the Faw-base data NBT.
          * @param base the Faw-base data NBT, which comes from {@link FawBase#getFawBase(NBTTagCompound)}
-         * @param modifierList the modifier-list data
+         * @param gemstoneList the gemstone-list data
          */
-        public static void putModifierList(NBTTagCompound base, NBTTagList modifierList) {
-            JavaUtil.notNullThenDo(base, b -> b.setTag(Tags.BaseSub.ModifierList, modifierList));
+        public static void putGemstoneList(NBTTagCompound base, NBTTagList gemstoneList) {
+            JavaUtil.notNullThenDo(base, b -> b.setTag(Tags.BaseSub.GemstoneList, gemstoneList));
         }
 
         /**
@@ -63,51 +63,51 @@ public final class FawNbt {
          * @param base
          * @return
          */
-        public static NBTTagList getFawBase(NBTTagCompound base) {
-            return NbtUtil.getSubListOrCreate(base, Tags.BaseSub.ModifierList, Tags.Type_String);
+        public static NBTTagList getGemstoneList(NBTTagCompound base) {
+            return NbtUtil.getSubListOrCreate(base, Tags.BaseSub.GemstoneList, Tags.Type_String);
         }
     }
 
     /**
-     * Modifier(Modifier)-str<br/>
+     * Gemstone(Gemstone)-str<br/>
      * Gemergy(Gemergy)-int<br/>
      * ...<br/>
      */
-    public static final class ModifierObject {
+    public static final class GemstoneObject {
         /**
          *
-         * @param modifierObj
-         * @param modifier
+         * @param gemstoneObj
+         * @param gemstone
          */
-        public static void putModifier(NBTTagCompound modifierObj, NBTTagString modifier) {
-            JavaUtil.notNullThenDo(modifierObj, obj -> obj.setTag(Tags.BaseSub.ModifierObject.Modifier, modifier));
+        public static void putGemstone(NBTTagCompound gemstoneObj, NBTTagString gemstone) {
+            JavaUtil.notNullThenDo(gemstoneObj, obj -> obj.setTag(Tags.BaseSub.GemstoneObject.Gemstone, gemstone));
         }
 
         /**
          *
-         * @param modifierObj
+         * @param gemstoneObj
          * @return
          */
-        public static NBTTagCompound getModifier(NBTTagCompound modifierObj) {
-            return NbtUtil.getSubCompoundOrCreate(modifierObj, Tags.BaseSub.ModifierObject.Modifier);
+        public static NBTTagCompound getGemstone(NBTTagCompound gemstoneObj) {
+            return NbtUtil.getSubCompoundOrCreate(gemstoneObj, Tags.BaseSub.GemstoneObject.Gemstone);
         }
 
         /**
          *
-         * @param modifierObj
+         * @param gemstoneObj
          * @param gemergy
          */
-        public static void putGemergy(NBTTagCompound modifierObj, int gemergy) {
-            JavaUtil.notNullThenDo(modifierObj, obj -> obj.setInteger(Tags.BaseSub.ModifierObject.Gemergy, gemergy));
+        public static void putGemergy(NBTTagCompound gemstoneObj, int gemergy) {
+            JavaUtil.notNullThenDo(gemstoneObj, obj -> obj.setInteger(Tags.BaseSub.GemstoneObject.Gemergy, gemergy));
         }
 
         /**
          *
-         * @param modifierObj
+         * @param gemstoneObj
          * @return
          */
-        public static NBTTagCompound getGemergy(NBTTagCompound modifierObj) {
-            return NbtUtil.getSubCompoundOrCreate(modifierObj, Tags.BaseSub.ModifierObject.Gemergy);
+        public static NBTTagCompound getGemergy(NBTTagCompound gemstoneObj) {
+            return NbtUtil.getSubCompoundOrCreate(gemstoneObj, Tags.BaseSub.GemstoneObject.Gemergy);
         }
     }
 

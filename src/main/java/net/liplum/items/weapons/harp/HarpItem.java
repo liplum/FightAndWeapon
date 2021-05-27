@@ -1,6 +1,5 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.lib.items.IHarp;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.ItemTool;
@@ -19,7 +18,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class HarpItem extends WeaponBaseItem implements IHarp {
+public class HarpItem extends WeaponBaseItem<IHarpCore> {
     private IHarpCore core;
 
     public HarpItem(@Nonnull IHarpCore core) {
@@ -60,12 +59,7 @@ public class HarpItem extends WeaponBaseItem implements IHarp {
     }
 
     @Override
-    public IHarpCore getHarpCore() {
+    public IHarpCore getCore() {
         return core;
-    }
-
-    @Override
-    public int getCoolDown() {
-        return core.getCoolDown();
     }
 }

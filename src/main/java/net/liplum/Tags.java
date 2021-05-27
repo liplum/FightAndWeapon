@@ -7,10 +7,10 @@ public final class Tags {
 
     /*
     FAWData(Base)-str
-        Modifiers(ModifierList)-list(str)
+        Gemstones(GemstoneList)-list(str)
             [
                 {
-                    Modifier(Modifier)-str
+                    Gemstone(Gemstone)-str
                     Gemergy(Gemergy)-int
                 },
                 ...
@@ -23,10 +23,10 @@ public final class Tags {
     public static final String Base = "FAWData";
 
     public final static class BaseSub {
-        public static final String ModifierList = "ModifierList";
+        public static final String GemstoneList = "GemstoneList";
 
-        public static final class ModifierObject {
-            public static final String Modifier = "Modifier";
+        public static final class GemstoneObject {
+            public static final String Gemstone = "Gemstone";
             public static final String Gemergy = "Gemergy";
         }
 

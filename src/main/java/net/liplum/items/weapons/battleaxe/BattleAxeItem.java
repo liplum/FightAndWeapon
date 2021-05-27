@@ -1,11 +1,13 @@
 package net.liplum.items.weapons.battleaxe;
 
+import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.ItemTool;
 import net.liplum.lib.items.IMeleeWeapon;
-import net.liplum.lib.items.ISkillableWeapon;
+import net.liplum.lib.weaponcores.IBattleAxeCore;
+import net.liplum.lib.weaponcores.ILanceCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -23,9 +25,10 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWeapon {
+public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> implements IMeleeWeapon{
+    private IBattleAxeCore core;
     public BattleAxeItem() {
-        super(ToolMaterial.IRON);
+        super();
     }
 
     private double sweepRange = 3;
@@ -94,13 +97,8 @@ public class BattleAxeItem extends ItemAxe implements IMeleeWeapon, ISkillableWe
         return ActionResult.newResult(result, held);
     }
 
-    /**
-     * Gets the cool down time of weapon.
-     *
-     * @return The cool down time of weapon(by tick)
-     */
     @Override
-    public int getCoolDown() {
-        return coolDown;
+    public IBattleAxeCore getCore() {
+        return core;
     }
 }

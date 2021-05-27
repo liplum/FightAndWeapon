@@ -1,5 +1,6 @@
 package net.liplum.lib.items;
 
+import net.liplum.lib.weaponcores.IWeaponCore;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -7,7 +8,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
-public abstract class WeaponBaseItem extends FawItem {
+public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawItem{
     public WeaponBaseItem() {
         super();
     }
@@ -70,5 +71,19 @@ public abstract class WeaponBaseItem extends FawItem {
         return false;
     }
 
+    /**
+     * Gets the cool down time of weapon.
+     *
+     * @return The cool down time of weapon(Unit: tick)
+     */
+    public int getCoolDown(){
+        return getCore().getCoolDown();
+    }
+
+    /**
+     * Gets the core.
+     * @return A core of this weapon.
+     */
+    public abstract CoreType getCore();
 
 }

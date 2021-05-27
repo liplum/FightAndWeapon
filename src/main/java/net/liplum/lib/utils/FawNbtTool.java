@@ -1,6 +1,5 @@
 package net.liplum.lib.utils;
 
-import net.liplum.Tags;
 import net.liplum.lib.FawNbt;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,12 +23,12 @@ public final class FawNbtTool {
 
     public static void setModifierList(ItemStack itemStack, NBTTagList modifierList) {
         NBTTagCompound fawBase = getFawBaseFromItem(itemStack);
-        FawNbt.ModifierList.putModifierList(fawBase, modifierList);
+        FawNbt.GemstoneList.putGemstoneList(fawBase, modifierList);
     }
 
     public static NBTTagList getModifierList(ItemStack itemStack) {
         NBTTagCompound fawBase = getFawBaseFromItem(itemStack);
-        NBTTagList modifierList = FawNbt.ModifierList.getFawBase(fawBase);
+        NBTTagList modifierList = FawNbt.GemstoneList.getGemstoneList(fawBase);
         return modifierList;
     }
 
