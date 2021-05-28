@@ -1,14 +1,10 @@
 package net.liplum.items.weapons;
 
-import net.liplum.Tags;
-import net.liplum.lib.utils.FawNbtTool;
+import net.liplum.lib.utils.FawGenerator;
 import net.liplum.registeies.ItemRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -30,16 +26,8 @@ public class QuartzSwordItem extends ItemSword {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        ItemStack item = new ItemStack(ItemRegistry.Lance_Item);
-
-        NBTTagList gemstoneList = FawNbtTool.getGemstoneList(item);
-
-        NBTTagCompound ruby = new NBTTagCompound();
-        NBTTagString rubyName = new NBTTagString("Ruby");
-        ruby.setTag(Tags.BaseSub.GemstoneObject.Gemstone,rubyName);
-
-        gemstoneList.appendTag(ruby);
-        playerIn.addItemStackToInventory(item);
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item,"Ruby"));
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item,"Endergem"));
         return new ActionResult<>(EnumActionResult.SUCCESS,playerIn.getHeldItem(handIn));
     }
 }

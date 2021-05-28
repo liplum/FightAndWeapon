@@ -72,7 +72,7 @@ public final class FawItemUtil {
         float strengthBase = core.getStrength();
         Modifier modifier = FawGemUtil.getModifierFrom(itemStack);
         if (modifier != null) {
-            finalDamage = calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
+            finalDamage += calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
         }
 
         boolean successfullyHit = weapon.dealDamage(itemStack, attacker, target, finalDamage);

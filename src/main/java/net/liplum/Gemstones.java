@@ -11,11 +11,9 @@ public final class Gemstones {
     }
 
     public final static Gemstone Ender_Gemstone = with(new Gemstone("Endergem")
-            .addModifiers(EnderGemstoneModifier.Normal_Lance)
-            .addModifierRegistries(ModifierRegistries.Lance));
+            .addModifier(EnderGemstoneModifier.Normal_Lance));
     public final static Gemstone Ruby_Gemstone = with(new Gemstone("Ruby")
-            .addModifiers(RubyModifier.Normal_Lance)
-            .addModifierRegistries(ModifierRegistries.Lance));
+            .addModifier(RubyModifier.Normal_Lance));
 
     private static Gemstone with(Gemstone gemstone) {
         GemstoneRegistry.Instance().register(gemstone);

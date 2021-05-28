@@ -40,6 +40,10 @@ public class PhysicsTool {
         setMotion(e,v2d.x,0.0D,v2d.y);
     }
 
+    public static void setPosition(Entity e,double x,double y ,double z) {
+        e.setPosition(x, y, z);
+    }
+
     public static Point get2DPosition(Entity e){
         return new Point(e.posX,e.posZ);
     }

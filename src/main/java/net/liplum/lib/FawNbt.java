@@ -1,7 +1,7 @@
 package net.liplum.lib;
 
 import net.liplum.Tags;
-import net.liplum.lib.utils.JavaUtil;
+import net.liplum.lib.utils.Utils;
 import net.liplum.lib.utils.NbtUtil;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -29,7 +29,7 @@ public final class FawNbt {
          * @param fawBase the new Faw-base data NBT.
          */
         public static void putFawBase(NBTTagCompound root, NBTTagCompound fawBase) {
-            JavaUtil.notNullThenDo(root, r -> r.setTag(Tags.Base, fawBase));
+            Utils.notNullThenDo(root, r -> r.setTag(Tags.Base, fawBase));
         }
 
         /**
@@ -55,7 +55,7 @@ public final class FawNbt {
          * @param gemstoneList the gemstone-list data
          */
         public static void putGemstoneList(NBTTagCompound base, NBTTagList gemstoneList) {
-            JavaUtil.notNullThenDo(base, b -> b.setTag(Tags.BaseSub.GemstoneList, gemstoneList));
+            Utils.notNullThenDo(base, b -> b.setTag(Tags.BaseSub.GemstoneList, gemstoneList));
         }
 
         /**
@@ -80,7 +80,7 @@ public final class FawNbt {
          * @param gemstone
          */
         public static void putGemstone(NBTTagCompound gemstoneObj, NBTTagString gemstone) {
-            JavaUtil.notNullThenDo(gemstoneObj, obj -> obj.setTag(Tags.BaseSub.GemstoneObject.Gemstone, gemstone));
+            Utils.notNullThenDo(gemstoneObj, obj -> obj.setTag(Tags.BaseSub.GemstoneObject.Gemstone, gemstone));
         }
 
         /**
@@ -98,7 +98,7 @@ public final class FawNbt {
          * @param gemergy
          */
         public static void putGemergy(NBTTagCompound gemstoneObj, int gemergy) {
-            JavaUtil.notNullThenDo(gemstoneObj, obj -> obj.setInteger(Tags.BaseSub.GemstoneObject.Gemergy, gemergy));
+            Utils.notNullThenDo(gemstoneObj, obj -> obj.setInteger(Tags.BaseSub.GemstoneObject.Gemergy, gemergy));
         }
 
         /**
@@ -121,7 +121,7 @@ public final class FawNbt {
          * @param durability
          */
         public static void putDurability(NBTTagCompound base, int durability) {
-            JavaUtil.notNullThenDo(base, obj -> obj.setInteger(Tags.BaseSub.Durability, durability));
+            Utils.notNullThenDo(base, obj -> obj.setInteger(Tags.BaseSub.Durability, durability));
         }
 
         /**

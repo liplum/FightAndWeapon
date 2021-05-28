@@ -2,8 +2,10 @@ package net.liplum.items.weapons.lance;
 
 import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.lib.modifiers.LanceModifier;
 import net.liplum.lib.modifiers.Modifier;
 import net.liplum.lib.utils.FawGemUtil;
+import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.weaponcores.ILanceCore;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,18 +19,10 @@ import javax.annotation.Nonnull;
 
 public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachWeapon {
     private ILanceCore core;
+
     public LanceItem(@Nonnull ILanceCore core) {
         super();
-        this.core=core;
-    }
-
-    /**
-     * The double value of this is the true length of a sprint.
-     *
-     * @return
-     */
-    public float getSprintLength() {
-        return core.getSprintLength();
+        this.core = core;
     }
 
     @Override
@@ -44,11 +38,19 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
             Modifier modifier = FawGemUtil.getModifierFrom(held);
-            if(modifier != null){
-
+            float length = core.getSprintLength();
+            float dmg = core.getStrength();
+            boolean releaseSkilled = false;
+            if (modifier != null) {
+                LanceModifier mod = (LanceModifier) modifier;
+                length = FawItemUtil.calcuAttribute(length, mod.getSprintLengthDelta(), mod.getSprintLengthRate());
+                dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
+                releaseSkilled |= mod.releaseSkill(core, worldIn, playerIn, held, handIn, length, dmg);
+            } else {
+                releaseSkilled |= core.releaseSkill(worldIn, playerIn, held, handIn, length, dmg);
             }
-            float length = getSprintLength();
-            if(core.releaseSkill(worldIn,playerIn,handIn,length)){
+
+            if (releaseSkilled) {
                 ItemTool.HeatWeaponIfSurvival(playerIn, held.getItem(), coolDownTime);
                 result = EnumActionResult.SUCCESS;
             }

@@ -1,29 +1,34 @@
 package net.liplum.modifiers;
 
-import net.liplum.ModifierRegistries;
 import net.liplum.items.weapons.lance.LanceCoreType;
 import net.liplum.lib.modifiers.LanceModifier;
+import net.liplum.lib.weaponcores.IWeaponCore;
 
 public final class RubyModifier {
-    public final static LanceModifier Normal_Lance = ModifierRegistries.toLance(new LanceModifier() {
+    public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
-        public double getRangeDelta() {
+        public float getSprintLengthDelta() {
             return 0;
         }
 
         @Override
-        public double getRangeRate() {
+        public float getSprintLengthRate() {
             return 0;
         }
 
         @Override
         public float getStrengthDelta() {
-            return 5;
+            return 2;
         }
 
         @Override
         public float getStrengthRate() {
             return 0.2F;
         }
-    }, LanceCoreType.Normal);
+
+        @Override
+        public IWeaponCore getCoreType() {
+            return LanceCoreType.Normal;
+        }
+    };
 }

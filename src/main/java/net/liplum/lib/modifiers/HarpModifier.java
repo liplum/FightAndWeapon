@@ -5,7 +5,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public abstract class IHarpModifier extends Modifier {
+public abstract class HarpModifier extends Modifier {
     public abstract double getUseRadiusModifier();
 
     public abstract double getSkillRadiusModifier();

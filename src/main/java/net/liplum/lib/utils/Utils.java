@@ -2,9 +2,20 @@ package net.liplum.lib.utils;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Random;
 import java.util.function.Consumer;
 
-public class JavaUtil {
+public class Utils {
+    private static Random RANDOM = new Random();
+
+    public static void refreshRandom(){
+        RANDOM = new Random();
+    }
+
+    public static Random getRandom(){
+        return RANDOM;
+    }
+
     public static <T> void notNullThenDo(@Nullable T a, Consumer<T> delegate) {
         if (a != null) {
             delegate.accept(a);

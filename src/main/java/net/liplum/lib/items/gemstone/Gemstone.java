@@ -1,31 +1,23 @@
 package net.liplum.lib.items.gemstone;
 
-import net.liplum.lib.registeies.ModifierRegistry;
 import net.liplum.lib.modifiers.Modifier;
 import net.liplum.lib.weaponcores.IWeaponCore;
 
 import javax.annotation.Nullable;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Gemstone {
     private final String registerName;
-    private Set<Modifier> modifiers = new HashSet<>();
-    private Set<ModifierRegistry> modifierRegistries = new HashSet<>();
+    private Map<IWeaponCore, Modifier> modifiersMap = new HashMap<>();
 
     public Gemstone(String registerName) {
         this.registerName = registerName;
     }
 
     public boolean hasModifierOf(IWeaponCore core) {
-        ModifierRegistry registry = getCorrespondingRegistry(core);
-        if (registry == null) {
-            return false;
-        }
-        Modifier modifier = registry.getModifier(core);
-        if (modifier != null) {
-            return modifiers.contains(modifier);
+        if (modifiersMap.containsKey(core)) {
+            return true;
         }
         return false;
     }
@@ -36,46 +28,14 @@ public class Gemstone {
      */
     @Nullable
     public Modifier getModifierOf(IWeaponCore core) {
-        ModifierRegistry registry = getCorrespondingRegistry(core);
-        if (registry == null) {
+        if (!modifiersMap.containsKey(core)) {
             return null;
         }
-        Modifier modifier = registry.getModifier(core);
-        if (modifier != null && modifiers.contains(modifier)) {
-            return modifier;
-        }
-        return null;
-    }
-
-    @Nullable
-    private ModifierRegistry getCorrespondingRegistry(IWeaponCore core) {
-        for (ModifierRegistry r : modifierRegistries) {
-            if (r.isRegistryOf(core)) {
-                return r;
-            }
-        }
-        return null;
+        return modifiersMap.get(core);
     }
 
     public Gemstone addModifier(Modifier newModifier) {
-        modifiers.add(newModifier);
-        return this;
-    }
-
-    public Gemstone addModifiers(Modifier... newModifiers) {
-        Collections.addAll(modifiers, newModifiers);
-        return this;
-    }
-
-    public Gemstone addModifierRegistry(ModifierRegistry registry) {
-        modifierRegistries.add(registry);
-        return this;
-    }
-
-    public Gemstone addModifierRegistries(ModifierRegistry... newRegistries) {
-        for(ModifierRegistry r : newRegistries){
-            modifierRegistries.add(r);
-        }
+        modifiersMap.put(newModifier.getCoreType(), newModifier);
         return this;
     }
 
