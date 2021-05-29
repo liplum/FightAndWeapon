@@ -1,16 +1,13 @@
 package net.liplum.modifiers;
 
-import net.liplum.items.weapons.lance.LanceCoreType;
+import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.modifiers.LanceModifier;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
 import net.liplum.lib.weaponcores.ILanceCore;
-import net.liplum.lib.weaponcores.IWeaponCore;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.item.EntityEnderPearl;
-import net.minecraft.entity.monster.EntityEnderman;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
@@ -26,8 +23,8 @@ import java.util.List;
 public final class EnderGemstoneModifier {
     public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
-        public IWeaponCore getCoreType() {
-            return LanceCoreType.Normal;
+        public ILanceCore getCoreType() {
+            return LanceCoreTypes.Normal;
         }
 
         @Override
@@ -41,7 +38,7 @@ public final class EnderGemstoneModifier {
         }
 
         @Override
-        public boolean releaseSkill(ILanceCore weaponCore, World world, EntityPlayer player, ItemStack itemStack, EnumHand handIn, float strength, float sprintLength) {
+        public boolean releaseSkill(ILanceCore core, World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));

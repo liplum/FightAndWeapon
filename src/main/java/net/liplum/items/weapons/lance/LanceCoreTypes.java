@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.coroutine.WaitForNextTick;
 import net.liplum.coroutine.WaitForTicks;
 import net.liplum.enumerator.Yield;
 import net.liplum.lib.coroutine.CoroutineSystem;
@@ -23,10 +24,10 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class LanceCoreType {
+public final class LanceCoreTypes {
     public static final ILanceCore Empty = new ILanceCore() {
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand handIn, float strength, float sprintLength) {
+        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
             return false;
         }
 
@@ -43,7 +44,7 @@ public class LanceCoreType {
 
     public static final ILanceCore Normal = new ILanceCore() {
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand handIn, float strength, float sprintLength) {
+        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
             PhysicsTool.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
@@ -63,7 +64,7 @@ public class LanceCoreType {
                                 damaged.add(e);
                             }
                         }
-                        yieldReturn(new WaitForTicks(5));
+                        yieldReturn(new WaitForNextTick());
                     }
                 }, 25);
             }
@@ -90,7 +91,7 @@ public class LanceCoreType {
     };
     public static final ILanceCore KnightLance = new ILanceCore() {
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand handIn, float strength, float sprintLength) {
+        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));

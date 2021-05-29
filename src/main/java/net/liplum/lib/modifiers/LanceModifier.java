@@ -6,7 +6,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public abstract class LanceModifier extends Modifier {
+public abstract class LanceModifier extends Modifier<ILanceCore> {
     public float getSprintLengthDelta() {
         return 0;
     }
@@ -15,7 +15,7 @@ public abstract class LanceModifier extends Modifier {
         return 0;
     }
 
-    public boolean releaseSkill(ILanceCore weaponCore, World world, EntityPlayer player, ItemStack itemStack, EnumHand handIn, float strength, float sprintLength){
-        return weaponCore.releaseSkill(world,player,itemStack,handIn,strength,sprintLength);
+    public boolean releaseSkill(ILanceCore core, World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength){
+        return core.releaseSkill(world,player,itemStack,hand,strength,sprintLength);
     }
 }

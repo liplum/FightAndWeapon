@@ -2,7 +2,7 @@ package net.liplum.lib.modifiers;
 
 import net.liplum.lib.weaponcores.IWeaponCore;
 
-public abstract class Modifier {
+public abstract class Modifier<CoreType extends IWeaponCore> {
     public int getCoolDownDelta() {
         return 0;
     }
@@ -18,5 +18,5 @@ public abstract class Modifier {
         return 0;
     }
 
-    public abstract IWeaponCore getCoreType();
+    public abstract CoreType getCoreType();
 }

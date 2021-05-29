@@ -1,22 +1,18 @@
 package net.liplum.items.weapons.harp;
 
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.math.MathUtil;
+import net.liplum.lib.items.weaponutils.HarpUtils;
 import net.liplum.lib.utils.ItemTool;
 import net.liplum.lib.weaponcores.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
-import net.minecraft.util.EnumHand;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.*;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 
 public class HarpItem extends WeaponBaseItem<IHarpCore> {
     private IHarpCore core;
@@ -28,36 +24,101 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        EnumActionResult result = EnumActionResult.PASS;
+        double radius = core.getRadius();
+        float ap = core.getAbilityPower();
         ItemStack held = playerIn.getHeldItem(handIn);
+        int coolDown = getCoolDown();
         if (playerIn.isSneaking()) {
-            ItemStack offHeld = playerIn.getHeldItemOffhand();
-            int originCoolDown = getCoolDown();
-            double originR = core.getRadius();
-            double r = MathUtil.fixMin(originR , 0);
-            int coolDown = MathUtil.fixMin( originCoolDown,0);
-
-            AxisAlignedBB playerBox = playerIn.getEntityBoundingBox();
-            List<EntityLivingBase> allInRange = worldIn
-                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(r, 0.25D, r));
-
-            for (EntityLivingBase e : allInRange) {
-                core.releaseHarpSkill(worldIn, playerIn, handIn, e);
+            boolean releasedSuccessfully = core.releaseSkill(worldIn, playerIn, held, handIn, radius, ap);
+            if (releasedSuccessfully) {
+                ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown);
+                playerIn.resetActiveHand();
             }
-            double px = playerIn.posX, py = playerIn.posY, pz = playerIn.posZ;
-
-            int rangeInt = MathHelper.ceil(r);
-            for (int i = -rangeInt; i <= rangeInt; i++) {
-                for (int j = -rangeInt; j <= rangeInt; j++) {
-                    worldIn.spawnParticle(EnumParticleTypes.NOTE, px + i, py, pz + j, 1, 1, 1);
-                }
-            }
-            ItemTool.HeatWeaponIfSurvival(playerIn,held.getItem(),coolDown);
-            result = EnumActionResult.SUCCESS;
+        } else {
+            playerIn.setActiveHand(handIn);
         }
-        return ActionResult.newResult(result, held);
+        return ActionResult.newResult(EnumActionResult.SUCCESS, held);
     }
 
+    @Override
+    public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
+        Item held = stack.getItem();
+        EntityPlayer p = (EntityPlayer) player;
+        EnumHand hand = ItemTool.inWhichHand(p, stack);
+        if (hand == null) {
+            return;
+        }
+        World world = player.world;
+        double radius = core.getRadius();
+        float ap = core.getAbilityPower();
+        int coolDown = getCoolDown();
+       /* if (player.isSneaking()) {
+            boolean releasedSuccessfully = core.releaseSkill(world, p, stack, hand, radius, ap);
+            if (releasedSuccessfully) {
+                ItemTool.heatWeaponIfSurvival(p, held, coolDown);
+                //HarpUtils.setState(stack, HarpUtils.HarpState.JustReleased);
+                player.resetActiveHand();
+            }
+            return;
+        } else {*/
+        int frequency = core.getFrequency();
+        int maxDuration = core.getMaxUseDuration();
+
+        int currentDuration = maxDuration - count;
+        int releasedCount = currentDuration / frequency;
+        if (currentDuration % frequency == 0) {
+
+        /*Modifier modifier = FawGemUtil.getModifierFrom(stack);
+        if (modifier != null) {
+            HarpModifier mod = (HarpModifier) modifier;
+            maxDuration =  (int) FawItemUtil.calcuAttribute(maxDuration,mod.getMaxUseDelta(),mod.getMaxUseRate());
+            frequency = (int) FawItemUtil.calcuAttribute(frequency,mod.getFrequencyDelta(),mod.getFrequencyRate());
+        }else {
+
+        }*/
+            core.continueSkill(world, p, stack, hand, radius, ap, releasedCount);
+
+        }
+        if (currentDuration == maxDuration - 1) {
+            ItemTool.heatWeaponIfSurvival(p, held, coolDown);
+        }
+        //}
+        return;
+    }
+
+
+    @Override
+    public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
+        int coolDown = getCoolDown();
+        Item held = stack.getItem();
+        //I'm not quite sure that the entityLiving is truly a EntityPlayer.
+        if (entityLiving instanceof EntityPlayer) {
+            EntityPlayer p = (EntityPlayer) entityLiving;
+            ItemTool.heatWeaponIfSurvival(p, held, coolDown);
+            p.resetActiveHand();
+        }
+        //HarpUtils.setState(stack, HarpUtils.HarpState.Normal);
+    }
+
+    @Override
+    public EnumAction getItemUseAction(ItemStack stack) {
+        return EnumAction.BOW;
+    }
+
+    @Override
+    public int getMaxItemUseDuration(ItemStack stack) {
+        int normalDuration = core.getMaxUseDuration();
+       /* HarpUtils.HarpState state = HarpUtils.getState(stack);
+        if (state == HarpUtils.HarpState.JustReleased) {
+            //HarpUtils.setState(stack, HarpUtils.HarpState.AfterReleasing);
+            //HarpUtils.setState(stack, HarpUtils.HarpState.Normal);
+            return 1;
+        }*//*else if (state == HarpUtils.HarpState.AfterReleasing) {
+            HarpUtils.setState(stack, HarpUtils.HarpState.Normal);
+            return normalDuration;
+        }*/
+        return normalDuration;
+    }
     @Override
     public IHarpCore getCore() {
         return core;

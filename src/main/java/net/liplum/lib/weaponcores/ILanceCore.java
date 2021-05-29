@@ -6,7 +6,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
 public interface ILanceCore extends IWeaponCore{
-    boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand handIn, float strength, float sprintLength);
+    boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength);
     /**
      * The double value of this is the true length of a sprint.
      *

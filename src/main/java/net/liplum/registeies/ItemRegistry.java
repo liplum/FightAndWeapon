@@ -6,12 +6,12 @@ import net.liplum.items.gemstones.RubyItem;
 import net.liplum.items.weapons.QuartzAxeItem;
 import net.liplum.items.weapons.QuartzSwordItem;
 import net.liplum.items.weapons.TestSwordItem;
+import net.liplum.items.weapons.battleaxe.BattleAxeCoreTypes;
 import net.liplum.items.weapons.battleaxe.BattleAxeItem;
-import net.liplum.items.weapons.harp.HarpCoreType;
+import net.liplum.items.weapons.harp.HarpCoreTypes;
 import net.liplum.items.weapons.harp.HarpItem;
-import net.liplum.items.weapons.lance.LanceCoreType;
+import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceItem;
-import net.liplum.lib.itemgroup.ItemGroup;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -42,10 +42,10 @@ public final class ItemRegistry {
     public static final Item QUARTZ_SWORD_ITEM = weapon(new QuartzSwordItem(), Names.Item.QuartzSwordItem);
     public static final Item Quartz_Axe_Item = weapon(new QuartzAxeItem(Item.ToolMaterial.IRON), Names.Item.QuartzAxeItem);
     public static final Item Test_Sword_Item = weapon(new TestSwordItem(), Names.Item.TestSwordItem);
-    public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(), Names.Item.BattleAxeItem);
-    public static final Item Lance_Item = weapon(new LanceItem(LanceCoreType.Normal), Names.Item.Lance.LanceItem);
-    public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCoreType.KnightLance), Names.Item.Lance.KnightLanceItem);
-    public static final Item Harp_Item = weapon(new HarpItem(HarpCoreType.Normal), Names.Item.Harp.HarpItem);
+    public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCoreTypes.Normal), Names.Item.BattleAxeItem);
+    public static final Item Lance_Item = weapon(new LanceItem(LanceCoreTypes.Normal), Names.Item.Lance.LanceItem);
+    public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCoreTypes.KnightLance), Names.Item.Lance.KnightLanceItem);
+    public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
     //------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------
     //  Sets the icon of FAW item group.

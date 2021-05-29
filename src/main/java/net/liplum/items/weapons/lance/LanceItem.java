@@ -33,7 +33,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
-        int coolDownTime = getCoolDown();
+        int coolDown = getCoolDown();
         EnumActionResult result = EnumActionResult.PASS;
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
@@ -51,7 +51,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
             }
 
             if (releaseSkilled) {
-                ItemTool.HeatWeaponIfSurvival(playerIn, held.getItem(), coolDownTime);
+                ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown);
                 result = EnumActionResult.SUCCESS;
             }
         }

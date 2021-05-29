@@ -8,7 +8,15 @@ public interface IWeaponCore {
      */
     int getCoolDown();
 
-    default float getStrength(){
+    default float getStrength() {
         return 0;
+    }
+
+    default int getEnemyBreakingTime() {
+        return -1;
+    }
+
+    default float getKnockbackStrength() {
+        return -1;
     }
 }

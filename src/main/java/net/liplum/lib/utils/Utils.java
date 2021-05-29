@@ -1,5 +1,7 @@
 package net.liplum.lib.utils;
 
+import org.lwjgl.input.Keyboard;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Random;
@@ -8,11 +10,11 @@ import java.util.function.Consumer;
 public class Utils {
     private static Random RANDOM = new Random();
 
-    public static void refreshRandom(){
+    public static void refreshRandom() {
         RANDOM = new Random();
     }
 
-    public static Random getRandom(){
+    public static Random getRandom() {
         return RANDOM;
     }
 
@@ -38,5 +40,9 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    public static boolean isShiftDown() {
+        return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
 }

@@ -3,6 +3,9 @@ package net.liplum.lib.utils;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
+
+import javax.annotation.Nullable;
 
 public class ItemTool {
     /**
@@ -13,7 +16,7 @@ public class ItemTool {
      * @param coolDownTime how much time need to cool down
      * @return if player is in survival mode, it'll return ture and heat the weapon, otherwise, return false.
      */
-    public static boolean HeatWeaponIfSurvival(EntityPlayer player, Item item, int coolDownTime) {
+    public static boolean heatWeaponIfSurvival(EntityPlayer player, Item item, int coolDownTime) {
         if (player.isCreative()||coolDownTime <= 0) {
             return false;
         }
@@ -34,5 +37,16 @@ public class ItemTool {
             }
         }
         return null;
+    }
+
+    @Nullable
+    public static EnumHand inWhichHand(EntityPlayer player,ItemStack itemStack){
+        if(player.getHeldItem(EnumHand.MAIN_HAND) == itemStack){
+            return EnumHand.MAIN_HAND;
+        }else if(player.getHeldItem(EnumHand.OFF_HAND)==itemStack) {
+            return EnumHand.OFF_HAND;
+        }else {
+            return null;
+        }
     }
 }
