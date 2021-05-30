@@ -7,7 +7,7 @@ import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Gemstone {
+public class Gemstone implements IGemstone {
     private final String registerName;
     private Map<IWeaponCore, Modifier> modifiersMap = new HashMap<>();
 
