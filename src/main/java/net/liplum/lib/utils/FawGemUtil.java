@@ -3,8 +3,8 @@ package net.liplum.lib.utils;
 import net.liplum.Tags;
 import net.liplum.lib.FawNbt;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.items.gemstone.Gemstone;
-import net.liplum.lib.modifiers.Modifier;
+import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.registeies.GemstoneRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -20,13 +20,13 @@ public final class FawGemUtil {
      * @return
      */
     @Nullable
-    public static Modifier getModifierFrom(ItemStack itemStack) {
+    public static IModifier getModifierFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem)) {
             return null;
         }
         WeaponBaseItem weapon = (WeaponBaseItem) item;
-        Gemstone gemstone = getGemstoneFrom(itemStack);
+        IGemstone gemstone = getGemstoneFrom(itemStack);
         if (gemstone == null) {
             return null;
         }
@@ -39,7 +39,7 @@ public final class FawGemUtil {
      * @return the first gemstone contained in the weapon. If this item is not a weapon then return false.
      */
     @Nullable
-    public static Gemstone getGemstoneFrom(ItemStack itemStack) {
+    public static IGemstone getGemstoneFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem)) {
             return null;

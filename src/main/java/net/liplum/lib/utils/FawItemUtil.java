@@ -4,8 +4,8 @@ import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
-import net.liplum.lib.modifiers.Modifier;
-import net.liplum.lib.weaponcores.IWeaponCore;
+import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.IWeaponCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -73,7 +73,7 @@ public final class FawItemUtil {
 
         IWeaponCore core = weapon.getCore();
         float strengthBase = core.getStrength();
-        Modifier modifier = FawGemUtil.getModifierFrom(itemStack);
+        IModifier modifier = FawGemUtil.getModifierFrom(itemStack);
         if (modifier != null) {
             finalDamage += calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
         } else {

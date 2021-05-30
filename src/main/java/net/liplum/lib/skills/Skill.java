@@ -1,4 +1,6 @@
 package net.liplum.lib.skills;
 
-public class Skill {
+import net.liplum.api.fight.ISkill;
+
+public class Skill implements ISkill {
 }

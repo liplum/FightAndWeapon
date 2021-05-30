@@ -1,6 +1,8 @@
 package net.liplum.lib.masters;
 
-public class Master {
+import net.liplum.api.fight.IMaster;
+
+public class Master implements IMaster {
     private Routine routine;
 
     public Master() {

@@ -6,6 +6,7 @@ import net.liplum.enumerator.Yield;
 import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
+import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.weaponcores.ILanceCore;
 import net.liplum.registeies.PotionRegistry;
@@ -59,7 +60,7 @@ public final class LanceCoreTypes {
                         List<EntityLivingBase> allInRange = world
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
-                            if (e != player && !damaged.contains(e)) {
+                            if (EntityUtil.canAttack(player,e) && !damaged.contains(e)) {
                                 e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                                 damaged.add(e);
                             }
@@ -97,7 +98,7 @@ public final class LanceCoreTypes {
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
             Vector2D look = MathUtil.toV2D(player.getLookVec());
             for (EntityLivingBase e : allInRange) {
-                if (player != e && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
+                if (EntityUtil.canAttack(player,e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player), 1.5F * strength);
                 }
             }

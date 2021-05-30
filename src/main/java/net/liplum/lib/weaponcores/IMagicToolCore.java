@@ -1,5 +1,7 @@
 package net.liplum.lib.weaponcores;
 
-public interface IMagicToolCore extends IWeaponCore{
+import net.liplum.api.weapon.IWeaponCore;
+
+public interface IMagicToolCore extends IWeaponCore {
     float getAbilityPower();
 }

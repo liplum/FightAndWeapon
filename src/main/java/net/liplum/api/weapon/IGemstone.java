@@ -1,7 +1,6 @@
-package net.liplum.lib.items.gemstone;
+package net.liplum.api.weapon;
 
-import net.liplum.lib.modifiers.Modifier;
-import net.liplum.lib.weaponcores.IWeaponCore;
+import net.liplum.lib.items.gemstone.Gemstone;
 
 import javax.annotation.Nullable;
 
@@ -14,9 +13,9 @@ public interface IGemstone {
      * @return the modifier or null if it didn't has a corresponding modifier of the core in this gemstone.
      */
     @Nullable
-    Modifier getModifierOf(IWeaponCore core);
+    IModifier getModifierOf(IWeaponCore core);
 
-    Gemstone addModifier(Modifier newModifier);
+    Gemstone addModifier(IModifier newModifier);
 
     String getRegisterName();
 }

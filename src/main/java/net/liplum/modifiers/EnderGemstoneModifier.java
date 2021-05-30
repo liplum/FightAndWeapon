@@ -3,7 +3,8 @@ package net.liplum.modifiers;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.modifiers.LanceModifier;
+import net.liplum.lib.modifiers.LanceIModifier;
+import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
 import net.liplum.lib.weaponcores.ILanceCore;
@@ -21,7 +22,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public final class EnderGemstoneModifier {
-    public final static LanceModifier Normal_Lance = new LanceModifier() {
+    public final static LanceIModifier Normal_Lance = new LanceIModifier() {
         @Override
         public ILanceCore getCoreType() {
             return LanceCoreTypes.Normal;
@@ -44,7 +45,7 @@ public final class EnderGemstoneModifier {
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
             Vector2D look = MathUtil.toV2D(player.getLookVec());
             for (EntityLivingBase e : allInRange) {
-                if (player != e && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
+                if (EntityUtil.canAttack(player,e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                 }
             }

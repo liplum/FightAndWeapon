@@ -1,4 +1,4 @@
-package net.liplum.lib.weaponcores;
+package net.liplum.api.weapon;
 
 public interface IWeaponCore {
     /**
@@ -13,10 +13,10 @@ public interface IWeaponCore {
     }
 
     default int getEnemyBreakingTime() {
-        return -1;
+        return 20;
     }
 
     default float getKnockbackStrength() {
-        return -1;
+        return 0;
     }
 }

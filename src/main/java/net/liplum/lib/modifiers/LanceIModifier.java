@@ -1,12 +1,13 @@
 package net.liplum.lib.modifiers;
 
+import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.weaponcores.ILanceCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public abstract class LanceModifier extends Modifier<ILanceCore> {
+public abstract class LanceIModifier implements IModifier<ILanceCore> {
     public float getSprintLengthDelta() {
         return 0;
     }

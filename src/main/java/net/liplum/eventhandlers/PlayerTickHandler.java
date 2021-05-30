@@ -22,7 +22,7 @@ public class PlayerTickHandler {
         if (!w.isRemote) {
             List<Entity> collided = w
                     .getEntitiesWithinAABB(Entity.class, p.getEntityBoundingBox());
-            if (collided.size() != 1 && collided.get(0) != p) {
+            if (collided.size() > 0 && collided.get(0) != p) {
                 MinecraftForge.EVENT_BUS.post(new PlayerCollisionEvent(p, collided.toArray(new Entity[0])));
             }
         }

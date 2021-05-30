@@ -1,8 +1,8 @@
 package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.modifiers.BattleAxeModifier;
-import net.liplum.lib.modifiers.Modifier;
+import net.liplum.lib.modifiers.BattleAxeIModifier;
+import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.ItemTool;
@@ -32,12 +32,12 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
         EnumActionResult result = EnumActionResult.PASS;
         //If play were not sneaking, didn't detect.
         if (!playerIn.isSneaking()) {
-            Modifier modifier = FawGemUtil.getModifierFrom(held);
+            IModifier modifier = FawGemUtil.getModifierFrom(held);
             float sweepRange = core.getSweepRange();
             float dmg = core.getStrength();
             boolean releaseSkilled = false;
             if (modifier != null) {
-                BattleAxeModifier mod = (BattleAxeModifier) modifier;
+                BattleAxeIModifier mod = (BattleAxeIModifier) modifier;
                 sweepRange = FawItemUtil.calcuAttribute(sweepRange, mod.getSweepRangeDelta(), mod.getSweepRate());
                 dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
                 releaseSkilled |= mod.releaseSkill(core, worldIn, playerIn, held, handIn, sweepRange, dmg);

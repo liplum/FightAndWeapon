@@ -75,8 +75,7 @@ public final class HarpCoreTypes {
 
             for (EntityLivingBase target : allInRange) {
                 //If friend
-                if (target == player ||
-                        player.isOnSameTeam(target) ||//Player's team member
+                if (!EntityUtil.canAttack(player, target) ||//Player's team member
                         target instanceof EntityVillager
                 ) {
                     target.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 1));

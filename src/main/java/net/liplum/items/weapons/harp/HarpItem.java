@@ -67,7 +67,6 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         int currentDuration = maxDuration - count;
         int releasedCount = currentDuration / frequency;
         if (currentDuration % frequency == 0) {
-
         /*Modifier modifier = FawGemUtil.getModifierFrom(stack);
         if (modifier != null) {
             HarpModifier mod = (HarpModifier) modifier;

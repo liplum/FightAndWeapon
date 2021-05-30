@@ -1,6 +1,6 @@
 package net.liplum.lib.registeies;
 
-import net.liplum.lib.items.gemstone.Gemstone;
+import net.liplum.api.weapon.IGemstone;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -13,14 +13,14 @@ public final class GemstoneRegistry {
         return instance;
     }
 
-    private Map<String, Gemstone> gemstoneMap =new HashMap<>();
+    private Map<String, IGemstone> gemstoneMap =new HashMap<>();
 
-    public void register(Gemstone gemstone){
+    public void register(IGemstone gemstone){
         gemstoneMap.put(gemstone.getRegisterName(),gemstone);
     }
 
     @Nullable
-    public Gemstone getGemstone(String registerName){
+    public IGemstone getGemstone(String registerName){
         if(gemstoneMap.containsKey(registerName)){
             return gemstoneMap.get(registerName);
         }

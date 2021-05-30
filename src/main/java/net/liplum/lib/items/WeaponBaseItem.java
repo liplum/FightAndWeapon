@@ -1,7 +1,7 @@
 package net.liplum.lib.items;
 
 import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.lib.weaponcores.IWeaponCore;
+import net.liplum.api.weapon.IWeaponCore;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

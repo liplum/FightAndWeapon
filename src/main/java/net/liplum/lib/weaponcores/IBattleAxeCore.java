@@ -1,5 +1,6 @@
 package net.liplum.lib.weaponcores;
 
+import net.liplum.api.weapon.IWeaponCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
