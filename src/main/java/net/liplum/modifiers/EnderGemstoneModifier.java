@@ -1,19 +1,18 @@
 package net.liplum.modifiers;
 
 import net.liplum.items.weapons.lance.LanceCoreTypes;
+import net.liplum.lib.cores.lance.ILanceCore;
+import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.modifiers.LanceIModifier;
+import net.liplum.lib.modifiers.LanceModifier;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
-import net.liplum.lib.weaponcores.ILanceCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
@@ -22,7 +21,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public final class EnderGemstoneModifier {
-    public final static LanceIModifier Normal_Lance = new LanceIModifier() {
+    public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
         public ILanceCore getCoreType() {
             return LanceCoreTypes.Normal;
@@ -39,7 +38,13 @@ public final class EnderGemstoneModifier {
         }
 
         @Override
-        public boolean releaseSkill(ILanceCore core, World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
+        public boolean releaseSkill(ILanceCore core,  LanceArgs args) {
+            World world = args.getWorld();
+            EntityPlayer player = args.getPlayer();
+            float strength = args.getStrength();
+
+            float sprintLength = args.getSprintLength();
+
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));

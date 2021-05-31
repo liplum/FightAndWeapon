@@ -2,12 +2,13 @@ package net.liplum.items.weapons.lance;
 
 import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.modifiers.LanceIModifier;
+import net.liplum.lib.modifiers.LanceModifier;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.lib.weaponcores.ILanceCore;
+import net.liplum.lib.cores.lance.ILanceCore;
 import net.liplum.lib.utils.ItemTool;
+import net.liplum.lib.cores.lance.LanceArgs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -40,17 +41,26 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
             IModifier modifier = FawGemUtil.getModifierFrom(held);
             float length = core.getSprintLength();
             float dmg = core.getStrength();
-            boolean releaseSkilled = false;
+            boolean releasedSuccessfully = false;
+            LanceArgs args = new LanceArgs()
+                    .setWorld(worldIn)
+                    .setPlayer(playerIn)
+                    .setItemStack(held)
+                    .setHand(handIn);
             if (modifier != null) {
-                LanceIModifier mod = (LanceIModifier) modifier;
+                LanceModifier mod = (LanceModifier) modifier;
                 length = FawItemUtil.calcuAttribute(length, mod.getSprintLengthDelta(), mod.getSprintLengthRate());
                 dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
-                releaseSkilled |= mod.releaseSkill(core, worldIn, playerIn, held, handIn, length, dmg);
+                args.setSprintLength(length)
+                        .setStrength(dmg);
+                releasedSuccessfully |= mod.releaseSkill(core, args);
             } else {
-                releaseSkilled |= core.releaseSkill(worldIn, playerIn, held, handIn, length, dmg);
+                args.setSprintLength(length)
+                        .setStrength(dmg);
+                releasedSuccessfully |= core.releaseSkill(args);
             }
 
-            if (releaseSkilled) {
+            if (releasedSuccessfully) {
                 ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown);
                 result = EnumActionResult.SUCCESS;
             }

@@ -1,21 +1,19 @@
 package net.liplum.items.weapons.lance;
 
 import net.liplum.coroutine.WaitForNextTick;
-import net.liplum.coroutine.WaitForTicks;
 import net.liplum.enumerator.Yield;
 import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.PhysicsTool;
-import net.liplum.lib.weaponcores.ILanceCore;
+import net.liplum.lib.cores.lance.ILanceCore;
+import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -27,14 +25,15 @@ import java.util.Set;
 
 public final class LanceCoreTypes {
     public static final ILanceCore Empty = new ILanceCore() {
-        @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
-            return false;
-        }
 
         @Override
         public int getCoolDown() {
             return 0;
+        }
+
+        @Override
+        public boolean releaseSkill(LanceArgs args) {
+            return false;
         }
 
         @Override
@@ -45,7 +44,13 @@ public final class LanceCoreTypes {
 
     public static final ILanceCore Normal = new ILanceCore() {
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
+        public boolean releaseSkill(LanceArgs args) {
+            World world = args.getWorld();
+            EntityPlayer player = args.getPlayer();
+            float strength = args.getStrength();
+
+            float sprintLength = args.getSprintLength();
+
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
             PhysicsTool.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
@@ -91,8 +96,20 @@ public final class LanceCoreTypes {
         }
     };
     public static final ILanceCore KnightLance = new ILanceCore() {
+
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sprintLength) {
+        public int getCoolDown() {
+            return 10 * 20;
+        }
+
+        @Override
+        public boolean releaseSkill(LanceArgs args) {
+            World world = args.getWorld();
+            EntityPlayer player = args.getPlayer();
+            float strength = args.getStrength();
+
+            float sprintLength = args.getSprintLength();
+
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
@@ -103,11 +120,6 @@ public final class LanceCoreTypes {
                 }
             }
             return true;
-        }
-
-        @Override
-        public int getCoolDown() {
-            return 10 * 20;
         }
 
         @Override

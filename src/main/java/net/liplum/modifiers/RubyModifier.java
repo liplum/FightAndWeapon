@@ -1,11 +1,11 @@
 package net.liplum.modifiers;
 
 import net.liplum.items.weapons.lance.LanceCoreTypes;
-import net.liplum.lib.modifiers.LanceIModifier;
-import net.liplum.lib.weaponcores.ILanceCore;
+import net.liplum.lib.modifiers.LanceModifier;
+import net.liplum.lib.cores.lance.ILanceCore;
 
 public final class RubyModifier {
-    public final static LanceIModifier Normal_Lance = new LanceIModifier() {
+    public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
         public float getSprintLengthDelta() {
             return 0;

@@ -29,10 +29,10 @@ public class Gemstone implements IGemstone {
      */
     @Nullable
     public IModifier getModifierOf(IWeaponCore core) {
-        if (!modifiersMap.containsKey(core)) {
-            return null;
+        if (modifiersMap.containsKey(core)) {
+            return modifiersMap.get(core);
         }
-        return modifiersMap.get(core);
+        return null;
     }
 
     public Gemstone addModifier(IModifier newModifier) {

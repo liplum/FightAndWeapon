@@ -6,7 +6,8 @@ import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.ItemTool;
-import net.liplum.lib.weaponcores.IBattleAxeCore;
+import net.liplum.lib.cores.battleaxe.BattleAxeArgs;
+import net.liplum.lib.cores.battleaxe.IBattleAxeCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -36,13 +37,22 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
             float sweepRange = core.getSweepRange();
             float dmg = core.getStrength();
             boolean releaseSkilled = false;
+            BattleAxeArgs args = new BattleAxeArgs()
+                    .setWorld(worldIn)
+                    .setPlayer(playerIn)
+                    .setItemStack(held)
+                    .setHand(handIn);
             if (modifier != null) {
                 BattleAxeIModifier mod = (BattleAxeIModifier) modifier;
                 sweepRange = FawItemUtil.calcuAttribute(sweepRange, mod.getSweepRangeDelta(), mod.getSweepRate());
                 dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
-                releaseSkilled |= mod.releaseSkill(core, worldIn, playerIn, held, handIn, sweepRange, dmg);
+                args.setStrength(dmg)
+                        .setSweepRange(sweepRange);
+                releaseSkilled |= mod.releaseSkill(core, args);
             } else {
-                releaseSkilled |= core.releaseSkill(worldIn, playerIn, held, handIn, sweepRange, dmg);
+                args.setStrength(dmg)
+                        .setSweepRange(sweepRange);
+                releaseSkilled |= core.releaseSkill(args);
             }
 
             if(releaseSkilled){

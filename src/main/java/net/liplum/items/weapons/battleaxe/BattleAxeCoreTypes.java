@@ -3,13 +3,12 @@ package net.liplum.items.weapons.battleaxe;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.weaponcores.IBattleAxeCore;
+import net.liplum.lib.cores.battleaxe.BattleAxeArgs;
+import net.liplum.lib.cores.battleaxe.IBattleAxeCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -19,8 +18,9 @@ import java.util.List;
 
 public final class BattleAxeCoreTypes {
     public static final IBattleAxeCore Empty = new IBattleAxeCore() {
+
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sweepRange) {
+        public boolean releaseSkill(BattleAxeArgs args) {
             return false;
         }
 
@@ -39,7 +39,13 @@ public final class BattleAxeCoreTypes {
         private final int coolDown = 20 * 5;
 
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, float strength, float sweepRange) {
+        public boolean releaseSkill(BattleAxeArgs args) {
+            World world = args.getWorld();
+            EntityPlayer player = args.getPlayer();
+            float strength = args.getStrength();
+
+            float sweepRange = args.getSweepRange();
+
             float knockBackAngleToX = MathHelper.sin((float) MathUtil.toRadian(player.rotationYaw));
             float knockBackAngleToY = -MathHelper.cos((float) MathUtil.toRadian(player.rotationYaw));
             AxisAlignedBB playerBox = player.getEntityBoundingBox();

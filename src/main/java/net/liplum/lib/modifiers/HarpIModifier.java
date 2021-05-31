@@ -1,7 +1,9 @@
 package net.liplum.lib.modifiers;
 
 import net.liplum.api.weapon.IModifier;
-import net.liplum.lib.weaponcores.IHarpCore;
+import net.liplum.lib.cores.harp.ContinuousHarpArgs;
+import net.liplum.lib.cores.harp.IHarpCore;
+import net.liplum.lib.cores.harp.SingleHarpArgs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -31,7 +33,11 @@ public abstract class HarpIModifier implements IModifier<IHarpCore> {
         return 0;
     }
 
-    public boolean releaseSkill(IHarpCore core, World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, double radius, float abilityPower,int releasedCount) {
-        return core.continueSkill(world, player, itemStack, hand, radius, abilityPower,releasedCount);
+    public boolean continueSkill(IHarpCore core, ContinuousHarpArgs args) {
+        return core.continueSkill(args);
+    }
+
+    public boolean releaseSkill(IHarpCore core, SingleHarpArgs args) {
+        return core.releaseSkill(args);
     }
 }

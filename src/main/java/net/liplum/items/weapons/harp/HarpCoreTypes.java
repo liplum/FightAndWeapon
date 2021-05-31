@@ -1,9 +1,10 @@
 package net.liplum.items.weapons.harp;
 
+import net.liplum.lib.cores.harp.ContinuousHarpArgs;
+import net.liplum.lib.cores.harp.SingleHarpArgs;
 import net.liplum.lib.utils.EntityUtil;
-import net.liplum.lib.utils.ItemTool;
 import net.liplum.lib.utils.Utils;
-import net.liplum.lib.weaponcores.IHarpCore;
+import net.liplum.lib.cores.harp.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
@@ -36,12 +37,12 @@ public final class HarpCoreTypes {
         }
 
         @Override
-        public boolean continueSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, double radius, float abilityPower, int releasedCount) {
+        public boolean continueSkill(ContinuousHarpArgs args) {
             return false;
         }
 
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, double radius, float abilityPower) {
+        public boolean releaseSkill(SingleHarpArgs args) {
             return false;
         }
 
@@ -68,7 +69,12 @@ public final class HarpCoreTypes {
         }
 
         @Override
-        public boolean continueSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, double radius, float abilityPower, int releasedCount) {
+        public boolean continueSkill(ContinuousHarpArgs args) {
+            World world = args.getWorld();
+            EntityPlayer player = args.getPlayer();
+            double radius = args.getRadius();
+
+
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(radius, 0.25D, radius));
@@ -107,7 +113,12 @@ public final class HarpCoreTypes {
         }
 
         @Override
-        public boolean releaseSkill(World world, EntityPlayer player, ItemStack itemStack, EnumHand hand, double radius, float abilityPower) {
+        public boolean releaseSkill(SingleHarpArgs args) {
+            World world = args.getWorld();
+            EntityPlayer player = args.getPlayer();
+            double radius = args.getRadius();
+
+
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(radius, 0.25D, radius));

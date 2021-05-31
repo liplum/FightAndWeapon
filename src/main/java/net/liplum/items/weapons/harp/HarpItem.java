@@ -1,9 +1,11 @@
 package net.liplum.items.weapons.harp;
 
+import net.liplum.lib.cores.harp.ContinuousHarpArgs;
+import net.liplum.lib.cores.harp.SingleHarpArgs;
+import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.items.weaponutils.HarpUtils;
 import net.liplum.lib.utils.ItemTool;
-import net.liplum.lib.weaponcores.IHarpCore;
+import net.liplum.lib.cores.harp.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
@@ -29,7 +31,14 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         ItemStack held = playerIn.getHeldItem(handIn);
         int coolDown = getCoolDown();
         if (playerIn.isSneaking()) {
-            boolean releasedSuccessfully = core.releaseSkill(worldIn, playerIn, held, handIn, radius, ap);
+            SingleHarpArgs args = new SingleHarpArgs()
+                    .setWorld(worldIn)
+                    .setPlayer(playerIn)
+                    .setItemStack(held)
+                    .setHand(handIn)
+                    .setAbilityPower(ap)
+                    .setRadius(radius);
+            boolean releasedSuccessfully = core.releaseSkill(args);
             if (releasedSuccessfully) {
                 ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown);
                 playerIn.resetActiveHand();
@@ -67,6 +76,14 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         int currentDuration = maxDuration - count;
         int releasedCount = currentDuration / frequency;
         if (currentDuration % frequency == 0) {
+            ContinuousHarpArgs args = new ContinuousHarpArgs()
+                    .setWorld(world)
+                    .setPlayer(p)
+                    .setItemStack(stack)
+                    .setHand(hand)
+                    .setAbilityPower(ap)
+                    .setRadius(radius)
+                    .setReleasedCount(releasedCount);
         /*Modifier modifier = FawGemUtil.getModifierFrom(stack);
         if (modifier != null) {
             HarpModifier mod = (HarpModifier) modifier;
@@ -75,7 +92,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         }else {
 
         }*/
-            core.continueSkill(world, p, stack, hand, radius, ap, releasedCount);
+            core.continueSkill(args);
 
         }
         if (currentDuration == maxDuration - 1) {
