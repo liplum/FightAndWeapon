@@ -2,6 +2,7 @@ package net.liplum.items.weapons.lance;
 
 import net.liplum.coroutine.WaitForNextTick;
 import net.liplum.enumerator.Yield;
+import net.liplum.events.LanceSprintEvent;
 import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
@@ -18,6 +19,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.util.HashSet;
 import java.util.List;
@@ -45,6 +47,10 @@ public final class LanceCoreTypes {
     public static final ILanceCore Normal = new ILanceCore() {
         @Override
         public boolean releaseSkill(LanceArgs args) {
+            boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
+            if (!canceled) {
+                return true;
+            }
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
             float strength = args.getStrength();
@@ -65,7 +71,7 @@ public final class LanceCoreTypes {
                         List<EntityLivingBase> allInRange = world
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
-                            if (EntityUtil.canAttack(player,e) && !damaged.contains(e)) {
+                            if (EntityUtil.canAttack(player, e) && !damaged.contains(e)) {
                                 e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                                 damaged.add(e);
                             }
@@ -115,7 +121,7 @@ public final class LanceCoreTypes {
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
             Vector2D look = MathUtil.toV2D(player.getLookVec());
             for (EntityLivingBase e : allInRange) {
-                if (EntityUtil.canAttack(player,e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
+                if (EntityUtil.canAttack(player, e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player), 1.5F * strength);
                 }
             }
