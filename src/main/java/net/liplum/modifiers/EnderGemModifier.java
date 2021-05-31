@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
-public final class EnderGemstoneModifier {
+public final class EnderGemModifier {
     public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
         public ILanceCore getCoreType() {

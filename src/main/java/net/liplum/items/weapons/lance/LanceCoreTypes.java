@@ -132,4 +132,30 @@ public final class LanceCoreTypes {
             return 6;
         }
     };
+
+    public static final ILanceCore TestLance = new ILanceCore() {
+        @Override
+        public boolean releaseSkill(LanceArgs args) {
+            EntityPlayer player = args.getPlayer();
+            float sprintLength = args.getSprintLength();
+
+
+            Vec3d originPos = player.getPositionVector();
+            Vec3d playerFace = player.getLookVec();
+            Vec3d sprintForce = playerFace.scale(sprintLength);
+            Vec3d nowPos = new Vec3d(sprintForce.x + originPos.x, originPos.y, sprintForce.z + originPos.z);
+            PhysicsTool.setPosition(player, nowPos.x, nowPos.y + 0.5, nowPos.z);
+            return true;
+        }
+
+        @Override
+        public float getSprintLength() {
+            return 10;
+        }
+
+        @Override
+        public int getCoolDown() {
+            return 20;
+        }
+    };
 }

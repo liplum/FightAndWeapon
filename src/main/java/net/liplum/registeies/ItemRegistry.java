@@ -46,6 +46,8 @@ public final class ItemRegistry {
     public static final Item Lance_Item = weapon(new LanceItem(LanceCoreTypes.Normal), Names.Item.Lance.LanceItem);
     public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCoreTypes.KnightLance), Names.Item.Lance.KnightLanceItem);
     public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
+
+    //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
     //------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------
     //  Sets the icon of FAW item group.
