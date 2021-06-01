@@ -1,6 +1,6 @@
 package net.liplum.api.weapon;
 
-import net.liplum.lib.items.gemstone.Gemstone;
+import net.liplum.api.fight.IPassiveSkill;
 
 import javax.annotation.Nullable;
 
@@ -15,7 +15,9 @@ public interface IGemstone {
     @Nullable
     IModifier getModifierOf(IWeaponCore core);
 
-    Gemstone addModifier(IModifier newModifier);
+    IGemstone addModifier(IModifier newModifier);
+
+    IGemstone addPassiveSkill(IPassiveSkill newPassiveSkill);
 
     String getRegisterName();
 }

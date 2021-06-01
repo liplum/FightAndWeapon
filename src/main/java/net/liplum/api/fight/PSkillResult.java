@@ -1,6 +1,6 @@
 package net.liplum.api.fight;
 
-public enum PassiveSkillResult {
+public enum PSkillResult {
     Complete,
     CancelTrigger,
     Fail

@@ -105,16 +105,17 @@ public final class FawItemUtil {
         //TODO:More!!!
         return successfullyHit;
     }
+
     /**
      * Calculate the final value of attribute without gemstone's amplification.
      *
      * @param base
      * @param deltaMaster
-     * @return
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
     public static float calcuAttribute(float base, float deltaMaster) {
-        float res = base + deltaMaster;
-        return MathUtil.fixMin(res,0);
+        return calcuAttribute(base, deltaMaster, 0, 0);
+
     }
 
     /**
@@ -123,11 +124,10 @@ public final class FawItemUtil {
      * @param base
      * @param rateGem
      * @param deltaGem
-     * @return
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
     public static float calcuAttribute(float base, float deltaGem, float rateGem) {
-        float res = (base + deltaGem) * (1 + rateGem);
-        return MathUtil.fixMin(res,0);
+        return calcuAttribute(base, 0, deltaGem, rateGem);
     }
 
     /**
@@ -135,11 +135,14 @@ public final class FawItemUtil {
      * @param deltaMaster
      * @param rateGem
      * @param deltaGem
-     * @return
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
     public static float calcuAttribute(float base, float deltaMaster, float deltaGem, float rateGem) {
+        if (base < 0) {
+            return -1;
+        }
         float res = ((base + deltaMaster) + deltaGem) * (1 + rateGem);
-        return MathUtil.fixMin(res,0);
+        return MathUtil.fixMin(res, 0);
     }
 
 }

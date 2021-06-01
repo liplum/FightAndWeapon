@@ -20,7 +20,11 @@ public class PotionWorkHandler {
     public static void onUnstoppablePotionWork(LivingAttackEvent e) {
         EntityLivingBase target = e.getEntityLiving();
         DamageSource source = e.getSource();
-        if (target.isPotionActive(PotionRegistry.Unstoppable_Potion) && source.getDamageType().equals(MCNames.DamageType.Mob)) {
+        String dmgType = source.getDamageType();
+        if (target.isPotionActive(PotionRegistry.Unstoppable_Potion) &&
+                (dmgType.equals(MCNames.DamageType.Mob) ||
+                        dmgType.equals(MCNames.DamageType.Player)
+                )) {
             e.setCanceled(true);
         }
     }

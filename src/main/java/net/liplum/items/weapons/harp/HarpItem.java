@@ -29,7 +29,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         double radius = core.getRadius();
         float ap = core.getAbilityPower();
         ItemStack held = playerIn.getHeldItem(handIn);
-        int coolDown = getCoolDown();
+        int coolDown = core.getCoolDown();
         if (playerIn.isSneaking()) {
             SingleHarpArgs args = new SingleHarpArgs()
                     .setWorld(worldIn)
@@ -60,7 +60,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         World world = player.world;
         double radius = core.getRadius();
         float ap = core.getAbilityPower();
-        int coolDown = getCoolDown();
+        int coolDown = core.getCoolDown();
        /* if (player.isSneaking()) {
             boolean releasedSuccessfully = core.releaseSkill(world, p, stack, hand, radius, ap);
             if (releasedSuccessfully) {
@@ -105,7 +105,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
 
     @Override
     public void onPlayerStoppedUsing(ItemStack stack, World worldIn, EntityLivingBase entityLiving, int timeLeft) {
-        int coolDown = getCoolDown();
+        int coolDown = core.getCoolDown();
         Item held = stack.getItem();
         //I'm not quite sure that the entityLiving is truly a EntityPlayer.
         if (entityLiving instanceof EntityPlayer) {

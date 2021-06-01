@@ -34,7 +34,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
-        int coolDown = getCoolDown();
+        int coolDown = core.getCoolDown();
         EnumActionResult result = EnumActionResult.PASS;
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
@@ -52,7 +52,8 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
                 length = FawItemUtil.calcuAttribute(length, mod.getSprintLengthDelta(), mod.getSprintLengthRate());
                 dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
                 args.setSprintLength(length)
-                        .setStrength(dmg);
+                        .setStrength(dmg)
+                        .setModifier(mod);
                 releasedSuccessfully |= mod.releaseSkill(core, args);
             } else {
                 args.setSprintLength(length)

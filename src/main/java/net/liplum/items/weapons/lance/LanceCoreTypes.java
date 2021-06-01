@@ -48,8 +48,8 @@ public final class LanceCoreTypes {
         @Override
         public boolean releaseSkill(LanceArgs args) {
             boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
-            if (!canceled) {
-                return true;
+            if (canceled) {
+                return false;
             }
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();

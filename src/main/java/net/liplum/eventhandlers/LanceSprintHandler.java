@@ -2,7 +2,7 @@ package net.liplum.eventhandlers;
 
 import net.liplum.MetaData;
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.fight.PassiveSkillResult;
+import net.liplum.api.fight.PSkillResult;
 import net.liplum.events.LanceSprintEvent;
 import net.liplum.lib.registeies.SkillManager;
 import net.minecraftforge.fml.common.Mod;
@@ -15,10 +15,13 @@ public class LanceSprintHandler {
     public static void onLanceSprint(LanceSprintEvent e) {
         SkillManager skillManager = SkillManager.Instance();
         IPassiveSkill[] passiveSkills = skillManager.getPassiveSkills(LanceSprintEvent.class);
-        for (IPassiveSkill skill : passiveSkills) {
-            PassiveSkillResult res = skill.onTrigger(e);
-            if (res == PassiveSkillResult.CancelTrigger) {
-                break;
+        if (passiveSkills != null) {
+
+            for (IPassiveSkill skill : passiveSkills) {
+                PSkillResult res = skill.onTrigger(e);
+                if (res == PSkillResult.CancelTrigger) {
+                    break;
+                }
             }
         }
     }

@@ -47,7 +47,9 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
                 sweepRange = FawItemUtil.calcuAttribute(sweepRange, mod.getSweepRangeDelta(), mod.getSweepRate());
                 dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
                 args.setStrength(dmg)
-                        .setSweepRange(sweepRange);
+                        .setSweepRange(sweepRange)
+                        .setModifier(mod);
+
                 releaseSkilled |= mod.releaseSkill(core, args);
             } else {
                 args.setStrength(dmg)
@@ -55,9 +57,9 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
                 releaseSkilled |= core.releaseSkill(args);
             }
 
-            if(releaseSkilled){
-                int coolDown =  getCoolDown();
-                if (ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(),coolDown)) {
+            if (releaseSkilled) {
+                int coolDown = core.getCoolDown();
+                if (ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown)) {
                     //When you release the skill, it will make your shield hot.
                     //Don't worry about the EMPTY, if that it'll return Items.AIR (no exception).
                     if (offHeld.getItem() == Items.SHIELD) {

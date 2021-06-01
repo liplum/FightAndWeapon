@@ -1,5 +1,6 @@
 package net.liplum;
 
+import net.liplum.api.weapon.IGemstone;
 import net.liplum.lib.items.gemstone.Gemstone;
 import net.liplum.lib.registeies.GemstoneRegistry;
 import net.liplum.modifiers.EnderGemModifier;
@@ -11,15 +12,16 @@ public final class Gemstones {
     public static void load() {
     }
 
-    public final static Gemstone Ender_Gemstone = with(new Gemstone("Endergem")
+    public final static IGemstone Ender_Gemstone = with(new Gemstone("Endergem")
             .addModifier(EnderGemModifier.Normal_Lance));
-    public final static Gemstone Ruby_Gemstone = with(new Gemstone("Ruby")
+
+    public final static IGemstone Ruby_Gemstone = with(new Gemstone("Ruby")
             .addModifier(RubyModifier.Normal_Lance));
 
-    public final static Gemstone Flame_Gemstone = with(new Gemstone("Flamegem")
+    public final static IGemstone Flame_Gemstone = with(new Gemstone("Flamegem")
             .addModifier(FlameGemModifier.Normal_Lance));
 
-    private static Gemstone with(Gemstone gemstone) {
+    private static IGemstone with(IGemstone gemstone) {
         GemstoneRegistry.Instance().register(gemstone);
         return gemstone;
     }

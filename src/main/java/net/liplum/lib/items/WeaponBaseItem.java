@@ -34,14 +34,6 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
     }
 
     /**
-     * Gets the knock back.the basic is 1.0F.
-     * @return the strength of knock back
-     */
-    public float getKnockBack() {
-        return 1.0F;
-    }
-
-    /**
      * Deals damage to a target form the attacker.
      * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
      * @param stack
@@ -76,15 +68,6 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
      */
     public boolean isEffective(IBlockState state) {
         return false;
-    }
-
-    /**
-     * Gets the cool down time of weapon.
-     *
-     * @return The cool down time of weapon(Unit: tick)
-     */
-    public int getCoolDown(){
-        return getCore().getCoolDown();
     }
 
     /**

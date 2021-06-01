@@ -22,12 +22,15 @@ public final class PotionRegistry {
                 setPotionName(Names.prefixPotionUnloc(name));
     }
 
+    /**
+     * Unstoppable:Who has this potion effect won't be attack by other mobs and players.
+     */
     public static final Potion Unstoppable_Potion = with(new UnstoppablePotion(), Names.Potion.UnstoppablePotion);
 
     @SubscribeEvent
     public static void onPotionRegistry(RegistryEvent.Register<Potion> event) {
         IForgeRegistry<Potion> potions = event.getRegistry();
-        for(Potion p :Potions){
+        for (Potion p : Potions) {
             potions.register(p);
         }
     }
