@@ -53,4 +53,10 @@ public final class Names {
     public final static class Potion {
         public static final String UnstoppablePotion = "unstoppable";
     }
+
+    public final static class Gemstone{
+        public static final String Ruby = "ruby";
+        public static final String Endergem = "endergem";
+        public static final String Flamegem = "flamegem";
+    }
 }

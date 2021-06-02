@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 /**
- * If you cancel it then the player can't sprint anymore.
+ * If you cancel it then the player can't sprint this time.
  */
 @Cancelable
 public class LanceSprintEvent extends Event {

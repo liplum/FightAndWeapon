@@ -1,6 +1,7 @@
 package net.liplum.items.weapons;
 
 import com.google.common.collect.Multimap;
+import net.liplum.Names;
 import net.liplum.lib.utils.FawGenerator;
 import net.liplum.registeies.ItemRegistry;
 import net.minecraft.entity.Entity;
@@ -32,9 +33,9 @@ public class QuartzSwordItem extends ItemSword {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, "Ruby"));
-        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, "Endergem"));
-        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, "Flamegem"));
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, Names.Gemstone.Ruby));
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, Names.Gemstone.Endergem));
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, Names.Gemstone.Flamegem));
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 

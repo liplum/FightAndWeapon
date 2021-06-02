@@ -6,18 +6,16 @@ import net.liplum.enumerator.IEnumerable;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.HashMap;
+import java.util.Map;
 
 public final class CoroutineSystem {
-    private static CoroutineSystem instance;
+    private static CoroutineSystem instance = new CoroutineSystem();
 
-    private CoroutineSystem(){
+    private CoroutineSystem() {
 
     }
 
     public static CoroutineSystem Instance() {
-        if (instance == null) {
-            instance = new CoroutineSystem();
-        }
         return instance;
     }
 
@@ -45,22 +43,38 @@ public final class CoroutineSystem {
         return cm.startCoroutines(coroutines);
     }
 
-    public void StopAllOfPlayer(EntityPlayer player) {
+    /**
+     * @param player
+     * @return true if it stops any coroutine of this player. False if there's no given player.
+     */
+    public boolean stopAllOfPlayer(EntityPlayer player) {
         if (playerCoroutines.containsKey(player)) {
             playerCoroutines.get(player).stopAll();
+            return true;
         }
+        return false;
+    }
+
+    public boolean clearPlayer(EntityPlayer player) {
+        if (playerCoroutines.containsKey(player)) {
+            playerCoroutines.get(player).stopAll();
+            playerCoroutines.remove(player);
+            return true;
+        }
+        return false;
     }
 
     public Coroutine attachCoroutineToPlayer(EntityPlayer player, IEnumerable task, int lifeSpan) {
         return attachCoroutineToPlayer(player, new Coroutine(task, lifeSpan));
     }
 
-    public boolean onPlayerTick(EntityPlayer player) {
-        if (playerCoroutines.containsKey(player)) {
-            CoroutineManager cm = playerCoroutines.get(player);
-            cm.OnTick();
-            return true;
+    public boolean onServerTick() {
+        if (playerCoroutines.isEmpty()) {
+            return false;
         }
-        return false;
+        for (CoroutineManager cm : playerCoroutines.values()) {
+            cm.OnTick();
+        }
+        return true;
     }
 }

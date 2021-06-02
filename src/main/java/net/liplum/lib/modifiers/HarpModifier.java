@@ -1,5 +1,6 @@
 package net.liplum.lib.modifiers;
 
+import net.liplum.api.weapon.IMagicToolModifier;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.cores.harp.ContinuousHarpArgs;
 import net.liplum.lib.cores.harp.IHarpCore;
@@ -9,12 +10,12 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public abstract class HarpIModifier implements IModifier<IHarpCore> {
+public abstract class HarpModifier implements IMagicToolModifier<IHarpCore> {
     public double getRadiusDelta() {
         return 0;
     }
 
-    public double getRadiusRate() {
+    public float getRadiusRate() {
         return 0;
     }
 
