@@ -12,9 +12,11 @@ import net.liplum.items.weapons.harp.HarpCoreTypes;
 import net.liplum.items.weapons.harp.HarpItem;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceItem;
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -47,6 +49,8 @@ public final class ItemRegistry {
     public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCoreTypes.KnightLance), Names.Item.Lance.KnightLanceItem);
     public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
 
+    public static final Item Test_Block_Item = forge(new ItemBlock(BlockRegistry.TestBlock), "test_block");
+
     //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
     //------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------
@@ -55,7 +59,9 @@ public final class ItemRegistry {
     static {
         ItemGroupsRegistry.FawWeapons.setIcon(new ItemStack(Lance_Item));
         ItemGroupsRegistry.FawGemstones.setIcon(new ItemStack(Ruby_Item));
+        //ItemGroupsRegistry.FawForges.setIcon(new ItemStack(Ruby_Item));
     }
+
     //------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------
     //  Registries
@@ -81,13 +87,14 @@ public final class ItemRegistry {
             registerModel(item);
         }
     }
+
     //------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------
     //  Provides a easy way to register items
     //
     private static Item with(Item item, String name, CreativeTabs itemGroup) {
         Items.addLast(item);
-        return item.setRegistryName(Names.prefixRegister(name)).
+        return item.setRegistryName(MetaData.MOD_ID,name).
                 setUnlocalizedName(Names.prefixUnloc(name)).
                 setCreativeTab(itemGroup);
     }
@@ -98,6 +105,10 @@ public final class ItemRegistry {
 
     public static Item weapon(Item item, String name) {
         return with(item, name, ItemGroupsRegistry.FawWeapons);
+    }
+
+    public static Item forge(Item item, String name) {
+        return with(item, name, ItemGroupsRegistry.FawForges);
     }
     //------------------------------------------------------------------------------------------------------------------------------
 }

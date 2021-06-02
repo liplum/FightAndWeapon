@@ -7,8 +7,8 @@ import net.minecraft.item.ItemStack;
 public class ItemGroup extends CreativeTabs {
     private ItemStack icon;
 
-    public ItemGroup(String registeryName) {
-        super(registeryName);
+    public ItemGroup(String registerName) {
+        super(registerName);
         this.icon = new ItemStack(Items.AIR);
     }
 

@@ -7,4 +7,5 @@ import net.liplum.lib.itemgroup.ItemGroup;
 public final class ItemGroupsRegistry {
     public static ItemGroup FawGemstones = new ItemGroup(Names.ItemGroup.FawGemstones);
     public static ItemGroup FawWeapons = new ItemGroup(Names.ItemGroup.FawWeapons);
+    public static ItemGroup FawForges = new ItemGroup(Names.ItemGroup.FawForges);
 }
