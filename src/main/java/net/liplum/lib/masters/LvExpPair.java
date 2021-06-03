@@ -1,15 +1,15 @@
 package net.liplum.lib.masters;
 
-public class LvExpPair {
+public class LvExpPair implements Cloneable{
     private int level = 0;
-    private long Exp = 0;
+    private long exp = 0;
 
     public LvExpPair() {
     }
 
     public LvExpPair(int level, long exp) {
         this.level = level;
-        Exp = exp;
+        this.exp = exp;
     }
 
     public int getLevel() {
@@ -21,10 +21,15 @@ public class LvExpPair {
     }
 
     public long getExp() {
-        return Exp;
+        return exp;
     }
 
     public void setExp(long exp) {
-        Exp = exp;
+        this.exp = exp;
+    }
+
+    @Override
+    protected Object clone() {
+        return new LvExpPair(level, exp);
     }
 }
