@@ -9,11 +9,13 @@ Designer : Frost_Ansel
 ## How to create a new Weapon Core.
 
 ```Java
-//Create a new class or just use a anonymous class. Make it extend a CONCRETE IWeaponCore class which you want
+//Create a new class or just use a anonymous class.
+//Make it extend a CONCRETE IWeaponCore class which you want.
 ILanceCore newLanceCore = new ILanceCore() {
     @Override
     public int getCoolDown() {
-        return 20*6;//It means 120 ticks which is equivalent to 6 seconds in reality. 
+        //It means 120 ticks which is equivalent to 6 seconds in reality. 
+        return 20*6;
     }
     
     @Override
@@ -29,7 +31,8 @@ ILanceCore newLanceCore = new ILanceCore() {
     }
 };
 
-//Then new a weapon object, which expands the WeaponBaseItem<CoreType extends IWeaponCore>, by its constructor.
+//Then new a weapon object, which expands the WeaponBaseItem<CoreType extends IWeaponCore>,
+//by its constructor.
 Item newLance = new LanceItem(LanceCoreTypes.newLanceCore)
 
 //Finally, register this item into Minecraft Forge.
@@ -57,7 +60,8 @@ GemstoneRegistry.Instance().register(newGem);
 ## How to create a new Modifier.
 
 ```Java
-//Create a new class or just use a anonymous class. Make it extend a Modifier class which you want
+//Create a new class or just use a anonymous class.
+//Make it extend a Modifier class which you want.
 LanceModifier newModifier = new LanceModifier(){
     //Claim this modifier is specific for which weapon core.
     @Override
@@ -67,14 +71,16 @@ LanceModifier newModifier = new LanceModifier(){
     
     @Override
     public float getStrengthDelta() {
-        return 5;//It means that if there are a weapon with it , the weapon's Strength Attribute will increase 5.
+        //It means that if there are a weapon with it , the weapon's Strength Attribute will increase 5.
+        return 5;
     }
     
     //If you didn't overwrite it, it would release the skill in the original weapon core's version.
     @Override
     public boolean releaseSkill(ILanceCore core, LanceArgs args){
         //Do somethings.
-        //Or you can even call the original weapon core's releaseSkill(LanceArgs) and add more(such as more particles).
+        //Or you can even call the original weapon core's releaseSkill(LanceArgs)
+        //and add more(such as more particles).
         return true;//It stand for success of this releasing.
     }
 
