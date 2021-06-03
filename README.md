@@ -1,8 +1,10 @@
 # [FAW] Fight And Weapon
 
-Major Author : Liplum
+Major Author : Liplum , Frost_Ansel , B1ackTea233
 
-Programing : Liplum
+Programing : Liplum , B1ackTea233
+
+Designer : Frost_Ansel
 
 ## How to create a new Weapon Core.
 
