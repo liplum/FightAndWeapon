@@ -94,7 +94,7 @@ public final class ItemRegistry {
     //
     private static Item with(Item item, String name, CreativeTabs itemGroup) {
         Items.addLast(item);
-        return item.setRegistryName(MetaData.MOD_ID,name).
+        return Names.setRegisterName(item,name).
                 setUnlocalizedName(Names.prefixUnloc(name)).
                 setCreativeTab(itemGroup);
     }

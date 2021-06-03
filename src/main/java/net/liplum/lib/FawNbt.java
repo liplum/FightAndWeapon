@@ -15,17 +15,18 @@ public final class FawNbt {
 
     /**
      * Gemstones(GemstoneList)-list(str)<br/>
-     *     [<br/>
-     *         Gemstone(Gemstone)-str<br/>
-     *         Gemergy(Gemergy)-int<br/>
-     *     ]<br/>
+     * [<br/>
+     * Gemstone(Gemstone)-str<br/>
+     * Gemergy(Gemergy)-int<br/>
+     * ]<br/>
      * Durability(Durability)-int<br/>
      * ...<br/>
      */
     public static final class FawBase {
         /**
          * Puts the Faw-base data into the item's root NBT.
-         * @param root the root NBT, which comes from {@link ItemStack#getTagCompound()}
+         *
+         * @param root    the root NBT, which comes from {@link ItemStack#getTagCompound()}
          * @param fawBase the new Faw-base data NBT.
          */
         public static void putFawBase(NBTTagCompound root, NBTTagCompound fawBase) {
@@ -34,6 +35,7 @@ public final class FawNbt {
 
         /**
          * Gets the Faw-base from the item's root NBT
+         *
          * @param root the root NBT, which comes from {@link ItemStack#getTagCompound()}
          * @return the Faw-base date
          */
@@ -41,17 +43,19 @@ public final class FawNbt {
             return NbtUtil.getSubCompoundOrCreate(root, Tags.Base);
         }
     }
+
     /**
      * [<br/>
-     *     Modifier(Modifier)-str<br/>
-     *     Gemergy(Gemergy)-int<br/>
-     *     ...<br/>
+     * Modifier(Modifier)-str<br/>
+     * Gemergy(Gemergy)-int<br/>
+     * ...<br/>
      * ]<br/>
      */
     public static final class GemstoneList {
         /**
          * Puts the gemstone-list data into the Faw-base data NBT.
-         * @param base the Faw-base data NBT, which comes from {@link FawBase#getFawBase(NBTTagCompound)}
+         *
+         * @param base         the Faw-base data NBT, which comes from {@link FawBase#getFawBase(NBTTagCompound)}
          * @param gemstoneList the gemstone-list data
          */
         public static void putGemstoneList(NBTTagCompound base, NBTTagList gemstoneList) {
@@ -59,7 +63,6 @@ public final class FawNbt {
         }
 
         /**
-         *
          * @param base
          * @return
          */
@@ -75,7 +78,6 @@ public final class FawNbt {
      */
     public static final class GemstoneObject {
         /**
-         *
          * @param gemstoneObj
          * @param gemstone
          */
@@ -84,7 +86,6 @@ public final class FawNbt {
         }
 
         /**
-         *
          * @param gemstoneObj
          * @return
          */
@@ -93,7 +94,6 @@ public final class FawNbt {
         }
 
         /**
-         *
          * @param gemstoneObj
          * @param gemergy
          */
@@ -102,7 +102,6 @@ public final class FawNbt {
         }
 
         /**
-         *
          * @param gemstoneObj
          * @return
          */
@@ -116,7 +115,6 @@ public final class FawNbt {
      */
     public static final class Durability {
         /**
-         *
          * @param base
          * @param durability
          */
@@ -125,12 +123,15 @@ public final class FawNbt {
         }
 
         /**
-         *
          * @param base
          * @return
          */
         public static NBTTagCompound getDurability(NBTTagCompound base) {
             return NbtUtil.getSubCompoundOrCreate(base, Tags.BaseSub.Durability);
         }
+    }
+
+    public static final class Master {
+
     }
 }

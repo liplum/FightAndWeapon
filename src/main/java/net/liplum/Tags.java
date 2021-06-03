@@ -36,7 +36,20 @@ public final class Tags {
         //Unbreaking
         public static final String Durability = "Durability";
     }
-    public final static class Harp{
+
+
+    public final static class Master {
+        public static final String MasterList = "MasterList";
+
+        public final static class MasterObject {
+            public static final String Type = "Type";
+            public static final String Level = "Level";
+            public static final String Exp = "Exp";
+        }
+    }
+
+
+    public final static class Harp {
 
         /**
          * {@link HarpUtils.HarpState}

@@ -1,4 +1,4 @@
-package net.liplum.lib.skills.passive;
+package net.liplum.passive;
 
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;

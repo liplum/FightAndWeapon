@@ -29,7 +29,7 @@ public final class BlockRegistry {
 
     private static Block with(Block block, String name, CreativeTabs itemGroup) {
         Blocks.addLast(block);
-        return block.setRegistryName(MetaData.MOD_ID,Names.prefixRegister(name)).
+        return Names.setRegisterName(block,name).
                 setUnlocalizedName(Names.prefixUnloc(name)).
                 setCreativeTab(itemGroup);
     }

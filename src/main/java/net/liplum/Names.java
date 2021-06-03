@@ -1,5 +1,8 @@
 package net.liplum;
 
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.registries.IForgeRegistryEntry;
+
 public final class Names {
     public static String prefixRegister(String name) {
         return String.format("%s:%s", MetaData.MOD_ID, name);
@@ -11,6 +14,14 @@ public final class Names {
 
     public static String prefixPotionUnloc(String name) {
         return String.format("%s.%s.%s", "potion", MetaData.MOD_ID, name);
+    }
+
+    public static <T extends IForgeRegistryEntry.Impl<T>> T setRegisterName(T namedObject, String registerName) {
+        return namedObject.setRegistryName(MetaData.MOD_ID, registerName);
+    }
+
+    public static ResourceLocation genResourceLocation(String resourcePath) {
+        return new ResourceLocation(MetaData.MOD_ID, resourcePath);
     }
 
     public static class Item {
@@ -34,6 +45,9 @@ public final class Names {
     public final static class Entity {
         public static final String StraightDamageEntity = "straight_damage";
     }
+    public final static class Capability {
+        public static final String Master = "master";
+    }
 
     public final static class ItemGroup {
         public static final String FawWeapons = "faw_weapons";
@@ -55,7 +69,7 @@ public final class Names {
         public static final String UnstoppablePotion = "unstoppable";
     }
 
-    public final static class Gemstone{
+    public final static class Gemstone {
         public static final String Ruby = "ruby";
         public static final String Endergem = "endergem";
         public static final String Flamegem = "flamegem";
