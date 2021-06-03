@@ -1,7 +1,7 @@
 package net.liplum.lib.items;
 
-import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.lib.utils.FawItemUtil;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,7 +9,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 
-public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawItem{
+public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawItem {
     public WeaponBaseItem() {
         super();
     }
@@ -27,15 +27,17 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
     /**
      * Gets the basic attack speed and it can be changed by modifier.
      * Range : (0,no limit]. A greater value stands for a slower speed.(Normal items are 4)
+     *
      * @return the basic attack speed
      */
-    public double getBaseAttackSpeed(){
+    public double getBaseAttackSpeed() {
         return 4;
     }
 
     /**
      * Deals damage to a target form the attacker.
      * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
+     *
      * @param stack
      * @param attacker
      * @param target
@@ -43,16 +45,16 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
      * @return true if the target was hit.
      */
     public boolean dealDamage(ItemStack stack, EntityLivingBase attacker, Entity target, float damage) {
-        DamageSource source = attacker instanceof EntityPlayer?
-                DamageSource.causePlayerDamage((EntityPlayer) attacker):
+        DamageSource source = attacker instanceof EntityPlayer ?
+                DamageSource.causePlayerDamage((EntityPlayer) attacker) :
                 DamageSource.causeMobDamage(attacker);
-        return target.attackEntityFrom(source,damage);
+        return target.attackEntityFrom(source, damage);
 
     }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-        return FawItemUtil.attackEntity(stack,this, player, entity);
+        return FawItemUtil.attackEntity(stack, this, player, entity);
     }
 
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float damage) {
@@ -63,6 +65,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
 
     /**
      * Whether player mines the block effectively
+     *
      * @param state the block player is mining
      * @return false but you can override it
      */
@@ -72,6 +75,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
 
     /**
      * Gets the core.
+     *
      * @return A core of this weapon.
      */
     public abstract CoreType getCore();

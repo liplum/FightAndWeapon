@@ -6,10 +6,10 @@ import net.liplum.enumerator.IEnumerable;
 import net.minecraft.entity.player.EntityPlayer;
 
 import java.util.HashMap;
-import java.util.Map;
 
 public final class CoroutineSystem {
     private static CoroutineSystem instance = new CoroutineSystem();
+    private HashMap<EntityPlayer, CoroutineManager> playerCoroutines = new HashMap<>();
 
     private CoroutineSystem() {
 
@@ -18,8 +18,6 @@ public final class CoroutineSystem {
     public static CoroutineSystem Instance() {
         return instance;
     }
-
-    private HashMap<EntityPlayer, CoroutineManager> playerCoroutines = new HashMap<>();
 
     public Coroutine attachCoroutineToPlayer(EntityPlayer player, Coroutine coroutine) {
         CoroutineManager cm;

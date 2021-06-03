@@ -5,6 +5,7 @@ public class ContinuousHarpArgs extends AbstractHarpArgs<ContinuousHarpArgs> {
 
     public ContinuousHarpArgs() {
     }
+
     /**
      * @return base on 1 (such as 1,2,3,4,5,...)
      */

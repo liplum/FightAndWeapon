@@ -10,10 +10,10 @@ import net.minecraft.util.math.Vec3d;
 
 
 public class MathUtil {
-    private static final double PI_Divide_180 = Math.PI / 180;
     public static final double HalfPI = Math.PI / 2;
     public static final Vector2D iY = new Vector2D(0, 1);
     public static final Vector2D iX = new Vector2D(1, 0);
+    private static final double PI_Divide_180 = Math.PI / 180;
 
     public static double toRadian(double degrees) {
         return degrees % 360 * PI_Divide_180;

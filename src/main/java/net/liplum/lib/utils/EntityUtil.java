@@ -3,11 +3,10 @@ package net.liplum.lib.utils;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
-import net.minecraft.entity.boss.EntityWither;
-import net.minecraft.entity.monster.*;
-import net.minecraft.entity.passive.EntitySkeletonHorse;
-import net.minecraft.entity.passive.EntityZombieHorse;
-import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.monster.EntityGhast;
+import net.minecraft.entity.monster.EntityMob;
+import net.minecraft.entity.monster.EntityShulker;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.world.World;
 

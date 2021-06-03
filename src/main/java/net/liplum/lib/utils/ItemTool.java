@@ -17,7 +17,7 @@ public class ItemTool {
      * @return if player is in survival mode, it'll return ture and heat the weapon, otherwise, return false.
      */
     public static boolean heatWeaponIfSurvival(EntityPlayer player, Item item, int coolDownTime) {
-        if (player.isCreative()||coolDownTime <= 0) {
+        if (player.isCreative() || coolDownTime <= 0) {
             return false;
         }
         player.getCooldownTracker().setCooldown(item, coolDownTime);
@@ -25,7 +25,6 @@ public class ItemTool {
     }
 
     /**
-     *
      * @param item
      * @param itemStacks
      * @return
@@ -40,12 +39,12 @@ public class ItemTool {
     }
 
     @Nullable
-    public static EnumHand inWhichHand(EntityPlayer player,ItemStack itemStack){
-        if(player.getHeldItem(EnumHand.MAIN_HAND) == itemStack){
+    public static EnumHand inWhichHand(EntityPlayer player, ItemStack itemStack) {
+        if (player.getHeldItem(EnumHand.MAIN_HAND) == itemStack) {
             return EnumHand.MAIN_HAND;
-        }else if(player.getHeldItem(EnumHand.OFF_HAND)==itemStack) {
+        } else if (player.getHeldItem(EnumHand.OFF_HAND) == itemStack) {
             return EnumHand.OFF_HAND;
-        }else {
+        } else {
             return null;
         }
     }

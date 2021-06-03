@@ -1,15 +1,15 @@
 package net.liplum.items.weapons.battleaxe;
 
+import net.liplum.api.weapon.IModifier;
 import net.liplum.events.WeaponSkillReleasePostEvent;
 import net.liplum.events.WeaponSkillReleasePreEvent;
+import net.liplum.lib.cores.battleaxe.BattleAxeArgs;
+import net.liplum.lib.cores.battleaxe.IBattleAxeCore;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.modifiers.BattleAxeIModifier;
-import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.ItemTool;
-import net.liplum.lib.cores.battleaxe.BattleAxeArgs;
-import net.liplum.lib.cores.battleaxe.IBattleAxeCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
@@ -53,7 +53,7 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
                     BattleAxeIModifier mod = (BattleAxeIModifier) modifier;
                     sweepRange = FawItemUtil.calcuAttribute(sweepRange, mod.getSweepRangeDelta(), mod.getSweepRate());
                     dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
-                    coolDown = FawItemUtil.calcuAttributeInRate(coolDown,mod.getCoolDownRate());
+                    coolDown = FawItemUtil.calcuAttributeInRate(coolDown, mod.getCoolDownRate());
                     args.setStrength(dmg)
                             .setSweepRange(sweepRange)
                             .setModifier(mod);

@@ -13,7 +13,7 @@ public abstract class LanceModifier implements IModifier<ILanceCore> {
         return 0;
     }
 
-    public boolean releaseSkill(ILanceCore core, LanceArgs args){
+    public boolean releaseSkill(ILanceCore core, LanceArgs args) {
         return core.releaseSkill(args);
     }
 }

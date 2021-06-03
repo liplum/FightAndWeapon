@@ -13,7 +13,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public abstract class FawItem extends Item {
     public final Set<Category> categories = new HashSet<>();
@@ -32,15 +35,15 @@ public abstract class FawItem extends Item {
         super.addInformation(stack, worldIn, tooltip, flagIn);
     }
 
-    public boolean isA(Category category){
+    public boolean isA(Category category) {
         return categories.contains(category);
     }
 
-    public void addCategory(Category...categories){
-        Collections.addAll(this.categories,categories);
+    public void addCategory(Category... categories) {
+        Collections.addAll(this.categories, categories);
     }
 
-    public Category[] getCategories(){
+    public Category[] getCategories() {
         return categories.toArray(new Category[0]);
     }
 
@@ -53,7 +56,7 @@ public abstract class FawItem extends Item {
     @Override
     public Entity createEntity(World world, Entity location, ItemStack itemstack) {
         EntityItem entity = new IndestructibleEntityItem(world, location.posX, location.posY, location.posZ, itemstack);
-        if(location instanceof EntityItem) {
+        if (location instanceof EntityItem) {
             //TODO:Test
             // workaround for private access on that field >_>
             NBTTagCompound tag = new NBTTagCompound();

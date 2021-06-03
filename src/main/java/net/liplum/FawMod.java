@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-@Mod(modid = MetaData.MOD_ID,name = MetaData.MOD_NAME,version = MetaData.MOD_VERSION)
+@Mod(modid = MetaData.MOD_ID, name = MetaData.MOD_NAME, version = MetaData.MOD_VERSION)
 public class FawMod {
 
     private static final Logger logger = LogManager.getLogger();
@@ -20,14 +20,13 @@ public class FawMod {
     }
 
     @Mod.EventHandler
-    public void preInit(FMLPreInitializationEvent event)
-    {
+    public void preInit(FMLPreInitializationEvent event) {
         CapabilityRegistry.load();
         logger.info("Capabilities loaded successfully.");
     }
+
     @Mod.EventHandler
-    public void init(FMLInitializationEvent event)
-    {
+    public void init(FMLInitializationEvent event) {
         Gemstones.load();
         logger.info("Gemstones loaded successfully.");
     }

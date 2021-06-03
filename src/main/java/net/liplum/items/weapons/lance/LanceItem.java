@@ -1,16 +1,16 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.api.weapon.IModifier;
 import net.liplum.events.WeaponSkillReleasePostEvent;
 import net.liplum.events.WeaponSkillReleasePreEvent;
+import net.liplum.lib.cores.lance.ILanceCore;
+import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.modifiers.LanceModifier;
-import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.lib.cores.lance.ILanceCore;
 import net.liplum.lib.utils.ItemTool;
-import net.liplum.lib.cores.lance.LanceArgs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -58,7 +58,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
                     LanceModifier mod = (LanceModifier) modifier;
                     length = FawItemUtil.calcuAttribute(length, mod.getSprintLengthDelta(), mod.getSprintLengthRate());
                     dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
-                    coolDown = FawItemUtil.calcuAttributeInRate(coolDown,mod.getCoolDownRate());
+                    coolDown = FawItemUtil.calcuAttributeInRate(coolDown, mod.getCoolDownRate());
                     args.setSprintLength(length)
                             .setStrength(dmg)
                             .setModifier(mod);

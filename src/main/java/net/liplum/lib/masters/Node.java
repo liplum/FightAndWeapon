@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class Node {
-    private Map<String,String> attributeAmplifiers = new HashMap<>();
+    private Map<String, String> attributeAmplifiers = new HashMap<>();
     private Set<String> skills = new HashSet<>();
 
 

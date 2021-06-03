@@ -31,14 +31,14 @@ public class WeaponArgs<This extends WeaponArgs> {
     }
 
     @Nonnull
-    public This setStrength(float strength) {
-        this.strength = strength;
-        return (This) this;
+    public float getStrength() {
+        return strength;
     }
 
     @Nonnull
-    public float getStrength() {
-        return strength;
+    public This setStrength(float strength) {
+        this.strength = strength;
+        return (This) this;
     }
 
     @Nonnull

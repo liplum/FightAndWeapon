@@ -16,11 +16,11 @@ public class MusicEnchantment extends Enchantment {
 
     @Override
     public int getMinEnchantability(int enchantmentLevel) {
-        return 1*enchantmentLevel*5;
+        return 1 * enchantmentLevel * 5;
     }
 
     @Override
     public int getMaxEnchantability(int enchantmentLevel) {
-        return 5*enchantmentLevel*5;
+        return 5 * enchantmentLevel * 5;
     }
 }

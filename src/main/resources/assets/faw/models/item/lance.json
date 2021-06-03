@@ -1,6 +1,6 @@
 {
-  "parent":"item/handheld",
-  "textures":{
-    "layer0":"faw:items/lance"
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "faw:items/lance"
   }
 }

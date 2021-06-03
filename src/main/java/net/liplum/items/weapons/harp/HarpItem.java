@@ -4,6 +4,7 @@ import net.liplum.api.weapon.IModifier;
 import net.liplum.events.WeaponSkillReleasePostEvent;
 import net.liplum.events.WeaponSkillReleasePreEvent;
 import net.liplum.lib.cores.harp.ContinuousHarpArgs;
+import net.liplum.lib.cores.harp.IHarpCore;
 import net.liplum.lib.cores.harp.SingleHarpArgs;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
@@ -11,13 +12,14 @@ import net.liplum.lib.modifiers.HarpModifier;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.ItemTool;
-import net.liplum.lib.cores.harp.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.*;
+import net.minecraft.util.ActionResult;
+import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -47,7 +49,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
                     HarpModifier mod = (HarpModifier) modifier;
                     ap = FawItemUtil.calcuAttribute(ap, mod.getAbilityPowerDelta(), mod.getAbilityPowerRate());
                     radius = FawItemUtil.calcuAttribute(radius, mod.getRadiusDelta(), mod.getRadiusRate());
-                    coolDown = FawItemUtil.calcuAttributeInRate(coolDown,mod.getCoolDownRate());
+                    coolDown = FawItemUtil.calcuAttributeInRate(coolDown, mod.getCoolDownRate());
                 }
                 SingleHarpArgs args = new SingleHarpArgs()
                         .setWorld(worldIn)
@@ -101,7 +103,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
             ap = FawItemUtil.calcuAttribute(ap, mod.getAbilityPowerDelta(), mod.getAbilityPowerRate());
             radius = FawItemUtil.calcuAttribute(radius, mod.getRadiusDelta(), mod.getRadiusRate());
             frequency = FawItemUtil.calcuAttribute(frequency, mod.getFrequencyDelta(), mod.getFrequencyRate());
-            frequency = MathUtil.fixMin(frequency,1);
+            frequency = MathUtil.fixMin(frequency, 1);
         }
         int currentDuration = maxDuration - count;
         int releasedCount = currentDuration / frequency;

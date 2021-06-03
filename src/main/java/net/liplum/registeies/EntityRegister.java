@@ -16,8 +16,11 @@ import java.util.LinkedList;
 public final class EntityRegister {
     public static final LinkedList<EntityEntry> EntityEntries = new LinkedList<>();
     private static int ID = 0;
+    public static final EntityEntry STRAIGHT_DAMAGE_ENTITY = build(
+            with(EntityEntryBuilder.create().entity(StraightDamageEntity.class), Names.Entity.StraightDamageEntity, ID++)
+                    .tracker(64, 10, true));
 
-    public static EntityEntry build(EntityEntryBuilder<?> b){
+    public static EntityEntry build(EntityEntryBuilder<?> b) {
         EntityEntry e = b.build();
         EntityEntries.addLast(e);
         return e;
@@ -28,14 +31,10 @@ public final class EntityRegister {
                 name(MetaData.MOD_ID + "." + name);
     }
 
-    public static final EntityEntry STRAIGHT_DAMAGE_ENTITY = build(
-            with(EntityEntryBuilder.create().entity(StraightDamageEntity.class), Names.Entity.StraightDamageEntity, ID++)
-                    .tracker(64, 10, true));
-
     @SubscribeEvent
     public static void onRegistry(RegistryEvent.Register<EntityEntry> event) {
         IForgeRegistry<EntityEntry> entityEntries = event.getRegistry();
-        for(EntityEntry i :EntityEntries){
+        for (EntityEntry i : EntityEntries) {
             entityEntries.register(i);
         }
     }

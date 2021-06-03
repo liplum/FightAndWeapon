@@ -45,6 +45,7 @@ public final class Names {
     public final static class Entity {
         public static final String StraightDamageEntity = "straight_damage";
     }
+
     public final static class Capability {
         public static final String Master = "master";
     }

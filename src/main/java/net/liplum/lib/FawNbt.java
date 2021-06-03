@@ -1,11 +1,11 @@
 package net.liplum.lib;
 
 import net.liplum.Tags;
-import net.liplum.lib.utils.Utils;
 import net.liplum.lib.utils.NbtUtil;
+import net.liplum.lib.utils.Utils;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagString;
 
 //TODO:Complete these notes

@@ -8,20 +8,19 @@ import java.util.Map;
 
 public final class GemstoneRegistry {
     private static GemstoneRegistry instance = new GemstoneRegistry();
+    private Map<String, IGemstone> gemstoneMap = new HashMap<>();
 
     public static GemstoneRegistry Instance() {
         return instance;
     }
 
-    private Map<String, IGemstone> gemstoneMap =new HashMap<>();
-
-    public void register(IGemstone gemstone){
-        gemstoneMap.put(gemstone.getRegisterName(),gemstone);
+    public void register(IGemstone gemstone) {
+        gemstoneMap.put(gemstone.getRegisterName(), gemstone);
     }
 
     @Nullable
-    public IGemstone getGemstone(String registerName){
-        if(gemstoneMap.containsKey(registerName)){
+    public IGemstone getGemstone(String registerName) {
+        if (gemstoneMap.containsKey(registerName)) {
             return gemstoneMap.get(registerName);
         }
         return null;

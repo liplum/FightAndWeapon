@@ -38,7 +38,7 @@ public final class EnderGemModifier {
         }
 
         @Override
-        public boolean releaseSkill(ILanceCore core,  LanceArgs args) {
+        public boolean releaseSkill(ILanceCore core, LanceArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
             float strength = args.getStrength();
@@ -50,7 +50,7 @@ public final class EnderGemModifier {
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
             Vector2D look = MathUtil.toV2D(player.getLookVec());
             for (EntityLivingBase e : allInRange) {
-                if (EntityUtil.canAttack(player,e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 2, sprintLength)) {
+                if (EntityUtil.canAttack(player, e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 2, sprintLength)) {
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                 }
             }

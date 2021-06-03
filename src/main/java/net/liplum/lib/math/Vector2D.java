@@ -18,6 +18,11 @@ public final class Vector2D {
         this(0, 0);
     }
 
+    public static Vector2D normalizedFromRadian(double radian) {
+        float fr = MathHelper.lfloor(radian);
+        return new Vector2D(MathHelper.sin(fr), MathHelper.cos(fr));
+    }
+
     public Vector2D add(Vector2D other) {
         return new Vector2D(x + other.x, y + other.y);
     }
@@ -101,11 +106,6 @@ public final class Vector2D {
      */
     public double angle(Vector2D other) {
         return Math.acos((this.dot(other)) / (this.abs() * other.abs()));
-    }
-
-    public static Vector2D normalizedFromRadian(double radian) {
-        float fr = MathHelper.lfloor(radian);
-        return new Vector2D(MathHelper.sin(fr), MathHelper.cos(fr));
     }
 
     public Vector2D normalized() {

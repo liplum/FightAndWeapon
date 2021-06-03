@@ -1,11 +1,11 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
-import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -220,7 +220,8 @@ public final class FawItemUtil {
     public static int calcuAttribute(int base, int deltaMaster, int deltaGem, float rateGem) {
         if (base < 0) {
             return -1;
-        } if(deltaMaster ==0 && deltaGem == 0 && rateGem == 0){
+        }
+        if (deltaMaster == 0 && deltaGem == 0 && rateGem == 0) {
             return base;
         }
         int res = (int) (((base + deltaMaster) + deltaGem) * (1 + rateGem));
@@ -228,7 +229,6 @@ public final class FawItemUtil {
     }
 
     /**
-     *
      * @param base
      * @param rate
      * @return
@@ -236,7 +236,7 @@ public final class FawItemUtil {
     public static int calcuAttributeInRate(int base, float rate) {
         if (base < 0) {
             return -1;
-        }else if(rate ==0){
+        } else if (rate == 0) {
             return base;
         }
         int res = (int) (base * (1 + rate));

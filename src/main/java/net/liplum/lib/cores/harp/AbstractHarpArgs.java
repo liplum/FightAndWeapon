@@ -4,7 +4,9 @@ import net.liplum.api.weapon.MagicToolArgs;
 
 public abstract class AbstractHarpArgs<This extends AbstractHarpArgs> extends MagicToolArgs<This> {
     private double radius = 0;
-    public AbstractHarpArgs(){}
+
+    public AbstractHarpArgs() {
+    }
 
     public double getRadius() {
         return radius;

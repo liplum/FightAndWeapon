@@ -1,17 +1,15 @@
 package net.liplum.items.weapons.harp;
 
 import net.liplum.lib.cores.harp.ContinuousHarpArgs;
+import net.liplum.lib.cores.harp.IHarpCore;
 import net.liplum.lib.cores.harp.SingleHarpArgs;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.Utils;
-import net.liplum.lib.cores.harp.IHarpCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
-import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.EnumHand;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;

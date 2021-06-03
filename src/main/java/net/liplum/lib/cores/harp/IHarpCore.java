@@ -1,10 +1,6 @@
 package net.liplum.lib.cores.harp;
 
 import net.liplum.api.weapon.IMagicToolCore;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.world.World;
 
 public interface IHarpCore extends IMagicToolCore {
     /**

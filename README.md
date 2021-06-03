@@ -5,6 +5,7 @@ Major Author : Liplum
 Programing : Liplum
 
 ## How to create a new Weapon Core.
+
 ```Java
 //Create a new class or just use a anonymous class. Make it extend a CONCRETE IWeaponCore class which you want
 ILanceCore newLanceCore = new ILanceCore() {
@@ -39,6 +40,7 @@ public static void onItemRegistry(RegistryEvent.Register<Item> event){
 ```
 
 ## How to create a new Gemstone.
+
 ```Java
 //New a gemstone object. Please only use lower case letters and underline.
 IGemstone newGem = new Gemstone("new_gem");
@@ -51,6 +53,7 @@ GemstoneRegistry.Instance().register(newGem);
 ```
 
 ## How to create a new Modifier.
+
 ```Java
 //Create a new class or just use a anonymous class. Make it extend a Modifier class which you want
 LanceModifier newModifier = new LanceModifier(){

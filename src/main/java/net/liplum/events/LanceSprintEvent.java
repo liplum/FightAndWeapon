@@ -15,7 +15,7 @@ public class LanceSprintEvent extends Event {
         this.args = args;
     }
 
-    public LanceArgs getArgs(){
+    public LanceArgs getArgs() {
         return args;
     }
 }

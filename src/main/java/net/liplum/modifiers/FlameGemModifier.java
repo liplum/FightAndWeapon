@@ -23,8 +23,8 @@ public class FlameGemModifier {
             EntityPlayer player = args.getPlayer();
 
             Vec3d face = player.getLookVec();
-            EntityLargeFireball fireball = new EntityLargeFireball(world,player,face.x,face.y,face.z);
-            EntityUtil.spawnEntityIfServer(world,fireball);
+            EntityLargeFireball fireball = new EntityLargeFireball(world, player, face.x, face.y, face.z);
+            EntityUtil.spawnEntityIfServer(world, fireball);
             return true;
         }
     };

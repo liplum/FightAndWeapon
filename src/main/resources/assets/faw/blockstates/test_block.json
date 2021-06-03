@@ -1,5 +1,7 @@
 {
   "variants": {
-    "": { "model": "neutrino:block/obsidian_obj" }
+    "": {
+      "model": "neutrino:block/obsidian_obj"
+    }
   }
 }

@@ -1,10 +1,10 @@
 package net.liplum.lib.utils;
 
 import net.liplum.Tags;
-import net.liplum.lib.FawNbt;
-import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
+import net.liplum.lib.FawNbt;
+import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.registeies.GemstoneRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -34,7 +34,6 @@ public final class FawGemUtil {
     }
 
     /**
-     *
      * @param itemStack
      * @return the first gemstone contained in the weapon. If this item is not a weapon then return false.
      */

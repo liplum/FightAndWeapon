@@ -12,7 +12,6 @@ public final class NbtUtil {
     }
 
     /**
-     *
      * @param itemStack
      * @return
      */
@@ -26,8 +25,7 @@ public final class NbtUtil {
     }
 
     /**
-     *
-     * @param nbt current NBT
+     * @param nbt    current NBT
      * @param subkey a key in the NBT map
      * @return
      */
@@ -36,16 +34,16 @@ public final class NbtUtil {
             return nbt.getCompoundTag(subkey);
         }
         NBTTagCompound newOne = new NBTTagCompound();
-        nbt.setTag(subkey,newOne);
+        nbt.setTag(subkey, newOne);
         return newOne;
     }
 
     public static NBTTagList getSubListOrCreate(@Nonnull NBTTagCompound nbt, @Nonnull String subkey, int type) {
         if (nbt.hasKey(subkey)) {
-            return nbt.getTagList(subkey,type);
+            return nbt.getTagList(subkey, type);
         }
         NBTTagList newOne = new NBTTagList();
-        nbt.setTag(subkey,newOne);
+        nbt.setTag(subkey, newOne);
         return newOne;
     }
 

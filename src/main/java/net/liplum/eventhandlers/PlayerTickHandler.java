@@ -2,7 +2,6 @@ package net.liplum.eventhandlers;
 
 import net.liplum.MetaData;
 import net.liplum.events.PlayerCollisionEvent;
-import net.liplum.lib.coroutine.CoroutineSystem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;

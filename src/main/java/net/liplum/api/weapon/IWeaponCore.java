@@ -23,6 +23,7 @@ public interface IWeaponCore {
 
     /**
      * Gets the knock back.the basic is 1.0F.
+     *
      * @return the strength of knock back
      */
     default float getKnockbackStrength() {

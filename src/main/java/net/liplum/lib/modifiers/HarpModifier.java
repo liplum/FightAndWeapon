@@ -1,14 +1,9 @@
 package net.liplum.lib.modifiers;
 
 import net.liplum.api.weapon.IMagicToolModifier;
-import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.cores.harp.ContinuousHarpArgs;
 import net.liplum.lib.cores.harp.IHarpCore;
 import net.liplum.lib.cores.harp.SingleHarpArgs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraft.util.EnumHand;
-import net.minecraft.world.World;
 
 public abstract class HarpModifier implements IMagicToolModifier<IHarpCore> {
     public double getRadiusDelta() {
@@ -19,18 +14,19 @@ public abstract class HarpModifier implements IMagicToolModifier<IHarpCore> {
         return 0;
     }
 
-    public int getMaxUseDelta(){
-        return 0;
-    }
-    public float getMaxUseRate(){
+    public int getMaxUseDelta() {
         return 0;
     }
 
-    public int getFrequencyDelta(){
+    public float getMaxUseRate() {
         return 0;
     }
 
-    public float getFrequencyRate(){
+    public int getFrequencyDelta() {
+        return 0;
+    }
+
+    public float getFrequencyRate() {
         return 0;
     }
 

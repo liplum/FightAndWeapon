@@ -10,7 +10,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 public class FAWItemExpireHandler {
     @SubscribeEvent
     public static void onFAWItemExpire(ItemExpireEvent event) {
-        if(event.getEntityItem() instanceof IndestructibleEntityItem){
+        if (event.getEntityItem() instanceof IndestructibleEntityItem) {
             event.setCanceled(true);
         }
     }

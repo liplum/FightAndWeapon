@@ -3,9 +3,9 @@ package net.liplum.lib.math;
 import net.minecraft.util.math.MathHelper;
 
 public class Point {
+    public static final Point Zero = new Point();
     public final double x;
     public final double y;
-    public static final Point Zero = new Point();
 
     public Point() {
         this(0, 0);

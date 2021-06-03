@@ -13,14 +13,22 @@ import java.util.Map;
 
 public class MasterCapability implements INBTSerializable<NBTTagCompound> {
 
-    private Map<String, LvExpPair> allTypesOfMasters = new HashMap<>();
+    private HashMap<String, LvExpPair> allMasters = new HashMap<>();
+
+    public HashMap<String, LvExpPair> cloneAllMasters() {
+        return (HashMap<String, LvExpPair>) allMasters.clone();
+    }
+
+    public void setAllMasters(HashMap<String, LvExpPair> newMasters) {
+        allMasters = newMasters;
+    }
 
     @Override
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbt = new NBTTagCompound();
         NBTTagList allMasters = new NBTTagList();
         nbt.setTag(Tags.Master.MasterList, allMasters);
-        for (Map.Entry<String, LvExpPair> entry : allTypesOfMasters.entrySet()) {
+        for (Map.Entry<String, LvExpPair> entry : this.allMasters.entrySet()) {
             String masterType = entry.getKey();
             LvExpPair lvExpPair = entry.getValue();
             int lv = lvExpPair.getLevel();
@@ -42,7 +50,7 @@ public class MasterCapability implements INBTSerializable<NBTTagCompound> {
             String type = master.getString(Tags.Master.MasterObject.Type);
             int lv = master.getInteger(Tags.Master.MasterObject.Level);
             long exp = master.getLong(Tags.Master.MasterObject.Exp);
-            allTypesOfMasters.put(type,new LvExpPair(lv,exp));
+            allMasters.put(type, new LvExpPair(lv, exp));
         }
     }
 }

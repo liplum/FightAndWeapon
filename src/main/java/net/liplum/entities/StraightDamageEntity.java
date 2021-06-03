@@ -31,8 +31,8 @@ public class StraightDamageEntity extends EntityLiving {
         List<EntityLivingBase> collided = world
                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox);
         for (EntityLivingBase e : collided) {
-            if(e != player){
-                e.attackEntityFrom(DamageSource.causePlayerDamage(player),straightDamage);
+            if (e != player) {
+                e.attackEntityFrom(DamageSource.causePlayerDamage(player), straightDamage);
             }
         }
         if (motionX == 0 && motionZ == 0) {

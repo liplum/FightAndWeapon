@@ -1,4 +1,4 @@
 package net.liplum.api.fight;
 
-public interface IActiveSkill extends ISkill{
+public interface IActiveSkill extends ISkill {
 }

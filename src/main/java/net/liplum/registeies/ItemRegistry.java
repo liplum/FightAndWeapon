@@ -12,7 +12,6 @@ import net.liplum.items.weapons.harp.HarpCoreTypes;
 import net.liplum.items.weapons.harp.HarpItem;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceItem;
-import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -94,7 +93,7 @@ public final class ItemRegistry {
     //
     private static Item with(Item item, String name, CreativeTabs itemGroup) {
         Items.addLast(item);
-        return Names.setRegisterName(item,name).
+        return Names.setRegisterName(item, name).
                 setUnlocalizedName(Names.prefixUnloc(name)).
                 setCreativeTab(itemGroup);
     }

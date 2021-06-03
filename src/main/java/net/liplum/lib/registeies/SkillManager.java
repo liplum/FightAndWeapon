@@ -12,12 +12,11 @@ import java.util.Set;
 
 public final class SkillManager {
     private final static SkillManager instance = new SkillManager();
+    private Map<Class<? extends Event>, Set<IPassiveSkill>> passiveSkills = new HashMap<>();
 
     public static SkillManager Instance() {
         return instance;
     }
-
-    private Map<Class<? extends Event>, Set<IPassiveSkill>> passiveSkills = new HashMap<>();
 
     public void registerPassiveSkill(@Nonnull IPassiveSkill passiveSkill) {
         Class<? extends Event> eventType = passiveSkill.getEventType();
@@ -29,13 +28,12 @@ public final class SkillManager {
     }
 
     /**
-     *
      * @param eventType
      * @return all the passive skills or null if there's no responding passive skill registered of this event.
      */
     @Nullable
-    public IPassiveSkill[] getPassiveSkills(Class<? extends Event> eventType){
-        if(passiveSkills.containsKey(eventType)){
+    public IPassiveSkill[] getPassiveSkills(Class<? extends Event> eventType) {
+        if (passiveSkills.containsKey(eventType)) {
             return passiveSkills.get(eventType).toArray(new IPassiveSkill[0]);
         }
         return null;

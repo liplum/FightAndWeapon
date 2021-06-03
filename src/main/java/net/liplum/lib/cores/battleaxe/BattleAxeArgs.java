@@ -4,7 +4,9 @@ import net.liplum.api.weapon.WeaponArgs;
 
 public class BattleAxeArgs extends WeaponArgs<BattleAxeArgs> {
     private float sweepRange = 0;
-    public BattleAxeArgs(){}
+
+    public BattleAxeArgs() {
+    }
 
     public float getSweepRange() {
         return sweepRange;

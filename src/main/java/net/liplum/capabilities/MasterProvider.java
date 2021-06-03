@@ -15,7 +15,7 @@ public class MasterProvider implements ICapabilitySerializable<NBTTagCompound> {
 
     public MasterProvider() {
         instance = new MasterCapability();
-        capability= CapabilityRegistry.Master_Capability;
+        capability = CapabilityRegistry.Master_Capability;
     }
 
     @Override

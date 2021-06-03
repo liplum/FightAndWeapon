@@ -23,7 +23,7 @@ public class IndestructibleEntityItem extends EntityItem {
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
-        if(source.getDamageType().equals(DamageSource.OUT_OF_WORLD.getDamageType())){
+        if (source.getDamageType().equals(DamageSource.OUT_OF_WORLD.getDamageType())) {
             return true;
         }
         return false;

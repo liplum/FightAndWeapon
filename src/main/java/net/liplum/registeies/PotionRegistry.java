@@ -14,18 +14,16 @@ import java.util.LinkedList;
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public final class PotionRegistry {
     public static final LinkedList<Potion> Potions = new LinkedList<>();
-
+    /**
+     * Unstoppable:Who has this potion effect won't be attack by other mobs and players.
+     */
+    public static final Potion Unstoppable_Potion = with(new UnstoppablePotion(), Names.Potion.UnstoppablePotion);
 
     public static Potion with(Potion potion, String name) {
         Potions.add(potion);
         return potion.setRegistryName(Names.prefixRegister(name)).
                 setPotionName(Names.prefixPotionUnloc(name));
     }
-
-    /**
-     * Unstoppable:Who has this potion effect won't be attack by other mobs and players.
-     */
-    public static final Potion Unstoppable_Potion = with(new UnstoppablePotion(), Names.Potion.UnstoppablePotion);
 
     @SubscribeEvent
     public static void onPotionRegistry(RegistryEvent.Register<Potion> event) {
