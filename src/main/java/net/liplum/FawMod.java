@@ -1,5 +1,6 @@
 package net.liplum;
 
+import net.liplum.lib.utils.MasterUtil;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -29,5 +30,6 @@ public class FawMod {
     public void init(FMLInitializationEvent event) {
         Gemstones.load();
         logger.info("Gemstones loaded successfully.");
+        MasterUtil.init();
     }
 }
