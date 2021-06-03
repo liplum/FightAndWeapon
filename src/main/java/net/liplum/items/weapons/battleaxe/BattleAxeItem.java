@@ -19,10 +19,12 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import javax.annotation.Nonnull;
+
 public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
     private IBattleAxeCore core;
 
-    public BattleAxeItem(IBattleAxeCore core) {
+    public BattleAxeItem(@Nonnull IBattleAxeCore core) {
         super();
         this.core = core;
     }

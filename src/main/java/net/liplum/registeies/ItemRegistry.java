@@ -1,7 +1,9 @@
 package net.liplum.registeies;
 
+import net.liplum.Gemstones;
 import net.liplum.MetaData;
 import net.liplum.Names;
+import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.items.gemstones.RubyItem;
 import net.liplum.items.weapons.QuartzAxeItem;
 import net.liplum.items.weapons.QuartzSwordItem;
@@ -39,15 +41,25 @@ public final class ItemRegistry {
     //------------------------------------------------------------------------------------------------------------------------------
     //  Registers all items
     //
-    public static final Item Ruby_Item = gemstone(new RubyItem(), Names.Item.RubyItem);
+    //Gemstone
+    public static final Item Ruby_Item = gemstone(new GemstoneItem(Gemstones.Ruby_Gemstone));
+
+    //Some test items
     public static final Item QUARTZ_SWORD_ITEM = weapon(new QuartzSwordItem(), Names.Item.QuartzSwordItem);
     public static final Item Quartz_Axe_Item = weapon(new QuartzAxeItem(Item.ToolMaterial.IRON), Names.Item.QuartzAxeItem);
     public static final Item Test_Sword_Item = weapon(new TestSwordItem(), Names.Item.TestSwordItem);
+
+    //Battle Axe
     public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCoreTypes.Normal), Names.Item.BattleAxeItem);
+
+    //Lance
     public static final Item Lance_Item = weapon(new LanceItem(LanceCoreTypes.Normal), Names.Item.Lance.LanceItem);
     public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCoreTypes.KnightLance), Names.Item.Lance.KnightLanceItem);
+
+    //Harp
     public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
 
+    //Block
     public static final Item Test_Block_Item = forge(new ItemBlock(BlockRegistry.TestBlock), "test_block");
 
     //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
@@ -98,8 +110,8 @@ public final class ItemRegistry {
                 setCreativeTab(itemGroup);
     }
 
-    public static Item gemstone(Item item, String name) {
-        return with(item, name, ItemGroupsRegistry.FawGemstones);
+    public static Item gemstone(GemstoneItem item) {
+        return with(item, item.getGemstone().getRegisterName(), ItemGroupsRegistry.FawGemstones);
     }
 
     public static Item weapon(Item item, String name) {

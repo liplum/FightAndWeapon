@@ -25,7 +25,6 @@ public final class Names {
     }
 
     public static class Item {
-        public static final String RubyItem = "ruby";
         public static final String MaterialQuartz = "material_quartz";
         public static final String QuartzSwordItem = "quartz_sword";
         public static final String QuartzAxeItem = "quartz_axe";
