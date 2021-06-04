@@ -15,6 +15,7 @@ public class Category {
     public static final Category Single = new Category(Names.Category.Single);
     private static Map<String, Category> AllCategories = new HashMap<>();
     public final String name;
+
     public Category(String name) {
         this.name = name;
         AllCategories.put(name, this);

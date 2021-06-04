@@ -1,6 +1,6 @@
 package net.liplum.lib.masters;
 
-public class LvExpPair implements Cloneable{
+public class LvExpPair implements Cloneable {
     private int level = 0;
     private long exp = 0;
 

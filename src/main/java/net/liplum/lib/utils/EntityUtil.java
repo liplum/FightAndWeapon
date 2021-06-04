@@ -50,7 +50,7 @@ public class EntityUtil {
         return true;
     }
 
-    public static void setRooting(EntityLivingBase livingEntity,double originX,double originY,double originZ){
-        PhysicsTool.setPosition(livingEntity,originX,originY,originZ);
+    public static void setRooting(EntityLivingBase livingEntity, double originX, double originY, double originZ) {
+        PhysicsTool.setPosition(livingEntity, originX, originY, originZ);
     }
 }

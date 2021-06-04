@@ -2,6 +2,7 @@ package net.liplum;
 
 import net.liplum.lib.utils.MasterUtil;
 import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registeies.FawNetworkRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
@@ -23,13 +24,15 @@ public class FawMod {
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         CapabilityRegistry.load();
-        logger.info("Capabilities loaded successfully.");
+        logger.info("Capability Component loaded successfully.");
+        FawNetworkRegistry.load();
+        logger.info("Network Component loaded successfully.");
     }
 
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) {
         Gemstones.load();
-        logger.info("Gemstones loaded successfully.");
+        logger.info("Gemstone Component loaded successfully.");
         MasterUtil.init();
     }
 }

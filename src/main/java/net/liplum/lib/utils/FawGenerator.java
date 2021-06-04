@@ -1,7 +1,6 @@
 package net.liplum.lib.utils;
 
 import net.liplum.Tags;
-import net.liplum.registeies.ItemRegistry;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
