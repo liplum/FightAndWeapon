@@ -32,7 +32,9 @@ public final class Names {
         public static final String BattleAxeItem = "battle_axe";
 
         public static class Lance {
-            public static final String LanceItem = "lance";
+            public static final String ArenaLanceItem = "arena_lance";
+            public static final String TrainingLanceItem = "training_lance";
+            public static final String LightLanceItem = "light_lance";
             public static final String KnightLanceItem = "knight_lance";
         }
 

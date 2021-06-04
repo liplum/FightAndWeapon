@@ -10,7 +10,7 @@ import net.minecraft.nbt.NBTTagString;
 
 public final class FawGenerator {
     public static ItemStack genWeaponWithGemstone(Item item, String gemstoneName) {
-        ItemStack itemStack = new ItemStack(ItemRegistry.Lance_Item);
+        ItemStack itemStack = new ItemStack(item);
 
         NBTTagList gemstoneList = FawNbtTool.getGemstoneList(itemStack);
 

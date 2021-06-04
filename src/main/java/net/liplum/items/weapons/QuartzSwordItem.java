@@ -34,9 +34,9 @@ public class QuartzSwordItem extends ItemSword {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, Names.Gemstone.Ruby));
-        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, Names.Gemstone.Endergem));
-        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Lance_Item, Names.Gemstone.Flamegem));
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.Ruby));
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.Endergem));
+        playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.Flamegem));
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 

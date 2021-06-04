@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "faw:items/lance"
+    "layer0": "faw:items/training_lance"
   }
 }

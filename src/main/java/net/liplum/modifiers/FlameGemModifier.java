@@ -14,7 +14,7 @@ public class FlameGemModifier {
     public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
         public ILanceCore getCoreType() {
-            return LanceCoreTypes.Normal;
+            return LanceCoreTypes.LightLance;
         }
 
         @Override

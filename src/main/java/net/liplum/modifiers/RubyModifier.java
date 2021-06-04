@@ -28,7 +28,7 @@ public final class RubyModifier {
 
         @Override
         public ILanceCore getCoreType() {
-            return LanceCoreTypes.Normal;
+            return LanceCoreTypes.LightLance;
         }
     };
 }

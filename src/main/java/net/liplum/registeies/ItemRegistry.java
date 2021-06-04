@@ -4,7 +4,6 @@ import net.liplum.Gemstones;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.items.gemstones.GemstoneItem;
-import net.liplum.items.gemstones.RubyItem;
 import net.liplum.items.weapons.QuartzAxeItem;
 import net.liplum.items.weapons.QuartzSwordItem;
 import net.liplum.items.weapons.TestSwordItem;
@@ -53,8 +52,10 @@ public final class ItemRegistry {
     public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCoreTypes.Normal), Names.Item.BattleAxeItem);
 
     //Lance
-    public static final Item Lance_Item = weapon(new LanceItem(LanceCoreTypes.Normal), Names.Item.Lance.LanceItem);
+    public static final Item Training_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TrainingLance), Names.Item.Lance.TrainingLanceItem);
+    public static final Item Light_Lance_Item = weapon(new LanceItem(LanceCoreTypes.LightLance), Names.Item.Lance.LightLanceItem);
     public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCoreTypes.KnightLance), Names.Item.Lance.KnightLanceItem);
+    public static final Item Arena_Lance_Item = weapon(new LanceItem(LanceCoreTypes.ArenaLance), Names.Item.Lance.ArenaLanceItem);
 
     //Harp
     public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
@@ -68,7 +69,7 @@ public final class ItemRegistry {
     //  Sets the icon of FAW item group.
     //
     static {
-        ItemGroupsRegistry.FawWeapons.setIcon(new ItemStack(Lance_Item));
+        ItemGroupsRegistry.FawWeapons.setIcon(new ItemStack(Light_Lance_Item));
         ItemGroupsRegistry.FawGemstones.setIcon(new ItemStack(Ruby_Item));
         //ItemGroupsRegistry.FawForges.setIcon(new ItemStack(Ruby_Item));
     }

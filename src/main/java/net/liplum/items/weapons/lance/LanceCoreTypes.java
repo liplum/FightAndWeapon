@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.WaitForNextTick;
 import net.liplum.enumerator.Yield;
 import net.liplum.events.LanceSprintEvent;
@@ -44,7 +45,29 @@ public final class LanceCoreTypes {
         }
     };
 
-    public static final ILanceCore Normal = new ILanceCore() {
+    public static final ILanceCore TrainingLance = new ILanceCore() {
+        @Override
+        public boolean releaseSkill(LanceArgs args) {
+            return false;
+        }
+
+        @Override
+        public float getSprintLength() {
+            return 0;
+        }
+
+        @Override
+        public int getCoolDown() {
+            return 0;
+        }
+
+        @Override
+        public float getStrength() {
+            return 5;
+        }
+    };
+
+    public static final ILanceCore LightLance = new ILanceCore() {
         @Override
         public boolean releaseSkill(LanceArgs args) {
             boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
@@ -101,6 +124,7 @@ public final class LanceCoreTypes {
             return 5;
         }
     };
+
     public static final ILanceCore KnightLance = new ILanceCore() {
 
         @Override
@@ -131,6 +155,70 @@ public final class LanceCoreTypes {
         @Override
         public float getSprintLength() {
             return 4;
+        }
+
+        @Override
+        public float getStrength() {
+            return 6;
+        }
+    };
+
+    public static final ILanceCore ArenaLance = new ILanceCore() {
+        @Override
+        public boolean releaseSkill(LanceArgs args) {
+            EntityPlayer player = args.getPlayer();
+            World world = args.getWorld();
+            double x = player.posX,
+                    y = player.posY,
+                    z = player.posZ;
+            float strength = args.getStrength();
+            if (!world.isRemote) {
+                CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Coroutine(new Yield() {
+                    private int duration = 20;
+
+                    @Override
+                    protected void runTask() {
+                        if (duration > 0) {
+                            EntityUtil.setRooting(player,x,y,z);
+                            duration--;
+                            yieldReturn(new WaitForNextTick());
+                        } else {
+                            AxisAlignedBB playerBox = player.getEntityBoundingBox();
+                            List<EntityLivingBase> allInRange = world
+                                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(3D, 0.25D, 3D));
+                            allInRange.remove(player);
+                            EntityLivingBase target;
+                            if (allInRange.isEmpty()) {
+                                return;
+                            } else if (allInRange.size() == 1) {
+                                target = allInRange.get(0);
+                            } else {
+                                target = (EntityLivingBase) allInRange.stream().sorted((e1, e2) -> {
+                                    double d1 = player.getDistanceSq(e1);
+                                    double d2 = player.getDistanceSq(e2);
+                                    if (d1 == d2) {
+                                        return 0;
+                                    }
+                                    return d1 > d2 ? 1 : -1;
+                                }).toArray()[0];
+                            }
+                            target.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.5F * strength);
+                            return;
+                        }
+                    }
+                }));
+            }
+            return true;
+        }
+
+        @Override
+        public float getSprintLength() {
+            return 0;
+        }
+
+        @Override
+        public int getCoolDown() {
+            return 200;
         }
 
         @Override
