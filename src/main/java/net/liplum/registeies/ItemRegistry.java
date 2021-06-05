@@ -63,6 +63,7 @@ public final class ItemRegistry {
 
     //Block
     public static final Item Test_Block_Item = forge(new ItemBlock(BlockRegistry.TestBlock), "test_block");
+    public static final Item Test_Func_Block_Item = forge(new ItemBlock(BlockRegistry.TestFuncBlock), "test_func_block");
 
     //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
     //------------------------------------------------------------------------------------------------------------------------------

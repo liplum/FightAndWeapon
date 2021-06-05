@@ -1,0 +1,6 @@
+{
+    "parent":"block/cube_all",
+    "textures":{
+        "all":"faw:block/test_func_block"
+    }
+}
