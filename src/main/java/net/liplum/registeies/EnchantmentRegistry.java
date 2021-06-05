@@ -1,5 +1,6 @@
 package net.liplum.registeies;
 
+import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.enchantments.MusicEnchantment;
@@ -22,7 +23,7 @@ public final class EnchantmentRegistry {
     public static Enchantment with(Enchantment enchantment, String name) {
         Enchantments.addLast(enchantment);
         return enchantment.setRegistryName(Names.prefixRegister(name)).
-                setName(Names.prefixUnloc(name));
+                setName(I18ns.prefixUnloc(name));
     }
 
     @SubscribeEvent

@@ -1,8 +1,8 @@
 package net.liplum.lib.items.weaponutils;
 
 import net.liplum.Tags;
-import net.liplum.lib.FawNbt;
-import net.liplum.lib.utils.NbtUtil;
+import net.liplum.lib.nbt.FawNbt;
+import net.liplum.lib.nbt.NbtUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 

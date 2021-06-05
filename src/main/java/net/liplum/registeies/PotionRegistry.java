@@ -1,5 +1,6 @@
 package net.liplum.registeies;
 
+import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.potions.UnstoppablePotion;
@@ -22,7 +23,7 @@ public final class PotionRegistry {
     public static Potion with(Potion potion, String name) {
         Potions.add(potion);
         return potion.setRegistryName(Names.prefixRegister(name)).
-                setPotionName(Names.prefixPotionUnloc(name));
+                setPotionName(I18ns.prefixPotionUnloc(name));
     }
 
     @SubscribeEvent

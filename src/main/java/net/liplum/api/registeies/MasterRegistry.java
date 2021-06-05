@@ -1,4 +1,4 @@
-package net.liplum.lib.registeies;
+package net.liplum.api.registeies;
 
 import net.liplum.lib.masters.Master;
 

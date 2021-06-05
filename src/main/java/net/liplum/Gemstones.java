@@ -2,7 +2,7 @@ package net.liplum;
 
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.lib.items.gemstone.Gemstone;
-import net.liplum.lib.registeies.GemstoneRegistry;
+import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.modifiers.EnderGemModifier;
 import net.liplum.modifiers.FlameGemModifier;
 import net.liplum.modifiers.RubyModifier;

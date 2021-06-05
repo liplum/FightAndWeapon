@@ -1,6 +1,7 @@
 package net.liplum.registeies;
 
 import net.liplum.Gemstones;
+import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.items.gemstones.GemstoneItem;
@@ -107,7 +108,7 @@ public final class ItemRegistry {
     private static Item with(Item item, String name, CreativeTabs itemGroup) {
         Items.addLast(item);
         return Names.setRegisterName(item, name).
-                setUnlocalizedName(Names.prefixUnloc(name)).
+                setUnlocalizedName(I18ns.prefixUnloc(name)).
                 setCreativeTab(itemGroup);
     }
 

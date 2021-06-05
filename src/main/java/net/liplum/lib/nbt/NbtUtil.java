@@ -1,4 +1,4 @@
-package net.liplum.lib.utils;
+package net.liplum.lib.nbt;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;

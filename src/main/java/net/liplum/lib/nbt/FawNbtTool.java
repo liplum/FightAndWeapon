@@ -1,6 +1,5 @@
-package net.liplum.lib.utils;
+package net.liplum.lib.nbt;
 
-import net.liplum.lib.FawNbt;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

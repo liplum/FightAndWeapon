@@ -2,7 +2,7 @@ package net.liplum.capabilities;
 
 import net.liplum.Tags;
 import net.liplum.lib.masters.LvExpPair;
-import net.liplum.lib.utils.NbtUtil;
+import net.liplum.lib.nbt.NbtUtil;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;

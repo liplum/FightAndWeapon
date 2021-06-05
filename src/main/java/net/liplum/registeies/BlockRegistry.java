@@ -1,5 +1,6 @@
 package net.liplum.registeies;
 
+import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.blocks.forge.TestBlock;
@@ -29,7 +30,7 @@ public final class BlockRegistry {
     private static Block with(Block block, String name, CreativeTabs itemGroup) {
         Blocks.addLast(block);
         return Names.setRegisterName(block, name).
-                setUnlocalizedName(Names.prefixUnloc(name)).
+                setUnlocalizedName(I18ns.prefixUnloc(name)).
                 setCreativeTab(itemGroup);
     }
 

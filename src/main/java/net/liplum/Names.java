@@ -8,14 +8,6 @@ public final class Names {
         return String.format("%s:%s", MetaData.MOD_ID, name);
     }
 
-    public static String prefixUnloc(String name) {
-        return String.format("%s.%s", MetaData.MOD_ID, name);
-    }
-
-    public static String prefixPotionUnloc(String name) {
-        return String.format("%s.%s.%s", "potion", MetaData.MOD_ID, name);
-    }
-
     public static <T extends IForgeRegistryEntry.Impl<T>> T setRegisterName(T namedObject, String registerName) {
         return namedObject.setRegistryName(MetaData.MOD_ID, registerName);
     }

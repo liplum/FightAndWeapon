@@ -1,3 +1,17 @@
+#Hotkey
+hotkey.category.faw=Fight And Weapon's hotkeys
+hotkey.faw.master=Open Master GUI
+
+#Item Groups
+itemGroup.faw_weapons=FAW's Weapons
+itemGroup.faw_gemstones=FAW's Gemstones
+
+#Enchantments
+enchantment.faw.music=Music
+
+#Potions
+potion.faw.unstoppable=Unstoppable
+
 #Items
 item.faw.ruby.name=Ruby
 item.faw.quartz_sword.name=Quartz Sword
@@ -9,16 +23,7 @@ item.faw.arena_lance.name=Arena Lance
 item.faw.light_lance.name=Light Lance
 item.faw.knight_lance.name=Knight Lance
 
-
 item.faw.battle_axe.name=Battle Axe
+
 item.faw.harp.name=Harp
 
-#Item Groups
-itemGroup.faw_weapons=FAW's Weapons
-itemGroup.faw_gemstones=FAW's Gemstones
-
-#Enchantments
-enchantment.faw.music=Music
-
-#Potions
-potion.faw.unstoppable=Unstoppable

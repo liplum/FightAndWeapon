@@ -4,7 +4,7 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.api.weapon.IWeaponCore;
-import net.liplum.lib.registeies.SkillManager;
+import net.liplum.api.registeies.SkillManager;
 
 import javax.annotation.Nullable;
 import java.util.HashMap;
