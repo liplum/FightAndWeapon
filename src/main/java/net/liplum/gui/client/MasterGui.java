@@ -1,11 +1,11 @@
 package net.liplum.gui.client;
 
+import net.liplum.gui.server.MasterContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Container;
 
 public class MasterGui extends GuiContainer {
-    public MasterGui(Container inventorySlotsIn) {
-        super(inventorySlotsIn);
+    public MasterGui() {
+        super(new MasterContainer());
     }
 
     @Override

@@ -11,7 +11,7 @@ public final class CapabilityRegistry {
     @CapabilityInject(MasterCapability.class)
     public static Capability<MasterCapability> Master_Capability;
 
-    public static void load() {
+    public static void init() {
         register(MasterCapability.class, new CapabilityStorage<>());
     }
 
