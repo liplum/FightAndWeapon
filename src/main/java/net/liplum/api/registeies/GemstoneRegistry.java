@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class GemstoneRegistry {
-    private static GemstoneRegistry instance = new GemstoneRegistry();
-    private Map<String, IGemstone> gemstoneMap = new HashMap<>();
+    private static final GemstoneRegistry instance = new GemstoneRegistry();
+    private final Map<String, IGemstone> gemstoneMap = new HashMap<>();
 
     public static GemstoneRegistry Instance() {
         return instance;

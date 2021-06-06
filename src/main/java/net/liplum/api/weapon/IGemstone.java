@@ -1,11 +1,14 @@
 package net.liplum.api.weapon;
 
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.lib.items.WeaponBaseItem;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.awt.*;
 
 public interface IGemstone {
+
+    String getRegisterName();
 
     boolean hasModifierOf(IWeaponCore core);
 
@@ -14,14 +17,26 @@ public interface IGemstone {
      * @return the modifier or null if it didn't has a corresponding modifier of the core in this gemstone.
      */
     @Nullable
-    IModifier getModifierOf(IWeaponCore core);
+    IModifier<?> getModifierOf(IWeaponCore core);
 
-    @Nullable
+    @Nonnull
     IPassiveSkill<?>[] getPassiveSkillsOf(IWeaponCore core);
 
-    IGemstone addModifier(IModifier newModifier);
+    IGemstone addModifier(IModifier<?> newModifier);
 
-    IGemstone addPassiveSkill(IWeaponCore core,IPassiveSkill newPassiveSkill);
+    IGemstone addPassiveSkillToCore(IWeaponCore core, IPassiveSkill<?> newPassiveSkill);
 
-    String getRegisterName();
+    IGemstone addPassiveSkillToWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> newPassiveSkill);
+
+    IGemstone addPassiveSkillToAll(IPassiveSkill<?> newPassiveSkill);
+
+    IGemstone removeModifier(IWeaponCore core);
+
+    IGemstone removeModifier(IModifier<?> modifier);
+
+    IGemstone removePassiveSkillFromCore(IWeaponCore core, IPassiveSkill<?> passiveSkill);
+
+    IGemstone removePassiveSkillFromWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> passiveSkill);
+
+    IGemstone removePassiveSkillFromAll(IPassiveSkill<?> passiveSkill);
 }

@@ -1,6 +1,7 @@
 package net.liplum.lib.cores.harp;
 
 import net.liplum.api.weapon.IMagicToolCore;
+import net.liplum.items.weapons.harp.HarpItem;
 
 public interface IHarpCore extends IMagicToolCore {
     /**
@@ -24,4 +25,9 @@ public interface IHarpCore extends IMagicToolCore {
     boolean continueSkill(ContinuousHarpArgs args);
 
     boolean releaseSkill(SingleHarpArgs args);
+
+    @Override
+    default Class<HarpItem> getWeaponType() {
+        return HarpItem.class;
+    }
 }

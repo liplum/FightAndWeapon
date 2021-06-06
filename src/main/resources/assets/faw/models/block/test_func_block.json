@@ -1,6 +1,6 @@
 {
-    "parent":"block/cube_all",
-    "textures":{
-        "all":"faw:block/test_func_block"
-    }
+  "parent": "block/cube_all",
+  "textures": {
+    "all": "faw:blocks/test_func_block"
+  }
 }

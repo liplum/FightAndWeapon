@@ -94,8 +94,8 @@ public final class ItemRegistry {
         ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
     }
 
-    @SideOnly(Side.CLIENT)
     @SubscribeEvent
+    @SideOnly(Side.CLIENT)
     public static void onModelRegistry(ModelRegistryEvent event) {
         for (Item item : Items) {
             registerModel(item);

@@ -1,5 +1,5 @@
 {
   "loader": "forge:obj",
-  "model": "faw:models/block/test_block.obj",
+  "model": "faw:models/blocks/test_block.obj",
   "flip-v": true
 }

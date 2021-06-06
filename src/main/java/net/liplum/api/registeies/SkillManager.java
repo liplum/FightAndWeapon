@@ -17,19 +17,20 @@ import java.util.*;
 
 public final class SkillManager {
     private final static SkillManager instance = new SkillManager();
-    private final Map<Class<? extends Event>, Set<IPassiveSkill<? extends Event>>> passiveSkills = new HashMap<>();
+    private final Map<Class<?>, Set<IPassiveSkill<?>>> passiveSkills = new HashMap<>();
 
     public static SkillManager Instance() {
         return instance;
     }
 
-    public void registerPassiveSkill(@Nonnull IPassiveSkill<?> passiveSkill) {
+    public <T extends Event> IPassiveSkill<T> registerPassiveSkill(@Nonnull IPassiveSkill<T> passiveSkill) {
         Class<? extends Event> eventType = passiveSkill.getEventType();
         if (passiveSkills.containsKey(eventType)) {
             passiveSkills.get(eventType).add(passiveSkill);
         }
         Set<IPassiveSkill<?>> skills = new HashSet<>();
         passiveSkills.put(eventType, skills);
+        return passiveSkill;
     }
 
     /**
@@ -64,10 +65,9 @@ public final class SkillManager {
             IWeaponCore core = weapon.getCore();
             IGemstone gemstone = FawGemUtil.getGemstoneFrom(itemStack);
             if (gemstone != null) {
-                IPassiveSkill<T>[] passiveSkills = (IPassiveSkill<T>[]) gemstone.getPassiveSkillsOf(core);
-                if (passiveSkills != null) {
-                    Collections.addAll(allSkills, passiveSkills);
-                }
+                //I told that it can be converted so it must can be converted!!!
+                IPassiveSkill<T>[] skills = (IPassiveSkill<T>[]) gemstone.getPassiveSkillsOf(core);
+                Collections.addAll(allSkills, skills);
             }
         }
         return allSkills;

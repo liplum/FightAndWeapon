@@ -1,11 +1,11 @@
 package net.liplum.lib.utils;
 
 import net.liplum.Tags;
+import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
-import net.liplum.lib.nbt.FawNbt;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.api.registeies.GemstoneRegistry;
+import net.liplum.lib.nbt.FawNbt;
 import net.liplum.lib.nbt.NbtUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;

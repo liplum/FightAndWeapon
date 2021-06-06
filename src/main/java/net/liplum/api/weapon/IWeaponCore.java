@@ -1,5 +1,7 @@
 package net.liplum.api.weapon;
 
+import net.liplum.lib.items.WeaponBaseItem;
+
 public interface IWeaponCore {
     /**
      * Gets the cool down time of weapon.
@@ -29,4 +31,6 @@ public interface IWeaponCore {
     default float getKnockbackStrength() {
         return 1;
     }
+
+    Class<? extends WeaponBaseItem<?>> getWeaponType();
 }
