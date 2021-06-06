@@ -5,6 +5,7 @@ hotkey.faw.master=Open Master GUI
 #Item Groups
 itemGroup.faw_weapons=FAW's Weapons
 itemGroup.faw_gemstones=FAW's Gemstones
+itemGroup.faw_forges=FAW's Forges
 
 #Enchantments
 enchantment.faw.music=Music
