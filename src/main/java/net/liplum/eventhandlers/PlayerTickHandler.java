@@ -16,13 +16,15 @@ import java.util.List;
 public class PlayerTickHandler {
     @SubscribeEvent
     public static void postPlayerCollisionEvent(TickEvent.PlayerTickEvent e) {
-        EntityPlayer p = e.player;
-        World w = p.world;
-        if (!w.isRemote) {
-            List<Entity> collided = w
-                    .getEntitiesWithinAABB(Entity.class, p.getEntityBoundingBox());
-            if (collided.size() > 0 && collided.get(0) != p) {
-                MinecraftForge.EVENT_BUS.post(new PlayerCollisionEvent(p, collided.toArray(new Entity[0])));
+        if (e.phase == TickEvent.Phase.START) {
+            EntityPlayer p = e.player;
+            World w = p.world;
+            if (!w.isRemote) {
+                List<Entity> collided = w
+                        .getEntitiesWithinAABB(Entity.class, p.getEntityBoundingBox());
+                if (collided.size() > 0 && collided.get(0) != p) {
+                    MinecraftForge.EVENT_BUS.post(new PlayerCollisionEvent(p, collided.toArray(new Entity[0])));
+                }
             }
         }
     }

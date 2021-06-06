@@ -3,6 +3,7 @@ package net.liplum.api.weapon;
 import net.liplum.api.fight.IPassiveSkill;
 
 import javax.annotation.Nullable;
+import java.awt.*;
 
 public interface IGemstone {
 
@@ -15,9 +16,12 @@ public interface IGemstone {
     @Nullable
     IModifier getModifierOf(IWeaponCore core);
 
+    @Nullable
+    IPassiveSkill<?>[] getPassiveSkillsOf(IWeaponCore core);
+
     IGemstone addModifier(IModifier newModifier);
 
-    IGemstone addPassiveSkill(IPassiveSkill newPassiveSkill);
+    IGemstone addPassiveSkill(IWeaponCore core,IPassiveSkill newPassiveSkill);
 
     String getRegisterName();
 }
