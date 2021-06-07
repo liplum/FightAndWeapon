@@ -63,6 +63,10 @@ public final class Names {
         public static final String UnstoppablePotion = "unstoppable";
     }
 
+    public final static class Command{
+        public static final String Inlay = "inlay";
+    }
+
     public final static class Gemstone {
         public static final String Ruby = "ruby";
         public static final String Endergem = "endergem";

@@ -10,13 +10,14 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.LinkedList;
+import java.util.Set;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public class PassiveSkillHandler {
     @SubscribeEvent
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent e) {
         EntityPlayer player = e.player;
-        LinkedList<IPassiveSkill<TickEvent.PlayerTickEvent>> skills =
+        Set<IPassiveSkill<TickEvent.PlayerTickEvent>> skills =
                 SkillUtil.getPassiveSkillsFromPlayer(TickEvent.PlayerTickEvent.class, player);
         for (IPassiveSkill<TickEvent.PlayerTickEvent> skill : skills) {
             PSkillResult res = skill.onTrigger(e);

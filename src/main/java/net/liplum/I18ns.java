@@ -16,6 +16,9 @@ public final class I18ns {
     public static String prefixHotkeyCategoryUnloc(String name) {
         return String.format("hotkey.category.%s", name);
     }
+    public static String prefixCommandUnloc(String name) {
+        return String.format("command.%s.usage", name);
+    }
 
     public static final class Hotkey {
         public static final String Faw_Category = prefixHotkeyCategoryUnloc("faw");
@@ -23,5 +26,9 @@ public final class I18ns {
         public static final class Master {
             public static final String Master = prefixHotkeyUnloc("master");
         }
+    }
+
+    public static final class Command{
+        public static final String Inlay = prefixCommandUnloc("inlay");
     }
 }

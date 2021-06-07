@@ -21,12 +21,12 @@ public final class FawGemUtil {
      * @return
      */
     @Nullable
-    public static IModifier getModifierFrom(ItemStack itemStack) {
+    public static IModifier<?> getModifierFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
-        if (!(item instanceof WeaponBaseItem)) {
+        if (!(item instanceof WeaponBaseItem<?>)) {
             return null;
         }
-        WeaponBaseItem weapon = (WeaponBaseItem) item;
+        WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
         IGemstone gemstone = getGemstoneFrom(itemStack);
         if (gemstone == null) {
             return null;
@@ -41,7 +41,7 @@ public final class FawGemUtil {
     @Nullable
     public static IGemstone getGemstoneFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
-        if (!(item instanceof WeaponBaseItem)) {
+        if (!(item instanceof WeaponBaseItem<?>)) {
             return null;
         }
         NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
@@ -56,5 +56,19 @@ public final class FawGemUtil {
         String gemstoneName = gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
         //Gets corresponding gemstone by its name.
         return GemstoneRegistry.Instance().getGemstone(gemstoneName);
+    }
+
+    public static boolean inlayGemstone(ItemStack itemStack, String gemstoneName) {
+        Item item = itemStack.getItem();
+        if (!(item instanceof WeaponBaseItem)) {
+            return false;
+        }
+        NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
+        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
+        NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
+        NBTTagCompound gemstoneObj = new NBTTagCompound();
+        gemstoneObj.setString(Tags.BaseSub.GemstoneObject.Gemstone,gemstoneName);
+        gemList.set(0,gemstoneObj);
+        return true;
     }
 }

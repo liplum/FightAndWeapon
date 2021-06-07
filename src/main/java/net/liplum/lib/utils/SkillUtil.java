@@ -11,9 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.Set;
+import java.util.*;
 
 public final class SkillUtil {
     @Nonnull
@@ -34,8 +32,8 @@ public final class SkillUtil {
     }
 
     @Nonnull
-    public static <T extends Event> LinkedList<IPassiveSkill<T>> getPassiveSkillsFromPlayer(@Nonnull Class<? extends Event> eventType, @Nonnull EntityPlayer player) {
-        LinkedList<IPassiveSkill<T>> skills = new LinkedList<>();
+    public static <T extends Event> Set<IPassiveSkill<T>> getPassiveSkillsFromPlayer(@Nonnull Class<T> eventType, @Nonnull EntityPlayer player) {
+        Set<IPassiveSkill<T>> skills = new HashSet<>();
         //First, gets the passive skills from weapon's gemstone
         ItemStack mainHandHeld = player.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
         Item mainHandHeldItem = mainHandHeld.getItem();
@@ -48,9 +46,11 @@ public final class SkillUtil {
 
         if (mainHandHeldItem instanceof WeaponBaseItem<?>) {
             Set<IPassiveSkill<?>> mainHandSkills = MasterUtil.getPassiveSkills(player, (Class<? extends WeaponBaseItem<?>>) mainHandHeldItem.getClass());
+            //skills.addAll((Collection<? extends IPassiveSkill<T>>) mainHandSkills);
         }
         if (offHandHeldItem instanceof WeaponBaseItem<?>) {
             Set<IPassiveSkill<?>> offHandSkills = MasterUtil.getPassiveSkills(player, (Class<? extends WeaponBaseItem<?>>) offHandHeldItem.getClass());
+            //.addAll((Collection<? extends IPassiveSkill<T>>) offHandSkills);
         }
         return skills;
     }

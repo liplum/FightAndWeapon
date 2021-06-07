@@ -16,7 +16,7 @@ public final class Gemstones {
             .addModifier(EnderGemModifier.Normal_Lance));
     public final static IGemstone Flame_Gemstone = with(new Gemstone(Names.Gemstone.Flamegem)
             .addModifier(FlameGemModifier.Normal_Lance))
-            .addPassiveSkillToCore(LanceCoreTypes.LightLance, FlameGemSkills.FireProof);
+            .addPassiveSkillToAll(FlameGemSkills.FireProof);
 
     //You must call it to load this class and all the static fields.
     public static void load() {
