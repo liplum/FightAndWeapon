@@ -14,9 +14,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 public final class MasterUtil {
-    private static int MaxLevel = 100;
-    private static long[] RequiredExpSheet = new long[100];//default maximum is 100.
-    private static long BaseRequiredExp = 100;
+    private static final int MaxLevel = 99;
+    private static final long[] RequiredExpSheet = new long[MaxLevel];//default maximum is 100.
+    private static final long BaseRequiredExp = 100;
 
     public static void init() {
         initRequiredExpSheet();
@@ -25,7 +25,7 @@ public final class MasterUtil {
     private static void initRequiredExpSheet() {
         int length = RequiredExpSheet.length;
         for (int i = 0; i < length; i++) {
-            RequiredExpSheet[i] = curExp(BaseRequiredExp, i + 1);
+            RequiredExpSheet[i] = curExp(i + 1);
         }
     }
 
@@ -36,10 +36,10 @@ public final class MasterUtil {
         return RequiredExpSheet[currentLevel - 1];
     }
 
-    private static long curExp(long base, int endLevel) {
-        long total = base;
-        for (int i = 0; i < endLevel; i++) {
-            total += base + (1 / 10) * (endLevel * endLevel);
+    private static long curExp(int endLevel) {
+        long total = BaseRequiredExp;
+        for (int i = 1; i < endLevel; i++) {
+            total += BaseRequiredExp + 0.1 * ((long) endLevel * endLevel);
         }
         return total;
     }
