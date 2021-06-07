@@ -8,6 +8,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
 
+import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,12 +16,31 @@ public class MasterCapability implements INBTSerializable<NBTTagCompound> {
 
     private HashMap<String, LvExpPair> allMasters = new HashMap<>();
 
-    public HashMap<String, LvExpPair> cloneAllMasters() {
+    public HashMap<String, LvExpPair> shallowCloneAllMasters() {
         return (HashMap<String, LvExpPair>) allMasters.clone();
     }
 
     public void setAllMasters(HashMap<String, LvExpPair> newMasters) {
         allMasters = newMasters;
+    }
+
+    public boolean hasMasterType(String masterName) {
+        return allMasters.containsKey(masterName);
+    }
+
+    /**
+     * @param masterName
+     * @return the level and exp. If this didn't have the master, it would return a new {@link LvExpPair} object and put it into this.
+     */
+    @Nonnull
+    public LvExpPair getLevelAndExp(String masterName) {
+        if (allMasters.containsKey(masterName)) {
+            return allMasters.get(masterName);
+        } else {
+            LvExpPair lvExpPair = new LvExpPair();
+            allMasters.put(masterName, lvExpPair);
+            return lvExpPair;
+        }
     }
 
     @Override

@@ -3,7 +3,7 @@ package net.liplum.eventhandlers;
 import net.liplum.MetaData;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
-import net.liplum.api.registeies.SkillManager;
+import net.liplum.lib.utils.SkillUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -17,7 +17,7 @@ public class PassiveSkillHandler {
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent e) {
         EntityPlayer player = e.player;
         LinkedList<IPassiveSkill<TickEvent.PlayerTickEvent>> skills =
-                SkillManager.Instance().getPassiveSkillsFromPlayer(TickEvent.PlayerTickEvent.class, player);
+                SkillUtil.getPassiveSkillsFromPlayer(TickEvent.PlayerTickEvent.class, player);
         for (IPassiveSkill<TickEvent.PlayerTickEvent> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
             if (res == PSkillResult.CancelTrigger) {

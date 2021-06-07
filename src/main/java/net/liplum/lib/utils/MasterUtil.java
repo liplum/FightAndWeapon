@@ -1,6 +1,17 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.fight.IMaster;
+import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.registeies.MasterRegistry;
+import net.liplum.capabilities.MasterCapability;
+import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.masters.LvExpPair;
+import net.liplum.registeies.CapabilityRegistry;
+import net.minecraft.entity.player.EntityPlayer;
+
+import javax.annotation.Nonnull;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class MasterUtil {
     private static int MaxLevel = 100;
@@ -53,4 +64,27 @@ public final class MasterUtil {
         return exp >= required;
     }
 
+    @Nonnull
+    public static LvExpPair getMaster(@Nonnull MasterCapability masterCapability, @Nonnull String masterName) {
+        return masterCapability.getLevelAndExp(masterName);
+    }
+
+    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMaster master) {
+        MasterCapability masterCapability = player.getCapability(CapabilityRegistry.Master_Capability, null);
+        if (masterCapability != null) {
+            LvExpPair lvAndExp = getMaster(masterCapability, master.getRegisterName());
+            int lv = lvAndExp.getLevel();
+            return new HashSet<>(master.getPassiveSkills(lv));
+        }
+        return new HashSet<>();
+    }
+
+    @Nonnull
+    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull Class<? extends WeaponBaseItem<?>> weaponType) {
+        IMaster master = MasterRegistry.getMasterOf(weaponType);
+        if (master != null) {
+            return getPassiveSkills(player, master);
+        }
+        return new HashSet<>();
+    }
 }

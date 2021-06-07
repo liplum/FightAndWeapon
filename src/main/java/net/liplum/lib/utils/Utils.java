@@ -45,4 +45,16 @@ public class Utils {
     public static boolean isShiftDown() {
         return Keyboard.isKeyDown(Keyboard.KEY_LSHIFT) || Keyboard.isKeyDown(Keyboard.KEY_RSHIFT);
     }
+
+    public static Number intAdd(Number summand, Number addend) {
+        return summand.intValue() + addend.intValue();
+    }
+
+    public static Number floatAdd(Number summand, Number addend) {
+        return summand.floatValue() + addend.floatValue();
+    }
+
+    public static Number doubleAdd(Number summand, Number addend) {
+        return summand.doubleValue() + addend.doubleValue();
+    }
 }

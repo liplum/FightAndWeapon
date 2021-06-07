@@ -1,8 +1,11 @@
 package net.liplum.lib.masters;
 
 public class LvExpPair implements Cloneable {
-    private int level = 0;
-    private long exp = 0;
+    public static int BaseLevel = 1;
+    public static long BaseExp = 0;
+
+    private int level = BaseLevel;
+    private long exp = BaseExp;
 
     public LvExpPair() {
     }
@@ -29,7 +32,7 @@ public class LvExpPair implements Cloneable {
     }
 
     @Override
-    protected Object clone() {
-        return new LvExpPair(level, exp);
+    protected Object clone() throws CloneNotSupportedException {
+        return super.clone();
     }
 }

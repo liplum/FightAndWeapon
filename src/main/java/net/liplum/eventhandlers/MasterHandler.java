@@ -13,6 +13,6 @@ public class MasterHandler {
     public static void onCloneMaster(PlayerEvent.Clone event) {
         MasterCapability oldOne = event.getOriginal().getCapability(CapabilityRegistry.Master_Capability, null);
         MasterCapability newOne = event.getEntityPlayer().getCapability(CapabilityRegistry.Master_Capability, null);
-        newOne.setAllMasters(oldOne.cloneAllMasters());
+        newOne.setAllMasters(oldOne.shallowCloneAllMasters());
     }
 }

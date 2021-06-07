@@ -68,4 +68,10 @@ public final class Names {
         public static final String Endergem = "endergem";
         public static final String Flamegem = "flamegem";
     }
+
+    public final static class PassiveSkill {
+        public static final String FireProof = "FireProof";
+
+
+    }
 }

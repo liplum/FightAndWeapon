@@ -1,5 +1,7 @@
 {
   "variants": {
-    "normal": { "model": "faw:test_block" }
+    "normal": {
+      "model": "faw:test_block"
+    }
   }
 }

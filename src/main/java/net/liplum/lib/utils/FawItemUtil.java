@@ -36,9 +36,9 @@ public final class FawItemUtil {
      * @param weapon
      * @param attacker  the attacker
      * @param target    the target
-     * @return
+     * @return whether this attack is successful
      */
-    public static boolean attackEntity(ItemStack itemStack, WeaponBaseItem weapon, EntityLivingBase attacker, Entity target) {
+    public static boolean attackEntity(ItemStack itemStack, WeaponBaseItem<?> weapon, EntityLivingBase attacker, Entity target) {
         //Nobody did and nobody was hit.
         if (attacker == null || target == null ||
                 //the target can't be hit by item
@@ -73,7 +73,7 @@ public final class FawItemUtil {
 
         IWeaponCore core = weapon.getCore();
         float strengthBase = core.getStrength();
-        IModifier modifier = FawGemUtil.getModifierFrom(itemStack);
+        IModifier<?> modifier = FawGemUtil.getModifierFrom(itemStack);
         if (modifier != null) {
             finalDamage += calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
         } else {
