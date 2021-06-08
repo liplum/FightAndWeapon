@@ -19,7 +19,7 @@ public final class RubySkills {
             DamageSource source = event.getSource();
             if (source.getDamageType().equals(DamageSource.IN_FIRE.damageType)) {
                 float dmg = event.getAmount();
-                event.setAmount(dmg/2);
+                event.setAmount(dmg / 2);
             }
             return PSkillResult.Complete;
         }

@@ -99,7 +99,7 @@ public final class FawItemUtil {
         }
         DamageSource damageSource = EntityUtil.genDamageSource(attacker);
 
-        WeaponPreAttackEvent preAttackEvent = new WeaponPreAttackEvent(world, attacker, target, core, modifier, itemStack,damageSource, finalDamage);
+        WeaponPreAttackEvent preAttackEvent = new WeaponPreAttackEvent(world, attacker, target, core, modifier, itemStack, damageSource, finalDamage);
         MinecraftForge.EVENT_BUS.post(preAttackEvent);
         DamageSource newDamageSource = preAttackEvent.getDamageSource();
         finalDamage = preAttackEvent.getDamage();

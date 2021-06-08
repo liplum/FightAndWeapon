@@ -63,7 +63,7 @@ public final class Names {
         public static final String UnstoppablePotion = "unstoppable";
     }
 
-    public final static class Command{
+    public final static class Command {
         public static final String Inlay = "inlay";
     }
 

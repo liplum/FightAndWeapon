@@ -20,8 +20,8 @@ public abstract class WeaponSkillReleaseBaseEvent extends Event {
     protected final EnumHand hand;
 
     public WeaponSkillReleaseBaseEvent(@Nonnull World world, @Nonnull EntityPlayer player,
-                                      @Nonnull IWeaponCore weaponCore, @Nullable IModifier modifier,
-                                      @Nonnull ItemStack itemStack, @Nonnull EnumHand hand) {
+                                       @Nonnull IWeaponCore weaponCore, @Nullable IModifier modifier,
+                                       @Nonnull ItemStack itemStack, @Nonnull EnumHand hand) {
         this.world = world;
         this.player = player;
         this.weaponCore = weaponCore;

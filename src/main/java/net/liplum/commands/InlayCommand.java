@@ -35,7 +35,7 @@ public class InlayCommand extends CommandBase {
                 if (!gemstoneName.isEmpty()) {
                     EntityLivingBase entity = (EntityLivingBase) sender;
                     ItemStack heldItemStack = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-                    FawGemUtil.inlayGemstone(heldItemStack,gemstoneName);
+                    FawGemUtil.inlayGemstone(heldItemStack, gemstoneName);
                 }
             }
         }

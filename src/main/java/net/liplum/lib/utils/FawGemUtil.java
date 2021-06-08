@@ -67,8 +67,8 @@ public final class FawGemUtil {
         NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
         NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
         NBTTagCompound gemstoneObj = new NBTTagCompound();
-        gemstoneObj.setString(Tags.BaseSub.GemstoneObject.Gemstone,gemstoneName);
-        gemList.set(0,gemstoneObj);
+        gemstoneObj.setString(Tags.BaseSub.GemstoneObject.Gemstone, gemstoneName);
+        gemList.set(0, gemstoneObj);
         return true;
     }
 }

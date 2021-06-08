@@ -71,7 +71,7 @@ public class PassiveSkillHandler {
             EntityPlayer player = (EntityPlayer) attacker;
             skills = SkillUtil.getPassiveSkillsFromPlayer(LivingFallEvent.class, player);
         } else {
-            skills = SkillUtil.getPassiveSkillsFromMob(WeaponAttackBaseEvent.class,attacker);
+            skills = SkillUtil.getPassiveSkillsFromMob(WeaponAttackBaseEvent.class, attacker);
         }
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);

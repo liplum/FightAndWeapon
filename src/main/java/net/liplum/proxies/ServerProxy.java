@@ -1,10 +1,8 @@
 package net.liplum.proxies;
 
-import net.liplum.commands.InlayCommand;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 public class ServerProxy extends ProxyBase {
     @Override
