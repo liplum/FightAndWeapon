@@ -3,7 +3,7 @@ package net.liplum.items.weapons.lance;
 import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.WaitForNextTick;
 import net.liplum.enumerator.Yield;
-import net.liplum.events.LanceSprintEvent;
+import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.lib.cores.lance.ILanceCore;
 import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.coroutine.CoroutineSystem;

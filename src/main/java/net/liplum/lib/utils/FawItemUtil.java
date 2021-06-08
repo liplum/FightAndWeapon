@@ -2,6 +2,9 @@ package net.liplum.lib.utils;
 
 import net.liplum.api.weapon.IModifier;
 import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.events.attack.WeaponAttackingEvent;
+import net.liplum.events.attack.WeaponPostAttackedEvent;
+import net.liplum.events.attack.WeaponPreAttackEvent;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
 import net.liplum.lib.items.WeaponBaseItem;
@@ -13,7 +16,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.Tuple;
+import net.minecraft.world.World;
+import net.minecraftforge.common.MinecraftForge;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public final class FawItemUtil {
     private FawItemUtil() {
@@ -29,7 +39,7 @@ public final class FawItemUtil {
     }
 
     /**
-     * It calls {@link WeaponBaseItem#dealDamage(ItemStack, EntityLivingBase, Entity, float)} to deal damage to the target.
+     * It calls {@link WeaponBaseItem#dealDamage(ItemStack, EntityLivingBase, Entity, DamageSource, float)} to deal damage to the target.
      * It's called by {@link WeaponBaseItem#onLeftClickEntity(ItemStack, EntityPlayer, Entity)}.
      *
      * @param itemStack
@@ -38,7 +48,7 @@ public final class FawItemUtil {
      * @param target    the target
      * @return whether this attack is successful
      */
-    public static boolean attackEntity(ItemStack itemStack, WeaponBaseItem<?> weapon, EntityLivingBase attacker, Entity target) {
+    public static boolean attackEntity(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem<?> weapon, EntityLivingBase attacker, Entity target) {
         //Nobody did and nobody was hit.
         if (attacker == null || target == null ||
                 //the target can't be hit by item
@@ -49,6 +59,7 @@ public final class FawItemUtil {
                 !itemStack.hasTagCompound()) {
             return false;
         }
+        World world = attacker.world;
         EntityLivingBase targetLiving = null;
         EntityPlayer attackPlayer = null;
         if (target instanceof EntityLivingBase) {
@@ -86,13 +97,40 @@ public final class FawItemUtil {
             sound = cooldown > 0.9f ? SoundEvents.ENTITY_PLAYER_ATTACK_STRONG : SoundEvents.ENTITY_PLAYER_ATTACK_WEAK;
             finalDamage *= (0.2F + cooldown * cooldown * 0.8F);
         }
+        DamageSource damageSource = EntityUtil.genDamageSource(attacker);
 
-        boolean successfullyHit = weapon.dealDamage(itemStack, attacker, target, finalDamage);
-        target.hurtResistantTime = 0;
-        if (!successfullyHit) {
+        WeaponPreAttackEvent preAttackEvent = new WeaponPreAttackEvent(world, attacker, target, core, modifier, itemStack,damageSource, finalDamage);
+        MinecraftForge.EVENT_BUS.post(preAttackEvent);
+        DamageSource newDamageSource = preAttackEvent.getDamageSource();
+        finalDamage = preAttackEvent.getDamage();
+
+        boolean isHitSuccessfully = weapon.dealDamage(itemStack, attacker, target, newDamageSource, finalDamage);
+
+        if (!isHitSuccessfully) {
             sound = SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE;
         } else {
+            //Post Weapon Attacking Event
+            WeaponAttackingEvent attackingEvent = new WeaponAttackingEvent(world, attacker, target, core, modifier, itemStack);
+            MinecraftForge.EVENT_BUS.post(attackingEvent);
+            //Deal extra damages
+            List<Tuple<DamageSource, Float>> extraDamages = attackingEvent.getExtraDamages();
+            for (Tuple<DamageSource, Float> extraDamage : extraDamages) {
+                DamageSource extraDamageSource = extraDamage.getFirst();
+                Float extraDamageValue = extraDamage.getSecond();
+                weapon.dealDamage(itemStack, attacker, target, extraDamageSource, extraDamageValue);
+            }
             attacker.setLastAttackedEntity(target);
+
+            //calcu enemy breaking time
+            int enemyBreakingTime = core.getEnemyBreakingTime();
+            if (modifier != null) {
+                enemyBreakingTime = calcuAttribute(enemyBreakingTime, modifier.getEnemyBreakingTimeDelta(), modifier.getEnemyBreakingTimeRate());
+            }
+
+            if (enemyBreakingTime >= 0) {
+                target.hurtResistantTime = enemyBreakingTime;
+            }
+
             //TODO:Something here!
         }
         //If attacker is not a player, it will be null.
@@ -102,8 +140,12 @@ public final class FawItemUtil {
         ) {
             attackPlayer.playSound(sound, 1, 1);
         }
+
         //TODO:More!!!
-        return successfullyHit;
+        WeaponPostAttackedEvent postAttackEvent = new WeaponPostAttackedEvent(world, attacker, target, core, modifier, itemStack, isHitSuccessfully);
+        MinecraftForge.EVENT_BUS.post(postAttackEvent);
+
+        return isHitSuccessfully;
     }
 
     /**

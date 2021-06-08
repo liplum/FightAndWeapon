@@ -1,8 +1,8 @@
-package net.liplum.skills.passive;
+package net.liplum.skills.passive.master;
 
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
-import net.liplum.events.LanceSprintEvent;
+import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.player.EntityPlayer;

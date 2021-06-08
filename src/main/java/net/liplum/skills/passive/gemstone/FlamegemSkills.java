@@ -1,4 +1,4 @@
-package net.liplum.skills.passive;
+package net.liplum.skills.passive.gemstone;
 
 import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
@@ -9,7 +9,7 @@ import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-public final class FlameGemSkills {
+public final class FlamegemSkills {
     public final static IPassiveSkill<TickEvent.PlayerTickEvent> FireProof = SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireProof, new IPassiveSkill<TickEvent.PlayerTickEvent>() {
         @Override
         public Class<TickEvent.PlayerTickEvent> getEventType() {

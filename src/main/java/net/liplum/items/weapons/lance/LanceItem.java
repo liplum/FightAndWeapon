@@ -1,8 +1,8 @@
 package net.liplum.items.weapons.lance;
 
 import net.liplum.api.weapon.IModifier;
-import net.liplum.events.WeaponSkillReleasePostEvent;
-import net.liplum.events.WeaponSkillReleasePreEvent;
+import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
+import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.cores.lance.ILanceCore;
 import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.items.ILongReachWeapon;
@@ -43,7 +43,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
         if (playerIn.onGround && playerIn.isSneaking()) {
             IModifier modifier = FawGemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillReleasePreEvent(worldIn, playerIn, core, modifier, held, handIn)
+                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 float length = core.getSprintLength();
@@ -72,7 +72,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
                     ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown);
                     result = EnumActionResult.SUCCESS;
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillReleasePostEvent(worldIn, playerIn, core, modifier, held, handIn)
+                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, core, modifier, held, handIn)
                     );
                 }
             }

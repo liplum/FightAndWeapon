@@ -69,12 +69,25 @@ public final class Names {
 
     public final static class Gemstone {
         public static final String Ruby = "ruby";
-        public static final String Endergem = "endergem";
+        public static final String Aquamarine = "aquamarine";
+        public static final String Citrine = "citrine";
+        public static final String Jadeite = "jadeite";
+        public static final String Amethyst = "amethyst";
+        public static final String RoseQuartz = "rose_quartz";
+        public static final String Turquoise = "turquoise";
+
         public static final String Flamegem = "flamegem";
+        public static final String Marinegem = "marinegem";
+        public static final String Earthgem = "earthgem";
+        public static final String Forestgem = "forestgem";
+        public static final String Endergem = "endergem";
+        public static final String MagicPearl = "magic_pearl";
+        public static final String WindyGemstone = "windy_gemstone";
     }
 
     public final static class PassiveSkill {
         public static final String FireProof = "FireProof";
+        public static final String FireResistance = "FireResistance";
 
 
     }

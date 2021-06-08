@@ -4,7 +4,7 @@ import net.liplum.MetaData;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.registeies.SkillRegistry;
-import net.liplum.events.LanceSprintEvent;
+import net.liplum.events.skill.LanceSprintEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 

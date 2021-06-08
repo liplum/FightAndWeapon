@@ -44,12 +44,8 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
      * @param damage
      * @return true if the target was hit.
      */
-    public boolean dealDamage(ItemStack stack, EntityLivingBase attacker, Entity target, float damage) {
-        DamageSource source = attacker instanceof EntityPlayer ?
-                DamageSource.causePlayerDamage((EntityPlayer) attacker) :
-                DamageSource.causeMobDamage(attacker);
-        return target.attackEntityFrom(source, damage);
-
+    public boolean dealDamage(ItemStack stack, EntityLivingBase attacker, Entity target, DamageSource damageSource, float damage) {
+        return target.attackEntityFrom(damageSource, damage);
     }
 
     @Override

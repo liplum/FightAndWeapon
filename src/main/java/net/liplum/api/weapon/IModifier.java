@@ -13,5 +13,13 @@ public interface IModifier<CoreType extends IWeaponCore> {
         return 0;
     }
 
+    default int getEnemyBreakingTimeDelta() {
+        return 0;
+    }
+
+    default float getEnemyBreakingTimeRate() {
+        return 0;
+    }
+
     CoreType getCoreType();
 }

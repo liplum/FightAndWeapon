@@ -1,8 +1,8 @@
 package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.api.weapon.IModifier;
-import net.liplum.events.WeaponSkillReleasePostEvent;
-import net.liplum.events.WeaponSkillReleasePreEvent;
+import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
+import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.cores.battleaxe.BattleAxeArgs;
 import net.liplum.lib.cores.battleaxe.IBattleAxeCore;
 import net.liplum.lib.items.WeaponBaseItem;
@@ -40,7 +40,7 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
         if (!playerIn.isSneaking()) {
             IModifier modifier = FawGemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillReleasePreEvent(worldIn, playerIn, core, modifier, held, handIn)
+                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 float sweepRange = core.getSweepRange();
@@ -77,7 +77,7 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
                     }
                     result = EnumActionResult.SUCCESS;
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillReleasePostEvent(worldIn, playerIn, core, modifier, held, handIn)
+                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, core, modifier, held, handIn)
                     );
                 }
             }

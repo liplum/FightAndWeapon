@@ -2,21 +2,43 @@ package net.liplum;
 
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.lib.items.gemstone.Gemstone;
 import net.liplum.modifiers.EnderGemModifier;
-import net.liplum.modifiers.FlameGemModifier;
 import net.liplum.modifiers.RubyModifier;
-import net.liplum.skills.passive.FlameGemSkills;
+import net.liplum.skills.passive.gemstone.*;
 
 public final class Gemstones {
     public final static IGemstone Ruby_Gemstone = with(new Gemstone(Names.Gemstone.Ruby)
-            .addModifier(RubyModifier.Normal_Lance));
-    public final static IGemstone Ender_Gemstone = with(new Gemstone(Names.Gemstone.Endergem)
-            .addModifier(EnderGemModifier.Normal_Lance));
-    public final static IGemstone Flame_Gemstone = with(new Gemstone(Names.Gemstone.Flamegem)
-            .addModifier(FlameGemModifier.Normal_Lance))
-            .addPassiveSkillToAll(FlameGemSkills.FireProof);
+            .addModifier(RubyModifier.Light_Lance)
+            .addPassiveSkillToAll(RubySkills.FireResistance)
+    );
+    public final static IGemstone Aquamarine_Gemstone = with(new Gemstone(Names.Gemstone.Aquamarine)
+    );
+    public final static IGemstone Citrine_Gemstone = with(new Gemstone(Names.Gemstone.Citrine)
+    );
+    public final static IGemstone Jadeite_Gemstone = with(new Gemstone(Names.Gemstone.Jadeite)
+    );
+    public final static IGemstone Amethyst_Gemstone = with(new Gemstone(Names.Gemstone.Amethyst)
+    );
+    public final static IGemstone Rose_Quartz_Gemstone = with(new Gemstone(Names.Gemstone.RoseQuartz)
+            .addPassiveSkillToAll(RoseQuartzSkills.MagicAttach)
+    );
+    public final static IGemstone Turquoise_Gemstone = with(new Gemstone(Names.Gemstone.Turquoise)
+            .addPassiveSkillToAll(TurquoiseSkills.GentlyLand)
+    );
+
+    public final static IGemstone Flamegem_Gemstone = with(new Gemstone(Names.Gemstone.Flamegem)
+            .addPassiveSkillToAll(FlamegemSkills.FireProof)
+    );
+
+
+    public final static IGemstone Endergem_Gemstone = with(new Gemstone(Names.Gemstone.Endergem)
+            .addModifier(EnderGemModifier.Normal_Lance)
+    );
+
+    public final static IGemstone Magic_Pearl_Gemstone = with(new Gemstone(Names.Gemstone.MagicPearl)
+            .addPassiveSkillToAll(MagicPearlSkills.Magicize)
+    );
 
     //You must call it to load this class and all the static fields.
     public static void load() {

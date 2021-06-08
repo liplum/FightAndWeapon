@@ -7,7 +7,9 @@ import net.minecraft.entity.monster.EntityGhast;
 import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.monster.EntitySlime;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.scoreboard.Team;
+import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -48,6 +50,10 @@ public class EntityUtil {
             return team.getAllowFriendlyFire();
         }
         return true;
+    }
+
+    public static DamageSource genDamageSource(EntityLivingBase entity) {
+        return entity instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) entity) : DamageSource.causeMobDamage(entity);
     }
 
     public static void setRooting(EntityLivingBase livingEntity, double originX, double originY, double originZ) {

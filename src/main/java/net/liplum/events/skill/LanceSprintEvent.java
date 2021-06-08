@@ -1,4 +1,4 @@
-package net.liplum.events;
+package net.liplum.events.skill;
 
 import net.liplum.lib.cores.lance.LanceArgs;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;

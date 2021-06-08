@@ -1,8 +1,8 @@
 package net.liplum.items.weapons.harp;
 
 import net.liplum.api.weapon.IModifier;
-import net.liplum.events.WeaponSkillReleasePostEvent;
-import net.liplum.events.WeaponSkillReleasePreEvent;
+import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
+import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.cores.harp.ContinuousHarpArgs;
 import net.liplum.lib.cores.harp.IHarpCore;
 import net.liplum.lib.cores.harp.SingleHarpArgs;
@@ -42,7 +42,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         if (playerIn.isSneaking()) {
             IModifier modifier = FawGemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillReleasePreEvent(worldIn, playerIn, core, modifier, held, handIn)
+                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 if (modifier != null) {
@@ -63,7 +63,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
                     ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown);
                     playerIn.resetActiveHand();
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillReleasePostEvent(worldIn, playerIn, core, modifier, held, handIn)
+                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, core, modifier, held, handIn)
                     );
                 }
             }

@@ -80,7 +80,7 @@ public final class MasterUtil {
     }
 
     @Nonnull
-    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull Class<? extends WeaponBaseItem<?>> weaponType) {
+    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull Class<WeaponBaseItem<?>> weaponType) {
         IMaster master = MasterRegistry.getMasterOf(weaponType);
         if (master != null) {
             return getPassiveSkills(player, master);

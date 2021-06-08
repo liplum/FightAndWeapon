@@ -5,7 +5,7 @@ import net.liplum.lib.cores.lance.ILanceCore;
 import net.liplum.lib.modifiers.LanceModifier;
 
 public final class RubyModifier {
-    public final static LanceModifier Normal_Lance = new LanceModifier() {
+    public final static LanceModifier Light_Lance = new LanceModifier() {
         @Override
         public float getSprintLengthDelta() {
             return 0;
