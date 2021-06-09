@@ -5,6 +5,7 @@ import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.events.attack.WeaponPostAttackedEvent;
 import net.liplum.events.attack.WeaponPreAttackEvent;
+import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
 import net.liplum.lib.items.WeaponBaseItem;
@@ -36,6 +37,22 @@ public final class FawItemUtil {
             return ((FawItem) item).isA(category);
         }
         return false;
+    }
+
+    public static boolean isFawWeapon(@Nonnull ItemStack itemStack){
+        return itemStack.getItem() instanceof WeaponBaseItem<?>;
+    }
+
+    public static boolean isGemstone(@Nonnull ItemStack itemStack){
+        return itemStack.getItem() instanceof GemstoneItem;
+    }
+
+    public static boolean isFawWeapon(@Nonnull Item item){
+        return item instanceof WeaponBaseItem<?>;
+    }
+
+    public static boolean isGemstone(@Nonnull Item item){
+        return item instanceof GemstoneItem;
     }
 
     /**

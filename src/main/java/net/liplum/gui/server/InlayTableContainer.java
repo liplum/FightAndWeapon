@@ -1,5 +1,8 @@
 package net.liplum.gui.server;
 
+import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.lib.utils.FawItemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
@@ -20,11 +23,26 @@ public class InlayTableContainer extends Container {
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
     private final Slot gemstoneSlot =
-            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17);
+            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17){
+                @Override
+                public boolean isItemValid(@Nonnull ItemStack stack) {
+                    return FawItemUtil.isGemstone(stack);
+                }
+            };
     private final Slot weaponSlot =
-            new SlotItemHandler(weaponItemHandler, 0, 56, 55);
+            new SlotItemHandler(weaponItemHandler, 0, 56, 55){
+                @Override
+                public boolean isItemValid(@Nonnull ItemStack stack) {
+                    return FawItemUtil.isGemstone(stack);
+                }
+            };
     private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 133, 26);
+            new SlotItemHandler(outputItemHandler, 0, 133, 26){
+                @Override
+                public boolean isItemValid(@Nonnull ItemStack stack) {
+                    return false;
+                }
+            };
 
     private final InventoryPlayer playerInventory;
 
