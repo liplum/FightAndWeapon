@@ -27,7 +27,7 @@ public class PassiveSkillHandler {
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent e) {
         EntityPlayer player = e.player;
         Set<IPassiveSkill<Event>> skills =
-                SkillUtil.getPassiveSkillsFromPlayer(TickEvent.PlayerTickEvent.class, player);
+                SkillUtil.getPassiveSkills(TickEvent.PlayerTickEvent.class, player);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
             if (res == PSkillResult.CancelTrigger) {
@@ -42,7 +42,7 @@ public class PassiveSkillHandler {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
             Set<IPassiveSkill<Event>> skills =
-                    SkillUtil.getPassiveSkillsFromPlayer(LivingHurtEvent.class, player);
+                    SkillUtil.getPassiveSkills(LivingHurtEvent.class, player);
             for (IPassiveSkill<Event> skill : skills) {
                 PSkillResult res = skill.onTrigger(e);
                 if (res == PSkillResult.CancelTrigger) {
@@ -58,7 +58,7 @@ public class PassiveSkillHandler {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
             Set<IPassiveSkill<Event>> skills =
-                    SkillUtil.getPassiveSkillsFromPlayer(LivingFallEvent.class, player);
+                    SkillUtil.getPassiveSkills(LivingFallEvent.class, player);
             for (IPassiveSkill<Event> skill : skills) {
                 PSkillResult res = skill.onTrigger(e);
                 if (res == PSkillResult.CancelTrigger) {
@@ -85,13 +85,8 @@ public class PassiveSkillHandler {
 
     private static void onWeaponAttack(WeaponAttackBaseEvent e, Class<? extends WeaponAttackBaseEvent> eventType) {
         EntityLivingBase attacker = e.getAttacker();
-        Set<IPassiveSkill<Event>> skills;
-        if (attacker instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) attacker;
-            skills = SkillUtil.getPassiveSkillsFromPlayer(eventType, player);
-        } else {
-            skills = SkillUtil.getPassiveSkillsFromMob(eventType, attacker);
-        }
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(eventType, attacker);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
             if (res == PSkillResult.CancelTrigger) {
