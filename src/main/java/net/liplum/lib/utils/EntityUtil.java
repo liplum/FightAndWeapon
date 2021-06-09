@@ -24,6 +24,12 @@ public class EntityUtil {
         return e instanceof EntityMob || e instanceof EntitySlime || e instanceof EntityGhast || e instanceof EntityDragon || e instanceof EntityShulker;
     }
 
+    public static void ifLivingThenDO(@Nonnull Entity e, Consumer<EntityLivingBase> delegate) {
+        if (e instanceof EntityLivingBase) {
+            delegate.accept((EntityLivingBase) e);
+        }
+    }
+
     public static boolean spawnEntityIfServer(@Nonnull World world, @Nonnull Entity entity) {
         if (!world.isRemote) {
             world.spawnEntity(entity);

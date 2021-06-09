@@ -39,13 +39,17 @@ public final class Gemstones {
     public final static IGemstone Magic_Pearl_Gemstone = with(new Gemstone(Names.Gemstone.MagicPearl)
             .addPassiveSkillToAll(MagicPearlSkills.Magicize)
     );
+    public final static IGemstone Windy_Gemstone = with(new Gemstone(Names.Gemstone.WindyGemstone)
+            .addPassiveSkillToAll(WindyGemstoneSkills.Levitation)
+            .addPassiveSkillToAll(WindyGemstoneSkills.Feather)
+    );
 
     //You must call it to load this class and all the static fields.
     public static void load() {
     }
 
     private static IGemstone with(IGemstone gemstone) {
-        GemstoneRegistry.Instance().register(gemstone);
+        GemstoneRegistry.register(gemstone);
         return gemstone;
     }
 }

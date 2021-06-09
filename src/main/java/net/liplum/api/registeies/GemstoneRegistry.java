@@ -3,27 +3,43 @@ package net.liplum.api.registeies;
 import net.liplum.api.weapon.IGemstone;
 
 import javax.annotation.Nullable;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public final class GemstoneRegistry {
-    private static final GemstoneRegistry instance = new GemstoneRegistry();
-    private final Map<String, IGemstone> gemstoneMap = new HashMap<>();
+    private static final Map<String, IGemstone> GemstoneMap = new HashMap<>();
+    private static ArrayList<String> NamesCache = new ArrayList<>();
+    private static boolean IsChanged = false;
 
-    public static GemstoneRegistry Instance() {
-        return instance;
-    }
-
-    public void register(IGemstone gemstone) {
-        gemstoneMap.put(gemstone.getRegisterName(), gemstone);
+    public static void register(IGemstone gemstone) {
+        GemstoneMap.put(gemstone.getRegisterName(), gemstone);
+        IsChanged = true;
     }
 
     @Nullable
-    public IGemstone getGemstone(String registerName) {
-        if (gemstoneMap.containsKey(registerName)) {
-            return gemstoneMap.get(registerName);
+    public static IGemstone getGemstone(String registerName) {
+        if (GemstoneMap.containsKey(registerName)) {
+            return GemstoneMap.get(registerName);
         }
         return null;
+    }
+
+    public static boolean hasGemstone(String registerName) {
+        return GemstoneMap.containsKey(registerName);
+    }
+
+    public static List<String> getAllGemstoneNames() {
+        if (IsChanged) {
+            genNamesCache();
+        }
+        return NamesCache;
+    }
+
+    private static void genNamesCache() {
+        NamesCache = new ArrayList<>(GemstoneMap.keySet());
+        IsChanged = false;
     }
 
 }

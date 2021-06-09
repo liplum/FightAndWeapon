@@ -12,28 +12,28 @@ import java.util.Map;
 import java.util.Set;
 
 public final class SkillRegistry {
-    private static final Map<Class<?>, Set<IPassiveSkill<?>>> passiveSkillsMap = new HashMap<>();
-    private static final Map<String, IPassiveSkill<?>> allPassiveSkills = new HashMap<>();
-    private static final Map<String, IActiveSkill> allActiveSkills = new HashMap<>();
+    private static final Map<Class<?>, Set<IPassiveSkill<?>>> PassiveSkillsMap = new HashMap<>();
+    private static final Map<String, IPassiveSkill<?>> AllPassiveSkills = new HashMap<>();
+    private static final Map<String, IActiveSkill> AllActiveSkills = new HashMap<>();
 
     @Nonnull
     public static <T extends Event> IPassiveSkill<T> registerPassiveSkill(@Nonnull String registerName, @Nonnull IPassiveSkill<T> passiveSkill) {
         //Register it to passiveSkillsMap
         Class<? extends Event> eventType = passiveSkill.getEventType();
-        if (passiveSkillsMap.containsKey(eventType)) {
-            passiveSkillsMap.get(eventType).add(passiveSkill);
+        if (PassiveSkillsMap.containsKey(eventType)) {
+            PassiveSkillsMap.get(eventType).add(passiveSkill);
         }
         Set<IPassiveSkill<?>> skills = new HashSet<>();
-        passiveSkillsMap.put(eventType, skills);
+        PassiveSkillsMap.put(eventType, skills);
 
         //Register it to all passive skills
-        allPassiveSkills.put(registerName, passiveSkill);
+        AllPassiveSkills.put(registerName, passiveSkill);
         return passiveSkill;
     }
 
     @Nonnull
     public static IActiveSkill registerActiveSkill(@Nonnull String registerName, @Nonnull IActiveSkill activeSkill) {
-        allActiveSkills.put(registerName, activeSkill);
+        AllActiveSkills.put(registerName, activeSkill);
         return activeSkill;
     }
 
@@ -43,8 +43,8 @@ public final class SkillRegistry {
      */
     @Nullable
     public static IPassiveSkill<?> getPassiveSkillsFromName(@Nonnull String registerName) {
-        if (allPassiveSkills.containsKey(registerName)) {
-            return allPassiveSkills.get(registerName);
+        if (AllPassiveSkills.containsKey(registerName)) {
+            return AllPassiveSkills.get(registerName);
         }
         return null;
     }
@@ -55,8 +55,8 @@ public final class SkillRegistry {
      */
     @Nullable
     public static IActiveSkill getActiveSkillsFromName(@Nonnull String registerName) {
-        if (allActiveSkills.containsKey(registerName)) {
-            return allActiveSkills.get(registerName);
+        if (AllActiveSkills.containsKey(registerName)) {
+            return AllActiveSkills.get(registerName);
         }
         return null;
     }
@@ -67,8 +67,8 @@ public final class SkillRegistry {
      */
     @Nullable
     public static IPassiveSkill<?>[] getPassiveSkillsFromEvent(@Nonnull Class<? extends Event> eventType) {
-        if (passiveSkillsMap.containsKey(eventType)) {
-            return passiveSkillsMap.get(eventType).toArray(new IPassiveSkill[0]);
+        if (PassiveSkillsMap.containsKey(eventType)) {
+            return PassiveSkillsMap.get(eventType).toArray(new IPassiveSkill[0]);
         }
         return null;
     }

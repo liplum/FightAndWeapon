@@ -6,7 +6,7 @@ public final class I18ns {
     }
 
     public static String prefixPotionUnloc(String name) {
-        return String.format("potion.%s.%s", MetaData.MOD_ID, name);
+        return String.format("potion.effect.%s.%s", MetaData.MOD_ID, name);
     }
 
     public static String prefixHotkeyUnloc(String name) {
@@ -18,7 +18,7 @@ public final class I18ns {
     }
 
     public static String prefixCommandUnloc(String name) {
-        return String.format("command.%s.usage", name);
+        return String.format("commands.%s.usage", name);
     }
 
     public static final class Hotkey {

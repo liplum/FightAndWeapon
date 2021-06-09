@@ -10,13 +10,13 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 public class ClientProxy extends ProxyBase {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger Logger = LogManager.getLogger();
 
     public static void initHotkeys() {
         for (KeyBinding hotkey : HotkeyRegistry.getAllHotkeys()) {
             ClientRegistry.registerKeyBinding(hotkey);
         }
-        logger.info("Hotkey Component initialized successfully.");
+        Logger.info("Hotkey Component initialized successfully.");
     }
 
     @Override

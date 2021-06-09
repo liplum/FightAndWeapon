@@ -8,21 +8,23 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public final class RubySkills {
-    public final static IPassiveSkill<LivingHurtEvent> FireResistance = SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireResistance, new IPassiveSkill<LivingHurtEvent>() {
-        @Override
-        public Class<LivingHurtEvent> getEventType() {
-            return LivingHurtEvent.class;
-        }
+    public final static IPassiveSkill<LivingHurtEvent> FireResistance =
+            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireResistance,
+                    new IPassiveSkill<LivingHurtEvent>() {
+                        @Override
+                        public Class<LivingHurtEvent> getEventType() {
+                            return LivingHurtEvent.class;
+                        }
 
-        @Override
-        public PSkillResult onTrigger(LivingHurtEvent event) {
-            DamageSource source = event.getSource();
-            if (source.getDamageType().equals(DamageSource.IN_FIRE.damageType)) {
-                float dmg = event.getAmount();
-                event.setAmount(dmg / 2);
-            }
-            return PSkillResult.Complete;
-        }
-    });
+                        @Override
+                        public PSkillResult onTrigger(LivingHurtEvent event) {
+                            DamageSource source = event.getSource();
+                            if (source.getDamageType().equals(DamageSource.IN_FIRE.damageType)) {
+                                float dmg = event.getAmount();
+                                event.setAmount(dmg / 2);
+                            }
+                            return PSkillResult.Complete;
+                        }
+                    });
 
 }

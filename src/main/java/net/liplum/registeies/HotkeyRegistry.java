@@ -9,7 +9,7 @@ import java.util.LinkedList;
 
 public final class HotkeyRegistry {
 
-    private static final LinkedList<KeyBinding> allHotkeys = new LinkedList<>();
+    private static final LinkedList<KeyBinding> AllHotkeys = new LinkedList<>();
 
     public static final KeyBinding Master_Hotkey = with(new KeyBinding(
             I18ns.Hotkey.Master.Master,
@@ -18,11 +18,11 @@ public final class HotkeyRegistry {
             I18ns.Hotkey.Faw_Category));
 
     private static KeyBinding with(KeyBinding keyBinding) {
-        allHotkeys.add(keyBinding);
+        AllHotkeys.add(keyBinding);
         return keyBinding;
     }
 
     public static LinkedList<KeyBinding> getAllHotkeys() {
-        return allHotkeys;
+        return AllHotkeys;
     }
 }

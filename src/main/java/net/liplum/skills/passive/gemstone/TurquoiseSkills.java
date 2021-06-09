@@ -8,20 +8,22 @@ import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public final class TurquoiseSkills {
-    public final static IPassiveSkill<LivingHurtEvent> GentlyLand = SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireResistance, new IPassiveSkill<LivingHurtEvent>() {
-        @Override
-        public Class<LivingHurtEvent> getEventType() {
-            return LivingHurtEvent.class;
-        }
+    public final static IPassiveSkill<LivingHurtEvent> GentlyLand =
+            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireResistance,
+                    new IPassiveSkill<LivingHurtEvent>() {
+                        @Override
+                        public Class<LivingHurtEvent> getEventType() {
+                            return LivingHurtEvent.class;
+                        }
 
-        @Override
-        public PSkillResult onTrigger(LivingHurtEvent event) {
-            DamageSource source = event.getSource();
-            if (source.getDamageType().equals(DamageSource.FALL.getDamageType())) {
-                float dmg = event.getAmount();
-                event.setAmount(dmg - dmg * 0.3F);
-            }
-            return PSkillResult.Complete;
-        }
-    });
+                        @Override
+                        public PSkillResult onTrigger(LivingHurtEvent event) {
+                            DamageSource source = event.getSource();
+                            if (source.getDamageType().equals(DamageSource.FALL.getDamageType())) {
+                                float dmg = event.getAmount();
+                                event.setAmount(dmg - dmg * 0.3F);
+                            }
+                            return PSkillResult.Complete;
+                        }
+                    });
 }

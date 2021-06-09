@@ -55,20 +55,58 @@ public final class FawGemUtil {
         NBTTagCompound gemstoneObj = (NBTTagCompound) gemstoneNbt;
         String gemstoneName = gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
         //Gets corresponding gemstone by its name.
-        return GemstoneRegistry.Instance().getGemstone(gemstoneName);
+        return GemstoneRegistry.getGemstone(gemstoneName);
     }
 
-    public static boolean inlayGemstone(ItemStack itemStack, String gemstoneName) {
+    public static InlayResult inlayGemstone(ItemStack itemStack, String gemstoneName) {
+        if (!GemstoneRegistry.hasGemstone(gemstoneName)) {
+            return InlayResult.NoSuchGemstone;
+        }
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem)) {
-            return false;
+            return InlayResult.NotFawWeapon;
         }
         NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
         NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
         NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
         NBTTagCompound gemstoneObj = new NBTTagCompound();
         gemstoneObj.setString(Tags.BaseSub.GemstoneObject.Gemstone, gemstoneName);
-        gemList.set(0, gemstoneObj);
-        return true;
+        if (gemList.tagCount() > 0) {
+            gemList.set(0, gemstoneObj);
+        } else {
+            gemList.appendTag(gemstoneObj);
+        }
+        return InlayResult.Succeed;
+    }
+
+    public static RemoveResult removeGemstone(ItemStack itemStack) {
+        return removeGemstone(itemStack, 0);
+    }
+
+    public static RemoveResult removeGemstone(ItemStack itemStack, int slot) {
+        Item item = itemStack.getItem();
+        if (!(item instanceof WeaponBaseItem)) {
+            return RemoveResult.NotFawWeapon;
+        }
+        NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
+        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
+        NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
+        if (gemList.tagCount() == 0) {
+            return RemoveResult.NoGemstone;
+        }
+        gemList.removeTag(slot);
+        return RemoveResult.Succeed;
+    }
+
+    public enum InlayResult {
+        Succeed,
+        NotFawWeapon,
+        NoSuchGemstone
+    }
+
+    public enum RemoveResult {
+        Succeed,
+        NotFawWeapon,
+        NoGemstone
     }
 }

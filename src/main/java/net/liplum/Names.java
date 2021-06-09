@@ -65,6 +65,10 @@ public final class Names {
 
     public final static class Command {
         public static final String Inlay = "inlay";
+
+        public final static class InlaySub {
+            public static final String Remove = "remove";
+        }
     }
 
     public final static class Gemstone {
@@ -87,7 +91,12 @@ public final class Names {
 
     public final static class PassiveSkill {
         public static final String FireProof = "FireProof";
+        public static final String Magicize = "Magicize";
+        public static final String MagicAttach = "MagicAttach";
+        public static final String GentlyLand = "GentlyLand";
+        public static final String Feather = "Feather";
         public static final String FireResistance = "FireResistance";
+        public static final String Levitation = "Levitation";
 
 
     }
