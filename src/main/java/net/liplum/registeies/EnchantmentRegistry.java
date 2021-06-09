@@ -22,7 +22,7 @@ public final class EnchantmentRegistry {
 
     public static Enchantment with(Enchantment enchantment, String name) {
         Enchantments.addLast(enchantment);
-        return enchantment.setRegistryName(Names.prefixRegister(name)).
+        return Names.setRegisterName(enchantment, name).
                 setName(I18ns.prefixUnloc(name));
     }
 

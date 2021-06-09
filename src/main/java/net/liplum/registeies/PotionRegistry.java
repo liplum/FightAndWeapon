@@ -22,7 +22,7 @@ public final class PotionRegistry {
 
     public static Potion with(Potion potion, String name) {
         Potions.add(potion);
-        return potion.setRegistryName(Names.prefixRegister(name)).
+        return Names.setRegisterName(potion, name).
                 setPotionName(I18ns.prefixPotionUnloc(name));
     }
 

@@ -1,7 +1,7 @@
 package net.liplum.eventhandlers;
 
-import net.liplum.MCNames;
 import net.liplum.MetaData;
+import net.liplum.Vanilla;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
@@ -18,8 +18,8 @@ public class PotionWorkHandler {
         DamageSource source = e.getSource();
         String dmgType = source.getDamageType();
         if (target.isPotionActive(PotionRegistry.Unstoppable_Potion) &&
-                (dmgType.equals(MCNames.DamageType.Mob) ||
-                        dmgType.equals(MCNames.DamageType.Player)
+                (dmgType.equals(Vanilla.DamageType.Mob) ||
+                        dmgType.equals(Vanilla.DamageType.Player)
                 )) {
             e.setCanceled(true);
         }

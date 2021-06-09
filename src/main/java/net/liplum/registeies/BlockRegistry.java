@@ -5,8 +5,8 @@ import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.blocks.TestFuncBlock;
 import net.liplum.blocks.forge.TestBlock;
+import net.liplum.blocks.weapon.InlayTableBlock;
 import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -16,10 +16,11 @@ import java.util.LinkedList;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public final class BlockRegistry {
-    public static final LinkedList<Block> Blocks = new LinkedList<>();
+    private static final LinkedList<Block> Blocks = new LinkedList<>();
 
     public static final Block TestBlock = forge(new TestBlock(), "test_block");
     public static final Block TestFuncBlock = forge(new TestFuncBlock(), "test_func_block");
+    public static final Block Inlay_Table_Block = forge(new InlayTableBlock(), Names.Block.InlayTable);
 
     @SubscribeEvent
     public static void onRegisterBlocks(RegistryEvent.Register<Block> event) {
@@ -29,15 +30,14 @@ public final class BlockRegistry {
         }
     }
 
-    private static Block with(Block block, String name, CreativeTabs itemGroup) {
+    private static Block with(Block block, String name) {
         Blocks.addLast(block);
         return Names.setRegisterName(block, name).
-                setUnlocalizedName(I18ns.prefixUnloc(name)).
-                setCreativeTab(itemGroup);
+                setUnlocalizedName(I18ns.prefixUnloc(name));
     }
 
     public static Block forge(Block block, String name) {
-        return with(block, name, ItemGroupsRegistry.FawForges);
+        return with(block, name);
     }
 
 }

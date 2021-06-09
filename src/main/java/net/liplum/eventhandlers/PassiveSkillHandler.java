@@ -23,7 +23,7 @@ import java.util.Set;
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public class PassiveSkillHandler {
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerTickEvent(TickEvent.PlayerTickEvent e) {
         EntityPlayer player = e.player;
         Set<IPassiveSkill<Event>> skills =
@@ -36,7 +36,7 @@ public class PassiveSkillHandler {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerHurtEvent(LivingHurtEvent e) {
         EntityLivingBase entity = e.getEntityLiving();
         if (entity instanceof EntityPlayer) {
@@ -52,7 +52,7 @@ public class PassiveSkillHandler {
         }
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onPlayerFallEvent(LivingFallEvent e) {
         EntityLivingBase entity = e.getEntityLiving();
         if (entity instanceof EntityPlayer) {

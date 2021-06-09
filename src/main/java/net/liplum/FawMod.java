@@ -3,7 +3,7 @@ package net.liplum;
 import net.liplum.lib.utils.MasterUtil;
 import net.liplum.proxies.ProxyBase;
 import net.liplum.registeies.CapabilityRegistry;
-import net.liplum.registeies.CommandsRegistry;
+import net.liplum.registeies.CommandRegistry;
 import net.liplum.registeies.FawNetworkRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -57,7 +57,7 @@ public class FawMod {
 
     @Mod.EventHandler
     public void postInit(FMLServerStartingEvent event) {
-        CommandsRegistry.load(event);
+        CommandRegistry.load(event);
         Logger.info("Command Component loaded successfully.");
     }
 }

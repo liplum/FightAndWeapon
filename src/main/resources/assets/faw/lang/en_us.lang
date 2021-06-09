@@ -19,6 +19,9 @@ commands.inlay.failure.noSuchGemstone=Couldn't inlay the gemstone called %s as i
 #Potions
 potion.effect.faw.unstoppable=Unstoppable
 
+#Tile
+tile.faw.inlay_table.name=Inlay Table
+
 #Items
 item.faw.ruby.name=Ruby
 item.faw.quartz_sword.name=Quartz Sword

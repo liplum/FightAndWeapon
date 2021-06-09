@@ -31,7 +31,6 @@ public final class Gemstones {
             .addPassiveSkillToAll(FlamegemSkills.FireProof)
     );
 
-
     public final static IGemstone Endergem_Gemstone = with(new Gemstone(Names.Gemstone.Endergem)
             .addModifier(EnderGemModifier.Normal_Lance)
     );

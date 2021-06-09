@@ -2,34 +2,57 @@ package net.liplum;
 
 public final class I18ns {
     public static String prefixUnloc(String name) {
-        return String.format("%s.%s", MetaData.MOD_ID, name);
+        return MetaData.MOD_ID + '.' +
+                name;
     }
 
     public static String prefixPotionUnloc(String name) {
-        return String.format("potion.effect.%s.%s", MetaData.MOD_ID, name);
+        return Vanilla.I18n.Potion + '.' + Vanilla.I18n.Effect + '.' +
+                MetaData.MOD_ID + '.' +
+                name;
     }
 
     public static String prefixHotkeyUnloc(String name) {
-        return String.format("hotkey.%s.%s", MetaData.MOD_ID, name);
+        return Vanilla.I18n.Hotkey + '.' +
+                MetaData.MOD_ID + '.' +
+                name;
     }
 
     public static String prefixHotkeyCategoryUnloc(String name) {
-        return String.format("hotkey.category.%s", name);
+        return Vanilla.I18n.Hotkey + '.' + Vanilla.I18n.Category + '.' +
+                name;
     }
 
     public static String prefixCommandUnloc(String name) {
-        return String.format("commands.%s.usage", name);
+        return Vanilla.I18n.Command + '.' +
+                name + '.' +
+                Vanilla.I18n.Command_Usage;
+    }
+
+    public static String prefixTile(String name) {
+        return Vanilla.I18n.Tile + '.' +
+                MetaData.MOD_ID + '.' +
+                name;
+    }
+
+    public static String endWithName(String content) {
+        return content + '.' +
+                Vanilla.I18n.Name;
     }
 
     public static final class Hotkey {
-        public static final String Faw_Category = prefixHotkeyCategoryUnloc("faw");
+        public static final String Faw_Category = prefixHotkeyCategoryUnloc(MetaData.MOD_ID);
 
         public static final class Master {
-            public static final String Master = prefixHotkeyUnloc("master");
+            public static final String Master = prefixHotkeyUnloc(Names.Master.Master);
         }
     }
 
     public static final class Command {
-        public static final String Inlay = prefixCommandUnloc("inlay");
+        public static final String Inlay = prefixCommandUnloc(Names.Command.Inlay);
+    }
+
+    public static final class Tile {
+        public static final String InlayTable_Name = endWithName(prefixTile(Names.Block.InlayTable));
     }
 }

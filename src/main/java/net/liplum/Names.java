@@ -5,7 +5,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public final class Names {
     public static String prefixRegister(String name) {
-        return String.format("%s:%s", MetaData.MOD_ID, name);
+        return MetaData.MOD_ID + ':' + name;
     }
 
     public static <T extends IForgeRegistryEntry.Impl<T>> T setRegisterName(T namedObject, String registerName) {
@@ -71,6 +71,10 @@ public final class Names {
         }
     }
 
+    public final static class Block {
+        public static final String InlayTable = "inlay_table";
+    }
+
     public final static class Gemstone {
         public static final String Ruby = "ruby";
         public static final String Aquamarine = "aquamarine";
@@ -99,5 +103,9 @@ public final class Names {
         public static final String Levitation = "Levitation";
 
 
+    }
+
+    public final static class Master {
+        public static final String Master = "master";
     }
 }

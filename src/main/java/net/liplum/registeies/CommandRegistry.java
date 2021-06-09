@@ -8,7 +8,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.LinkedList;
 
-public class CommandsRegistry {
+public class CommandRegistry {
     private static final Logger Logger = LogManager.getLogger();
     private static final LinkedList<Class<? extends CommandBase>> Commands = new LinkedList<>();
 
