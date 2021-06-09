@@ -3,7 +3,7 @@ package net.liplum.gui.client;
 import net.liplum.I18ns;
 import net.liplum.Resources;
 import net.liplum.Vanilla;
-import net.liplum.gui.server.InlayingContainer;
+import net.liplum.gui.server.InlayTableContainer;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
@@ -11,14 +11,14 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
 
-public class InlayingGUI extends GuiContainer {
+public class InlayTableGUI extends GuiContainer {
     private static final int XSize = 176;
     private static final int YSize = 166;
     private static final ResourceLocation Texture =
             Resources.genGuiContainerTx(Resources.Textures.GUI.InlayTable);
 
-    public InlayingGUI(EntityPlayer player, World world, int x, int y, int z) {
-        super(new InlayingContainer(player, world, x, y, z));
+    public InlayTableGUI(EntityPlayer player, World world, int x, int y, int z) {
+        super(new InlayTableContainer(player, world, x, y, z));
         xSize = XSize;
         ySize = YSize;
     }
@@ -43,6 +43,6 @@ public class InlayingGUI extends GuiContainer {
     @Override
     protected void drawGuiContainerForegroundLayer(int mouseX, int mouseY) {
         String blockName = I18n.format(I18ns.Tile.InlayTable_Name);
-        drawCenteredString(fontRenderer, blockName, xSize / 2, 6, Vanilla.Color.BlackColor);
+        fontRenderer.drawString(blockName, xSize / 2, 6, Vanilla.Color.BlackColor);
     }
 }

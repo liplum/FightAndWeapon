@@ -1,8 +1,8 @@
 package net.liplum.gui;
 
-import net.liplum.gui.client.InlayingGUI;
+import net.liplum.gui.client.InlayTableGUI;
 import net.liplum.gui.client.MasterGui;
-import net.liplum.gui.server.InlayingContainer;
+import net.liplum.gui.server.InlayTableContainer;
 import net.liplum.gui.server.MasterContainer;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.world.World;
@@ -14,15 +14,15 @@ public class FawGuiHandler implements IGuiHandler {
     private static int Number = 1;
 
     public static int Master_ID = Number++;
-    public static int Inlaying_ID = Number++;
+    public static int Inlay_Table_ID = Number++;
 
     @Nullable
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Master_ID) {
             return new MasterContainer();
-        } else if (ID == Inlaying_ID) {
-            return new InlayingContainer(player, world, x, y, z);
+        } else if (ID == Inlay_Table_ID) {
+            return new InlayTableContainer(player, world, x, y, z);
         }
         return null;
     }
@@ -32,8 +32,8 @@ public class FawGuiHandler implements IGuiHandler {
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Master_ID) {
             return new MasterGui();
-        } else if (ID == Inlaying_ID) {
-            return new InlayingGUI(player, world, x, y, z);
+        } else if (ID == Inlay_Table_ID) {
+            return new InlayTableGUI(player, world, x, y, z);
         }
         return null;
     }

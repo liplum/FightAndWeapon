@@ -25,7 +25,7 @@ public class InlayTableBlock extends Block {
                                     float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
             playerIn.openGui(MetaData.MOD_ID,
-                    FawGuiHandler.Inlaying_ID,
+                    FawGuiHandler.Inlay_Table_ID,
                     worldIn, pos.getX(), pos.getY(), pos.getZ());
         }
         return true;
