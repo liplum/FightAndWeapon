@@ -23,6 +23,8 @@ public final class Names {
         public static final String TestSwordItem = "test_sword";
         public static final String BattleAxeItem = "battle_axe";
 
+        public static final String InlayingToolItem = "inlaying_tool";
+
         public static class Lance {
             public static final String ArenaLanceItem = "arena_lance";
             public static final String TrainingLanceItem = "training_lance";

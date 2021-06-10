@@ -4,6 +4,7 @@ import net.liplum.Gemstones;
 import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
+import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.items.weapons.QuartzAxeItem;
 import net.liplum.items.weapons.QuartzSwordItem;
@@ -43,9 +44,23 @@ public final class ItemRegistry {
     //
     //Gemstone
     public static final Item Ruby_Item = gemstone(new GemstoneItem(Gemstones.Ruby_Gemstone));
+    public static final Item Aquamarine_Item = gemstone(new GemstoneItem(Gemstones.Aquamarine_Gemstone));
+    public static final Item Citrine_Item = gemstone(new GemstoneItem(Gemstones.Citrine_Gemstone));
+    public static final Item Jadeite_Item = gemstone(new GemstoneItem(Gemstones.Jadeite_Gemstone));
+    public static final Item Amethyst_Item = gemstone(new GemstoneItem(Gemstones.Amethyst_Gemstone));
+    public static final Item Rose_Quartz_Item = gemstone(new GemstoneItem(Gemstones.Rose_Quartz_Gemstone));
+    public static final Item Turquoise_Item = gemstone(new GemstoneItem(Gemstones.Turquoise_Gemstone));
+
+    public static final Item Flamegem_Item = gemstone(new GemstoneItem(Gemstones.Flamegem_Gemstone));
+    public static final Item Marinegem_Item = gemstone(new GemstoneItem(Gemstones.Marinegem_Gemstone));
+    public static final Item Earthgem_Item = gemstone(new GemstoneItem(Gemstones.Earthgem_Gemstone));
+    public static final Item Forestgem_Item = gemstone(new GemstoneItem(Gemstones.Forestgem_Gemstone));
+    public static final Item Endergem_Item = gemstone(new GemstoneItem(Gemstones.Endergem_Gemstone));
+    public static final Item Magic_Pearl_Item = gemstone(new GemstoneItem(Gemstones.Magic_Pearl_Gemstone));
+    public static final Item Windy_Gemstone_Item = gemstone(new GemstoneItem(Gemstones.Windy_Gemstone));
 
     //Some test items
-    public static final Item QUARTZ_SWORD_ITEM = weapon(new QuartzSwordItem(), Names.Item.QuartzSwordItem);
+    public static final Item Quartz_Sword_Item = weapon(new QuartzSwordItem(), Names.Item.QuartzSwordItem);
     public static final Item Quartz_Axe_Item = weapon(new QuartzAxeItem(Item.ToolMaterial.IRON), Names.Item.QuartzAxeItem);
     public static final Item Test_Sword_Item = weapon(new TestSwordItem(), Names.Item.TestSwordItem);
 
@@ -66,6 +81,7 @@ public final class ItemRegistry {
     public static final Item Test_Func_Block_Item = forge(new ItemBlock(BlockRegistry.TestFuncBlock), "test_func_block");
     public static final Item Inlay_Table_Block_Item = forge(new ItemBlock(BlockRegistry.Inlay_Table_Block), Names.Block.InlayTable);
 
+    public static final Item Inlaying_Tool_Item = forge(new InlayingToolItem(),Names.Item.InlayingToolItem);
     //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
     //------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------

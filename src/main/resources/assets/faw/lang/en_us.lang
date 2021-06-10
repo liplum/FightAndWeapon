@@ -23,7 +23,24 @@ potion.effect.faw.unstoppable=Unstoppable
 tile.faw.inlay_table.name=Inlay Table
 
 #Items
+#Gemstones
 item.faw.ruby.name=Ruby
+item.faw.aquamarine.name=Aquamarine
+item.faw.citrine.name=Citrine
+item.faw.jadeite.name=Jadeite
+item.faw.amethyst.name=Amethyst
+item.faw.rose_quartz.name=RoseQuartz
+item.faw.turquoise.name=Turquoise
+item.faw.flamegem.name=Flamegem
+item.faw.marinegem.name=Marinegem
+item.faw.earthgem.name=Earthgem
+item.faw.forestgem.name=Forestgem
+item.faw.endergem.name=Endergem
+item.faw.magic_pearl.name=MagicPearl
+item.faw.windy_gemstone.name=WindyGemstone
+
+item.faw.inlaying_tool.name=Inlaying Tool
+
 item.faw.quartz_sword.name=Quartz Sword
 item.faw.quartz_axe.name=Quartz Axe
 item.faw.test_sword.name=Test Sword

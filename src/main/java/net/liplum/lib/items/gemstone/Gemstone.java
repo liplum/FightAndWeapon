@@ -27,7 +27,7 @@ public class Gemstone implements IGemstone {
 
     @Override
     public boolean hasModifierOf(IWeaponCore core) {
-        return amplifierOfCores.hasModifierOf(core);
+        return amplifierOfCores.hasAnyAmplifier(core);
     }
 
     /**
@@ -114,6 +114,17 @@ public class Gemstone implements IGemstone {
         return this;
     }
 
+    @Override
+    public boolean hasAnyAmplifier(WeaponBaseItem<?> weapon) {
+        if (hasModifierOf(weapon.getCore())) {
+            return true;
+        }
+        if (amplifierOfAllWeaponTypes.hasAnyAmplifier()) {
+            return true;
+        }
+        return amplifierOfWeaponTypes.hasAnyAmplifier(weapon.getClass());
+    }
+
 
     private static class AmplifierOfCores {
         private final Map<IWeaponCore, CoreAmplifier> amplifiers = new HashMap<>();
@@ -125,8 +136,11 @@ public class Gemstone implements IGemstone {
             return null;
         }
 
-        public boolean hasModifierOf(IWeaponCore core) {
-            return amplifiers.containsKey(core);
+        public boolean hasAnyAmplifier(IWeaponCore core) {
+            if (amplifiers.containsKey(core)) {
+                return amplifiers.get(core).hasAny();
+            }
+            return false;
         }
 
         @Nullable
@@ -199,6 +213,10 @@ public class Gemstone implements IGemstone {
             public void removePassiveSkill(IPassiveSkill<?> passiveSkill) {
                 passiveSkills.remove(passiveSkill);
             }
+
+            public boolean hasAny() {
+                return modifier != null || passiveSkills.size() > 0;
+            }
         }
     }
 
@@ -228,6 +246,10 @@ public class Gemstone implements IGemstone {
                 amplifiers.get(weaponType).remove(passiveSkill);
             }
         }
+
+        public boolean hasAnyAmplifier(Class<?> weaponType) {
+            return amplifiers.containsKey(weaponType);
+        }
     }
 
     private static class AmplifierOfAllWeaponTypes {
@@ -244,6 +266,10 @@ public class Gemstone implements IGemstone {
 
         public void removePassiveSkill(IPassiveSkill<?> passiveSkill) {
             amplifiers.remove(passiveSkill);
+        }
+
+        public boolean hasAnyAmplifier() {
+            return amplifiers.size() > 0;
         }
     }
 

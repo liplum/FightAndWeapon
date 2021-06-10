@@ -6,7 +6,9 @@ import net.liplum.Names;
 import net.liplum.blocks.TestFuncBlock;
 import net.liplum.blocks.forge.TestBlock;
 import net.liplum.blocks.weapon.InlayTableBlock;
+import net.liplum.lib.ItemGroup;
 import net.minecraft.block.Block;
+import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -30,14 +32,14 @@ public final class BlockRegistry {
         }
     }
 
-    private static Block with(Block block, String name) {
+    private static Block with(Block block, String name, ItemGroup itemGroup) {
         Blocks.addLast(block);
         return Names.setRegisterName(block, name).
-                setUnlocalizedName(I18ns.prefixUnloc(name));
+                setUnlocalizedName(I18ns.prefixUnloc(name))
+                .setCreativeTab(itemGroup);
     }
 
     public static Block forge(Block block, String name) {
-        return with(block, name);
+        return with(block, name,ItemGroupRegistry.FawForges);
     }
-
 }

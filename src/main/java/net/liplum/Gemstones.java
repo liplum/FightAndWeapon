@@ -31,6 +31,15 @@ public final class Gemstones {
             .addPassiveSkillToAll(FlamegemSkills.FireProof)
     );
 
+    public final static IGemstone Marinegem_Gemstone = with(new Gemstone(Names.Gemstone.Marinegem)
+    );
+
+    public final static IGemstone Earthgem_Gemstone = with(new Gemstone(Names.Gemstone.Earthgem)
+    );
+
+    public final static IGemstone Forestgem_Gemstone = with(new Gemstone(Names.Gemstone.Forestgem)
+    );
+
     public final static IGemstone Endergem_Gemstone = with(new Gemstone(Names.Gemstone.Endergem)
             .addModifier(EnderGemModifier.Normal_Lance)
     );

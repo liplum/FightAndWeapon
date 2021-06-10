@@ -34,6 +34,35 @@ public final class FawGemUtil {
         return gemstone.getModifierOf(weapon.getCore());
     }
 
+    public static boolean hasGemstone(ItemStack itemStack) {
+        Item item = itemStack.getItem();
+        if (!(item instanceof WeaponBaseItem<?>)) {
+            return false;
+        }
+        NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
+        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
+        NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
+        if (gemList.tagCount() == 0) {
+            return false;
+        }
+        NBTBase gemstoneNbt = gemList.get(0);
+        NBTTagCompound gemstoneObj = (NBTTagCompound) gemstoneNbt;
+        String gemstoneName = gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
+        return !gemstoneName.isEmpty();
+    }
+
+    public static boolean canInlayGemstone(WeaponBaseItem<?> weapon, IGemstone gemstone) {
+        return gemstone.hasAnyAmplifier(weapon);
+    }
+
+    public static boolean canInlayGemstone(WeaponBaseItem<?> weapon, String gemstoneName) {
+        IGemstone gemstone = GemstoneRegistry.getGemstone(gemstoneName);
+        if (gemstone != null) {
+            return gemstone.hasAnyAmplifier(weapon);
+        }
+        return false;
+    }
+
     /**
      * @param itemStack
      * @return the first gemstone contained in the weapon. If this item is not a weapon then return false.
@@ -56,6 +85,10 @@ public final class FawGemUtil {
         String gemstoneName = gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
         //Gets corresponding gemstone by its name.
         return GemstoneRegistry.getGemstone(gemstoneName);
+    }
+
+    public static InlayResult inlayGemstone(ItemStack itemStack, IGemstone gemstone) {
+        return inlayGemstone(itemStack, gemstone.getRegisterName());
     }
 
     public static InlayResult inlayGemstone(ItemStack itemStack, String gemstoneName) {

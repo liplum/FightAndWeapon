@@ -1,12 +1,16 @@
 package net.liplum.gui.server;
 
+import net.liplum.api.weapon.IGemstone;
+import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -19,28 +23,48 @@ public class InlayTableContainer extends Container {
     private static final double MaxReachDistanceSq = 64;
     private final World world;
     private final BlockPos pos;
-   private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
+    private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
     private final Slot gemstoneSlot =
-            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17){
+            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    return FawItemUtil.isGemstone(stack);
+                    Item item = stack.getItem();
+                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
+                }
+
+                @Override
+                public void onSlotChanged() {
+                    super.onSlotChanged();
+                    onInputChanged();
                 }
             };
     private final Slot weaponSlot =
-            new SlotItemHandler(weaponItemHandler, 0, 56, 55){
+            new SlotItemHandler(weaponItemHandler, 0, 56, 55) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    return FawItemUtil.isGemstone(stack);
+                    return FawItemUtil.isFawWeapon(stack);
+                }
+
+                @Override
+                public void onSlotChanged() {
+                    super.onSlotChanged();
+                    onInputChanged();
                 }
             };
     private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 133, 26){
+            new SlotItemHandler(outputItemHandler, 0, 133, 26) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
                     return false;
+                }
+
+                @Override
+                public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
+                    ItemStack newWeapon = super.onTake(thePlayer, stack);
+                    onTookOutput();
+                    return newWeapon;
                 }
             };
 
@@ -54,7 +78,7 @@ public class InlayTableContainer extends Container {
     }
 
 
-    public void addAllSlots() {
+    private void addAllSlots() {
         addSlotToContainer(gemstoneSlot);
         addSlotToContainer(weaponSlot);
         addSlotToContainer(outputSlot);
@@ -62,6 +86,52 @@ public class InlayTableContainer extends Container {
         addPlayerInventorySlots();
     }
 
+    private void onInputChanged() {
+        ItemStack weaponStack = weaponSlot.getStack();
+        ItemStack gemstoneStack = gemstoneSlot.getStack();
+        if (weaponStack.isEmpty() || gemstoneStack.isEmpty()) {
+            outputSlot.putStack(ItemStack.EMPTY);
+            return;
+        }
+        //Now we have a weapon and a "gemstone(maybe)"
+        WeaponBaseItem<?> weaponType = (WeaponBaseItem<?>) weaponStack.getItem();
+        Item maybeGemstoneItem = gemstoneStack.getItem();
+
+        if (FawItemUtil.isGemstone(maybeGemstoneItem)) {
+            //It's a gemstoneItem
+            GemstoneItem gemstoneItem = (GemstoneItem) maybeGemstoneItem;
+            //Now we have a weapon and a gemstoneItem
+            if (!FawGemUtil.hasGemstone(weaponStack)) {
+                //Now we have a weapon without gemstoneItem and a gemstoneItem waited for inlaying
+                ItemStack newWeapon = weaponStack.copy();
+
+                IGemstone gemstone = gemstoneItem.getGemstone();
+                if (FawGemUtil.canInlayGemstone(weaponType, gemstone)) {
+                    FawGemUtil.inlayGemstone(newWeapon, gemstone);
+                    outputSlot.putStack(newWeapon);
+                }
+            }
+        } else {
+            //It's an inlaying tool
+            //Now we have a weapon and an inlaying tool
+            if (FawGemUtil.hasGemstone(weaponStack)) {
+                //Now we have a weapon with gemstone and an inlaying tool
+                ItemStack newWeapon = weaponStack.copy();
+                FawGemUtil.removeGemstone(newWeapon);
+                outputSlot.putStack(newWeapon);
+            }
+        }
+    }
+
+    private void onTookOutput() {
+        ItemStack weaponStack = weaponSlot.getStack();
+        ItemStack gemstoneStack = gemstoneSlot.getStack();
+        if (weaponStack.isEmpty() || gemstoneStack.isEmpty()) {
+            return;
+        }
+        weaponSlot.putStack(ItemStack.EMPTY);
+        gemstoneSlot.putStack(ItemStack.EMPTY);
+    }
 
     public void addPlayerInventorySlots() {
         for (int k = 0; k < 3; ++k) {
@@ -75,13 +145,14 @@ public class InlayTableContainer extends Container {
         }
     }
 
+    @Nonnull
     @Override
-    public ItemStack transferStackInSlot(EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(@Nonnull EntityPlayer playerIn, int index) {
         return ItemStack.EMPTY;
     }
 
-   @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
+    @Override
+    public void onContainerClosed(@Nonnull EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
         if (playerIn.isServerWorld()) {
             tryDropItem(playerIn, gemstoneSlot.getStack());

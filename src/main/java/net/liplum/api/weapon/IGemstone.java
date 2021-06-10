@@ -39,4 +39,6 @@ public interface IGemstone {
     IGemstone removePassiveSkillFromWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> passiveSkill);
 
     IGemstone removePassiveSkillFromAll(IPassiveSkill<?> passiveSkill);
+
+    boolean hasAnyAmplifier(WeaponBaseItem<?> weapon);
 }
