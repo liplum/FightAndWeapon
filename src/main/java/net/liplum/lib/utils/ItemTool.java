@@ -5,6 +5,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class ItemTool {
@@ -46,6 +47,12 @@ public class ItemTool {
             return EnumHand.OFF_HAND;
         } else {
             return null;
+        }
+    }
+
+    public static void tryDropItem(@Nonnull EntityPlayer player, @Nonnull ItemStack itemStack) {
+        if (itemStack != ItemStack.EMPTY) {
+            player.dropItem(itemStack, false);
         }
     }
 }

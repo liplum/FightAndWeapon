@@ -4,6 +4,7 @@ import net.liplum.Tags;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
+import net.liplum.items.InlayingToolItem;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.nbt.FawNbt;
 import net.liplum.lib.nbt.NbtUtil;
@@ -16,6 +17,7 @@ import net.minecraft.nbt.NBTTagList;
 import javax.annotation.Nullable;
 
 public final class FawGemUtil {
+
     /**
      * @param itemStack
      * @return

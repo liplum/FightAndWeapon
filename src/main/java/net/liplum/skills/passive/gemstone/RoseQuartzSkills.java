@@ -14,7 +14,7 @@ import java.util.List;
 
 public final class RoseQuartzSkills {
     public static final IPassiveSkill<WeaponAttackingEvent> MagicAttach =
-            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.MagicAttach,
+            SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<WeaponAttackingEvent>() {
                         @Override
                         public Class<WeaponAttackingEvent> getEventType() {
@@ -25,9 +25,15 @@ public final class RoseQuartzSkills {
                         public PSkillResult onTrigger(WeaponAttackingEvent event) {
                             List<Tuple<DamageSource, Float>> extraDamages = event.getExtraDamages();
                             EntityLivingBase attacker = event.getAttacker();
-                            DamageSource extraDamageSource = EntityUtil.genDamageSource(attacker).setMagicDamage();
+                            DamageSource extraDamageSource = EntityUtil.genDamageSource(attacker).
+                                    setMagicDamage().setDamageBypassesArmor();
                             extraDamages.add(new Tuple<>(extraDamageSource, 1F));
                             return PSkillResult.Complete;
+                        }
+
+                        @Override
+                        public String getRegisterName() {
+                            return Names.PassiveSkill.MagicAttach;
                         }
                     });
 }

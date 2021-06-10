@@ -92,14 +92,12 @@ newGem.addModifier(yyyModifier);
 ```
 
 ## How to create a new Passive Skill and register it.
+
 ```Java
 // You can see this passive skill in Class MagicPearlSkills
 
 IPassiveSkill<WeaponPreAttackEvent> Magicize =
         SkillRegistry.registerPassiveSkill(
-                // Name it and ensure it unique.
-                // If you want to change it, please change it synchronously in anywhere
-                "Magicize",
         // Create a new class or just use a anonymous class.
         // Make it extend a Modifier class which you want.
         // The generic parameter stands for which event you need to subscribe
@@ -121,6 +119,13 @@ IPassiveSkill<WeaponPreAttackEvent> Magicize =
         // If it triggered failed then returned PSkillResult.Fail.
         // NOTE:If you want to cancel the rest of passive skills then return PSkillResult.CancelTrigger.
         return PSkillResult.Complete;
+    }
+    
+    @Override
+    public String getRegisterName() {
+        // Name it and ensure it unique.
+        // If you want to change it, please change it synchronously in anywhere
+        return "Magicize";
     }
 });
 

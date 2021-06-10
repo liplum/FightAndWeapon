@@ -9,7 +9,7 @@ import net.minecraft.util.DamageSource;
 
 public final class MagicPearlSkills {
     public static final IPassiveSkill<WeaponPreAttackEvent> Magicize =
-            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.Magicize,
+            SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<WeaponPreAttackEvent>() {
                         @Override
                         public Class<WeaponPreAttackEvent> getEventType() {
@@ -19,8 +19,13 @@ public final class MagicPearlSkills {
                         @Override
                         public PSkillResult onTrigger(WeaponPreAttackEvent event) {
                             DamageSource damageSource = event.getDamageSource();
-                            damageSource.setMagicDamage();
+                            damageSource.setMagicDamage().setDamageBypassesArmor();
                             return PSkillResult.Complete;
+                        }
+
+                        @Override
+                        public String getRegisterName() {
+                            return Names.PassiveSkill.Magicize;
                         }
                     });
 

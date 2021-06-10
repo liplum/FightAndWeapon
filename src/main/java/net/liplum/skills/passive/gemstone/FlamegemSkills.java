@@ -11,7 +11,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 public final class FlamegemSkills {
     public final static IPassiveSkill<TickEvent.PlayerTickEvent> FireProof =
-            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireProof,
+            SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<TickEvent.PlayerTickEvent>() {
                         @Override
                         public Class<TickEvent.PlayerTickEvent> getEventType() {
@@ -25,6 +25,11 @@ public final class FlamegemSkills {
                                 player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 5, 0, false, false));
                             }
                             return PSkillResult.Complete;
+                        }
+
+                        @Override
+                        public String getRegisterName() {
+                            return Names.PassiveSkill.FireProof;
                         }
                     });
 }

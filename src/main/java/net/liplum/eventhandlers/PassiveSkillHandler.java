@@ -7,6 +7,7 @@ import net.liplum.events.attack.WeaponAttackBaseEvent;
 import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.events.attack.WeaponPostAttackedEvent;
 import net.liplum.events.attack.WeaponPreAttackEvent;
+import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.lib.utils.SkillUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -81,6 +82,19 @@ public class PassiveSkillHandler {
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onWeaponPostAttackEvent(WeaponPostAttackedEvent e) {
         onWeaponAttack(e, WeaponPostAttackedEvent.class);
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onLanceSprint(LanceSprintEvent e) {
+        EntityPlayer player = e.getArgs().getPlayer();
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(LanceSprintEvent.class, player);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
     }
 
     private static void onWeaponAttack(WeaponAttackBaseEvent e, Class<? extends WeaponAttackBaseEvent> eventType) {

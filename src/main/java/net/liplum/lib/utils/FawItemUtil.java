@@ -5,6 +5,7 @@ import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.events.attack.WeaponPostAttackedEvent;
 import net.liplum.events.attack.WeaponPreAttackEvent;
+import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
@@ -39,20 +40,28 @@ public final class FawItemUtil {
         return false;
     }
 
-    public static boolean isFawWeapon(@Nonnull ItemStack itemStack){
-        return itemStack.getItem() instanceof WeaponBaseItem<?>;
+    public static boolean isFawWeapon(@Nonnull ItemStack itemStack) {
+        return isFawWeapon(itemStack.getItem());
     }
 
-    public static boolean isGemstone(@Nonnull ItemStack itemStack){
-        return itemStack.getItem() instanceof GemstoneItem;
+    public static boolean isGemstone(@Nonnull ItemStack itemStack) {
+        return isGemstone(itemStack.getItem());
     }
 
-    public static boolean isFawWeapon(@Nonnull Item item){
+    public static boolean isFawWeapon(@Nonnull Item item) {
         return item instanceof WeaponBaseItem<?>;
     }
 
-    public static boolean isGemstone(@Nonnull Item item){
+    public static boolean isGemstone(@Nonnull Item item) {
         return item instanceof GemstoneItem;
+    }
+
+    public static boolean isInlayingTool(ItemStack itemStack){
+        return isInlayingTool(itemStack.getItem());
+    }
+
+    public static boolean isInlayingTool(Item item){
+        return item instanceof InlayingToolItem;
     }
 
     /**
@@ -301,5 +310,4 @@ public final class FawItemUtil {
         int res = (int) (base * (1 + rate));
         return res;
     }
-
 }

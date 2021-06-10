@@ -14,10 +14,10 @@ public final class Vanilla {
         public static final String Tile = "tile";
         public static final String Command = "commands";
         public static final String Command_Usage = "usage";
-        public static final String Hotkey = "hotkey";
+        public static final String Hotkey = "key";
         public static final String Potion = "potion";
         public static final String Effect = "effect";
-        public static final String Category = "category";
+        public static final String Category = "categories";
         public static final String Name = "name";
     }
 

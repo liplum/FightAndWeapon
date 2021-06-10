@@ -38,6 +38,7 @@ public final class Gemstones {
     );
 
     public final static IGemstone Forestgem_Gemstone = with(new Gemstone(Names.Gemstone.Forestgem)
+            .addPassiveSkillToAll(ForestgemSkills.NutrientAbsorption)
     );
 
     public final static IGemstone Endergem_Gemstone = with(new Gemstone(Names.Gemstone.Endergem)

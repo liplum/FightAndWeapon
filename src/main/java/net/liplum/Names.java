@@ -96,6 +96,10 @@ public final class Names {
     }
 
     public final static class PassiveSkill {
+        public static final String PassiveSkill = "pskill";
+
+        public static final String UnstoppableSprint = "UnstoppableSprint";
+
         public static final String FireProof = "FireProof";
         public static final String Magicize = "Magicize";
         public static final String MagicAttach = "MagicAttach";
@@ -103,8 +107,7 @@ public final class Names {
         public static final String Feather = "Feather";
         public static final String FireResistance = "FireResistance";
         public static final String Levitation = "Levitation";
-
-
+        public static final String NutrientAbsorption = "NutrientAbsorption";
     }
 
     public final static class Master {

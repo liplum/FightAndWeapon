@@ -12,7 +12,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 
 public final class WindyGemstoneSkills {
     public final static IPassiveSkill<WeaponPostAttackedEvent> Levitation =
-            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.Levitation,
+            SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<WeaponPostAttackedEvent>() {
                         @Override
                         public Class<WeaponPostAttackedEvent> getEventType() {
@@ -22,15 +22,19 @@ public final class WindyGemstoneSkills {
                         @Override
                         public PSkillResult onTrigger(WeaponPostAttackedEvent event) {
                             if (event.isHitSuccessfully()) {
-                                EntityUtil.ifLivingThenDO(event.getTarget(), e -> {
-                                    e.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 8, 0, false, false));
-                                });
+                                EntityUtil.ifLivingThenDO(event.getTarget(), e ->
+                                        e.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 8, 0, false, false)));
                             }
                             return PSkillResult.Complete;
                         }
+
+                        @Override
+                        public String getRegisterName() {
+                            return Names.PassiveSkill.Levitation;
+                        }
                     });
     public final static IPassiveSkill<LivingFallEvent> Feather =
-            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.Feather,
+            SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<LivingFallEvent>() {
                         @Override
                         public Class<LivingFallEvent> getEventType() {
@@ -41,6 +45,11 @@ public final class WindyGemstoneSkills {
                         public PSkillResult onTrigger(LivingFallEvent event) {
                             event.setCanceled(true);
                             return PSkillResult.CancelTrigger;
+                        }
+
+                        @Override
+                        public String getRegisterName() {
+                            return Names.PassiveSkill.Feather;
                         }
                     });
 }

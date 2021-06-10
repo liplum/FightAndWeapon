@@ -35,9 +35,24 @@ public final class I18ns {
                 name;
     }
 
+    public static String prefixPSkill(String name) {
+        return Names.PassiveSkill.PassiveSkill + '.' +
+                MetaData.MOD_ID + '.' +
+                name;
+    }
+
     public static String endWithName(String content) {
         return content + '.' +
                 Vanilla.I18n.Name;
+    }
+
+    public static String endWithDescription(String content) {
+        return content + '.' +
+                PassiveSkill.Description;
+    }
+
+    public static final class PassiveSkill {
+        public static final String Description = "description";
     }
 
     public static final class Hotkey {

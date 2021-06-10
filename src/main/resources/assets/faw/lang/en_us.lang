@@ -1,6 +1,6 @@
 #Hotkey
-hotkey.category.faw=Fight And Weapon's hotkeys
-hotkey.faw.master=Open Master GUI
+key.categories.faw=Fight And Weapon's hotkeys
+key.faw.master=Open Master GUI
 
 #Item Groups
 itemGroup.faw_weapons=FAW's Weapons
@@ -22,8 +22,13 @@ potion.effect.faw.unstoppable=Unstoppable
 #Tile
 tile.faw.inlay_table.name=Inlay Table
 
+#Skills
+#---Passive Skills
+pskill.faw.FireProof.name=FireProof
+
+
 #Items
-#Gemstones
+#---Gemstones
 item.faw.ruby.name=Ruby
 item.faw.aquamarine.name=Aquamarine
 item.faw.citrine.name=Citrine

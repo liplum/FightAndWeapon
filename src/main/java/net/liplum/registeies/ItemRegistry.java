@@ -81,7 +81,8 @@ public final class ItemRegistry {
     public static final Item Test_Func_Block_Item = forge(new ItemBlock(BlockRegistry.TestFuncBlock), "test_func_block");
     public static final Item Inlay_Table_Block_Item = forge(new ItemBlock(BlockRegistry.Inlay_Table_Block), Names.Block.InlayTable);
 
-    public static final Item Inlaying_Tool_Item = forge(new InlayingToolItem(),Names.Item.InlayingToolItem);
+    public static final Item Inlaying_Tool_Item = forge(new InlayingToolItem(), Names.Item.InlayingToolItem);
+
     //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
     //------------------------------------------------------------------------------------------------------------------------------
     //------------------------------------------------------------------------------------------------------------------------------

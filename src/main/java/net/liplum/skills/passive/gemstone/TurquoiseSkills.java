@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public final class TurquoiseSkills {
     public final static IPassiveSkill<LivingHurtEvent> GentlyLand =
-            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireResistance,
+            SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<LivingHurtEvent>() {
                         @Override
                         public Class<LivingHurtEvent> getEventType() {
@@ -24,6 +24,11 @@ public final class TurquoiseSkills {
                                 event.setAmount(dmg - dmg * 0.3F);
                             }
                             return PSkillResult.Complete;
+                        }
+
+                        @Override
+                        public String getRegisterName() {
+                            return Names.PassiveSkill.GentlyLand;
                         }
                     });
 }

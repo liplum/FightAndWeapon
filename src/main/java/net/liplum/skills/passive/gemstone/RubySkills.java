@@ -9,7 +9,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 public final class RubySkills {
     public final static IPassiveSkill<LivingHurtEvent> FireResistance =
-            SkillRegistry.registerPassiveSkill(Names.PassiveSkill.FireResistance,
+            SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<LivingHurtEvent>() {
                         @Override
                         public Class<LivingHurtEvent> getEventType() {
@@ -19,11 +19,16 @@ public final class RubySkills {
                         @Override
                         public PSkillResult onTrigger(LivingHurtEvent event) {
                             DamageSource source = event.getSource();
-                            if (source.getDamageType().equals(DamageSource.IN_FIRE.damageType)) {
+                            if (source.isFireDamage()) {
                                 float dmg = event.getAmount();
                                 event.setAmount(dmg / 2);
                             }
                             return PSkillResult.Complete;
+                        }
+
+                        @Override
+                        public String getRegisterName() {
+                            return Names.PassiveSkill.FireResistance;
                         }
                     });
 

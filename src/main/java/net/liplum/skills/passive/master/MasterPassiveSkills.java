@@ -1,7 +1,9 @@
 package net.liplum.skills.passive.master;
 
+import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
+import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.registeies.PotionRegistry;
@@ -16,7 +18,7 @@ public final class MasterPassiveSkills {
     /**
      * It can make the player unstoppable when sprinting with a lance.
      */
-    public final static IPassiveSkill<LanceSprintEvent> UnstoppableLanceSprint = new IPassiveSkill<LanceSprintEvent>() {
+    public final static IPassiveSkill<LanceSprintEvent> UnstoppableSprint = SkillRegistry.registerPassiveSkill(new IPassiveSkill<LanceSprintEvent>() {
         @Override
         public Class<LanceSprintEvent> getEventType() {
             return LanceSprintEvent.class;
@@ -29,5 +31,10 @@ public final class MasterPassiveSkills {
             player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
             return PSkillResult.Complete;
         }
-    };
+
+        @Override
+        public String getRegisterName() {
+            return Names.PassiveSkill.UnstoppableSprint;
+        }
+    });
 }

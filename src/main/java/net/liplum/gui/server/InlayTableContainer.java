@@ -6,9 +6,9 @@ import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
-import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -19,8 +19,9 @@ import net.minecraftforge.items.SlotItemHandler;
 
 import javax.annotation.Nonnull;
 
-public class InlayTableContainer extends Container {
+public class InlayTableContainer extends ContainerBase {
     private static final double MaxReachDistanceSq = 64;
+    private final InventoryPlayer playerInventory;
     private final World world;
     private final BlockPos pos;
     private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
@@ -61,19 +62,17 @@ public class InlayTableContainer extends Container {
                 }
 
                 @Override
-                public ItemStack onTake(EntityPlayer thePlayer, ItemStack stack) {
+                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
                     ItemStack newWeapon = super.onTake(thePlayer, stack);
                     onTookOutput();
                     return newWeapon;
                 }
             };
 
-    private final InventoryPlayer playerInventory;
-
     public InlayTableContainer(EntityPlayer player, World world, int x, int y, int z) {
+        this.playerInventory = player.inventory;
         this.world = world;
         this.pos = new BlockPos(x, y, z);
-        playerInventory = player.inventory;
         addAllSlots();
     }
 
@@ -84,6 +83,18 @@ public class InlayTableContainer extends Container {
         addSlotToContainer(outputSlot);
 
         addPlayerInventorySlots();
+    }
+
+    public void addPlayerInventorySlots() {
+        for (int k = 0; k < 3; ++k) {
+            for (int i1 = 0; i1 < 9; ++i1) {
+                addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
+            }
+        }
+
+        for (int l = 0; l < 9; ++l) {
+            addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 142));
+        }
     }
 
     private void onInputChanged() {
@@ -130,18 +141,10 @@ public class InlayTableContainer extends Container {
             return;
         }
         weaponSlot.putStack(ItemStack.EMPTY);
-        gemstoneSlot.putStack(ItemStack.EMPTY);
-    }
-
-    public void addPlayerInventorySlots() {
-        for (int k = 0; k < 3; ++k) {
-            for (int i1 = 0; i1 < 9; ++i1) {
-                addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
-            }
-        }
-
-        for (int l = 0; l < 9; ++l) {
-            addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 142));
+        if (FawItemUtil.isInlayingTool(gemstoneStack)) {
+            gemstoneStack.shrink(1);
+        } else {
+            gemstoneSlot.putStack(ItemStack.EMPTY);
         }
     }
 
@@ -155,14 +158,8 @@ public class InlayTableContainer extends Container {
     public void onContainerClosed(@Nonnull EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
         if (playerIn.isServerWorld()) {
-            tryDropItem(playerIn, gemstoneSlot.getStack());
-            tryDropItem(playerIn, weaponSlot.getStack());
-        }
-    }
-
-    public void tryDropItem(@Nonnull EntityPlayer player, @Nonnull ItemStack itemStack) {
-        if (itemStack != ItemStack.EMPTY) {
-            player.dropItem(itemStack, false);
+            ItemTool.tryDropItem(playerIn, gemstoneSlot.getStack());
+            ItemTool.tryDropItem(playerIn, weaponSlot.getStack());
         }
     }
 

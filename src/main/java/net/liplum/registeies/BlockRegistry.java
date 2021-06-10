@@ -8,7 +8,6 @@ import net.liplum.blocks.forge.TestBlock;
 import net.liplum.blocks.weapon.InlayTableBlock;
 import net.liplum.lib.ItemGroup;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -40,6 +39,6 @@ public final class BlockRegistry {
     }
 
     public static Block forge(Block block, String name) {
-        return with(block, name,ItemGroupRegistry.FawForges);
+        return with(block, name, ItemGroupRegistry.FawForges);
     }
 }
