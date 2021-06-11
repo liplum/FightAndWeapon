@@ -16,7 +16,15 @@ public final class Names {
         return new ResourceLocation(MetaData.MOD_ID, resourcePath);
     }
 
-    public static class Item {
+    public static final class Special {
+        public static final String Weapon = "weapon";
+        public static final String Master = "master";
+        public static final String PassiveSkill = "pskill";
+        public static final String Generic = "generic";
+        public static final String Attributes = "attributes";
+    }
+
+    public static final class Item {
         public static final String MaterialQuartz = "material_quartz";
         public static final String QuartzSwordItem = "quartz_sword";
         public static final String QuartzAxeItem = "quartz_axe";
@@ -25,15 +33,29 @@ public final class Names {
 
         public static final String InlayingToolItem = "inlaying_tool";
 
-        public static class Lance {
+        public static final class Lance {
+            public static final String TypeName = "lance";
             public static final String ArenaLanceItem = "arena_lance";
             public static final String TrainingLanceItem = "training_lance";
             public static final String LightLanceItem = "light_lance";
             public static final String KnightLanceItem = "knight_lance";
         }
 
-        public static class Harp {
+        public static final class Harp {
+            public static final String TypeName = "harp";
             public static final String HarpItem = "harp";
+        }
+    }
+
+    public static final class Attribute {
+
+        public static final class Generic {
+            public static final String Strength = "Strength";
+            public static final String CoolDown = "CoolDown";
+        }
+
+        public static final class Lance {
+            public static final String SprintLength = "SprintLength";
         }
     }
 
@@ -96,11 +118,10 @@ public final class Names {
     }
 
     public final static class PassiveSkill {
-        public static final String PassiveSkill = "pskill";
 
         public static final String UnstoppableSprint = "UnstoppableSprint";
 
-        public static final String FireProof = "FireProof";
+        public static final String Fireproof = "Fireproof";
         public static final String Magicize = "Magicize";
         public static final String MagicAttach = "MagicAttach";
         public static final String GentlyLand = "GentlyLand";
@@ -111,6 +132,5 @@ public final class Names {
     }
 
     public final static class Master {
-        public static final String Master = "master";
     }
 }

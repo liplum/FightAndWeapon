@@ -7,8 +7,8 @@ import net.liplum.lib.cores.battleaxe.BattleAxeArgs;
 import net.liplum.lib.cores.battleaxe.IBattleAxeCore;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.modifiers.BattleAxeIModifier;
-import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -38,7 +38,7 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
         //Default is PASS
         //If play were not sneaking, didn't detect.
         if (!playerIn.isSneaking()) {
-            IModifier modifier = FawGemUtil.getModifierFrom(held);
+            IModifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );

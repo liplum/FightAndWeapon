@@ -8,8 +8,8 @@ import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.modifiers.LanceModifier;
-import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -34,14 +34,15 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
         return 5;
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         int coolDown = core.getCoolDown();
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
-            IModifier modifier = FawGemUtil.getModifierFrom(held);
+            IModifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );

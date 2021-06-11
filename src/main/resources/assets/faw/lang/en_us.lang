@@ -1,4 +1,4 @@
-#Hotkey
+#Hotkeys
 key.categories.faw=Fight And Weapon's hotkeys
 key.faw.master=Open Master GUI
 
@@ -19,12 +19,30 @@ commands.inlay.failure.noSuchGemstone=Couldn't inlay the gemstone called %s as i
 #Potions
 potion.effect.faw.unstoppable=Unstoppable
 
-#Tile
+#Tooltips
+tooltip.faw.weapon.inlaid=Inlaid
+tooltip.faw.weapon.noGemstone=No Gemstone
+
+#Attributes
+attributes.faw.generic.Strength=Strength
+attributes.faw.generic.CoolDown=Cool Down
+
+attributes.faw.lance.SprintLength=Sprint Length
+
+
+#Tiles
 tile.faw.inlay_table.name=Inlay Table
 
 #Skills
 #---Passive Skills
-pskill.faw.FireProof.name=FireProof
+pskill.faw.FireProof.name=Fireproof
+pskill.faw.Magicize.name=Magicize
+pskill.faw.MagicAttach.name=Magic Attach
+pskill.faw.GentlyLand.name=Gently Land
+pskill.faw.Feather.name=Feather
+pskill.faw.FireResistance.name=Fire Resistance
+pskill.faw.Levitation.name=Levitation
+pskill.faw.NutrientAbsorption.name=Nutrient Absorption
 
 
 #Items
@@ -34,15 +52,15 @@ item.faw.aquamarine.name=Aquamarine
 item.faw.citrine.name=Citrine
 item.faw.jadeite.name=Jadeite
 item.faw.amethyst.name=Amethyst
-item.faw.rose_quartz.name=RoseQuartz
+item.faw.rose_quartz.name=Rose Quartz
 item.faw.turquoise.name=Turquoise
 item.faw.flamegem.name=Flamegem
 item.faw.marinegem.name=Marinegem
 item.faw.earthgem.name=Earthgem
 item.faw.forestgem.name=Forestgem
 item.faw.endergem.name=Endergem
-item.faw.magic_pearl.name=MagicPearl
-item.faw.windy_gemstone.name=WindyGemstone
+item.faw.magic_pearl.name=Magic Pearl
+item.faw.windy_gemstone.name=Windy Gemstone
 
 item.faw.inlaying_tool.name=Inlaying Tool
 

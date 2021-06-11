@@ -12,6 +12,8 @@ public final class Vanilla {
 
     public static final class I18n {
         public static final String Tile = "tile";
+        public static final String Tooltip = "tooltip";
+        public static final String Item = "item";
         public static final String Command = "commands";
         public static final String Command_Usage = "usage";
         public static final String Hotkey = "key";

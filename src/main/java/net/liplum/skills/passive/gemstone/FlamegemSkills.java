@@ -29,7 +29,7 @@ public final class FlamegemSkills {
 
                         @Override
                         public String getRegisterName() {
-                            return Names.PassiveSkill.FireProof;
+                            return Names.PassiveSkill.Fireproof;
                         }
                     });
 }

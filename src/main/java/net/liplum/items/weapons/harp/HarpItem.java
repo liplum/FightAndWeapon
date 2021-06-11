@@ -9,8 +9,8 @@ import net.liplum.lib.cores.harp.SingleHarpArgs;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.modifiers.HarpModifier;
-import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -40,7 +40,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         ItemStack held = playerIn.getHeldItem(handIn);
         int coolDown = core.getCoolDown();
         if (playerIn.isSneaking()) {
-            IModifier modifier = FawGemUtil.getModifierFrom(held);
+            IModifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
@@ -76,7 +76,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
     @Override
     public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
         Item held = stack.getItem();
-        IModifier modifier = FawGemUtil.getModifierFrom(stack);
+        IModifier modifier = GemUtil.getModifierFrom(stack);
         EntityPlayer p = (EntityPlayer) player;
         EnumHand hand = ItemTool.inWhichHand(p, stack);
         if (hand == null) {

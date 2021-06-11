@@ -3,7 +3,7 @@ package net.liplum.commands;
 import net.liplum.I18ns;
 import net.liplum.Names;
 import net.liplum.api.registeies.GemstoneRegistry;
-import net.liplum.lib.utils.FawGemUtil;
+import net.liplum.lib.utils.GemUtil;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
@@ -46,7 +46,7 @@ public class InlayCommand extends CommandBase {
 
                 if (gemstoneName.equals(Names.Command.InlaySub.Remove)) {
                     //Remove current gemstone
-                    FawGemUtil.RemoveResult removeResult = FawGemUtil.removeGemstone(heldItemStack);
+                    GemUtil.RemoveResult removeResult = GemUtil.removeGemstone(heldItemStack);
                     switch (removeResult) {
                         case NotFawWeapon:
                             throw new CommandException("commands.inlay.failure.notFawWeapon", sender);
@@ -55,7 +55,7 @@ public class InlayCommand extends CommandBase {
                     }
                 } else {
                     //Inlay new gemstone
-                    FawGemUtil.InlayResult inlayResult = FawGemUtil.inlayGemstone(heldItemStack, gemstoneName);
+                    GemUtil.InlayResult inlayResult = GemUtil.inlayGemstone(heldItemStack, gemstoneName);
                     switch (inlayResult) {
                         case NotFawWeapon:
                             throw new CommandException("commands.inlay.failure.notFawWeapon", sender);

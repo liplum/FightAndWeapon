@@ -12,6 +12,12 @@ public final class I18ns {
                 name;
     }
 
+    public static String prefixItem(String name) {
+        return Vanilla.I18n.Item + '.' + MetaData.MOD_ID + '.' +
+                name;
+
+    }
+
     public static String prefixHotkeyUnloc(String name) {
         return Vanilla.I18n.Hotkey + '.' +
                 MetaData.MOD_ID + '.' +
@@ -36,8 +42,13 @@ public final class I18ns {
     }
 
     public static String prefixPSkill(String name) {
-        return Names.PassiveSkill.PassiveSkill + '.' +
+        return Names.Special.PassiveSkill + '.' +
                 MetaData.MOD_ID + '.' +
+                name;
+    }
+
+    public static String prefixTooltip(String category, String name) {
+        return Vanilla.I18n.Tooltip + '.' + MetaData.MOD_ID + '.' + category + '.' +
                 name;
     }
 
@@ -51,6 +62,11 @@ public final class I18ns {
                 PassiveSkill.Description;
     }
 
+    public static String prefixAttr(String weaponType, String attributeName) {
+        return Names.Special.Attributes + '.' + MetaData.MOD_ID + '.' +
+                weaponType + '.' + attributeName;
+    }
+
     public static final class PassiveSkill {
         public static final String Description = "description";
     }
@@ -59,7 +75,7 @@ public final class I18ns {
         public static final String Faw_Category = prefixHotkeyCategoryUnloc(MetaData.MOD_ID);
 
         public static final class Master {
-            public static final String Master = prefixHotkeyUnloc(Names.Master.Master);
+            public static final String Master = prefixHotkeyUnloc(Names.Special.Master);
         }
     }
 
@@ -69,5 +85,29 @@ public final class I18ns {
 
     public static final class Tile {
         public static final String InlayTable_Name = endWithName(prefixTile(Names.Block.InlayTable));
+    }
+
+    public static final class Tooltip {
+        public static final String Inlaid = prefixTooltip(Names.Special.Weapon, "inlaid");
+        public static final String NoGemstone = prefixTooltip(Names.Special.Weapon, "noGemstone");
+    }
+
+    public static final class Attribute {
+        public static final class Generic {
+            public static final String Strength = with(Names.Attribute.Generic.Strength);
+            public static final String CoolDown = with(Names.Attribute.Generic.CoolDown);
+
+            private static String with(String attributeName) {
+                return prefixAttr(Names.Special.Generic, attributeName);
+            }
+        }
+
+        public static final class Lance {
+            public static final String SprintLength = with(Names.Attribute.Lance.SprintLength);
+
+            private static String with(String attributeName) {
+                return prefixAttr(Names.Item.Lance.TypeName, attributeName);
+            }
+        }
     }
 }

@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.events.attack.WeaponAttackingEvent;
@@ -11,6 +12,7 @@ import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -21,6 +23,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.Tuple;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
@@ -56,11 +59,11 @@ public final class FawItemUtil {
         return item instanceof GemstoneItem;
     }
 
-    public static boolean isInlayingTool(ItemStack itemStack){
+    public static boolean isInlayingTool(ItemStack itemStack) {
         return isInlayingTool(itemStack.getItem());
     }
 
-    public static boolean isInlayingTool(Item item){
+    public static boolean isInlayingTool(Item item) {
         return item instanceof InlayingToolItem;
     }
 
@@ -110,7 +113,7 @@ public final class FawItemUtil {
 
         IWeaponCore core = weapon.getCore();
         float strengthBase = core.getStrength();
-        IModifier<?> modifier = FawGemUtil.getModifierFrom(itemStack);
+        IModifier<?> modifier = GemUtil.getModifierFrom(itemStack);
         if (modifier != null) {
             finalDamage += calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
         } else {
@@ -309,5 +312,28 @@ public final class FawItemUtil {
         }
         int res = (int) (base * (1 + rate));
         return res;
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value) {
+        tooltip.add(TextFormatting.YELLOW +
+                I18n.format(attrTranslateKey) + " : " +
+                Math.round(value));
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value) {
+        tooltip.add(TextFormatting.YELLOW +
+                I18n.format(attrTranslateKey) + " : " +
+                Math.round(value));
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value) {
+        tooltip.add(TextFormatting.YELLOW +
+                I18n.format(attrTranslateKey) + " : " +
+                value);
+    }
+
+    public static void addPassiveSkillTooltip(@Nonnull List<String> tooltip, @Nonnull IPassiveSkill<?> passiveSkill) {
+        tooltip.add(TextFormatting.BLUE +
+                I18n.format(SkillUtil.getNameI18nKey(passiveSkill)));
     }
 }

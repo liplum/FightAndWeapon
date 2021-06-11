@@ -4,8 +4,8 @@ import net.liplum.api.weapon.IGemstone;
 import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.utils.FawGemUtil;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -112,23 +112,23 @@ public class InlayTableContainer extends ContainerBase {
             //It's a gemstoneItem
             GemstoneItem gemstoneItem = (GemstoneItem) maybeGemstoneItem;
             //Now we have a weapon and a gemstoneItem
-            if (!FawGemUtil.hasGemstone(weaponStack)) {
+            if (!GemUtil.hasGemstone(weaponStack)) {
                 //Now we have a weapon without gemstoneItem and a gemstoneItem waited for inlaying
                 ItemStack newWeapon = weaponStack.copy();
 
                 IGemstone gemstone = gemstoneItem.getGemstone();
-                if (FawGemUtil.canInlayGemstone(weaponType, gemstone)) {
-                    FawGemUtil.inlayGemstone(newWeapon, gemstone);
+                if (GemUtil.canInlayGemstone(weaponType, gemstone)) {
+                    GemUtil.inlayGemstone(newWeapon, gemstone);
                     outputSlot.putStack(newWeapon);
                 }
             }
         } else {
             //It's an inlaying tool
             //Now we have a weapon and an inlaying tool
-            if (FawGemUtil.hasGemstone(weaponStack)) {
+            if (GemUtil.hasGemstone(weaponStack)) {
                 //Now we have a weapon with gemstone and an inlaying tool
                 ItemStack newWeapon = weaponStack.copy();
-                FawGemUtil.removeGemstone(newWeapon);
+                GemUtil.removeGemstone(newWeapon);
                 outputSlot.putStack(newWeapon);
             }
         }

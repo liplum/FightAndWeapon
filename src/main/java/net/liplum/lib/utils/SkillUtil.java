@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IWeaponCore;
@@ -17,6 +18,16 @@ import java.util.Set;
 
 public final class SkillUtil {
 
+
+    public static String getNameI18nKey(IPassiveSkill<?> passiveSkill) {
+        return I18ns.endWithName(I18ns.prefixPSkill(passiveSkill.getRegisterName()));
+    }
+
+    public static String getDescriptionI18nKey(IPassiveSkill<?> passiveSkill) {
+        return I18ns.endWithDescription(I18ns.prefixPSkill(passiveSkill.getRegisterName()));
+    }
+
+
     private static void addPassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull Set<IPassiveSkill<Event>> allSkills, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity) {
         Item item = itemStack.getItem();
         if (item instanceof WeaponBaseItem<?>) {
@@ -25,7 +36,7 @@ public final class SkillUtil {
             WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
             Class<WeaponBaseItem<?>> clz = (Class<WeaponBaseItem<?>>) weapon.getClass();
             IWeaponCore core = weapon.getCore();
-            IGemstone gemstone = FawGemUtil.getGemstoneFrom(itemStack);
+            IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
             if (gemstone != null) {
                 //I told it can be converted so that it must can be converted!!!
                 IPassiveSkill<?>[] skillsFromGemstone = gemstone.getPassiveSkillsOf(core);
