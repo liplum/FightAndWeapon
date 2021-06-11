@@ -9,4 +9,12 @@ public final class GuiUtil {
     public static void setEmpty(Slot slot) {
         slot.putStack(ItemStack.EMPTY);
     }
+
+    public static boolean ifEmptyThenPut(Slot slot, ItemStack itemStack) {
+        if (!slot.getHasStack()) {
+            slot.putStack(itemStack);
+            return true;
+        }
+        return false;
+    }
 }

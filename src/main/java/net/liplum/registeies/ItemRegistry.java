@@ -43,21 +43,21 @@ public final class ItemRegistry {
     //  Registers all items
     //
     //Gemstone
-    public static final Item Ruby_Item = gemstone(new GemstoneItem(Gemstones.Ruby_Gemstone));
-    public static final Item Aquamarine_Item = gemstone(new GemstoneItem(Gemstones.Aquamarine_Gemstone));
-    public static final Item Citrine_Item = gemstone(new GemstoneItem(Gemstones.Citrine_Gemstone));
-    public static final Item Jadeite_Item = gemstone(new GemstoneItem(Gemstones.Jadeite_Gemstone));
-    public static final Item Amethyst_Item = gemstone(new GemstoneItem(Gemstones.Amethyst_Gemstone));
-    public static final Item Rose_Quartz_Item = gemstone(new GemstoneItem(Gemstones.Rose_Quartz_Gemstone));
-    public static final Item Turquoise_Item = gemstone(new GemstoneItem(Gemstones.Turquoise_Gemstone));
+    public static final Item Ruby_Item = gemstone(new GemstoneItem(Gemstones.Ruby_Gemstone, 16));
+    public static final Item Aquamarine_Item = gemstone(new GemstoneItem(Gemstones.Aquamarine_Gemstone, 16));
+    public static final Item Citrine_Item = gemstone(new GemstoneItem(Gemstones.Citrine_Gemstone, 16));
+    public static final Item Jadeite_Item = gemstone(new GemstoneItem(Gemstones.Jadeite_Gemstone, 16));
+    public static final Item Amethyst_Item = gemstone(new GemstoneItem(Gemstones.Amethyst_Gemstone, 16));
+    public static final Item Rose_Quartz_Item = gemstone(new GemstoneItem(Gemstones.Rose_Quartz_Gemstone, 16));
+    public static final Item Turquoise_Item = gemstone(new GemstoneItem(Gemstones.Turquoise_Gemstone, 16));
 
-    public static final Item Flamegem_Item = gemstone(new GemstoneItem(Gemstones.Flamegem_Gemstone));
-    public static final Item Marinegem_Item = gemstone(new GemstoneItem(Gemstones.Marinegem_Gemstone));
-    public static final Item Earthgem_Item = gemstone(new GemstoneItem(Gemstones.Earthgem_Gemstone));
-    public static final Item Forestgem_Item = gemstone(new GemstoneItem(Gemstones.Forestgem_Gemstone));
-    public static final Item Endergem_Item = gemstone(new GemstoneItem(Gemstones.Endergem_Gemstone));
-    public static final Item Magic_Pearl_Item = gemstone(new GemstoneItem(Gemstones.Magic_Pearl_Gemstone));
-    public static final Item Windy_Gemstone_Item = gemstone(new GemstoneItem(Gemstones.Windy_Gemstone));
+    public static final Item Flamegem_Item = gemstone(new GemstoneItem(Gemstones.Flamegem_Gemstone, 1));
+    public static final Item Marinegem_Item = gemstone(new GemstoneItem(Gemstones.Marinegem_Gemstone, 1));
+    public static final Item Earthgem_Item = gemstone(new GemstoneItem(Gemstones.Earthgem_Gemstone, 1));
+    public static final Item Forestgem_Item = gemstone(new GemstoneItem(Gemstones.Forestgem_Gemstone, 1));
+    public static final Item Endergem_Item = gemstone(new GemstoneItem(Gemstones.Endergem_Gemstone, 1));
+    public static final Item Magic_Pearl_Item = gemstone(new GemstoneItem(Gemstones.Magic_Pearl_Gemstone, 1));
+    public static final Item Windy_Gemstone_Item = gemstone(new GemstoneItem(Gemstones.Windy_Gemstone, 1));
 
     //Some test items
     public static final Item Quartz_Sword_Item = weapon(new QuartzSwordItem(), Names.Item.QuartzSwordItem);
