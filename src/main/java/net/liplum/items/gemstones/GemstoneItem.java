@@ -11,6 +11,7 @@ public class GemstoneItem extends Item {
 
     public GemstoneItem(@Nonnull IGemstone gemstone) {
         this.gemstone = gemstone;
+        this.maxStackSize = 16;
     }
 
     public IGemstone getGemstone() {

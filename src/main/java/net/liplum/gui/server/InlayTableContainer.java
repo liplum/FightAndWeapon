@@ -6,6 +6,7 @@ import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
+import net.liplum.lib.utils.GuiUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
@@ -21,24 +22,26 @@ import javax.annotation.Nonnull;
 
 public class InlayTableContainer extends ContainerBase {
     private static final double MaxReachDistanceSq = 64;
+    private static final int InlayTableSlotCount = 3;
+    private static final int PlayerInventoryEndIndex = InlayTableSlotCount + GuiUtil.PlayerInventoryCount;
     private final InventoryPlayer playerInventory;
     private final World world;
     private final BlockPos pos;
     private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
-    private final Slot gemstoneSlot =
-            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
+    private final Slot outputSlot =
+            new SlotItemHandler(outputItemHandler, 0, 133, 26) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    Item item = stack.getItem();
-                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
+                    return false;
                 }
 
                 @Override
-                public void onSlotChanged() {
-                    super.onSlotChanged();
-                    onInputChanged();
+                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
+                    ItemStack newWeapon = super.onTake(thePlayer, stack);
+                    onTookOutput();
+                    return newWeapon;
                 }
             };
     private final Slot weaponSlot =
@@ -54,18 +57,18 @@ public class InlayTableContainer extends ContainerBase {
                     onInputChanged();
                 }
             };
-    private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 133, 26) {
+    private final Slot gemstoneSlot =
+            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    return false;
+                    Item item = stack.getItem();
+                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
                 }
 
                 @Override
-                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
-                    ItemStack newWeapon = super.onTake(thePlayer, stack);
-                    onTookOutput();
-                    return newWeapon;
+                public void onSlotChanged() {
+                    super.onSlotChanged();
+                    onInputChanged();
                 }
             };
 
@@ -140,17 +143,39 @@ public class InlayTableContainer extends ContainerBase {
         if (weaponStack.isEmpty() || gemstoneStack.isEmpty()) {
             return;
         }
-        weaponSlot.putStack(ItemStack.EMPTY);
-        if (FawItemUtil.isInlayingTool(gemstoneStack)) {
-            gemstoneStack.shrink(1);
-        } else {
-            gemstoneSlot.putStack(ItemStack.EMPTY);
-        }
+        GuiUtil.setEmpty(weaponSlot);
+        gemstoneStack.shrink(1);
     }
 
     @Nonnull
     @Override
     public ItemStack transferStackInSlot(@Nonnull EntityPlayer playerIn, int index) {
+        Slot originalSlot = inventorySlots.get(index);
+        if (originalSlot == null || !originalSlot.getHasStack()) {
+            return ItemStack.EMPTY;
+        }
+        ItemStack original = originalSlot.getStack();
+
+        if (originalSlot == gemstoneSlot || originalSlot == weaponSlot) {
+            //It comes from the inlay table
+            if (mergeItemStack(original, InlayTableSlotCount, PlayerInventoryEndIndex, true)) {
+                originalSlot.onSlotChanged();
+            }
+        } else if (originalSlot == outputSlot) {
+            //It comes from the inlay table
+            if (mergeItemStack(original, InlayTableSlotCount, PlayerInventoryEndIndex, true)) {
+                onTookOutput();
+            }
+        } else {
+            //A Slot of player's inventory
+            if (gemstoneSlot.isItemValid(original)) {
+                gemstoneSlot.putStack(original);
+                originalSlot.putStack(ItemStack.EMPTY);
+            } else if (weaponSlot.isItemValid(original)) {
+                weaponSlot.putStack(original);
+                originalSlot.putStack(ItemStack.EMPTY);
+            }
+        }
         return ItemStack.EMPTY;
     }
 
@@ -160,6 +185,7 @@ public class InlayTableContainer extends ContainerBase {
         if (playerIn.isServerWorld()) {
             ItemTool.tryDropItem(playerIn, gemstoneSlot.getStack());
             ItemTool.tryDropItem(playerIn, weaponSlot.getStack());
+
         }
     }
 
