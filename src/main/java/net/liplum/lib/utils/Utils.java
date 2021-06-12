@@ -57,4 +57,61 @@ public class Utils {
     public static Number doubleAdd(Number summand, Number addend) {
         return summand.doubleValue() + addend.doubleValue();
     }
+
+    public static boolean notNull(Boolean value) {
+        if (value == null) {
+            return false;
+        }
+        return value;
+    }
+
+    public static int notNull(Integer value) {
+        if (value == null) {
+            return 0;
+        }
+        return value;
+    }
+
+    public static float notNull(Float value) {
+        if (value == null) {
+            return 0;
+        }
+        return value;
+    }
+
+    public static double notNull(Double value) {
+        if (value == null) {
+            return 0;
+        }
+        return value;
+    }
+
+    public static char notNull(Character value) {
+        if (value == null) {
+            return '\0';
+        }
+        return value;
+    }
+
+    public static long notNull(Long value) {
+        if (value == null) {
+            return 0;
+        }
+        return value;
+    }
+
+    public static short notNull(Short value) {
+        if (value == null) {
+            return 0;
+        }
+        return value;
+    }
+
+    public static byte notNull(Byte value) {
+        if (value == null) {
+            return 0;
+        }
+        return value;
+    }
+
 }

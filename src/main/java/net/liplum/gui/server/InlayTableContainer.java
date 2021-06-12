@@ -3,11 +3,11 @@ package net.liplum.gui.server;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.lib.gui.Property;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.GuiUtil;
-import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Slot;
@@ -30,6 +30,10 @@ public class InlayTableContainer extends ContainerBase {
     private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
+
+    @Nonnull
+    public final Property<Boolean> canDo = new Property<>(true);
+
     private final Slot gemstoneSlot =
             new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
                 @Override
@@ -58,7 +62,7 @@ public class InlayTableContainer extends ContainerBase {
                 }
             };
     private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 133, 26) {
+            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
                     return false;
@@ -104,6 +108,7 @@ public class InlayTableContainer extends ContainerBase {
         ItemStack weaponStack = weaponSlot.getStack();
         ItemStack gemstoneStack = gemstoneSlot.getStack();
         if (weaponStack.isEmpty() || gemstoneStack.isEmpty()) {
+            setCanDo(true);
             outputSlot.putStack(ItemStack.EMPTY);
             return;
         }
@@ -115,7 +120,10 @@ public class InlayTableContainer extends ContainerBase {
             //It's a gemstoneItem
             GemstoneItem gemstoneItem = (GemstoneItem) maybeGemstoneItem;
             //Now we have a weapon and a gemstoneItem
-            if (!GemUtil.hasGemstone(weaponStack)) {
+            if (GemUtil.hasGemstone(weaponStack)) {
+                setCanDo(false);
+            } else {
+                setCanDo(true);
                 //Now we have a weapon without gemstoneItem and a gemstoneItem waited for inlaying
                 ItemStack newWeapon = weaponStack.copy();
 
@@ -129,10 +137,13 @@ public class InlayTableContainer extends ContainerBase {
             //It's an inlaying tool
             //Now we have a weapon and an inlaying tool
             if (GemUtil.hasGemstone(weaponStack)) {
+                setCanDo(true);
                 //Now we have a weapon with gemstone and an inlaying tool
                 ItemStack newWeapon = weaponStack.copy();
                 GemUtil.removeGemstone(newWeapon);
                 outputSlot.putStack(newWeapon);
+            } else {
+                setCanDo(false);
             }
         }
     }
@@ -184,15 +195,11 @@ public class InlayTableContainer extends ContainerBase {
     @Override
     public void onContainerClosed(@Nonnull EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
-        if (playerIn.isServerWorld()) {
+        if (!world.isRemote) {
             ItemStack gemstone = gemstoneSlot.getStack();
             ItemStack weapon = weaponSlot.getStack();
-            if (!mergeItemStack(gemstone, InlayTableSlotCount, PlayerInventoryEndIndex, false)) {
-                ItemTool.tryDropItem(playerIn, gemstone);
-            }
-            if (!mergeItemStack(weapon, InlayTableSlotCount, PlayerInventoryEndIndex, false)) {
-                ItemTool.tryDropItem(playerIn, weapon);
-            }
+            playerIn.inventory.placeItemBackInInventory(world, gemstone);
+            playerIn.inventory.placeItemBackInInventory(world, weapon);
         }
     }
 
@@ -200,5 +207,14 @@ public class InlayTableContainer extends ContainerBase {
     public boolean canInteractWith(EntityPlayer playerIn) {
         return playerIn.world.equals(world) &&
                 playerIn.getDistanceSq(pos) <= MaxReachDistanceSq;
+    }
+
+    public void setCanDo(boolean canDo) {
+        this.canDo.set(canDo);
+    }
+
+    @Nonnull
+    public Property<Boolean> getCanDo() {
+        return canDo;
     }
 }
