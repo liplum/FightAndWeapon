@@ -4,8 +4,10 @@ import net.liplum.Gemstones;
 import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
-import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.items.tools.BlacksmithGloveItem;
+import net.liplum.items.tools.ForgeHammerItem;
+import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.items.weapons.QuartzAxeItem;
 import net.liplum.items.weapons.QuartzSwordItem;
 import net.liplum.items.weapons.TestSwordItem;
@@ -82,6 +84,8 @@ public final class ItemRegistry {
     public static final Item Inlay_Table_Block_Item = forge(new ItemBlock(BlockRegistry.Inlay_Table_Block), Names.Block.InlayTable);
 
     public static final Item Inlaying_Tool_Item = forge(new InlayingToolItem(), Names.Item.InlayingToolItem);
+    public static final Item Blacksmith_Glove_Item = forge(new BlacksmithGloveItem(), Names.Item.BlacksmithGloveItem);
+    public static final Item Forge_Hammer_Item = forge(new ForgeHammerItem(), Names.Item.ForgeHammerItem);
 
     //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
     //------------------------------------------------------------------------------------------------------------------------------
@@ -91,7 +95,7 @@ public final class ItemRegistry {
     static {
         ItemGroupRegistry.FawWeapons.setIcon(new ItemStack(Light_Lance_Item));
         ItemGroupRegistry.FawGemstones.setIcon(new ItemStack(Ruby_Item));
-        //ItemGroupsRegistry.FawForges.setIcon(new ItemStack(Ruby_Item));
+        ItemGroupRegistry.FawForges.setIcon(new ItemStack(Blacksmith_Glove_Item));
     }
 
     //------------------------------------------------------------------------------------------------------------------------------

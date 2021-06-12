@@ -1,6 +1,6 @@
 {
   "parent": "item/handheld",
   "textures": {
-    "layer0": "faw:items/weapons/light_lance"
+    "layer0": "faw:items/blacksmith_glove"
   }
 }

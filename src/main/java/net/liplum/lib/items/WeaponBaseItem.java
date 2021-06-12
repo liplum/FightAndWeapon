@@ -81,11 +81,11 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         int coolDown = core.getCoolDown();
         if (strength > 0) {
             FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.Strength, strength);
-            added |= true;
+            added = true;
         }
         if (coolDown > 0) {
             FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.CoolDown, coolDown);
-            added |= true;
+            added = true;
         }
         return added;
     }

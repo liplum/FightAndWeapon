@@ -6,8 +6,8 @@ import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.events.attack.WeaponPostAttackedEvent;
 import net.liplum.events.attack.WeaponPreAttackEvent;
-import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
 import net.liplum.lib.items.WeaponBaseItem;
@@ -324,6 +324,12 @@ public final class FawItemUtil {
         tooltip.add(TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
                 Math.round(value));
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, String format, float value) {
+        tooltip.add(TextFormatting.YELLOW +
+                I18n.format(attrTranslateKey) + " : " +
+                String.format(format, value));
     }
 
     public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value) {

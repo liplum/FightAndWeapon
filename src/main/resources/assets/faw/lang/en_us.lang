@@ -26,8 +26,12 @@ tooltip.faw.weapon.noGemstone=No Gemstone
 #Attributes
 attributes.faw.generic.Strength=Strength
 attributes.faw.generic.CoolDown=Cool Down
+attributes.faw.generic.AbilityPower=AP
 
-attributes.faw.lance.SprintLength=Sprint Length
+attributes.faw.harp.SprintLength=Sprint Length
+
+attributes.faw.harp.Radius=Radius
+attributes.faw.harp.Frequency=Frequency
 
 
 #Tiles
@@ -63,6 +67,8 @@ item.faw.magic_pearl.name=Magic Pearl
 item.faw.windy_gemstone.name=Windy Gemstone
 
 item.faw.inlaying_tool.name=Inlaying Tool
+item.faw.forge_hammer.name=Forge Hammer
+item.faw.blacksmith_glove.name=Blacksmith Glove
 
 item.faw.quartz_sword.name=Quartz Sword
 item.faw.quartz_axe.name=Quartz Axe

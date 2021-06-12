@@ -1,4 +1,4 @@
-package net.liplum.items;
+package net.liplum.items.tools;
 
 import net.minecraft.item.Item;
 

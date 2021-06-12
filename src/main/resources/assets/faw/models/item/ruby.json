@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "faw:items/ruby"
+    "layer0": "faw:items/gemstones/ruby"
   }
 }

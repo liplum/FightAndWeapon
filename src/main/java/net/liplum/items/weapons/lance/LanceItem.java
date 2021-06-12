@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.I18ns;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
@@ -20,9 +21,10 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachWeapon {
-    private ILanceCore core;
+    private final ILanceCore core;
 
     public LanceItem(@Nonnull ILanceCore core) {
         super();
@@ -63,7 +65,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
                     args.setSprintLength(length)
                             .setStrength(dmg)
                             .setModifier(mod);
-                    releasedSuccessfully |= mod.releaseSkill(core, args);
+                    releasedSuccessfully = mod.releaseSkill(core, args);
                 } else {
                     args.setSprintLength(length)
                             .setStrength(dmg);
@@ -79,6 +81,17 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
             }
         }
         return ActionResult.newResult(result, held);
+    }
+
+    @Override
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
+        boolean shown = super.addAttributesTooltip(stack, tooltip, isAdvanced);
+        float sprintLength = core.getSprintLength();
+        if (sprintLength > 0) {
+            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Lance.SprintLength, sprintLength);
+            shown = true;
+        }
+        return shown;
     }
 
     @Override

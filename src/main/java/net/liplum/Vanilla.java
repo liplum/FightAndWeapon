@@ -1,6 +1,9 @@
 package net.liplum;
 
 public final class Vanilla {
+    public static final int TPS = 20;
+    public static final int PlayerInventoryCount = 36;
+
     public static final class Color {
         public static final int BlackColor = 0x404040;
     }

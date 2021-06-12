@@ -12,7 +12,7 @@ public interface IHarpCore extends IMagicToolCore {
     double getRadius();
 
     /**
-     * It's equal to 60 minutes
+     * The default one equals 60 minutes
      *
      * @return
      */

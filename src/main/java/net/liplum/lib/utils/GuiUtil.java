@@ -6,7 +6,6 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 
 public final class GuiUtil {
-    public static final int PlayerInventoryCount = 36;
 
     public static final IView Full255View = new View(255, 255);
 

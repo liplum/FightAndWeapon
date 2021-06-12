@@ -1,8 +1,9 @@
 package net.liplum.gui.server;
 
+import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.items.InlayingToolItem;
 import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.gui.Property;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
@@ -23,7 +24,7 @@ import javax.annotation.Nonnull;
 public class InlayTableContainer extends ContainerBase {
     private static final double MaxReachDistanceSq = 64;
     private static final int InlayTableSlotCount = 3;
-    private static final int PlayerInventoryEndIndex = InlayTableSlotCount + GuiUtil.PlayerInventoryCount;
+    private static final int PlayerInventoryEndIndex = InlayTableSlotCount + Vanilla.PlayerInventoryCount;
     @Nonnull
     public final Property<Boolean> canDo = new Property<>(true);
     private final InventoryPlayer playerInventory;

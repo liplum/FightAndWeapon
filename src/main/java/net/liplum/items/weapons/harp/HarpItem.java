@@ -1,5 +1,7 @@
 package net.liplum.items.weapons.harp;
 
+import net.liplum.I18ns;
+import net.liplum.Vanilla;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
@@ -24,23 +26,25 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
+import java.util.List;
 
 public class HarpItem extends WeaponBaseItem<IHarpCore> {
-    private IHarpCore core;
+    private final IHarpCore core;
 
     public HarpItem(@Nonnull IHarpCore core) {
         super();
         this.core = core;
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         double radius = core.getRadius();
         float ap = core.getAbilityPower();
         ItemStack held = playerIn.getHeldItem(handIn);
         int coolDown = core.getCoolDown();
         if (playerIn.isSneaking()) {
-            IModifier modifier = GemUtil.getModifierFrom(held);
+            IModifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
@@ -74,9 +78,9 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
     }
 
     @Override
-    public void onUsingTick(ItemStack stack, EntityLivingBase player, int count) {
+    public void onUsingTick(ItemStack stack, @Nonnull EntityLivingBase player, int count) {
         Item held = stack.getItem();
-        IModifier modifier = GemUtil.getModifierFrom(stack);
+        IModifier<?> modifier = GemUtil.getModifierFrom(stack);
         EntityPlayer p = (EntityPlayer) player;
         EnumHand hand = ItemTool.inWhichHand(p, stack);
         if (hand == null) {
@@ -86,15 +90,6 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         double radius = core.getRadius();
         float ap = core.getAbilityPower();
         int coolDown = core.getCoolDown();
-       /* if (player.isSneaking()) {
-            boolean releasedSuccessfully = core.releaseSkill(world, p, stack, hand, radius, ap);
-            if (releasedSuccessfully) {
-                ItemTool.heatWeaponIfSurvival(p, held, coolDown);
-                //HarpUtils.setState(stack, HarpUtils.HarpState.JustReleased);
-                player.resetActiveHand();
-            }
-            return;
-        } else {*/
         int frequency = core.getFrequency();
         int maxDuration = core.getMaxUseDuration();
 
@@ -122,8 +117,6 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         if (currentDuration == maxDuration - 1) {
             ItemTool.heatWeaponIfSurvival(p, held, coolDown);
         }
-        //}
-        return;
     }
 
 
@@ -140,15 +133,15 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
         //HarpUtils.setState(stack, HarpUtils.HarpState.Normal);
     }
 
+    @Nonnull
     @Override
-    public EnumAction getItemUseAction(ItemStack stack) {
+    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
         return EnumAction.BOW;
     }
 
     @Override
-    public int getMaxItemUseDuration(ItemStack stack) {
-        int normalDuration = core.getMaxUseDuration();
-       /* HarpUtils.HarpState state = HarpUtils.getState(stack);
+    public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
+        /* HarpUtils.HarpState state = HarpUtils.getState(stack);
         if (state == HarpUtils.HarpState.JustReleased) {
             //HarpUtils.setState(stack, HarpUtils.HarpState.AfterReleasing);
             //HarpUtils.setState(stack, HarpUtils.HarpState.Normal);
@@ -157,7 +150,32 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
             HarpUtils.setState(stack, HarpUtils.HarpState.Normal);
             return normalDuration;
         }*/
-        return normalDuration;
+        return core.getMaxUseDuration();
+    }
+
+    @Override
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
+        boolean shown = super.addAttributesTooltip(stack, tooltip, isAdvanced);
+        float ap = core.getAbilityPower();
+        if (ap > 0) {
+            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.AbilityPower, ap);
+            shown = true;
+        }
+
+        double radius = core.getRadius();
+        if (radius > 0) {
+            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Harp.Radius, radius);
+            shown = true;
+        }
+        if (isAdvanced) {
+            int frequency = core.getFrequency();
+            if (frequency > 0) {
+                float frequencyDecimal = (float) frequency / Vanilla.TPS;
+                FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Harp.Frequency, "%.1f", frequencyDecimal);
+                shown = true;
+            }
+        }
+        return shown;
     }
 
     @Override

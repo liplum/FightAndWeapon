@@ -32,6 +32,8 @@ public final class Names {
         public static final String BattleAxeItem = "battle_axe";
 
         public static final String InlayingToolItem = "inlaying_tool";
+        public static final String BlacksmithGloveItem = "blacksmith_glove";
+        public static final String ForgeHammerItem = "forge_hammer";
 
         public static final class Lance {
             public static final String TypeName = "lance";
@@ -52,10 +54,16 @@ public final class Names {
         public static final class Generic {
             public static final String Strength = "Strength";
             public static final String CoolDown = "CoolDown";
+            public static final String AbilityPower = "AbilityPower";
         }
 
         public static final class Lance {
             public static final String SprintLength = "SprintLength";
+        }
+
+        public static final class Harp {
+            public static final String Radius = "Radius";
+            public static final String Frequency = "Frequency";
         }
     }
 

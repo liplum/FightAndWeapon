@@ -96,6 +96,7 @@ public final class I18ns {
         public static final class Generic {
             public static final String Strength = with(Names.Attribute.Generic.Strength);
             public static final String CoolDown = with(Names.Attribute.Generic.CoolDown);
+            public static final String AbilityPower = with(Names.Attribute.Generic.AbilityPower);
 
             private static String with(String attributeName) {
                 return prefixAttr(Names.Special.Generic, attributeName);
@@ -107,6 +108,15 @@ public final class I18ns {
 
             private static String with(String attributeName) {
                 return prefixAttr(Names.Item.Lance.TypeName, attributeName);
+            }
+        }
+
+        public static final class Harp {
+            public static final String Radius = with(Names.Attribute.Harp.Radius);
+            public static final String Frequency = with(Names.Attribute.Harp.Frequency);
+
+            private static String with(String attributeName) {
+                return prefixAttr(Names.Item.Harp.TypeName, attributeName);
             }
         }
     }
