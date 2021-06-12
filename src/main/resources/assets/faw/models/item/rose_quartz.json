@@ -1,6 +1,6 @@
 {
   "parent": "item/generated",
   "textures": {
-    "layer0": "faw:items/no_texture"
+    "layer0": "faw:items/rose_quartz"
   }
 }

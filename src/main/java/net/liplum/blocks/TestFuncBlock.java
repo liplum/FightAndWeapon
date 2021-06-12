@@ -1,10 +1,12 @@
 package net.liplum.blocks;
 
+import net.liplum.items.gemstones.GemstoneItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -23,7 +25,11 @@ public class TestFuncBlock extends Block {
                                     EntityPlayer playerIn,
                                     EnumHand hand, EnumFacing facing,
                                     float hitX, float hitY, float hitZ) {
-        playerIn.addItemStackToInventory(new ItemStack(Blocks.DIRT, 1));
+        ItemStack heldItem = playerIn.getHeldItem(hand);
+        Item item = heldItem.getItem();
+        if (item instanceof GemstoneItem) {
+            playerIn.addItemStackToInventory(new ItemStack(Blocks.DIRT, 1));
+        }
         return true;
     }
 }

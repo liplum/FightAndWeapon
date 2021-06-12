@@ -6,7 +6,9 @@ import net.liplum.Vanilla;
 import net.liplum.gui.server.InlayTableContainer;
 import net.liplum.lib.gui.Binding;
 import net.liplum.lib.gui.BindingMode;
+import net.liplum.lib.gui.IView;
 import net.liplum.lib.gui.Property;
+import net.liplum.lib.utils.GuiUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
@@ -20,16 +22,21 @@ public class InlayTableGUI extends GuiContainer {
     private static final int YSize = 166;
     private static final ResourceLocation Texture =
             Resources.genGuiContainerTx(Resources.Textures.GUI.InlayTable);
+    private static final IView InlayTableTexture = GuiUtil.Full255View.slice(XSize, YSize);
+    private static final IView CrossTexture = InlayTableTexture.slice(176, 0, 17, 18);
+    private static final int CrossXOffset = 55;
+    private static final int CrossYOffset = 35;
+
     private final InlayTableContainer inlayTable;
     private final Property<Boolean> displayCross = new Property<>(false);
     private final Binding<Boolean> displayCrossBinding;
 
     public InlayTableGUI(EntityPlayer player, World world, int x, int y, int z) {
         super(new InlayTableContainer(player, world, x, y, z));
-        inlayTable = (InlayTableContainer) this.inventorySlots;
-        xSize = XSize;
-        ySize = YSize;
-        displayCrossBinding = new Binding<>(inlayTable.getCanDo(), displayCross, BindingMode.ONLY_GET, v -> !v);
+        this.inlayTable = (InlayTableContainer) this.inventorySlots;
+        this.xSize = XSize;
+        this.ySize = YSize;
+        this.displayCrossBinding = new Binding<>(inlayTable.getCanDo(), displayCross, BindingMode.ONLY_GET, v -> !v);
     }
 
     @Override
@@ -48,9 +55,13 @@ public class InlayTableGUI extends GuiContainer {
         int top = (height - ySize) / 2;
         GlStateManager.color(1F, 1F, 1F, 1F);
         mc.getTextureManager().bindTexture(Texture);
-        drawTexturedModalRect(left, top, 0, 0, xSize, ySize);
+
+        drawTexturedModalRect(left, top,
+                InlayTableTexture.getLeft(), InlayTableTexture.getTop(), InlayTableTexture.getWidth(), InlayTableTexture.getHeight());
+
         if (Utils.notNull(displayCross.get())) {
-            drawTexturedModalRect(left+55,top+35,176,0,17,18);
+            drawTexturedModalRect(left + CrossXOffset, top + CrossYOffset,
+                    CrossTexture.getLeft(), CrossTexture.getTop(), CrossTexture.getWidth(), CrossTexture.getHeight());
         }
     }
 

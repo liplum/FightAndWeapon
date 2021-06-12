@@ -35,7 +35,7 @@ tile.faw.inlay_table.name=Inlay Table
 
 #Skills
 #---Passive Skills
-pskill.faw.FireProof.name=Fireproof
+pskill.faw.Fireproof.name=Fireproof
 pskill.faw.Magicize.name=Magicize
 pskill.faw.MagicAttach.name=Magic Attach
 pskill.faw.GentlyLand.name=Gently Land

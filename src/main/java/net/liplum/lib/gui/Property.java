@@ -6,8 +6,8 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class Property<R> {
-    private R value;
     private final Event<IPropertySubscriber<R>> event = new PropertyChangedEvent(this);
+    private R value;
 
     public Property(R value) {
         this.value = value;
