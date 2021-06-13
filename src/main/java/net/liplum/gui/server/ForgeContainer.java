@@ -81,21 +81,7 @@ public class ForgeContainer extends ContainerBase {
         addSlotToContainer(additionSlot);
         addSlotToContainer(materialSlot);
 
-        addPlayerInventorySlots();
-    }
-
-    public void addPlayerInventorySlots() {
-        int i = 36;
-
-        for (int l = 0; l < 3; ++l) {
-            for (int j1 = 0; j1 < 9; ++j1) {
-                this.addSlotToContainer(new Slot(playerInventory, j1 + l * 9 + 9, 8 + j1 * 18, 103 + l * 18 + i));
-            }
-        }
-
-        for (int i1 = 0; i1 < 9; ++i1) {
-            this.addSlotToContainer(new Slot(playerInventory, i1, 8 + i1 * 18, 161 + i));
-        }
+        addPlayerInventorySlots(playerInventory, 8, 140);
     }
 
     @Nonnull

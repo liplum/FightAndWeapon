@@ -32,18 +32,18 @@ public class InlayTableContainer extends ContainerBase {
     private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
-    private final Slot gemstoneSlot =
-            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
+    private final Slot outputSlot =
+            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    Item item = stack.getItem();
-                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
+                    return false;
                 }
 
                 @Override
-                public void onSlotChanged() {
-                    super.onSlotChanged();
-                    onInputChanged();
+                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
+                    ItemStack newWeapon = super.onTake(thePlayer, stack);
+                    onTookOutput();
+                    return newWeapon;
                 }
             };
     private final Slot weaponSlot =
@@ -58,18 +58,18 @@ public class InlayTableContainer extends ContainerBase {
                     onInputChanged();
                 }
             };
-    private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
+    private final Slot gemstoneSlot =
+            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    return false;
+                    Item item = stack.getItem();
+                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
                 }
 
                 @Override
-                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
-                    ItemStack newWeapon = super.onTake(thePlayer, stack);
-                    onTookOutput();
-                    return newWeapon;
+                public void onSlotChanged() {
+                    super.onSlotChanged();
+                    onInputChanged();
                 }
             };
 
@@ -86,19 +86,7 @@ public class InlayTableContainer extends ContainerBase {
         addSlotToContainer(weaponSlot);
         addSlotToContainer(outputSlot);
 
-        addPlayerInventorySlots();
-    }
-
-    public void addPlayerInventorySlots() {
-        for (int k = 0; k < 3; ++k) {
-            for (int i1 = 0; i1 < 9; ++i1) {
-                addSlotToContainer(new Slot(playerInventory, i1 + k * 9 + 9, 8 + i1 * 18, 84 + k * 18));
-            }
-        }
-
-        for (int l = 0; l < 9; ++l) {
-            addSlotToContainer(new Slot(playerInventory, l, 8 + l * 18, 142));
-        }
+        addPlayerInventorySlots(playerInventory, 8, 84);
     }
 
     private void onInputChanged() {
