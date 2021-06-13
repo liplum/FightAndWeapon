@@ -1,7 +1,7 @@
 {
   "variants": {
     "normal": {
-      "model": "faw:test_block"
+      "model": "faw:forge"
     }
   }
 }

@@ -5,8 +5,8 @@
     64
   ],
   "textures": {
-    "0": "faw:blocks/test_block",
-    "particle": "faw:blocks/test_block"
+    "0": "faw:blocks/forge",
+    "particle": "faw:blocks/forge"
   },
   "elements": [
     {

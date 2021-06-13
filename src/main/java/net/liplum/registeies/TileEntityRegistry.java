@@ -1,7 +1,9 @@
 package net.liplum.registeies;
 
 import net.liplum.MetaData;
+import net.liplum.Names;
 import net.liplum.lib.FawLocation;
+import net.liplum.tileentities.weapon.ForgeTE;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
@@ -11,6 +13,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
 
+import javax.annotation.Nonnull;
 import java.util.LinkedList;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
@@ -19,7 +22,7 @@ public final class TileEntityRegistry {
             TileEntities = new LinkedList<>();
 
     static {
-
+        with(ForgeTE.class, Names.Block.Forge);
     }
 
     @SubscribeEvent
@@ -31,7 +34,7 @@ public final class TileEntityRegistry {
         }
     }
 
-    private static void with(Class<? extends TileEntity> tileEntity, String name) {
+    private static void with(@Nonnull Class<? extends TileEntity> tileEntity, @Nonnull String name) {
         TileEntities.addLast(new Tuple<>(tileEntity, new FawLocation(name)));
     }
 }

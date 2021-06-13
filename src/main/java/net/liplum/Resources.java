@@ -17,7 +17,8 @@ public final class Resources {
 
     public static final class Textures {
         public static final class GUI {
-            public static final String InlayTable = "inlay_table";
+            public static final String InlayTable = Names.Block.InlayTable;
+            public static final String Forge = Names.Block.Forge;
         }
     }
 }

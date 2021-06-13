@@ -4,7 +4,7 @@ import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.blocks.TestFuncBlock;
-import net.liplum.blocks.forge.TestBlock;
+import net.liplum.blocks.forge.ForgeBlock;
 import net.liplum.blocks.weapon.InlayTableBlock;
 import net.liplum.lib.ItemGroup;
 import net.minecraft.block.Block;
@@ -19,7 +19,7 @@ import java.util.LinkedList;
 public final class BlockRegistry {
     private static final LinkedList<Block> Blocks = new LinkedList<>();
 
-    public static final Block TestBlock = forge(new TestBlock(), "test_block");
+    public static final Block Forge_Block = forge(new ForgeBlock(), Names.Block.Forge);
     public static final Block TestFuncBlock = forge(new TestFuncBlock(), "test_func_block");
     public static final Block Inlay_Table_Block = forge(new InlayTableBlock(), Names.Block.InlayTable);
 

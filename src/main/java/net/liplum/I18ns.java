@@ -85,6 +85,7 @@ public final class I18ns {
 
     public static final class Tile {
         public static final String InlayTable_Name = endWithName(prefixTile(Names.Block.InlayTable));
+        public static final String Forge_Name = endWithName(prefixTile(Names.Block.Forge));
     }
 
     public static final class Tooltip {

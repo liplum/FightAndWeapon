@@ -1,7 +1,9 @@
 package net.liplum.gui;
 
+import net.liplum.gui.client.ForgeGUI;
 import net.liplum.gui.client.InlayTableGUI;
 import net.liplum.gui.client.MasterGui;
+import net.liplum.gui.server.ForgeContainer;
 import net.liplum.gui.server.InlayTableContainer;
 import net.liplum.gui.server.MasterContainer;
 import net.minecraft.entity.player.EntityPlayer;
@@ -15,6 +17,7 @@ public class FawGuiHandler implements IGuiHandler {
 
     public static int Master_ID = Number++;
     public static int Inlay_Table_ID = Number++;
+    public static int Forge_ID = Number++;
 
     @Nullable
     @Override
@@ -23,6 +26,8 @@ public class FawGuiHandler implements IGuiHandler {
             return new MasterContainer();
         } else if (ID == Inlay_Table_ID) {
             return new InlayTableContainer(player, world, x, y, z);
+        } else if (ID == Forge_ID) {
+            return new ForgeContainer(player, world, x, y, z);
         }
         return null;
     }
@@ -34,6 +39,8 @@ public class FawGuiHandler implements IGuiHandler {
             return new MasterGui();
         } else if (ID == Inlay_Table_ID) {
             return new InlayTableGUI(player, world, x, y, z);
+        } else if (ID == Forge_ID) {
+            return new ForgeGUI(player, world, x, y, z);
         }
         return null;
     }

@@ -105,6 +105,7 @@ public final class Names {
 
     public final static class Block {
         public static final String InlayTable = "inlay_table";
+        public static final String Forge = "forge";
     }
 
     public final static class Gemstone {

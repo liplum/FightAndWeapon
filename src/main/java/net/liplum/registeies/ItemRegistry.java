@@ -32,7 +32,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
 
+import javax.annotation.Nonnull;
 import java.util.LinkedList;
+import java.util.Objects;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public final class ItemRegistry {
@@ -79,7 +81,7 @@ public final class ItemRegistry {
     public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
 
     //Block
-    public static final Item Test_Block_Item = forge(new ItemBlock(BlockRegistry.TestBlock), "test_block");
+    public static final Item Forge_Block_Item = forge(new ItemBlock(BlockRegistry.Forge_Block), Names.Block.Forge);
     public static final Item Test_Func_Block_Item = forge(new ItemBlock(BlockRegistry.TestFuncBlock), "test_func_block");
     public static final Item Inlay_Table_Block_Item = forge(new ItemBlock(BlockRegistry.Inlay_Table_Block), Names.Block.InlayTable);
 
@@ -111,8 +113,8 @@ public final class ItemRegistry {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void registerModel(Item item) {
-        ModelResourceLocation modelResourceLocation = new ModelResourceLocation(item.getRegistryName(), "inventory");
+    private static void registerModel(@Nonnull Item item) {
+        ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory");
         ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
     }
 

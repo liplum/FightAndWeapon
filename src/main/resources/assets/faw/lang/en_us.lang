@@ -28,7 +28,7 @@ attributes.faw.generic.Strength=Strength
 attributes.faw.generic.CoolDown=Cool Down
 attributes.faw.generic.AbilityPower=AP
 
-attributes.faw.harp.SprintLength=Sprint Length
+attributes.faw.lance.SprintLength=Sprint Length
 
 attributes.faw.harp.Radius=Radius
 attributes.faw.harp.Frequency=Frequency
@@ -36,6 +36,7 @@ attributes.faw.harp.Frequency=Frequency
 
 #Tiles
 tile.faw.inlay_table.name=Inlay Table
+tile.faw.forge.name=Forge
 
 #Skills
 #---Passive Skills
