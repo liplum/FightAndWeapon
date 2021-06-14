@@ -55,7 +55,6 @@ public class InlayTableGUI extends GuiContainer {
         int top = (height - ySize) / 2;
         GlStateManager.color(1F, 1F, 1F, 1F);
         mc.getTextureManager().bindTexture(Texture);
-
         drawTexturedModalRect(left, top,
                 InlayTableTexture.getLeft(), InlayTableTexture.getTop(), InlayTableTexture.getWidth(), InlayTableTexture.getHeight());
 

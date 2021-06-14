@@ -4,12 +4,13 @@ import net.liplum.lib.Event;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
-public class Property<R> {
-    private final Event<IPropertySubscriber<R>> event = new PropertyChangedEvent(this);
-    private R value;
+public class Property<T> implements INotifyPropertyChanged<T>, Supplier<T> {
+    private final Event<IPropertySubscriber<T>> event = new PropertyChangedEvent();
+    private T value;
 
-    public Property(R value) {
+    public Property(T value) {
         this.value = value;
     }
 
@@ -18,11 +19,11 @@ public class Property<R> {
     }
 
     @Nonnull
-    public Event<IPropertySubscriber<R>> getEvent() {
+    public Event<IPropertySubscriber<T>> getPropertyChangedEvent() {
         return event;
     }
 
-    public boolean set(@Nullable R newValue) {
+    public boolean set(@Nullable T newValue) {
         if (value != newValue) {
             value = newValue;
             onChanged();
@@ -32,7 +33,7 @@ public class Property<R> {
     }
 
     @Nullable
-    public R get() {
+    public T get() {
         return value;
     }
 
@@ -40,18 +41,12 @@ public class Property<R> {
         event.trigger();
     }
 
-    public class PropertyChangedEvent extends Event<IPropertySubscriber<R>> {
-
-        protected Property<R> property;
-
-        public PropertyChangedEvent(Property<R> property) {
-            this.property = property;
-        }
+    public class PropertyChangedEvent extends Event<IPropertySubscriber<T>> {
 
         @Override
         public void trigger() {
-            for (IPropertySubscriber<R> subscriber : subscribers) {
-                subscriber.onChanged(property);
+            for (IPropertySubscriber<T> subscriber : subscribers) {
+                subscriber.onChanged(new PropertyChangedArgs<>(value));
             }
         }
     }

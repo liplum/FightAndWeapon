@@ -1,5 +1,5 @@
 package net.liplum.lib.gui;
 
 public interface IPropertySubscriber<T> {
-    void onChanged(Property<T> property);
+    void onChanged(PropertyChangedArgs<T> args);
 }

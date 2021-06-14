@@ -12,10 +12,14 @@ import net.liplum.lib.utils.GuiUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.renderer.GlStateManager;
+import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.client.GuiScrollingList;
+
+import java.util.LinkedList;
 
 public class ForgeGUI extends GuiContainer {
     public static final int AdditionIconXOffset = 107;
@@ -26,7 +30,8 @@ public class ForgeGUI extends GuiContainer {
     private static final int YSize = 221;
     private static final ResourceLocation Texture =
             Resources.genGuiContainerTx(Resources.Textures.GUI.Forge);
-    private static final IView ForgeTexture = GuiUtil.Full255View.slice(XSize, YSize);
+    private static final IView ForgeTexture =
+            GuiUtil.Full255View.slice(XSize, YSize);
     private static final int IconBoardThickness = 1;
     private static final int IconLength = 18;
     private static final int IconCount = 2;
@@ -38,9 +43,9 @@ public class ForgeGUI extends GuiContainer {
             176, 0,
             IconCount * IconLength + IconBoardThickness * (IconCount + 1),
             IconLength + IconCount * IconBoardThickness);
-    private static final IView[] Icons = new IView[2];
-    private static final IView AdditionIconTexture = Icons[0];
-    private static final IView MaterialIconTexture = Icons[1];
+    private static final IView[] Icons = new IView[IconCount];
+    private static final IView AdditionIconTexture;
+    private static final IView MaterialIconTexture;
 
     static {
         for (int i = 0; i < IconCount; i++) {
@@ -51,7 +56,16 @@ public class ForgeGUI extends GuiContainer {
                     IconLength
             );
         }
+        AdditionIconTexture = Icons[0];
+        MaterialIconTexture = Icons[1];
     }
+
+    private CastScrollView castScrollView;
+
+    private final int CastLength = 18;
+
+    private final LinkedList<Cast> castList = new LinkedList<>();
+    private int selectedIndex;
 
     private final ForgeContainer forge;
     private final Property<Boolean> displayAdditionIcon = new Property<>(true);
@@ -75,6 +89,23 @@ public class ForgeGUI extends GuiContainer {
         super.renderHoveredToolTip(mouseX, mouseY);
         GlStateManager.disableLighting();
         GlStateManager.disableBlend();
+    }
+
+    @Override
+    public void initGui() {
+        super.initGui();
+    }
+
+    public void selectCast(int index) {
+        if (index == this.selectedIndex) {
+            return;
+        }
+        this.selectedIndex = index;
+        //TODO:
+    }
+
+    public boolean isSelected(int index) {
+        return index == selectedIndex;
     }
 
     @Override
@@ -106,5 +137,42 @@ public class ForgeGUI extends GuiContainer {
         GlStateManager.disableBlend();
         String blockName = I18n.format(I18ns.Tile.Forge_Name);
         fontRenderer.drawString(blockName, xSize / 2, 6, Vanilla.Color.BlackColor);
+    }
+
+    private class CastScrollView extends GuiScrollingList {
+
+        public CastScrollView(int width, int height, int top, int bottom, int left, int entryHeight, int screenWidth, int screenHeight) {
+            super(ForgeGUI.this.mc, width, height, top, bottom, left, entryHeight, screenWidth, screenHeight);
+        }
+
+        @Override
+        protected int getSize() {
+            return castList.size();
+        }
+
+        @Override
+        protected void elementClicked(int index, boolean doubleClick) {
+
+        }
+
+        @Override
+        protected boolean isSelected(int index) {
+            return ForgeGUI.this.isSelected(index);
+        }
+
+        @Override
+        protected void drawBackground() {
+            drawDefaultBackground();
+        }
+
+        @Override
+        protected int getContentHeight() {
+            return getSize() * CastLength;
+        }
+
+        @Override
+        protected void drawSlot(int slotIdx, int entryRight, int slotTop, int slotBuffer, Tessellator tess) {
+
+        }
     }
 }

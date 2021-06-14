@@ -15,15 +15,15 @@ public class Binding<T> {
 
     private final IPropertySubscriber<T> onSourceChanged = new IPropertySubscriber<T>() {
         @Override
-        public void onChanged(Property<T> property) {
-            target.set(map.apply(property.get()));
+        public void onChanged(PropertyChangedArgs<T> args) {
+            target.set(map.apply(args.getValue()));
         }
     };
 
     private final IPropertySubscriber<T> onTargetChanged = new IPropertySubscriber<T>() {
         @Override
-        public void onChanged(Property<T> property) {
-            source.set(map.apply(property.get()));
+        public void onChanged(PropertyChangedArgs<T> args) {
+            source.set(map.apply(args.getValue()));
         }
     };
 
@@ -33,10 +33,10 @@ public class Binding<T> {
         this.source = source;
         this.target = target;
         if (mode.isSourceToTarget()) {
-            source.getEvent().addSubscriber(onSourceChanged);
+            source.getPropertyChangedEvent().addSubscriber(onSourceChanged);
         }
         if (mode.isTargetToSource()) {
-            target.getEvent().addSubscriber(onTargetChanged);
+            target.getPropertyChangedEvent().addSubscriber(onTargetChanged);
         }
     }
 
@@ -69,7 +69,7 @@ public class Binding<T> {
      * Once you destroy this binding, it will no longer work
      */
     public void destroy() {
-        source.getEvent().removeSubscriber(onSourceChanged);
-        target.getEvent().removeSubscriber(onTargetChanged);
+        source.getPropertyChangedEvent().removeSubscriber(onSourceChanged);
+        target.getPropertyChangedEvent().removeSubscriber(onTargetChanged);
     }
 }
