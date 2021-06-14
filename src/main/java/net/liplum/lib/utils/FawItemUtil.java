@@ -140,6 +140,7 @@ public final class FawItemUtil {
         } else {
             //Post Weapon Attacking Event
             WeaponAttackingEvent attackingEvent = new WeaponAttackingEvent(world, attacker, target, core, modifier, itemStack);
+            attackingEvent.setDamage(finalDamage);
             MinecraftForge.EVENT_BUS.post(attackingEvent);
             //Deal extra damages
             List<Tuple<DamageSource, Float>> extraDamages = attackingEvent.getExtraDamages();
@@ -172,6 +173,7 @@ public final class FawItemUtil {
 
         //TODO:More!!!
         WeaponPostAttackedEvent postAttackEvent = new WeaponPostAttackedEvent(world, attacker, target, core, modifier, itemStack, isHitSuccessfully);
+        postAttackEvent.setDamage(finalDamage);
         MinecraftForge.EVENT_BUS.post(postAttackEvent);
 
         return isHitSuccessfully;
