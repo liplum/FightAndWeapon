@@ -13,24 +13,23 @@ public class WeaponArgs<This extends WeaponArgs> {
     private World world = null;
     private EntityPlayer player = null;
     private ItemStack itemStack = null;
-    private IModifier modifier = null;
+    private IModifier<?> modifier = null;
     private EnumHand hand = null;
 
     /**
      * @return the modifier or null if this weapon didn't have a modifier.
      */
     @Nullable
-    public IModifier getModifier() {
+    public IModifier<?> getModifier() {
         return modifier;
     }
 
     @Nonnull
-    public This setModifier(@Nullable IModifier modifier) {
+    public This setModifier(@Nullable IModifier<?> modifier) {
         this.modifier = modifier;
         return (This) this;
     }
 
-    @Nonnull
     public float getStrength() {
         return strength;
     }

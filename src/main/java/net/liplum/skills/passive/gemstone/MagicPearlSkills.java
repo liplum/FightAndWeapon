@@ -4,22 +4,41 @@ import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.registeies.SkillRegistry;
-import net.liplum.events.attack.WeaponPreAttackEvent;
+import net.liplum.api.weapon.DamageArgs;
+import net.liplum.events.attack.WeaponAttackingArgs;
+import net.liplum.events.attack.WeaponAttackingEvent;
+import net.liplum.lib.utils.EntityUtil;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 
+import java.util.List;
+
 public final class MagicPearlSkills {
-    public static final IPassiveSkill<WeaponPreAttackEvent> Magicize =
+    public static final IPassiveSkill<WeaponAttackingEvent> Magicize =
             SkillRegistry.registerPassiveSkill(
-                    new IPassiveSkill<WeaponPreAttackEvent>() {
+                    new IPassiveSkill<WeaponAttackingEvent>() {
                         @Override
-                        public Class<WeaponPreAttackEvent> getEventType() {
-                            return WeaponPreAttackEvent.class;
+                        public Class<WeaponAttackingEvent> getEventType() {
+                            return WeaponAttackingEvent.class;
                         }
 
                         @Override
-                        public PSkillResult onTrigger(WeaponPreAttackEvent event) {
-                            DamageSource damageSource = event.getDamageSource();
-                            damageSource.setMagicDamage().setDamageBypassesArmor();
+                        public PSkillResult onTrigger(WeaponAttackingEvent event) {
+                            WeaponAttackingArgs args = event.getArgs();
+                            EntityLivingBase attacker = args.getAttacker();
+                            List<DamageArgs> allDamages = args.getAllDamages();
+                            DamageArgs initialDamage = args.getInitialDamage();
+                            float initialDamageValue = initialDamage.getDamage();
+                            Entity target = initialDamage.getTarget();
+
+                            DamageSource normalDamage = EntityUtil.genDamageSource(attacker);
+                            DamageSource magicDamage = EntityUtil.genDamageSource(attacker)
+                                    .setMagicDamage().setDamageBypassesArmor();
+
+                            args.setInitialDamage(new DamageArgs(initialDamageValue / 2, normalDamage, target));
+                            allDamages.add(new DamageArgs(initialDamageValue / 2, magicDamage, target));
+
                             return PSkillResult.Complete;
                         }
 

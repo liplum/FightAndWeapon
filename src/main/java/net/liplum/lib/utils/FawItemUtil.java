@@ -1,11 +1,13 @@
 package net.liplum.lib.utils;
 
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.weapon.DamageArgs;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.events.attack.WeaponAttackedArgs;
+import net.liplum.events.attack.WeaponAttackedEvent;
+import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
-import net.liplum.events.attack.WeaponPostAttackedEvent;
-import net.liplum.events.attack.WeaponPreAttackEvent;
 import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.items.Category;
@@ -22,7 +24,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -126,31 +127,38 @@ public final class FawItemUtil {
             sound = cooldown > 0.9f ? SoundEvents.ENTITY_PLAYER_ATTACK_STRONG : SoundEvents.ENTITY_PLAYER_ATTACK_WEAK;
             finalDamage *= (0.2F + cooldown * cooldown * 0.8F);
         }
+
         DamageSource damageSource = EntityUtil.genDamageSource(attacker);
 
-        WeaponPreAttackEvent preAttackEvent = new WeaponPreAttackEvent(world, attacker, target, core, modifier, itemStack, damageSource, finalDamage);
-        MinecraftForge.EVENT_BUS.post(preAttackEvent);
-        DamageSource newDamageSource = preAttackEvent.getDamageSource();
-        finalDamage = preAttackEvent.getDamage();
+        DamageArgs initialDamage = new DamageArgs(finalDamage, damageSource, target);
+        WeaponAttackingArgs attackingArgs = new WeaponAttackingArgs();
+        attackingArgs.setWorld(world)
+                .setAttacker(attacker)
+                .setTarget(target)
+                .setItemStack(itemStack)
+                .setModifier(modifier)
+                .setWeaponCore(core)
+                .setInitialDamage(initialDamage);
 
-        boolean isHitSuccessfully = weapon.dealDamage(itemStack, attacker, target, newDamageSource, finalDamage);
+        WeaponAttackingEvent attackingEvent = new WeaponAttackingEvent(attackingArgs);
+        MinecraftForge.EVENT_BUS.post(attackingEvent);
+
+        float totalDamage = 0;
+        boolean isHitSuccessfully = false;
+        List<DamageArgs> allDamages = attackingArgs.getAllDamages();
+        for (DamageArgs damageArgs : allDamages) {
+            float singleDamage = damageArgs.getDamage();
+            boolean currentHitSuccessfully = weapon.dealDamage(itemStack, attacker, damageArgs.getTarget(), damageArgs.getDamageSource(), singleDamage);
+            if (currentHitSuccessfully) {
+                totalDamage += singleDamage;
+                isHitSuccessfully = true;
+            }
+        }
+        attacker.setLastAttackedEntity(target);
 
         if (!isHitSuccessfully) {
             sound = SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE;
         } else {
-            //Post Weapon Attacking Event
-            WeaponAttackingEvent attackingEvent = new WeaponAttackingEvent(world, attacker, target, core, modifier, itemStack);
-            attackingEvent.setDamage(finalDamage);
-            MinecraftForge.EVENT_BUS.post(attackingEvent);
-            //Deal extra damages
-            List<Tuple<DamageSource, Float>> extraDamages = attackingEvent.getExtraDamages();
-            for (Tuple<DamageSource, Float> extraDamage : extraDamages) {
-                DamageSource extraDamageSource = extraDamage.getFirst();
-                Float extraDamageValue = extraDamage.getSecond();
-                weapon.dealDamage(itemStack, attacker, target, extraDamageSource, extraDamageValue);
-            }
-            attacker.setLastAttackedEntity(target);
-
             //calcu enemy breaking time
             int enemyBreakingTime = core.getEnemyBreakingTime();
             if (modifier != null) {
@@ -172,8 +180,18 @@ public final class FawItemUtil {
         }
 
         //TODO:More!!!
-        WeaponPostAttackedEvent postAttackEvent = new WeaponPostAttackedEvent(world, attacker, target, core, modifier, itemStack, isHitSuccessfully);
-        postAttackEvent.setDamage(finalDamage);
+        WeaponAttackedArgs postArgs = new WeaponAttackedArgs();
+        postArgs.setWorld(world)
+                .setAttacker(attacker)
+                .setTarget(target)
+                .setItemStack(itemStack)
+                .setModifier(modifier)
+                .setInitialDamage(initialDamage)
+                .setWeaponCore(core)
+                .setHitSuccessfully(isHitSuccessfully)
+                .setTotalDamage(totalDamage);
+
+        WeaponAttackedEvent postAttackEvent = new WeaponAttackedEvent(postArgs);
         MinecraftForge.EVENT_BUS.post(postAttackEvent);
 
         return isHitSuccessfully;

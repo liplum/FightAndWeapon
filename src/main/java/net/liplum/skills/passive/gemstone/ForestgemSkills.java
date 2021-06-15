@@ -4,23 +4,25 @@ import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.registeies.SkillRegistry;
-import net.liplum.events.attack.WeaponPostAttackedEvent;
+import net.liplum.events.attack.WeaponAttackedArgs;
+import net.liplum.events.attack.WeaponAttackedEvent;
 import net.minecraft.entity.EntityLivingBase;
 
 public final class ForestgemSkills {
-    public static final IPassiveSkill<WeaponPostAttackedEvent> NutrientAbsorption =
+    public static final IPassiveSkill<WeaponAttackedEvent> NutrientAbsorption =
             SkillRegistry.registerPassiveSkill(
-                    new IPassiveSkill<WeaponPostAttackedEvent>() {
+                    new IPassiveSkill<WeaponAttackedEvent>() {
                         @Override
-                        public Class<WeaponPostAttackedEvent> getEventType() {
-                            return WeaponPostAttackedEvent.class;
+                        public Class<WeaponAttackedEvent> getEventType() {
+                            return WeaponAttackedEvent.class;
                         }
 
                         @Override
-                        public PSkillResult onTrigger(WeaponPostAttackedEvent event) {
-                            if (event.isHitSuccessfully()) {
-                                EntityLivingBase attacker = event.getAttacker();
-                                float dmg = event.getDamage();
+                        public PSkillResult onTrigger(WeaponAttackedEvent event) {
+                            WeaponAttackedArgs args = event.getArgs();
+                            if (args.isHitSuccessfully()) {
+                                EntityLivingBase attacker = args.getAttacker();
+                                float dmg = args.getInitialDamage().getDamage();
                                 attacker.heal(dmg * 0.3F);
                             }
                             return PSkillResult.Complete;

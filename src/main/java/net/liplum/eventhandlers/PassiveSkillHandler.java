@@ -3,10 +3,8 @@ package net.liplum.eventhandlers;
 import net.liplum.MetaData;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
-import net.liplum.events.attack.WeaponAttackBaseEvent;
-import net.liplum.events.attack.WeaponAttackingEvent;
-import net.liplum.events.attack.WeaponPostAttackedEvent;
-import net.liplum.events.attack.WeaponPreAttackEvent;
+import net.liplum.api.weapon.WeaponAttackArgs;
+import net.liplum.events.attack.*;
 import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.lib.utils.SkillUtil;
 import net.minecraft.entity.EntityLivingBase;
@@ -70,18 +68,13 @@ public class PassiveSkillHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onWeaponPreAttackEvent(WeaponPreAttackEvent e) {
-        onWeaponAttack(e, WeaponPreAttackEvent.class);
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onWeaponAttackingEvent(WeaponAttackingEvent e) {
         onWeaponAttack(e, WeaponAttackingEvent.class);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onWeaponPostAttackEvent(WeaponPostAttackedEvent e) {
-        onWeaponAttack(e, WeaponPostAttackedEvent.class);
+    public static void onWeaponPostAttackEvent(WeaponAttackedEvent e) {
+        onWeaponAttack(e, WeaponAttackedEvent.class);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -97,8 +90,9 @@ public class PassiveSkillHandler {
         }
     }
 
-    private static void onWeaponAttack(WeaponAttackBaseEvent e, Class<? extends WeaponAttackBaseEvent> eventType) {
-        EntityLivingBase attacker = e.getAttacker();
+    private static void onWeaponAttack(WeaponAttackBaseEvent<?> e, Class<? extends WeaponAttackBaseEvent<?>> eventType) {
+        WeaponAttackArgs<?> args = e.getArgs();
+        EntityLivingBase attacker = args.getAttacker();
         Set<IPassiveSkill<Event>> skills =
                 SkillUtil.getPassiveSkills(eventType, attacker);
         for (IPassiveSkill<Event> skill : skills) {
