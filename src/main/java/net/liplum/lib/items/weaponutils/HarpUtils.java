@@ -1,7 +1,7 @@
 package net.liplum.lib.items.weaponutils;
 
 import net.liplum.Tags;
-import net.liplum.lib.nbt.FawNbt;
+import net.liplum.lib.nbt.FawNbts;
 import net.liplum.lib.nbt.NbtUtil;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -9,13 +9,13 @@ import net.minecraft.nbt.NBTTagCompound;
 public final class HarpUtils {
     public static void setState(ItemStack itemStack, HarpState state) {
         NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
+        NBTTagCompound fawBase = FawNbts.FawBase.getFawBase(root);
         fawBase.setByte(Tags.Harp.HarpState, state.getStateValue());
     }
 
     public static HarpState getState(ItemStack itemStack) {
         NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
+        NBTTagCompound fawBase = FawNbts.FawBase.getFawBase(root);
         byte state = fawBase.getByte(Tags.Harp.HarpState);
         try {
             return HarpState.values()[state];

@@ -40,5 +40,5 @@ public interface IGemstone {
 
     IGemstone removePassiveSkillFromAll(IPassiveSkill<?> passiveSkill);
 
-    boolean hasAnyAmplifier(WeaponBaseItem<?> weapon);
+    boolean hasAnyAmplifier(IWeaponCore core);
 }

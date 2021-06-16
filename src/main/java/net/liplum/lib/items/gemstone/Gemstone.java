@@ -115,14 +115,14 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public boolean hasAnyAmplifier(WeaponBaseItem<?> weapon) {
-        if (hasModifierOf(weapon.getCore())) {
+    public boolean hasAnyAmplifier(IWeaponCore core) {
+        if (hasModifierOf(core)) {
             return true;
         }
         if (amplifierOfAllWeaponTypes.hasAnyAmplifier()) {
             return true;
         }
-        return amplifierOfWeaponTypes.hasAnyAmplifier(weapon.getClass());
+        return amplifierOfWeaponTypes.hasAnyAmplifier(core.getWeaponType());
     }
 
 

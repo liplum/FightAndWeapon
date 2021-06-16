@@ -9,26 +9,41 @@ public final class FawNbtTool {
 
     }
 
-    public static NBTTagCompound getFawBaseFromItem(ItemStack itemStack) {
+    public static NBTTagCompound getFawBase(ItemStack itemStack) {
         NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
-        return fawBase;
+        return FawNbts.FawBase.getFawBase(root);
     }
 
     public static void setFawBaseInToItem(ItemStack itemStack, NBTTagCompound fawBase) {
         NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        FawNbt.FawBase.putFawBase(root, fawBase);
+        FawNbts.FawBase.setFawBase(root, fawBase);
     }
 
     public static void setGemstoneList(ItemStack itemStack, NBTTagList modifierList) {
-        NBTTagCompound fawBase = getFawBaseFromItem(itemStack);
-        FawNbt.GemstoneList.putGemstoneList(fawBase, modifierList);
+        NBTTagCompound fawBase = getFawBase(itemStack);
+        FawNbts.GemstoneList.setGemstoneList(fawBase, modifierList);
     }
 
     public static NBTTagList getGemstoneList(ItemStack itemStack) {
-        NBTTagCompound fawBase = getFawBaseFromItem(itemStack);
-        NBTTagList modifierList = FawNbt.GemstoneList.getGemstoneList(fawBase);
-        return modifierList;
+        NBTTagCompound fawBase = getFawBase(itemStack);
+        return FawNbts.GemstoneList.getGemstoneList(fawBase);
+    }
+
+    public static void setGemstone(ItemStack itemStack, String gemstoneName) {
+        NBTTagList gemList = getGemstoneList(itemStack);
+        NBTTagCompound gemstoneObj = new NBTTagCompound();
+        FawNbts.GemstoneObject.setGemstone(gemstoneObj, gemstoneName);
+        NbtUtil.setFirstOrAdd(gemList, gemstoneObj);
+    }
+
+    public static void setWeaponPart(ItemStack itemStack, String weaponPartName) {
+        NBTTagCompound fawBase = getFawBase(itemStack);
+        FawNbts.WeaponPart.setWeaponPart(fawBase, weaponPartName);
+    }
+
+    public static String getWeaponPart(ItemStack itemStack) {
+        NBTTagCompound fawBase = getFawBase(itemStack);
+        return FawNbts.WeaponPart.getWeaponPart(fawBase);
     }
 
     //TODO:Durability

@@ -1,13 +1,13 @@
 package net.liplum.lib.utils;
 
 import net.liplum.I18ns;
-import net.liplum.Tags;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.nbt.FawNbt;
-import net.liplum.lib.nbt.NbtUtil;
+import net.liplum.lib.nbt.FawNbts;
+import net.liplum.lib.nbt.FawNbtTool;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
@@ -45,28 +45,28 @@ public final class GemUtil {
         if (!(item instanceof WeaponBaseItem<?>)) {
             return false;
         }
-        NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
-        NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
+        NBTTagList gemList = FawNbtTool.getGemstoneList(itemStack);
         if (gemList.tagCount() == 0) {
             return false;
         }
         NBTBase gemstoneNbt = gemList.get(0);
-        NBTTagCompound gemstoneObj = (NBTTagCompound) gemstoneNbt;
-        String gemstoneName = gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
-        return !gemstoneName.isEmpty();
-    }
-
-    public static boolean canInlayGemstone(WeaponBaseItem<?> weapon, IGemstone gemstone) {
-        return gemstone.hasAnyAmplifier(weapon);
-    }
-
-    public static boolean canInlayGemstone(WeaponBaseItem<?> weapon, String gemstoneName) {
-        IGemstone gemstone = GemstoneRegistry.getGemstone(gemstoneName);
-        if (gemstone != null) {
-            return gemstone.hasAnyAmplifier(weapon);
+        if (gemstoneNbt instanceof NBTTagCompound) {
+            String gemstoneName = FawNbts.GemstoneObject.getGemstone((NBTTagCompound) gemstoneNbt);
+            return !gemstoneName.isEmpty();
         }
         return false;
+    }
+
+    public static boolean canInlayGemstone(IWeaponCore core, IGemstone gemstone) {
+        return gemstone.hasAnyAmplifier(core);
+    }
+
+    public static boolean canInlayGemstone(IWeaponCore core, String gemstoneName) {
+        IGemstone gemstone = GemstoneRegistry.getGemstone(gemstoneName);
+        if (gemstone == null) {
+            return false;
+        }
+        return gemstone.hasAnyAmplifier(core);
     }
 
     /**
@@ -79,18 +79,18 @@ public final class GemUtil {
         if (!(item instanceof WeaponBaseItem<?>)) {
             return null;
         }
-        NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
-        NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
+        NBTTagList gemList = FawNbtTool.getGemstoneList(itemStack);
         if (gemList.tagCount() == 0) {
             return null;
         }
         //It's up to how many a weapon can contain gemstones.
         NBTBase gemstoneNbt = gemList.get(0);
-        NBTTagCompound gemstoneObj = (NBTTagCompound) gemstoneNbt;
-        String gemstoneName = gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
         //Gets corresponding gemstone by its name.
-        return GemstoneRegistry.getGemstone(gemstoneName);
+        if (gemstoneNbt instanceof NBTTagCompound) {
+            String gemstoneName = FawNbts.GemstoneObject.getGemstone((NBTTagCompound) gemstoneNbt);
+            return GemstoneRegistry.getGemstone(gemstoneName);
+        }
+        return null;
     }
 
     public static InlayResult inlayGemstone(ItemStack itemStack, IGemstone gemstone) {
@@ -105,16 +105,7 @@ public final class GemUtil {
         if (!(item instanceof WeaponBaseItem)) {
             return InlayResult.NotFawWeapon;
         }
-        NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
-        NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
-        NBTTagCompound gemstoneObj = new NBTTagCompound();
-        gemstoneObj.setString(Tags.BaseSub.GemstoneObject.Gemstone, gemstoneName);
-        if (gemList.tagCount() > 0) {
-            gemList.set(0, gemstoneObj);
-        } else {
-            gemList.appendTag(gemstoneObj);
-        }
+        FawNbtTool.setGemstone(itemStack, gemstoneName);
         return InlayResult.Succeed;
     }
 
@@ -127,9 +118,7 @@ public final class GemUtil {
         if (!(item instanceof WeaponBaseItem)) {
             return RemoveResult.NotFawWeapon;
         }
-        NBTTagCompound root = NbtUtil.getOrCreateFrom(itemStack);
-        NBTTagCompound fawBase = FawNbt.FawBase.getFawBase(root);
-        NBTTagList gemList = FawNbt.GemstoneList.getGemstoneList(fawBase);
+        NBTTagList gemList = FawNbtTool.getGemstoneList(itemStack);
         if (gemList.tagCount() == 0) {
             return RemoveResult.NoGemstone;
         }

@@ -2,6 +2,7 @@ package net.liplum.gui.server;
 
 import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.gui.Property;
@@ -99,6 +100,7 @@ public class InlayTableContainer extends ContainerBase {
         }
         //Now we have a weapon and a "gemstone(maybe)"
         WeaponBaseItem<?> weaponType = (WeaponBaseItem<?>) weaponStack.getItem();
+        IWeaponCore core = weaponType.getCore();
         Item maybeGemstoneItem = gemstoneStack.getItem();
 
         if (FawItemUtil.isGemstone(maybeGemstoneItem)) {
@@ -113,7 +115,7 @@ public class InlayTableContainer extends ContainerBase {
                 ItemStack newWeapon = weaponStack.copy();
 
                 IGemstone gemstone = gemstoneItem.getGemstone();
-                if (GemUtil.canInlayGemstone(weaponType, gemstone)) {
+                if (GemUtil.canInlayGemstone(core, gemstone)) {
                     GemUtil.inlayGemstone(newWeapon, gemstone);
                     outputSlot.putStack(newWeapon);
                 }

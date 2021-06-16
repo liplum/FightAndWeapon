@@ -1,6 +1,7 @@
 package net.liplum.lib.nbt;
 
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -15,13 +16,15 @@ public final class NbtUtil {
      * @param itemStack
      * @return
      */
+    @Nonnull
     public static NBTTagCompound getOrCreateFrom(@Nonnull ItemStack itemStack) {
-        if (itemStack.isEmpty() || !(itemStack.hasTagCompound())) {
+        NBTTagCompound tag = itemStack.getTagCompound();
+        if (tag == null) {
             NBTTagCompound root = new NBTTagCompound();
             itemStack.setTagCompound(root);
             return root;
         }
-        return itemStack.getTagCompound();
+        return tag;
     }
 
     /**
@@ -29,6 +32,7 @@ public final class NbtUtil {
      * @param subkey a key in the NBT map
      * @return
      */
+    @Nonnull
     public static NBTTagCompound getSubCompoundOrCreate(@Nonnull NBTTagCompound nbt, @Nonnull String subkey) {
         if (nbt.hasKey(subkey)) {
             return nbt.getCompoundTag(subkey);
@@ -38,6 +42,7 @@ public final class NbtUtil {
         return newOne;
     }
 
+    @Nonnull
     public static NBTTagList getSubListOrCreate(@Nonnull NBTTagCompound nbt, @Nonnull String subkey, int type) {
         if (nbt.hasKey(subkey)) {
             return nbt.getTagList(subkey, type);
@@ -47,7 +52,11 @@ public final class NbtUtil {
         return newOne;
     }
 
-    public static void addInto(@Nonnull NBTTagList container, @Nonnull NBTTagCompound obj) {
-        container.appendTag(obj);
+    public static void setFirstOrAdd(@Nonnull NBTTagList nbtList, @Nonnull NBTBase nbt) {
+        if (nbtList.tagCount() == 0) {
+            nbtList.appendTag(nbt);
+        } else {
+            nbtList.set(0, nbt);
+        }
     }
 }

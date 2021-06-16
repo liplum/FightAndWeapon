@@ -4,6 +4,7 @@ import net.liplum.Gemstones;
 import net.liplum.I18ns;
 import net.liplum.MetaData;
 import net.liplum.Names;
+import net.liplum.items.CastBlueprintItem;
 import net.liplum.items.gemstones.GemstoneItem;
 import net.liplum.items.tools.BlacksmithGloveItem;
 import net.liplum.items.tools.ForgeHammerItem;
@@ -88,6 +89,7 @@ public final class ItemRegistry {
     public static final Item Inlaying_Tool_Item = forge(new InlayingToolItem(), Names.Item.InlayingToolItem);
     public static final Item Blacksmith_Glove_Item = forge(new BlacksmithGloveItem(), Names.Item.BlacksmithGloveItem);
     public static final Item Forge_Hammer_Item = forge(new ForgeHammerItem(), Names.Item.ForgeHammerItem);
+    public static final Item Cast_Blueprint_Item = forge(new CastBlueprintItem(), Names.Item.CastBlueprintItem);
 
     //public static final Item Test_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TestLance), "test_lance");
     //------------------------------------------------------------------------------------------------------------------------------

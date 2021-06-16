@@ -34,6 +34,7 @@ public final class Names {
         public static final String InlayingToolItem = "inlaying_tool";
         public static final String BlacksmithGloveItem = "blacksmith_glove";
         public static final String ForgeHammerItem = "forge_hammer";
+        public static final String CastBlueprintItem = "cast_blueprint";
 
         public static final class Lance {
             public static final String TypeName = "lance";

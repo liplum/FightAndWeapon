@@ -9,9 +9,9 @@ public final class Tags {
     public static final int Type_NbtCompound = (new NBTTagCompound()).getId();
     public static final String Base = "FAWData";
 
-    /*
+    /*Weapon
     FAWData(Base)-str
-        Gemstones(GemstoneList)-list(str)
+        GemstoneList(GemstoneList)-list(str)
             [
                 {
                     Gemstone(Gemstone)-str
@@ -21,6 +21,11 @@ public final class Tags {
             ]
         Durability(Durability)-int
     */
+
+    /*CastBlueprint
+    FAWData(Base)-str
+        WeaponPart(WeaponPart)-str
+     */
     private Tags() {
     }
 
@@ -28,6 +33,8 @@ public final class Tags {
         public static final String GemstoneList = "GemstoneList";
         //Unbreaking
         public static final String Durability = "Durability";
+        
+        public static final String WeaponPart = "WeaponPart";
 
         public static final class GemstoneObject {
             public static final String Gemstone = "Gemstone";

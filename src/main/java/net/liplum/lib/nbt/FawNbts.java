@@ -5,14 +5,16 @@ import net.liplum.lib.utils.Utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.nbt.NBTTagString;
+
+import javax.annotation.Nonnull;
 
 //TODO:Complete these notes
-public final class FawNbt {
-    private FawNbt() {
+public final class FawNbts {
+    private FawNbts() {
     }
 
     /**
+     * Weapon:<br/>
      * Gemstones(GemstoneList)-list(str)<br/>
      * [<br/>
      * Gemstone(Gemstone)-str<br/>
@@ -20,6 +22,7 @@ public final class FawNbt {
      * ]<br/>
      * Durability(Durability)-int<br/>
      * ...<br/>
+     * CastBlueprint:<br/>
      */
     public static final class FawBase {
         /**
@@ -28,7 +31,7 @@ public final class FawNbt {
          * @param root    the root NBT, which comes from {@link ItemStack#getTagCompound()}
          * @param fawBase the new Faw-base data NBT.
          */
-        public static void putFawBase(NBTTagCompound root, NBTTagCompound fawBase) {
+        public static void setFawBase(NBTTagCompound root, NBTTagCompound fawBase) {
             Utils.notNullThenDo(root, r -> r.setTag(Tags.Base, fawBase));
         }
 
@@ -57,7 +60,7 @@ public final class FawNbt {
          * @param base         the Faw-base data NBT, which comes from {@link FawBase#getFawBase(NBTTagCompound)}
          * @param gemstoneList the gemstone-list data
          */
-        public static void putGemstoneList(NBTTagCompound base, NBTTagList gemstoneList) {
+        public static void setGemstoneList(NBTTagCompound base, NBTTagList gemstoneList) {
             Utils.notNullThenDo(base, b -> b.setTag(Tags.BaseSub.GemstoneList, gemstoneList));
         }
 
@@ -78,25 +81,25 @@ public final class FawNbt {
     public static final class GemstoneObject {
         /**
          * @param gemstoneObj
-         * @param gemstone
+         * @param gemstoneName
          */
-        public static void putGemstone(NBTTagCompound gemstoneObj, NBTTagString gemstone) {
-            Utils.notNullThenDo(gemstoneObj, obj -> obj.setTag(Tags.BaseSub.GemstoneObject.Gemstone, gemstone));
+        public static void setGemstone(NBTTagCompound gemstoneObj, String gemstoneName) {
+            Utils.notNullThenDo(gemstoneObj, obj -> obj.setString(Tags.BaseSub.GemstoneObject.Gemstone, gemstoneName));
         }
 
         /**
          * @param gemstoneObj
          * @return
          */
-        public static NBTTagCompound getGemstone(NBTTagCompound gemstoneObj) {
-            return NbtUtil.getSubCompoundOrCreate(gemstoneObj, Tags.BaseSub.GemstoneObject.Gemstone);
+        public static String getGemstone(NBTTagCompound gemstoneObj) {
+            return gemstoneObj.getString(Tags.BaseSub.GemstoneObject.Gemstone);
         }
 
         /**
          * @param gemstoneObj
          * @param gemergy
          */
-        public static void putGemergy(NBTTagCompound gemstoneObj, int gemergy) {
+        public static void setGemergy(NBTTagCompound gemstoneObj, int gemergy) {
             Utils.notNullThenDo(gemstoneObj, obj -> obj.setInteger(Tags.BaseSub.GemstoneObject.Gemergy, gemergy));
         }
 
@@ -109,28 +112,44 @@ public final class FawNbt {
         }
     }
 
-    /**
-     * Durability(Durability)-int<br/>
-     */
-    public static final class Durability {
+
+    public static final class Master {
+
+    }
+
+    public static final class Weapon {
         /**
          * @param base
          * @param durability
          */
-        public static void putDurability(NBTTagCompound base, int durability) {
+        public static void setDurability(@Nonnull NBTTagCompound base, int durability) {
             Utils.notNullThenDo(base, obj -> obj.setInteger(Tags.BaseSub.Durability, durability));
         }
 
         /**
-         * @param base
-         * @return
+         * Durability(Durability)-int<br/>
          */
-        public static NBTTagCompound getDurability(NBTTagCompound base) {
+        @Nonnull
+        public static NBTTagCompound getDurability(@Nonnull NBTTagCompound base) {
             return NbtUtil.getSubCompoundOrCreate(base, Tags.BaseSub.Durability);
         }
     }
 
-    public static final class Master {
+    public static final class WeaponPart {
+        /**
+         * @param base
+         * @param weaponPart
+         */
+        public static void setWeaponPart(@Nonnull NBTTagCompound base,@Nonnull  String weaponPart) {
+            Utils.notNullThenDo(base, obj -> obj.setString(Tags.BaseSub.WeaponPart, weaponPart));
+        }
 
+        /**
+         * Durability(Durability)-int<br/>
+         */
+        @Nonnull
+        public static String getWeaponPart(@Nonnull NBTTagCompound base) {
+            return base.getString(Tags.BaseSub.WeaponPart);
+        }
     }
 }
