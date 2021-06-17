@@ -38,6 +38,10 @@ attributes.faw.harp.Frequency=Frequency
 tile.faw.inlay_table.name=Inlay Table
 tile.faw.forge.name=Forge
 
+#Casts
+#"cast" + mod id + weapon type + weapon name + part
+casts.faw.lance.chinese_lance.head=Chinese Lance Head
+
 #Skills
 #---Passive Skills
 pskill.faw.Fireproof.name=Fireproof

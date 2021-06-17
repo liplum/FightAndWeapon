@@ -23,7 +23,7 @@ public class FawGuiHandler implements IGuiHandler {
     @Override
     public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Master_ID) {
-            return new MasterContainer();
+            return new MasterContainer(player, world, x, y, z);
         } else if (ID == Inlay_Table_ID) {
             return new InlayTableContainer(player, world, x, y, z);
         } else if (ID == Forge_ID) {
@@ -36,7 +36,7 @@ public class FawGuiHandler implements IGuiHandler {
     @Override
     public Object getClientGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
         if (ID == Master_ID) {
-            return new MasterGui();
+            return new MasterGui(player, world, x, y, z);
         } else if (ID == Inlay_Table_ID) {
             return new InlayTableGUI(player, world, x, y, z);
         } else if (ID == Forge_ID) {
