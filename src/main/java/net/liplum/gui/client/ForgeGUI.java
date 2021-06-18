@@ -4,10 +4,7 @@ import net.liplum.I18ns;
 import net.liplum.Resources;
 import net.liplum.Vanilla;
 import net.liplum.gui.server.ForgeContainer;
-import net.liplum.lib.gui.Binding;
-import net.liplum.lib.gui.BindingMode;
-import net.liplum.lib.gui.IView;
-import net.liplum.lib.gui.Property;
+import net.liplum.lib.gui.*;
 import net.liplum.lib.utils.GuiUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -30,7 +27,7 @@ public class ForgeGUI extends GuiContainer {
     private static final int YSize = 221;
     private static final ResourceLocation Texture =
             Resources.genGuiContainerTx(Resources.Textures.GUI.Forge);
-    private static final IView ForgeTexture =
+    private static final IView ForgeView =
             GuiUtil.Full255View.slice(XSize, YSize);
     private static final int IconBoardThickness = 1;
     private static final int IconLength = 18;
@@ -44,8 +41,10 @@ public class ForgeGUI extends GuiContainer {
             IconCount * IconLength + IconBoardThickness * (IconCount + 1),
             IconLength + IconCount * IconBoardThickness);
     private static final IView[] Icons = new IView[IconCount];
-    private static final IView AdditionIconTexture;
-    private static final IView MaterialIconTexture;
+    private static final TextureFactory textureFactory = new TextureFactory(Texture);
+    private static final Texture ForgeTexture = textureFactory.gen(ForgeView);
+    private static final Texture AdditionIconTexture;
+    private static final Texture MaterialIconTexture;
 
     static {
         for (int i = 0; i < IconCount; i++) {
@@ -56,8 +55,8 @@ public class ForgeGUI extends GuiContainer {
                     IconLength
             );
         }
-        AdditionIconTexture = Icons[0];
-        MaterialIconTexture = Icons[1];
+        AdditionIconTexture = textureFactory.gen(Icons[0]);
+        MaterialIconTexture = textureFactory.gen(Icons[1]);
     }
 
     private CastScrollView castScrollView;
@@ -116,18 +115,13 @@ public class ForgeGUI extends GuiContainer {
         GlStateManager.color(1F, 1F, 1F, 1F);
         mc.getTextureManager().bindTexture(Texture);
 
-        drawTexturedModalRect(left, top,
-                ForgeTexture.getLeft(), ForgeTexture.getTop(), ForgeTexture.getWidth(), ForgeTexture.getHeight());
+        ForgeTexture.draw(this,left, top);
 
         if (Utils.notNull(displayAdditionIcon.get())) {
-            drawTexturedModalRect(left + AdditionIconXOffset, top + AdditionIconYOffset,
-                    AdditionIconTexture.getLeft(), AdditionIconTexture.getTop(),
-                    AdditionIconTexture.getWidth(), AdditionIconTexture.getHeight());
+            AdditionIconTexture.draw(this, left + AdditionIconXOffset, top + AdditionIconYOffset);
         }
         if (Utils.notNull(displayMaterialIcon.get())) {
-            drawTexturedModalRect(left + MaterialIconXOffset, top + MaterialIconYOffset,
-                    MaterialIconTexture.getLeft(), MaterialIconTexture.getTop(),
-                    MaterialIconTexture.getWidth(), MaterialIconTexture.getHeight());
+            MaterialIconTexture.draw(this, left + MaterialIconXOffset, top + MaterialIconYOffset);
         }
     }
 

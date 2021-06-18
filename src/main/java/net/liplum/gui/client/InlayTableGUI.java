@@ -4,10 +4,7 @@ import net.liplum.I18ns;
 import net.liplum.Resources;
 import net.liplum.Vanilla;
 import net.liplum.gui.server.InlayTableContainer;
-import net.liplum.lib.gui.Binding;
-import net.liplum.lib.gui.BindingMode;
-import net.liplum.lib.gui.IView;
-import net.liplum.lib.gui.Property;
+import net.liplum.lib.gui.*;
 import net.liplum.lib.utils.GuiUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -23,7 +20,9 @@ public class InlayTableGUI extends GuiContainer {
     private static final ResourceLocation Texture =
             Resources.genGuiContainerTx(Resources.Textures.GUI.InlayTable);
     private static final IView InlayTableTexture = GuiUtil.Full255View.slice(XSize, YSize);
-    private static final IView CrossTexture = GuiUtil.Full255View.slice(176, 0, 17, 18);
+    private static final IView CrossView = GuiUtil.Full255View.slice(176, 0, 17, 18);
+    private static final TextureFactory textureFactory = new TextureFactory(Texture);
+    private static final Texture Cross = textureFactory.gen(CrossView);
     private static final int CrossXOffset = 55;
     private static final int CrossYOffset = 35;
 
@@ -59,8 +58,7 @@ public class InlayTableGUI extends GuiContainer {
                 InlayTableTexture.getLeft(), InlayTableTexture.getTop(), InlayTableTexture.getWidth(), InlayTableTexture.getHeight());
 
         if (Utils.notNull(displayCross.get())) {
-            drawTexturedModalRect(left + CrossXOffset, top + CrossYOffset,
-                    CrossTexture.getLeft(), CrossTexture.getTop(), CrossTexture.getWidth(), CrossTexture.getHeight());
+            Cross.draw(this, left + CrossXOffset, top + CrossYOffset);
         }
     }
 
