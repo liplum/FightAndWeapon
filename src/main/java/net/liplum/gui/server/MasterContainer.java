@@ -10,6 +10,6 @@ public class MasterContainer extends ContainerBase {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        return false;
+        return true;
     }
 }

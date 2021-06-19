@@ -1,6 +1,7 @@
 package net.liplum.lib.gui;
 
-import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
 
 import javax.annotation.Nonnull;
@@ -16,12 +17,20 @@ public class Texture {
         this.view = view;
     }
 
-    public void bind(GuiContainer container) {
-        container.mc.getTextureManager().bindTexture(texture);
+    public void bind(Minecraft mc) {
+        mc.getTextureManager().bindTexture(texture);
     }
 
-    public void draw(GuiContainer container, int x, int y) {
-        container.drawTexturedModalRect(x, y,
+    public void draw(Gui gui, int x, int y) {
+        gui.drawTexturedModalRect(x, y,
                 view.getLeft(), view.getTop(), view.getWidth(), view.getHeight());
+    }
+
+    public int getWidth() {
+        return view.getWidth();
+    }
+
+    public int getHeight() {
+        return view.getHeight();
     }
 }
