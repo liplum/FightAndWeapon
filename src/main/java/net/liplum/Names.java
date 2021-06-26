@@ -1,6 +1,5 @@
 package net.liplum;
 
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public final class Names {
@@ -12,16 +11,13 @@ public final class Names {
         return namedObject.setRegistryName(MetaData.MOD_ID, registerName);
     }
 
-    public static ResourceLocation genResourceLocation(String resourcePath) {
-        return new ResourceLocation(MetaData.MOD_ID, resourcePath);
-    }
-
     public static final class Special {
         public static final String Weapon = "weapon";
         public static final String Master = "master";
         public static final String PassiveSkill = "pskill";
         public static final String Generic = "generic";
         public static final String Attributes = "attributes";
+        public static final String Blueprint = "blueprint";
     }
 
     public static final class Item {
@@ -74,6 +70,7 @@ public final class Names {
 
     public final static class Capability {
         public static final String Master = "master";
+        public static final String CastStudy = "cast_study";
     }
 
     public final static class ItemGroup {

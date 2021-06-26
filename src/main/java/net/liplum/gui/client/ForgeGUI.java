@@ -59,18 +59,15 @@ public class ForgeGUI extends GuiContainer {
         MaterialIconTexture = textureFactory.gen(Icons[1]);
     }
 
-    private CastScrollView castScrollView;
-
     private final int CastLength = 18;
-
     private final LinkedList<Cast> castList = new LinkedList<>();
-    private int selectedIndex;
-
     private final ForgeContainer forge;
     private final Property<Boolean> displayAdditionIcon = new Property<>(true);
     private final Property<Boolean> displayMaterialIcon = new Property<>(true);
     private final Binding<Boolean> displayAdditionIconBinding;
     private final Binding<Boolean> displayMaterialIconBinding;
+    private CastScrollView castScrollView;
+    private int selectedIndex;
 
     public ForgeGUI(EntityPlayer player, World world, int x, int y, int z) {
         super(new ForgeContainer(player, world, x, y, z));
@@ -115,7 +112,7 @@ public class ForgeGUI extends GuiContainer {
         GlStateManager.color(1F, 1F, 1F, 1F);
         mc.getTextureManager().bindTexture(Texture);
 
-        ForgeTexture.draw(this,left, top);
+        ForgeTexture.draw(this, left, top);
 
         if (Utils.notNull(displayAdditionIcon.get())) {
             AdditionIconTexture.draw(this, left + AdditionIconXOffset, top + AdditionIconYOffset);

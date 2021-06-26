@@ -10,4 +10,12 @@ public class Cast {
     public String getRegisterName() {
         return weaponPart.getRegisterName();
     }
+
+    public WeaponPart getWeaponPart() {
+        return weaponPart;
+    }
+
+    public int getID() {
+        return weaponPart.getID();
+    }
 }

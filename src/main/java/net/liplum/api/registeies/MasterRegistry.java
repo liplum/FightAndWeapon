@@ -9,18 +9,18 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class MasterRegistry {
-    private static final Map<Class<? extends WeaponBaseItem<?>>, IMaster> AllMasters = new HashMap<>();
+    private static final Map<Class<? extends WeaponBaseItem<?>>, IMaster> MasterMap = new HashMap<>();
 
     @Nonnull
     public static IMaster register(@Nonnull IMaster master) {
-        AllMasters.put(master.getWeaponType(), master);
+        MasterMap.put(master.getWeaponType(), master);
         return master;
     }
 
     @Nullable
     public static IMaster getMasterOf(@Nonnull Class<? extends WeaponBaseItem<?>> weaponType) {
-        if (AllMasters.containsKey(weaponType)) {
-            return AllMasters.get(weaponType);
+        if (MasterMap.containsKey(weaponType)) {
+            return MasterMap.get(weaponType);
         }
         return null;
     }

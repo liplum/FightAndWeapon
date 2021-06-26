@@ -140,7 +140,7 @@ public final class FawNbts {
          * @param base
          * @param weaponPart
          */
-        public static void setWeaponPart(@Nonnull NBTTagCompound base,@Nonnull  String weaponPart) {
+        public static void setWeaponPart(@Nonnull NBTTagCompound base, @Nonnull String weaponPart) {
             Utils.notNullThenDo(base, obj -> obj.setString(Tags.BaseSub.WeaponPart, weaponPart));
         }
 

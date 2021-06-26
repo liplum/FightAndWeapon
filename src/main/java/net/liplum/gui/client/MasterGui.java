@@ -95,6 +95,10 @@ public class MasterGui extends GuiContainer {
     }.setTextures(R_Normal, R_Hovered, R_Pressed)
             .setPosition(30, 20);
 
+    public MasterGui(EntityPlayer player, World world, int x, int y, int z) {
+        super(new MasterContainer(player, world, x, y, z));
+    }
+
     @Override
     public void initGui() {
         super.initGui();
@@ -130,9 +134,5 @@ public class MasterGui extends GuiContainer {
         this.renderHoveredToolTip(mouseX, mouseY);
         GlStateManager.disableLighting();
         GlStateManager.disableBlend();
-    }
-
-    public MasterGui(EntityPlayer player, World world, int x, int y, int z) {
-        super(new MasterContainer(player, world, x, y, z));
     }
 }

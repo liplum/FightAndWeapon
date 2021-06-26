@@ -1,6 +1,10 @@
 package net.liplum.proxies;
 
 import net.liplum.registeies.HotkeyRegistry;
+import net.liplum.renders.CastTextureCreator;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.resources.IReloadableResourceManager;
+import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -27,11 +31,18 @@ public class ClientProxy extends ProxyBase {
     @Override
     public void preInit(FMLPreInitializationEvent event) {
         initHotkeys();
+        //I changed it to static
+        //MinecraftForge.EVENT_BUS.register(CastTextureCreator.getInstance());
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
+        IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
+        IReloadableResourceManager reloadResourceManager = (IReloadableResourceManager) resourceManager;
+        reloadResourceManager.registerReloadListener(CastTextureCreator.getInstance());
 
+        //Register a custom model loader of weapons
+        //   ModelLoaderRegistry.registerLoader(WeaponModelLoader.getInstance());
     }
 
     @Override

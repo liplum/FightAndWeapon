@@ -22,6 +22,7 @@ potion.effect.faw.unstoppable=Unstoppable
 #Tooltips
 tooltip.faw.weapon.inlaid=Inlaid
 tooltip.faw.weapon.noGemstone=No Gemstone
+tooltip.faw.weapon.noSuchWeaponPart=No Such Weapon Part
 
 #Attributes
 attributes.faw.generic.Strength=Strength
@@ -74,6 +75,7 @@ item.faw.windy_gemstone.name=Windy Gemstone
 item.faw.inlaying_tool.name=Inlaying Tool
 item.faw.forge_hammer.name=Forge Hammer
 item.faw.blacksmith_glove.name=Blacksmith Glove
+item.faw.cast_blueprint.name=Cast Blueprint
 
 item.faw.quartz_sword.name=Quartz Sword
 item.faw.quartz_axe.name=Quartz Axe
@@ -88,3 +90,6 @@ item.faw.battle_axe.name=Battle Axe
 
 item.faw.harp.name=Harp
 
+#Weapon Parts
+item.faw.knight_lance_head.name=Knight Lance Head
+item.faw.chinese_lance_head.name=Chinese Lance Head

@@ -91,6 +91,7 @@ public final class I18ns {
     public static final class Tooltip {
         public static final String Inlaid = prefixTooltip(Names.Special.Weapon, "inlaid");
         public static final String NoGemstone = prefixTooltip(Names.Special.Weapon, "noGemstone");
+        public static final String NoSuchWeaponPart = prefixTooltip(Names.Special.Weapon, "noSuchWeaponPart");
     }
 
     public static final class Attribute {

@@ -9,12 +9,12 @@ import net.minecraftforge.common.capabilities.ICapabilitySerializable;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class MasterProvider implements ICapabilitySerializable<NBTTagCompound> {
-    private final MasterCapability instance = new MasterCapability();
-    private final Capability<MasterCapability> capability;
+public class CastStudyProvider implements ICapabilitySerializable<NBTTagCompound> {
+    private final CastStudyCapability instance = new CastStudyCapability();
+    private final Capability<CastStudyCapability> capability;
 
-    public MasterProvider() {
-        capability = CapabilityRegistry.Master_Capability;
+    public CastStudyProvider() {
+        capability = CapabilityRegistry.CastStudy_Capability;
     }
 
     @Override

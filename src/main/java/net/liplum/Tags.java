@@ -33,7 +33,7 @@ public final class Tags {
         public static final String GemstoneList = "GemstoneList";
         //Unbreaking
         public static final String Durability = "Durability";
-        
+
         public static final String WeaponPart = "WeaponPart";
 
         public static final class GemstoneObject {

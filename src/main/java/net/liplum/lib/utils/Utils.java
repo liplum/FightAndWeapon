@@ -4,8 +4,11 @@ import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Random;
 import java.util.function.Consumer;
+import java.util.function.ToIntFunction;
 
 public class Utils {
     private static Random RANDOM = new Random();
@@ -40,6 +43,23 @@ public class Utils {
             }
         }
         return null;
+    }
+
+    @Nonnull
+    public static <T> int[] toIntArray(@Nonnull Collection<T> list, @Nonnull ToIntFunction<T> mapping) {
+        int len = list.size();
+        if (len == 0) {
+            return new int[0];
+        }
+        int[] res = new int[len];
+
+        Iterator<T> it = list.iterator();
+        int index = 0;
+        while (it.hasNext()) {
+            res[index] = mapping.applyAsInt(it.next());
+            index++;
+        }
+        return res;
     }
 
     public static boolean isShiftDown() {

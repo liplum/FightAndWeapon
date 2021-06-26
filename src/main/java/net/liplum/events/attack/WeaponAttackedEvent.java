@@ -7,6 +7,7 @@ public class WeaponAttackedEvent extends WeaponAttackBaseEvent<WeaponAttackedArg
     public WeaponAttackedEvent(WeaponAttackedArgs args) {
         super(args);
     }
+
     @Nonnull
     @Override
     public WeaponAttackedArgs getArgs() {

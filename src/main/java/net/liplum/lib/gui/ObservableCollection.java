@@ -23,7 +23,7 @@ public class ObservableCollection<T> implements INotifyPropertyChanged<List<T>> 
         return event;
     }
 
-    public void raise(){
+    public void raise() {
         event.trigger();
     }
 

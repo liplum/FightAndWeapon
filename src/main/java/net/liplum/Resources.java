@@ -4,21 +4,24 @@ import net.liplum.lib.FawLocation;
 import net.minecraft.util.ResourceLocation;
 
 public final class Resources {
-    private static final String PNG_Suffix = ".png";
+    public static final String PNG_Extension = ".png";
+    public static final String JSON_Extension = ".json";
+    public static final String Weapon_Extension = ".faw";
 
     public static ResourceLocation genGuiTx(String unsuffixedFileName) {
         String str = Vanilla.Resources.Textures + '/' +
                 Vanilla.Resources.GUI + '/' +
                 unsuffixedFileName +
-                PNG_Suffix;
+                PNG_Extension;
         return new FawLocation(str);
     }
+
     public static ResourceLocation genGuiContainerTx(String unsuffixedFileName) {
         String str = Vanilla.Resources.Textures + '/' +
                 Vanilla.Resources.GUI + '/' +
                 Vanilla.Resources.Container + '/' +
                 unsuffixedFileName +
-                PNG_Suffix;
+                PNG_Extension;
         return new FawLocation(str);
     }
 

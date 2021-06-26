@@ -11,7 +11,7 @@ import java.util.Map;
 public final class GemstoneRegistry {
     private static final Map<String, IGemstone> GemstoneMap = new HashMap<>();
     private static ArrayList<String> NamesCache = new ArrayList<>();
-    private static boolean IsChanged = false;
+    private static boolean IsChanged = true;
 
     public static void register(IGemstone gemstone) {
         GemstoneMap.put(gemstone.getRegisterName(), gemstone);

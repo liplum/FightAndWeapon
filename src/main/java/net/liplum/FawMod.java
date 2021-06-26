@@ -17,7 +17,7 @@ import org.apache.logging.log4j.Logger;
 @Mod(modid = MetaData.MOD_ID, name = MetaData.MOD_NAME, version = MetaData.MOD_VERSION)
 public class FawMod {
 
-    private static final Logger Logger = LogManager.getLogger();
+    public static final Logger Logger = LogManager.getLogger();
 
     @SidedProxy(clientSide = MetaData.CLIENT_PROXY_CLZ,
             serverSide = MetaData.SERVER_PROXY_CLZ)
@@ -36,6 +36,8 @@ public class FawMod {
         Logger.info("Capability Component initialized successfully.");
         FawNetworkRegistry.init();
         Logger.info("Network Component initialized successfully.");
+        WeaponParts.load();
+        Logger.info("Weapon Part Component initialized successfully.");
         proxy.preInit(event);
         Logger.info("Proxy Component pre-initialized successfully.");
     }

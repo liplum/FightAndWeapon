@@ -4,6 +4,7 @@ import net.liplum.api.weapon.Cast;
 import net.liplum.api.weapon.WeaponPart;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -12,12 +13,7 @@ import java.util.Map;
 public class WeaponPartRegistry {
     private static final Map<String, WeaponPart> WeaponPartMap = new HashMap<>();
     private static ArrayList<String> NamesCache = new ArrayList<>();
-    private static boolean IsChanged = false;
-
-    enum RegisterType {
-        Has_Cast,
-        No_Cast
-    }
+    private static boolean IsChanged = true;
 
     @Nonnull
     public static WeaponPart register(@Nonnull WeaponPart weaponPart, @Nonnull RegisterType registerType) {
@@ -30,6 +26,11 @@ public class WeaponPartRegistry {
         return weaponPart;
     }
 
+    @Nullable
+    public static WeaponPart getWeaponPart(@Nonnull String weaponPartName) {
+        return WeaponPartMap.get(weaponPartName);
+    }
+
     public static List<String> getAllWeaponPartNames() {
         if (IsChanged) {
             genNamesCache();
@@ -40,5 +41,10 @@ public class WeaponPartRegistry {
     private static void genNamesCache() {
         NamesCache = new ArrayList<>(WeaponPartMap.keySet());
         IsChanged = false;
+    }
+
+    public enum RegisterType {
+        Has_Cast,
+        No_Cast
     }
 }

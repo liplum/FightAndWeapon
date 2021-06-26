@@ -1,9 +1,11 @@
 package net.liplum.lib.utils;
 
+import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.DamageArgs;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.api.weapon.WeaponPart;
 import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
@@ -361,5 +363,9 @@ public final class FawItemUtil {
     public static void addPassiveSkillTooltip(@Nonnull List<String> tooltip, @Nonnull IPassiveSkill<?> passiveSkill) {
         tooltip.add(TextFormatting.BLUE +
                 I18n.format(SkillUtil.getNameI18nKey(passiveSkill)));
+    }
+
+    public static String getNameI18nKey(WeaponPart weaponPart) {
+        return I18ns.endWithName(I18ns.prefixItem(weaponPart.getRegisterName()));
     }
 }
