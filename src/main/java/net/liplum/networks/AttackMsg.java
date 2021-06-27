@@ -51,10 +51,10 @@ public class AttackMsg implements IMessage {
                     Item item = itemStack.getItem();
                     if (FawItemUtil.isFawWeapon(itemStack) && !player.isHandActive()) {
                         WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
-                        double reach = weapon.getAttackDistance();
+                        double reach = weapon.getCore().getAttackReach();
                         IModifier<?> modifier = GemUtil.getModifierFrom(itemStack);
                         if (modifier != null) {
-                            reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackDistanceDelta(), modifier.getAttackDistanceRate());
+                            reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
                         }
 
                         if (player.getDistanceSq(target) < reach * reach) {

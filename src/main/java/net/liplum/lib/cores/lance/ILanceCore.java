@@ -3,6 +3,8 @@ package net.liplum.lib.cores.lance;
 import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.items.weapons.lance.LanceItem;
 
+import javax.annotation.Nonnull;
+
 public interface ILanceCore extends IWeaponCore {
     boolean releaseSkill(LanceArgs args);
 
@@ -13,6 +15,7 @@ public interface ILanceCore extends IWeaponCore {
      */
     float getSprintLength();
 
+    @Nonnull
     @Override
     default Class<LanceItem> getWeaponType() {
         return LanceItem.class;

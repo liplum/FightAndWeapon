@@ -348,7 +348,13 @@ public final class FawItemUtil {
                 Math.round(value));
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, String format, float value) {
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, String format) {
+        tooltip.add(TextFormatting.YELLOW +
+                I18n.format(attrTranslateKey) + " : " +
+                String.format(format, value));
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, String format) {
         tooltip.add(TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
                 String.format(format, value));

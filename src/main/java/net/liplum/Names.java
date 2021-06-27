@@ -18,6 +18,7 @@ public final class Names {
         public static final String Generic = "generic";
         public static final String Attributes = "attributes";
         public static final String Blueprint = "blueprint";
+        public static final String Parts = "parts";
     }
 
     public static final class Item {
@@ -31,6 +32,7 @@ public final class Names {
         public static final String BlacksmithGloveItem = "blacksmith_glove";
         public static final String ForgeHammerItem = "forge_hammer";
         public static final String CastBlueprintItem = "cast_blueprint";
+        public static final String WeaponPartItem = "weapon_part";
 
         public static final class Lance {
             public static final String TypeName = "lance";
@@ -51,6 +53,7 @@ public final class Names {
         public static final class Generic {
             public static final String Strength = "Strength";
             public static final String CoolDown = "CoolDown";
+            public static final String AttackReach = "AttackReach";
             public static final String AbilityPower = "AbilityPower";
         }
 

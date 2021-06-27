@@ -18,10 +18,10 @@ import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
-public class CastTextureCreator implements ISelectiveResourceReloadListener {
-    public static final CastTextureCreator instance = new CastTextureCreator();
+public class WeaponPartTextureCreator implements ISelectiveResourceReloadListener {
+    public static final WeaponPartTextureCreator instance = new WeaponPartTextureCreator();
 
-    public static CastTextureCreator getInstance() {
+    public static WeaponPartTextureCreator getInstance() {
         return instance;
     }
 

@@ -1,5 +1,9 @@
 package net.liplum.api.weapon;
 
+import net.liplum.AttributeDefault;
+
 public interface IMagicToolCore extends IWeaponCore {
-    float getAbilityPower();
+    default float getAbilityPower() {
+        return AttributeDefault.Generic.AbilityPower;
+    }
 }

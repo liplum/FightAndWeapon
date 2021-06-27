@@ -85,6 +85,7 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
         return ActionResult.newResult(result, held);
     }
 
+    @Nonnull
     @Override
     public IBattleAxeCore getCore() {
         return core;

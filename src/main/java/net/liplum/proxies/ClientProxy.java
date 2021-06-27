@@ -3,7 +3,8 @@ package net.liplum.proxies;
 import net.liplum.eventhandlers.ClientHandler;
 import net.liplum.eventhandlers.HotkeyHandler;
 import net.liplum.registeies.HotkeyRegistry;
-import net.liplum.renders.CastTextureCreator;
+import net.liplum.renders.RenderManager;
+import net.liplum.renders.WeaponPartTextureCreator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
@@ -38,13 +39,14 @@ public class ClientProxy extends ProxyBase {
         //MinecraftForge.EVENT_BUS.register(CastTextureCreator.getInstance());
         MinecraftForge.EVENT_BUS.register(new HotkeyHandler());
         MinecraftForge.EVENT_BUS.register(new ClientHandler());
+        RenderManager.init();
     }
 
     @Override
     public void init(FMLInitializationEvent event) {
         IResourceManager resourceManager = Minecraft.getMinecraft().getResourceManager();
         IReloadableResourceManager reloadResourceManager = (IReloadableResourceManager) resourceManager;
-        reloadResourceManager.registerReloadListener(CastTextureCreator.getInstance());
+        reloadResourceManager.registerReloadListener(WeaponPartTextureCreator.getInstance());
 
         //Register a custom model loader of weapons
         //   ModelLoaderRegistry.registerLoader(WeaponModelLoader.getInstance());

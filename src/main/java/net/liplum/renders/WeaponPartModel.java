@@ -18,13 +18,13 @@ import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Function;
 
-public class CastModel implements IModel {
+public class WeaponPartModel implements IModel {
     /**
      * Only single one
      */
     private final ImmutableList<ResourceLocation> texture;
 
-    public CastModel(ResourceLocation texture) {
+    public WeaponPartModel(ResourceLocation texture) {
         this.texture = ImmutableList.of(texture);
     }
 

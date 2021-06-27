@@ -1,6 +1,11 @@
 package net.liplum.eventhandlers;
 
+import net.liplum.AttributeDefault;
+import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.RenderUtil;
 import net.liplum.networks.AttackMsg;
 import net.liplum.networks.MessageManager;
@@ -30,14 +35,22 @@ public class ClientHandler {
             }
             ItemStack mainHand = player.getHeldItem(EnumHand.MAIN_HAND);
             Item item = mainHand.getItem();
-            if (item instanceof WeaponBaseItem<?>) {
-                WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
-                if (!player.isHandActive()) {
-                    RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(weapon.getAttackDistance());
-                    if (rayTrace != null) {
-                        MessageManager.sendMessageToServer(
-                                new AttackMsg(rayTrace.entityHit.getEntityId())
-                        );
+            if (!player.isHandActive()) {
+                if (item instanceof WeaponBaseItem<?>) {
+                    WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
+                    IWeaponCore core = weapon.getCore();
+                    double reach = core.getAttackReach();
+                    IModifier<?> modifier = GemUtil.getModifierFrom(mainHand);
+                    if (modifier != null) {
+                        reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
+                    }
+                    if (reach != AttributeDefault.Generic.AttackReach) {
+                        RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(core.getAttackReach());
+                        if (rayTrace != null) {
+                            MessageManager.sendMessageToServer(
+                                    new AttackMsg(rayTrace.entityHit.getEntityId())
+                            );
+                        }
                     }
                 }
             }

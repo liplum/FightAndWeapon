@@ -1,6 +1,9 @@
 package net.liplum.api.weapon;
 
+import net.liplum.AttributeDefault;
 import net.liplum.lib.items.WeaponBaseItem;
+
+import javax.annotation.Nonnull;
 
 public interface IWeaponCore {
     /**
@@ -11,11 +14,11 @@ public interface IWeaponCore {
     int getCoolDown();
 
     default float getStrength() {
-        return 0;
+        return AttributeDefault.Generic.Strength;
     }
 
-    default double getAttackDistance(){
-        return 3.5D;
+    default double getAttackReach() {
+        return AttributeDefault.Generic.AttackReach;
     }
 
     /**
@@ -24,7 +27,7 @@ public interface IWeaponCore {
      * @return the invincible time(by tick)
      */
     default int getEnemyBreakingTime() {
-        return 20;
+        return AttributeDefault.Generic.EnemyBreakingTime;
     }
 
     /**
@@ -33,8 +36,9 @@ public interface IWeaponCore {
      * @return the strength of knock back
      */
     default float getKnockbackStrength() {
-        return 1;
+        return AttributeDefault.Generic.KnockbackStrength;
     }
 
+    @Nonnull
     Class<? extends WeaponBaseItem<?>> getWeaponType();
 }

@@ -13,6 +13,7 @@ import java.util.Map;
 public class WeaponPartRegistry {
     private static final Map<String, WeaponPart> WeaponPartMap = new HashMap<>();
     private static ArrayList<String> NamesCache = new ArrayList<>();
+    private static ArrayList<WeaponPart> WeaponPartsCache = new ArrayList<>();
     private static boolean IsChanged = true;
 
     @Nonnull
@@ -33,13 +34,21 @@ public class WeaponPartRegistry {
 
     public static List<String> getAllWeaponPartNames() {
         if (IsChanged) {
-            genNamesCache();
+            genCache();
         }
         return NamesCache;
     }
 
-    private static void genNamesCache() {
+    public static List<WeaponPart> getAllWeaponParts() {
+        if (IsChanged) {
+            genCache();
+        }
+        return WeaponPartsCache;
+    }
+
+    private static void genCache() {
         NamesCache = new ArrayList<>(WeaponPartMap.keySet());
+        WeaponPartsCache = new ArrayList<>(WeaponPartMap.values());
         IsChanged = false;
     }
 

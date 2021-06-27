@@ -1,8 +1,10 @@
 package net.liplum.lib.items;
 
+import net.liplum.AttributeDefault;
 import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.IModifier;
 import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -78,13 +80,18 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         boolean added = false;
         CoreType core = getCore();
         float strength = core.getStrength();
-        int coolDown = core.getCoolDown();
-        if (strength > 0) {
+        if (strength > 0 && strength != AttributeDefault.Generic.Strength) {
             FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.Strength, strength);
             added = true;
         }
+        int coolDown = core.getCoolDown();
         if (coolDown > 0) {
             FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.CoolDown, coolDown);
+            added = true;
+        }
+        double attackReach = core.getAttackReach();
+        if (attackReach > 0 && attackReach != AttributeDefault.Generic.AttackReach) {
+            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.AttackReach, attackReach, "%.1f");
             added = true;
         }
         return added;
@@ -113,10 +120,6 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         return 4;
     }
 
-    public double getAttackDistance(){
-        return getCore().getAttackDistance();
-    }
-
     /**
      * Deals damage to a target form the attacker.
      * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
@@ -131,13 +134,22 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         return target.attackEntityFrom(damageSource, damage);
     }
 
-    public boolean attackEntity(ItemStack stack, EntityPlayer player, Entity entity){
+    public boolean attackEntity(ItemStack stack, EntityPlayer player, Entity entity) {
         return FawItemUtil.attackEntity(stack, this, player, entity);
     }
 
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-        return true;
+        double reach = getCore().getAttackReach();
+        IModifier<?> modifier = GemUtil.getModifierFrom(stack);
+        if (modifier != null) {
+            reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
+        }
+        if (reach == AttributeDefault.Generic.AttackReach) {
+            return attackEntity(stack, player, entity);
+        } else {
+            return true;
+        }
     }
 
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float damage) {
@@ -161,6 +173,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
      *
      * @return A core of this weapon.
      */
+    @Nonnull
     public abstract CoreType getCore();
 
 }

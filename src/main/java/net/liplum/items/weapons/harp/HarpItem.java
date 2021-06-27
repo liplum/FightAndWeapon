@@ -171,13 +171,14 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
             int frequency = core.getFrequency();
             if (frequency > 0) {
                 float frequencyDecimal = (float) frequency / Vanilla.TPS;
-                FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Harp.Frequency, "%.1f", frequencyDecimal);
+                FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Harp.Frequency, frequencyDecimal, "%.1f");
                 shown = true;
             }
         }
         return shown;
     }
 
+    @Nonnull
     @Override
     public IHarpCore getCore() {
         return core;

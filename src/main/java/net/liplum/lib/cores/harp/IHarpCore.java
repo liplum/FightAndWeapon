@@ -3,6 +3,8 @@ package net.liplum.lib.cores.harp;
 import net.liplum.api.weapon.IMagicToolCore;
 import net.liplum.items.weapons.harp.HarpItem;
 
+import javax.annotation.Nonnull;
+
 public interface IHarpCore extends IMagicToolCore {
     /**
      * Gets the radius of the range
@@ -26,6 +28,7 @@ public interface IHarpCore extends IMagicToolCore {
 
     boolean releaseSkill(SingleHarpArgs args);
 
+    @Nonnull
     @Override
     default Class<HarpItem> getWeaponType() {
         return HarpItem.class;

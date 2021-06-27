@@ -27,6 +27,7 @@ tooltip.faw.weapon.noSuchWeaponPart=No Such Weapon Part
 #Attributes
 attributes.faw.generic.Strength=Strength
 attributes.faw.generic.CoolDown=Cool Down
+attributes.faw.generic.AttackReach=Attack Reach
 attributes.faw.generic.AbilityPower=AP
 
 attributes.faw.lance.SprintLength=Sprint Length
@@ -41,7 +42,7 @@ tile.faw.forge.name=Forge
 
 #Casts
 #"cast" + mod id + weapon type + weapon name + part
-casts.faw.lance.chinese_lance.head=Chinese Lance Head
+#casts.faw.lance.chinese_lance.head=Chinese Lance Head
 
 #Skills
 #---Passive Skills
@@ -91,5 +92,6 @@ item.faw.battle_axe.name=Battle Axe
 item.faw.harp.name=Harp
 
 #Weapon Parts
+item.faw.weapon_part.name=Weapon Part
 item.faw.knight_lance_head.name=Knight Lance Head
 item.faw.chinese_lance_head.name=Chinese Lance Head

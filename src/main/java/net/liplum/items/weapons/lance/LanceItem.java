@@ -94,6 +94,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
         return shown;
     }
 
+    @Nonnull
     @Override
     public ILanceCore getCore() {
         return core;

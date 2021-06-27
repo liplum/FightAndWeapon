@@ -98,6 +98,7 @@ public final class I18ns {
         public static final class Generic {
             public static final String Strength = with(Names.Attribute.Generic.Strength);
             public static final String CoolDown = with(Names.Attribute.Generic.CoolDown);
+            public static final String AttackReach = with(Names.Attribute.Generic.AttackReach);
             public static final String AbilityPower = with(Names.Attribute.Generic.AbilityPower);
 
             private static String with(String attributeName) {

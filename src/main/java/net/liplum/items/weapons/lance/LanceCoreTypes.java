@@ -126,7 +126,7 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        public double getAttackDistance() {
+        public double getAttackReach() {
             return 8;
         }
     };

@@ -22,11 +22,11 @@ public interface IModifier<CoreType extends IWeaponCore> {
         return 0;
     }
 
-    default double getAttackDistanceDelta() {
+    default double getAttackReachDelta() {
         return 0;
     }
 
-    default float getAttackDistanceRate() {
+    default float getAttackReachRate() {
         return 0;
     }
 
