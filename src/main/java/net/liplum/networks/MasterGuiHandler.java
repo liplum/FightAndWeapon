@@ -9,6 +9,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
+import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
@@ -16,21 +17,36 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
+import javax.annotation.Nonnull;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-public class MasterGuiHandler {
+public class MasterGuiHandler implements IDataPacketHandler {
+    public static final MasterGuiHandler instance = new MasterGuiHandler();
+
+    public static MasterGuiHandler getInstance() {
+        return instance;
+    }
+
     private static final String ChannelName = ChannelNames.Master.GUI;
 
+    @Override
+    @Nonnull
+    public String getChannelName() {
+        return ChannelName;
+    }
+
+    @Override
     @SubscribeEvent
     // NOTE: DON'T ADD @SideOnly(Side.CLIENT) !!!!!!!!
-    public static void onClientReceivedPacket(FMLNetworkEvent.ClientCustomPacketEvent event) {
+    public void onClientReceivedPacket(FMLNetworkEvent.ClientCustomPacketEvent event) {
         System.out.println("GOT.");
     }
 
+    @Override
     @SubscribeEvent
     // NOTE: DON'T ADD @SideOnly(Side.SERVER) !!!!!!!!
-    public static void onServerReceivedPacket(FMLNetworkEvent.ServerCustomPacketEvent event) {
+    public void onServerReceivedPacket(FMLNetworkEvent.ServerCustomPacketEvent event) {
         FMLProxyPacket packet = event.getPacket();
         ByteBuf buffer = packet.payload();
         int uuidLength = buffer.readInt();
@@ -40,13 +56,15 @@ public class MasterGuiHandler {
 
         Minecraft mc = Minecraft.getMinecraft();
         IntegratedServer server = mc.getIntegratedServer();
-        mc.addScheduledTask(() -> {
-                    PlayerList playerList = server.getPlayerList();
-                    EntityPlayerMP player = playerList.getPlayerByUUID(uuid);
-                    World world = player.world;
-                    player.openGui(MetaData.MOD_ID, FawGuiHandler.Master_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
-                }
-        );
+        if (server != null) {
+            mc.addScheduledTask(() -> {
+                        PlayerList playerList = server.getPlayerList();
+                        EntityPlayerMP player = playerList.getPlayerByUUID(uuid);
+                        World world = player.world;
+                        player.openGui(MetaData.MOD_ID, FawGuiHandler.Master_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+                    }
+            );
+        }
     }
 
     public static void sendClientPacket(EntityPlayer player) {
@@ -56,6 +74,6 @@ public class MasterGuiHandler {
         int uuidLength = uuidStr.length();
         buffer.writeInt(uuidLength);
         buffer.writeString(uuidStr);
-        FawNetworkRegistry.Channel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
+        FawNetworkRegistry.MasterGuiChannel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
     }
 }

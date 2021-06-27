@@ -2,6 +2,8 @@ package net.liplum.api.weapon;
 
 import net.minecraft.item.ItemStack;
 
+import javax.annotation.Nonnull;
+
 public class WeaponPart {
     private final String registerName;
     private final int ID;
@@ -11,6 +13,7 @@ public class WeaponPart {
         this.registerName = registerName;
     }
 
+    @Nonnull
     public String getRegisterName() {
         return registerName;
     }
@@ -19,7 +22,7 @@ public class WeaponPart {
         return ID;
     }
 
-    public boolean isPart(ItemStack itemStack) {
+    public boolean isPart(@Nonnull ItemStack itemStack) {
         return true;
     }
 }

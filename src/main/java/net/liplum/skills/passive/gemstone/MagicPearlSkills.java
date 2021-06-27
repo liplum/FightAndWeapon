@@ -12,19 +12,22 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public final class MagicPearlSkills {
     public static final IPassiveSkill<WeaponAttackingEvent> Magicize =
             SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<WeaponAttackingEvent>() {
+                        @Nonnull
                         @Override
                         public Class<WeaponAttackingEvent> getEventType() {
                             return WeaponAttackingEvent.class;
                         }
 
+                        @Nonnull
                         @Override
-                        public PSkillResult onTrigger(WeaponAttackingEvent event) {
+                        public PSkillResult onTrigger(@Nonnull WeaponAttackingEvent event) {
                             WeaponAttackingArgs args = event.getArgs();
                             EntityLivingBase attacker = args.getAttacker();
                             List<DamageArgs> allDamages = args.getAllDamages();
@@ -42,6 +45,7 @@ public final class MagicPearlSkills {
                             return PSkillResult.Complete;
                         }
 
+                        @Nonnull
                         @Override
                         public String getRegisterName() {
                             return Names.PassiveSkill.Magicize;

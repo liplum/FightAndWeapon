@@ -7,6 +7,7 @@ import net.minecraft.util.EnumHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Predicate;
 
 public class ItemTool {
     /**
@@ -48,6 +49,27 @@ public class ItemTool {
         } else {
             return null;
         }
+    }
+
+    /**
+     * Get the item stack which fits the filter.<br/>
+     * Main Hand will be tested first and then it'll test Off Hand.
+     *
+     * @param player
+     * @param filter
+     * @return
+     */
+    @Nonnull
+    public static ItemStack getItemStack(EntityPlayer player, Predicate<ItemStack> filter) {
+        ItemStack mainHand = player.getHeldItem(EnumHand.MAIN_HAND);
+        if (filter.test(mainHand)) {
+            return mainHand;
+        }
+        ItemStack offHand = player.getHeldItem(EnumHand.OFF_HAND);
+        if (filter.test(offHand)) {
+            return offHand;
+        }
+        return ItemStack.EMPTY;
     }
 
     public static void tryDropItem(@Nonnull EntityPlayer player, @Nonnull ItemStack itemStack) {

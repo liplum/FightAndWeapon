@@ -1,6 +1,7 @@
 package net.liplum.items.weapons.lance;
 
 import net.liplum.coroutine.Coroutine;
+import net.liplum.coroutine.IWaitable;
 import net.liplum.coroutine.WaitForNextTick;
 import net.liplum.enumerator.Yield;
 import net.liplum.events.skill.LanceSprintEvent;
@@ -85,8 +86,8 @@ public final class LanceCoreTypes {
             PhysicsTool.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
             if (!world.isRemote) {
                 player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
-                CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Yield() {
-                    Set<EntityLivingBase> damaged = new HashSet<>();
+                CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Yield<IWaitable>() {
+                    final Set<EntityLivingBase> damaged = new HashSet<>();
 
                     @Override
                     protected void runTask() {
@@ -122,6 +123,11 @@ public final class LanceCoreTypes {
         @Override
         public float getStrength() {
             return 5;
+        }
+
+        @Override
+        public double getAttackDistance() {
+            return 8;
         }
     };
 
@@ -173,7 +179,7 @@ public final class LanceCoreTypes {
                     z = player.posZ;
             float strength = args.getStrength();
             if (!world.isRemote) {
-                CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Coroutine(new Yield() {
+                CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Coroutine(new Yield<IWaitable>() {
                     private int duration = 20;
 
                     @Override
@@ -203,7 +209,6 @@ public final class LanceCoreTypes {
                                 }).toArray()[0];
                             }
                             target.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.5F * strength);
-                            return;
                         }
                     }
                 }));

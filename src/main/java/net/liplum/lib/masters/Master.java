@@ -29,21 +29,25 @@ public class Master implements IMaster {
         this.routine = routine;
     }
 
+    @Nonnull
     @Override
     public String getRegisterName() {
         return registerName;
     }
 
+    @Nonnull
     @Override
     public Class<? extends WeaponBaseItem<?>> getWeaponType() {
         return weaponType;
     }
 
+    @Nonnull
     @Override
     public Map<String, Number> getAttributeAmplifier(int level) {
         return routine.getAttributeAmplifiers(level);
     }
 
+    @Nonnull
     @Override
     public List<IPassiveSkill<?>> getPassiveSkills(int level) {
         LinkedList<IPassiveSkill<?>> res = new LinkedList<>();
@@ -56,6 +60,7 @@ public class Master implements IMaster {
         return res;
     }
 
+    @Nonnull
     @Override
     public List<IActiveSkill> getActiveSkills(int level) {
         LinkedList<IActiveSkill> res = new LinkedList<>();

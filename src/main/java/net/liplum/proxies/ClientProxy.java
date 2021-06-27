@@ -1,11 +1,13 @@
 package net.liplum.proxies;
 
+import net.liplum.eventhandlers.ClientHandler;
 import net.liplum.registeies.HotkeyRegistry;
 import net.liplum.renders.CastTextureCreator;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IReloadableResourceManager;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.client.settings.KeyBinding;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
@@ -33,6 +35,7 @@ public class ClientProxy extends ProxyBase {
         initHotkeys();
         //I changed it to static
         //MinecraftForge.EVENT_BUS.register(CastTextureCreator.getInstance());
+        MinecraftForge.EVENT_BUS.register(new ClientHandler());
     }
 
     @Override

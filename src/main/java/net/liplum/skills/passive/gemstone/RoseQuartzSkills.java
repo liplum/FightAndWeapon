@@ -11,19 +11,22 @@ import net.liplum.lib.utils.EntityUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 public final class RoseQuartzSkills {
     public static final IPassiveSkill<WeaponAttackingEvent> MagicAttach =
             SkillRegistry.registerPassiveSkill(
                     new IPassiveSkill<WeaponAttackingEvent>() {
+                        @Nonnull
                         @Override
                         public Class<WeaponAttackingEvent> getEventType() {
                             return WeaponAttackingEvent.class;
                         }
 
+                        @Nonnull
                         @Override
-                        public PSkillResult onTrigger(WeaponAttackingEvent event) {
+                        public PSkillResult onTrigger(@Nonnull WeaponAttackingEvent event) {
                             WeaponAttackingArgs args = event.getArgs();
                             List<DamageArgs> allDamages = args.getAllDamages();
                             EntityLivingBase attacker = args.getAttacker();
@@ -33,6 +36,7 @@ public final class RoseQuartzSkills {
                             return PSkillResult.Complete;
                         }
 
+                        @Nonnull
                         @Override
                         public String getRegisterName() {
                             return Names.PassiveSkill.MagicAttach;

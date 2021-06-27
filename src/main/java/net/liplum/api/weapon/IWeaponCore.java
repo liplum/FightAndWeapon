@@ -14,6 +14,10 @@ public interface IWeaponCore {
         return 0;
     }
 
+    default double getAttackDistance(){
+        return 3.5D;
+    }
+
     /**
      * Gets the upcoming invincible time of a enemy who was attacked by this weapon.
      *

@@ -113,6 +113,10 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         return 4;
     }
 
+    public double getAttackDistance(){
+        return getCore().getAttackDistance();
+    }
+
     /**
      * Deals damage to a target form the attacker.
      * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
