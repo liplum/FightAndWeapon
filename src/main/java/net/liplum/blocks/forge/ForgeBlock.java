@@ -2,7 +2,7 @@ package net.liplum.blocks.forge;
 
 import net.liplum.MetaData;
 import net.liplum.gui.FawGuiHandler;
-import net.liplum.tileentities.weapon.ForgeTE;
+import net.liplum.tileentities.forge.ForgeTE;
 import net.minecraft.block.BlockContainer;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

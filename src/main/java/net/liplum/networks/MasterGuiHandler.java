@@ -74,6 +74,6 @@ public class MasterGuiHandler implements IDataPacketHandler {
         int uuidLength = uuidStr.length();
         buffer.writeInt(uuidLength);
         buffer.writeString(uuidStr);
-        FawNetworkRegistry.MasterGuiChannel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
+        //FawNetworkRegistry.MasterGuiChannel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
     }
 }

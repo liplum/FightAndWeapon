@@ -2,7 +2,7 @@ package net.liplum.gui.server;
 
 import net.liplum.Vanilla;
 import net.liplum.lib.gui.Property;
-import net.liplum.tileentities.weapon.ForgeTE;
+import net.liplum.tileentities.forge.ForgeTE;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.Items;

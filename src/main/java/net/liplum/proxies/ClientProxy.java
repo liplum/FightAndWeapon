@@ -1,6 +1,7 @@
 package net.liplum.proxies;
 
 import net.liplum.eventhandlers.ClientHandler;
+import net.liplum.eventhandlers.HotkeyHandler;
 import net.liplum.registeies.HotkeyRegistry;
 import net.liplum.renders.CastTextureCreator;
 import net.minecraft.client.Minecraft;
@@ -35,6 +36,7 @@ public class ClientProxy extends ProxyBase {
         initHotkeys();
         //I changed it to static
         //MinecraftForge.EVENT_BUS.register(CastTextureCreator.getInstance());
+        MinecraftForge.EVENT_BUS.register(new HotkeyHandler());
         MinecraftForge.EVENT_BUS.register(new ClientHandler());
     }
 

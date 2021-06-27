@@ -3,7 +3,7 @@ package net.liplum.registeies;
 import net.liplum.MetaData;
 import net.liplum.Names;
 import net.liplum.lib.FawLocation;
-import net.liplum.tileentities.weapon.ForgeTE;
+import net.liplum.tileentities.forge.ForgeTE;
 import net.minecraft.block.Block;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;

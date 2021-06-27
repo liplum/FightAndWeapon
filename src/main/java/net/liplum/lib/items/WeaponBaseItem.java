@@ -131,9 +131,13 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         return target.attackEntityFrom(damageSource, damage);
     }
 
+    public boolean attackEntity(ItemStack stack, EntityPlayer player, Entity entity){
+        return FawItemUtil.attackEntity(stack, this, player, entity);
+    }
+
     @Override
     public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
-        return FawItemUtil.attackEntity(stack, this, player, entity);
+        return true;
     }
 
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float damage) {

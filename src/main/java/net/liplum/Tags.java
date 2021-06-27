@@ -1,6 +1,5 @@
 package net.liplum;
 
-import net.liplum.lib.items.weaponutils.HarpUtils;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 
@@ -51,14 +50,5 @@ public final class Tags {
             public static final String Level = "Level";
             public static final String Exp = "Exp";
         }
-    }
-
-
-    public final static class Harp {
-
-        /**
-         * {@link HarpUtils.HarpState}
-         */
-        public static final String HarpState = "HarpState";
     }
 }

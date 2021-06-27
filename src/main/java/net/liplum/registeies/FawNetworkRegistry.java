@@ -2,22 +2,14 @@ package net.liplum.registeies;
 
 import net.liplum.MetaData;
 import net.liplum.gui.FawGuiHandler;
-import net.liplum.lib.utils.Utils;
-import net.liplum.networks.AttackDistanceMsg;
 import net.liplum.networks.IDataPacketHandler;
 import net.liplum.networks.MasterGuiHandler;
 import net.liplum.networks.MessageManager;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
-import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
-import net.minecraftforge.fml.common.network.simpleimpl.SimpleNetworkWrapper;
-import net.minecraftforge.fml.relauncher.Side;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedList;
-import java.util.function.Consumer;
 
 public class FawNetworkRegistry {
     private static final LinkedList<Tuple<FMLEventChannel, IDataPacketHandler>> handlers = new LinkedList<>();

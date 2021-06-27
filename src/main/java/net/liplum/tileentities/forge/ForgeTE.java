@@ -1,4 +1,4 @@
-package net.liplum.tileentities.weapon;
+package net.liplum.tileentities.forge;
 
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;

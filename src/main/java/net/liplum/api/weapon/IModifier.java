@@ -1,6 +1,7 @@
 package net.liplum.api.weapon;
 
 public interface IModifier<CoreType extends IWeaponCore> {
+
     default float getCoolDownRate() {
         return 0;
     }
@@ -18,6 +19,14 @@ public interface IModifier<CoreType extends IWeaponCore> {
     }
 
     default float getEnemyBreakingTimeRate() {
+        return 0;
+    }
+
+    default double getAttackDistanceDelta() {
+        return 0;
+    }
+
+    default float getAttackDistanceRate() {
         return 0;
     }
 

@@ -18,7 +18,7 @@ public class MessageManager {
     public static void init() {
         //FawNetworkRegistry.registerAllMessage(channel);
         //Client to Server
-        channel.registerMessage(AttackDistanceMsg.Handler.class, AttackDistanceMsg.class, ID++, Side.SERVER);
+        channel.registerMessage(AttackMsg.Handler.class, AttackMsg.class, ID++, Side.SERVER);
     }
 
     public static void sendMessageToDim(IMessage msg, int dim) {

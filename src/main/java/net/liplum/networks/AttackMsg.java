@@ -1,8 +1,10 @@
 package net.liplum.networks;
 
 import io.netty.buffer.ByteBuf;
+import net.liplum.api.weapon.IModifier;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;
@@ -15,14 +17,14 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class AttackDistanceMsg implements IMessage {
+public class AttackMsg implements IMessage {
 
     private int targetEntityID;
 
-    public AttackDistanceMsg() {
+    public AttackMsg() {
     }
 
-    public AttackDistanceMsg(int targetEntityID) {
+    public AttackMsg(int targetEntityID) {
         this.targetEntityID = targetEntityID;
     }
 
@@ -36,10 +38,10 @@ public class AttackDistanceMsg implements IMessage {
         buf.writeInt(targetEntityID);
     }
 
-    public static class Handler implements IMessageHandler<AttackDistanceMsg, IMessage> {
+    public static class Handler implements IMessageHandler<AttackMsg, IMessage> {
 
         @Override
-        public IMessage onMessage(AttackDistanceMsg message, MessageContext ctx) {
+        public IMessage onMessage(AttackMsg message, MessageContext ctx) {
             EntityPlayerMP player = ctx.getServerHandler().player;
             WorldServer serverWorld = player.getServerWorld();
             serverWorld.addScheduledTask(() -> {
@@ -50,15 +52,19 @@ public class AttackDistanceMsg implements IMessage {
                     if (FawItemUtil.isFawWeapon(itemStack) && !player.isHandActive()) {
                         WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
                         double reach = weapon.getAttackDistance();
+                        IModifier<?> modifier = GemUtil.getModifierFrom(itemStack);
+                        if (modifier != null) {
+                            reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackDistanceDelta(), modifier.getAttackDistanceRate());
+                        }
 
                         if (player.getDistanceSq(target) < reach * reach) {
-                            RayTraceResult rayTrace = player.world.rayTraceBlocks(
+                            RayTraceResult rayTrace = serverWorld.rayTraceBlocks(
                                     new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ),
                                     new Vec3d(target.posX, target.posY + target.getEyeHeight(), target.posZ),
                                     false, true, false);
 
                             if (rayTrace == null || !serverWorld.getBlockState(rayTrace.getBlockPos()).isFullCube())
-                                weapon.onLeftClickEntity(itemStack, player, target);
+                                weapon.attackEntity(itemStack, player, target);
                         }
                     }
                 }

@@ -2,7 +2,7 @@ package net.liplum.eventhandlers;
 
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.RenderUtil;
-import net.liplum.networks.AttackDistanceMsg;
+import net.liplum.networks.AttackMsg;
 import net.liplum.networks.MessageManager;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -36,7 +36,7 @@ public class ClientHandler {
                     RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(weapon.getAttackDistance());
                     if (rayTrace != null) {
                         MessageManager.sendMessageToServer(
-                                new AttackDistanceMsg(rayTrace.entityHit.getEntityId())
+                                new AttackMsg(rayTrace.entityHit.getEntityId())
                         );
                     }
                 }
