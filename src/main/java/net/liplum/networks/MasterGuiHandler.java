@@ -4,12 +4,10 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import net.liplum.MetaData;
 import net.liplum.gui.FawGuiHandler;
-import net.liplum.registeies.FawNetworkRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.network.play.INetHandlerPlayServer;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
@@ -23,12 +21,21 @@ import java.util.UUID;
 
 public class MasterGuiHandler implements IDataPacketHandler {
     public static final MasterGuiHandler instance = new MasterGuiHandler();
+    private static final String ChannelName = ChannelNames.Master.GUI;
 
     public static MasterGuiHandler getInstance() {
         return instance;
     }
 
-    private static final String ChannelName = ChannelNames.Master.GUI;
+    public static void sendClientPacket(EntityPlayer player) {
+        PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
+        UUID uuid = player.getUniqueID();
+        String uuidStr = uuid.toString();
+        int uuidLength = uuidStr.length();
+        buffer.writeInt(uuidLength);
+        buffer.writeString(uuidStr);
+        //FawNetworkRegistry.MasterGuiChannel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
+    }
 
     @Override
     @Nonnull
@@ -65,15 +72,5 @@ public class MasterGuiHandler implements IDataPacketHandler {
                     }
             );
         }
-    }
-
-    public static void sendClientPacket(EntityPlayer player) {
-        PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
-        UUID uuid = player.getUniqueID();
-        String uuidStr = uuid.toString();
-        int uuidLength = uuidStr.length();
-        buffer.writeInt(uuidLength);
-        buffer.writeString(uuidStr);
-        //FawNetworkRegistry.MasterGuiChannel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
     }
 }

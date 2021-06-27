@@ -18,14 +18,14 @@ public class FawNetworkRegistry {
     //private static Consumer<SimpleNetworkWrapper> RegisterAction;
     //private static int ID = 0;
 
-  /*  public static void registerAllMessage(SimpleNetworkWrapper simpleNetworkWrapper) {
-        Utils.notNullThenDo(simpleNetworkWrapper, s -> RegisterAction.accept(s));
-    }
+    /*  public static void registerAllMessage(SimpleNetworkWrapper simpleNetworkWrapper) {
+          Utils.notNullThenDo(simpleNetworkWrapper, s -> RegisterAction.accept(s));
+      }
 
-    static {
-        add(new MessageEntry<>(AttackDistanceMsg.Handler.class, AttackDistanceMsg.class, ID++, Side.CLIENT));
-    }
-*/
+      static {
+          add(new MessageEntry<>(AttackDistanceMsg.Handler.class, AttackDistanceMsg.class, ID++, Side.CLIENT));
+      }
+  */
     public static void init() {
         NetworkRegistry.INSTANCE.registerGuiHandler(MetaData.MOD_ID, new FawGuiHandler());
 

@@ -36,8 +36,7 @@ public final class RenderUtil {
                         closestHitVec = collisionRay == null ? eyesVec : collisionRay.hitVec;
                         closestDistance = 0;
                     }
-                }
-                else if (collisionRay != null) {
+                } else if (collisionRay != null) {
                     double collidedDistance = eyesVec.distanceTo(collisionRay.hitVec);
 
                     if (collidedDistance < closestDistance || closestDistance == 0) {
@@ -46,8 +45,7 @@ public final class RenderUtil {
                                 closestTarget = collided;
                                 closestHitVec = collisionRay.hitVec;
                             }
-                        }
-                        else {
+                        } else {
                             closestTarget = collided;
                             closestHitVec = collisionRay.hitVec;
                             closestDistance = collidedDistance;
