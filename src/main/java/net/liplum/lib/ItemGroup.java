@@ -1,15 +1,16 @@
 package net.liplum.lib;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+
+import javax.annotation.Nonnull;
 
 public class ItemGroup extends CreativeTabs {
     private ItemStack icon;
 
     public ItemGroup(String registerName) {
         super(registerName);
-        this.icon = new ItemStack(Items.AIR);
+        this.icon = ItemStack.EMPTY;
     }
 
     public boolean setIcon(ItemStack newIcon) {
@@ -20,6 +21,7 @@ public class ItemGroup extends CreativeTabs {
         return true;
     }
 
+    @Nonnull
     @Override
     public ItemStack getTabIconItem() {
         return icon;

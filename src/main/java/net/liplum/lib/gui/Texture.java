@@ -10,9 +10,9 @@ public class Texture {
     @Nonnull
     private final ResourceLocation texture;
     @Nonnull
-    private final IView view;
+    private final View view;
 
-    public Texture(@Nonnull ResourceLocation textureLocation, @Nonnull IView view) {
+    public Texture(@Nonnull ResourceLocation textureLocation, @Nonnull View view) {
         this.texture = textureLocation;
         this.view = view;
     }

@@ -19,8 +19,8 @@ public class InlayTableGUI extends GuiContainer {
     private static final int YSize = 166;
     private static final ResourceLocation Texture =
             Resources.genGuiContainerTx(Resources.Textures.GUI.InlayTable);
-    private static final IView InlayTableTexture = GuiUtil.Full255View.slice(XSize, YSize);
-    private static final IView CrossView = GuiUtil.Full255View.slice(176, 0, 17, 18);
+    private static final View InlayTableTexture = GuiUtil.Full255View.slice(XSize, YSize);
+    private static final View CrossView = GuiUtil.Full255View.slice(176, 0, 17, 18);
     private static final TextureFactory textureFactory = new TextureFactory(Texture);
     private static final Texture Cross = textureFactory.gen(CrossView);
     private static final int CrossXOffset = 55;

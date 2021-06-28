@@ -2,7 +2,7 @@ package net.liplum.gui.client;
 
 import net.liplum.Resources;
 import net.liplum.gui.server.MasterContainer;
-import net.liplum.lib.gui.IView;
+import net.liplum.lib.gui.View;
 import net.liplum.lib.gui.Texture;
 import net.liplum.lib.gui.TextureFactory;
 import net.liplum.lib.gui.controls.Button;
@@ -27,13 +27,13 @@ public class MasterGui extends GuiContainer {
     private static final int ArrowButtonsRow = 2;
     private static final int ArrowButtonsColumn = 3;
 
-    private static final IView ArrowButtonsView = GuiUtil.Full255View.slice(
+    private static final View ArrowButtonsView = GuiUtil.Full255View.slice(
             ArrowButtonWidth * ArrowButtonsColumn, ArrowButtonHeight * ArrowButtonsRow);
-    private static final IView[][] ArrowButtons = new IView[ArrowButtonsRow][ArrowButtonsColumn];
+    private static final View[][] ArrowButtons = new View[ArrowButtonsRow][ArrowButtonsColumn];
 
     private static final int WeaponTypeButtonWidth = 20;
     private static final int WeaponTypeButtonHeight = ArrowButtonHeight;
-    private static final IView WeaponTypeButtonView = GuiUtil.Full255View.slice(
+    private static final View WeaponTypeButtonView = GuiUtil.Full255View.slice(
             ArrowButtonWidth * ArrowButtonsColumn, 0,
             WeaponTypeButtonWidth, WeaponTypeButtonHeight);
 
@@ -44,7 +44,7 @@ public class MasterGui extends GuiContainer {
     private static final Texture L_Hovered;
     private static final Texture L_Pressed;
 
-    private static final IView[] WeaponTypeButtons = new IView[2];
+    private static final View[] WeaponTypeButtons = new View[2];
     private static final Texture WeaponTypeButton_Normal;
     private static final Texture WeaponTypeButton_Pressed;
 

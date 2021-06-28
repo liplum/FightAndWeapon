@@ -27,7 +27,7 @@ public class ForgeGUI extends GuiContainer {
     private static final int YSize = 221;
     private static final ResourceLocation Texture =
             Resources.genGuiContainerTx(Resources.Textures.GUI.Forge);
-    private static final IView ForgeView =
+    private static final View ForgeView =
             GuiUtil.Full255View.slice(XSize, YSize);
     private static final int IconBoardThickness = 1;
     private static final int IconLength = 18;
@@ -36,11 +36,11 @@ public class ForgeGUI extends GuiContainer {
      * Icon list(from left to right):
      * AdditionSlot,MaterialSlot
      */
-    private static final IView IconsTexture = GuiUtil.Full255View.slice(
+    private static final View IconsTexture = GuiUtil.Full255View.slice(
             176, 0,
             IconCount * IconLength + IconBoardThickness * (IconCount + 1),
             IconLength + IconCount * IconBoardThickness);
-    private static final IView[] Icons = new IView[IconCount];
+    private static final View[] Icons = new View[IconCount];
     private static final TextureFactory textureFactory = new TextureFactory(Texture);
     private static final Texture ForgeTexture = textureFactory.gen(ForgeView);
     private static final Texture AdditionIconTexture;

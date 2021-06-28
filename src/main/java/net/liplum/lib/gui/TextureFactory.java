@@ -12,7 +12,7 @@ public class TextureFactory {
         this.textureLocation = textureLocation;
     }
 
-    public Texture gen(IView view) {
+    public Texture gen(View view) {
         return new Texture(textureLocation, view);
     }
 
