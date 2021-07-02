@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
+
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -21,10 +22,10 @@ public class FawMod {
 
     @SidedProxy(clientSide = MetaData.CLIENT_PROXY_CLZ,
             serverSide = MetaData.SERVER_PROXY_CLZ)
-    public static ProxyBase proxy;
+    public static ProxyBase Proxy;
 
     @Mod.Instance
-    public static FawMod instance;
+    public static FawMod Instance;
 
     public FawMod() {
 
@@ -38,7 +39,7 @@ public class FawMod {
         Logger.info("Network Component initialized successfully.");
         WeaponParts.load();
         Logger.info("Weapon Part Component initialized successfully.");
-        proxy.preInit(event);
+        Proxy.preInit(event);
         Logger.info("Proxy Component pre-initialized successfully.");
     }
 
@@ -47,13 +48,13 @@ public class FawMod {
         Gemstones.load();
         Logger.info("Gemstone Component loaded successfully.");
         MasterUtil.init();
-        proxy.init(event);
+        Proxy.init(event);
         Logger.info("Proxy Component initialized successfully.");
     }
 
     @Mod.EventHandler
     public void postInit(FMLPostInitializationEvent event) {
-        proxy.postInit(event);
+        Proxy.postInit(event);
         Logger.info("Proxy Component post-initialized successfully.");
     }
 

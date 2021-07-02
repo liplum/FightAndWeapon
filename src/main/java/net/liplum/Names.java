@@ -132,6 +132,7 @@ public final class Names {
         public static final String UnstoppableSprint = "UnstoppableSprint";
 
         public static final String Fireproof = "Fireproof";
+        public static final String ScorchingTouch = "ScorchingTouch";
         public static final String Magicize = "Magicize";
         public static final String MagicAttach = "MagicAttach";
         public static final String GentlyLand = "GentlyLand";

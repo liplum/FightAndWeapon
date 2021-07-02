@@ -6,34 +6,31 @@ import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.cores.lance.ILanceCore;
 import net.liplum.lib.cores.lance.LanceArgs;
-import net.liplum.lib.items.ILongReachWeapon;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.modifiers.LanceModifier;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachWeapon {
+public class LanceItem extends WeaponBaseItem<ILanceCore>{
     private final ILanceCore core;
 
     public LanceItem(@Nonnull ILanceCore core) {
         super();
         this.core = core;
-    }
-
-    @Override
-    public double getReach() {
-        return 5;
     }
 
     @Nonnull
@@ -84,6 +81,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
         boolean shown = super.addAttributesTooltip(stack, tooltip, isAdvanced);
         float sprintLength = core.getSprintLength();
@@ -92,6 +90,12 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> implements ILongReachW
             shown = true;
         }
         return shown;
+    }
+
+    @Nonnull
+    @Override
+    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
+        return EnumAction.BLOCK;
     }
 
     @Nonnull

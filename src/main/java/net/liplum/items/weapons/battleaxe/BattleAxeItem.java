@@ -12,6 +12,7 @@ import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -22,15 +23,16 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nonnull;
 
 public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
-    private IBattleAxeCore core;
+    private final IBattleAxeCore core;
 
     public BattleAxeItem(@Nonnull IBattleAxeCore core) {
         super();
         this.core = core;
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         ItemStack offHeld = playerIn.getHeldItemOffhand();
@@ -38,7 +40,7 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
         //Default is PASS
         //If play were not sneaking, didn't detect.
         if (!playerIn.isSneaking()) {
-            IModifier modifier = GemUtil.getModifierFrom(held);
+            IModifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
@@ -83,6 +85,12 @@ public class BattleAxeItem extends WeaponBaseItem<IBattleAxeCore> {
             }
         }
         return ActionResult.newResult(result, held);
+    }
+
+    @Nonnull
+    @Override
+    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
+        return EnumAction.BLOCK;
     }
 
     @Nonnull

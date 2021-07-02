@@ -19,6 +19,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -30,7 +32,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
     }
 
     @Override
-    public boolean showDurabilityBar(ItemStack stack) {
+    public boolean showDurabilityBar(@Nonnull ItemStack stack) {
         return super.showDurabilityBar(stack);
     }
 
@@ -39,6 +41,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         return super.isDamageable();
     }
 
+    @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
         boolean isAdvanced = flagIn.isAdvanced() || Utils.isShiftDown();
@@ -61,6 +64,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
     /**
      * @return whether it was added something.
      */
+    @SideOnly(Side.CLIENT)
     public boolean addGemstoneTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> tooltip, boolean isAdvanced) {
         if (gemstone != null) {
             tooltip.add(
@@ -76,6 +80,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
     /**
      * @return whether it was added something.
      */
+    @SideOnly(Side.CLIENT)
     public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
         boolean added = false;
         CoreType core = getCore();
@@ -89,10 +94,12 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
             FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.CoolDown, coolDown);
             added = true;
         }
-        double attackReach = core.getAttackReach();
-        if (attackReach > 0 && attackReach != AttributeDefault.Generic.AttackReach) {
-            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.AttackReach, attackReach, "%.1f");
-            added = true;
+        if (isAdvanced) {
+            double attackReach = core.getAttackReach();
+            if (attackReach > 0 && attackReach != AttributeDefault.Generic.AttackReach) {
+                FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.AttackReach, attackReach, "%.1f");
+                added = true;
+            }
         }
         return added;
     }
@@ -100,6 +107,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
     /**
      * @return whether it was added something.
      */
+    @SideOnly(Side.CLIENT)
     public boolean addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nullable IPassiveSkill<?>[] passiveSkills, @Nonnull List<String> tooltip, boolean isAdvanced) {
         if (passiveSkills != null) {
             for (IPassiveSkill<?> passiveSkill : passiveSkills) {
@@ -130,16 +138,16 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
      * @param damage
      * @return true if the target was hit.
      */
-    public boolean dealDamage(ItemStack stack, EntityLivingBase attacker, Entity target, DamageSource damageSource, float damage) {
+    public boolean dealDamage(@Nonnull ItemStack stack, @Nonnull EntityLivingBase attacker, @Nonnull Entity target, @Nonnull DamageSource damageSource, float damage) {
         return target.attackEntityFrom(damageSource, damage);
     }
 
-    public boolean attackEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+    public boolean attackEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
         return FawItemUtil.attackEntity(stack, this, player, entity);
     }
 
     @Override
-    public boolean onLeftClickEntity(ItemStack stack, EntityPlayer player, Entity entity) {
+    public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
         double reach = getCore().getAttackReach();
         IModifier<?> modifier = GemUtil.getModifierFrom(stack);
         if (modifier != null) {

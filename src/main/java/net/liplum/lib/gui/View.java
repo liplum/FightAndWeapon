@@ -48,16 +48,19 @@ public class View {
         return new SubView(this, width, height);
     }
 
-  /*  public View[] splitByCell(int cellWidth, int cellHeight) {
-        if (cellWidth <= 0 || cellHeight <= 0) {
+/*    public View[] splitByCell(int cellWidth, int cellHeight, int row, int column) {
+        if (cellWidth <= 0 || cellHeight <= 0 || row <= 0 || column <= 0) {
             throw new ArithmeticException();
         }
         if (cellWidth > getWidth() || cellHeight > getHeight()) {
             throw new ViewSizeOutOfRangeException();
         }
-        int fullWidth = getWidth() - (getWidth() % cellWidth);
-        int fullHeight = getHeight() - (getHeight() % cellHeight);
-        int count = fullWidth
+        //Now  cellWidth > width ,cellHeight > height ,row > 0 ,column > 0
+        int finalWidth = getWidth() - (getWidth() % cellWidth);
+        int finalHeight = getHeight() - (getHeight() % cellHeight);
+        int finalRow = Math.min(row, finalHeight / cellHeight);
+        int finalColumn = Math.min(column, finalWidth / cellWidth);
+
     }*/
 }
 

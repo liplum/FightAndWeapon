@@ -24,6 +24,8 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -154,6 +156,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
     }
 
     @Override
+    @SideOnly(Side.CLIENT)
     public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
         boolean shown = super.addAttributesTooltip(stack, tooltip, isAdvanced);
         float ap = core.getAbilityPower();

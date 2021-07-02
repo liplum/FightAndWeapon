@@ -29,6 +29,7 @@ public final class Gemstones {
 
     public final static IGemstone Flamegem_Gemstone = with(new Gemstone(Names.Gemstone.Flamegem)
             .addPassiveSkillToAll(FlamegemSkills.FireProof)
+            .addPassiveSkillToAll(FlamegemSkills.ScorchingTouch)
     );
 
     public final static IGemstone Marinegem_Gemstone = with(new Gemstone(Names.Gemstone.Marinegem)
