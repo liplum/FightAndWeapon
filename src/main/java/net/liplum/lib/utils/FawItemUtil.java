@@ -10,7 +10,7 @@ import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
-import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public final class FawItemUtil {
@@ -332,38 +333,37 @@ public final class FawItemUtil {
         } else if (rate == 0) {
             return base;
         }
-        int res = (int) (base * (1 + rate));
-        return res;
+        return (int) (base * (1 + rate));
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value) {
-        tooltip.add(TextFormatting.YELLOW +
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, @Nullable String format, @Nullable String unit) {
+        String valueContent = format != null ? String.format(format, value) : Float.toString(value);
+        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
+        String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
-                Math.round(value));
+                valueContent +
+                unitContent;
+        tooltip.add(content);
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value) {
-        tooltip.add(TextFormatting.YELLOW +
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, @Nullable String format, @Nullable String unit) {
+        String valueContent = format != null ? String.format(format, value) : Double.toString(value);
+        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
+        String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
-                Math.round(value));
+                valueContent +
+                unitContent;
+        tooltip.add(content);
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, String format) {
-        tooltip.add(TextFormatting.YELLOW +
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format, @Nullable String unit) {
+        String valueContent = format != null ? String.format(format, value) : Integer.toString(value);
+        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
+        String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
-                String.format(format, value));
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, String format) {
-        tooltip.add(TextFormatting.YELLOW +
-                I18n.format(attrTranslateKey) + " : " +
-                String.format(format, value));
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value) {
-        tooltip.add(TextFormatting.YELLOW +
-                I18n.format(attrTranslateKey) + " : " +
-                value);
+                valueContent +
+                unitContent;
+        tooltip.add(content);
     }
 
     public static void addPassiveSkillTooltip(@Nonnull List<String> tooltip, @Nonnull IPassiveSkill<?> passiveSkill) {

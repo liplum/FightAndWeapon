@@ -25,7 +25,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import java.util.List;
 
-public class LanceItem extends WeaponBaseItem<ILanceCore>{
+public class LanceItem extends WeaponBaseItem<ILanceCore> {
     private final ILanceCore core;
 
     public LanceItem(@Nonnull ILanceCore core) {
@@ -82,11 +82,12 @@ public class LanceItem extends WeaponBaseItem<ILanceCore>{
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
-        boolean shown = super.addAttributesTooltip(stack, tooltip, isAdvanced);
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, boolean isAdvanced) {
+        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, isAdvanced);
         float sprintLength = core.getSprintLength();
         if (sprintLength > 0) {
-            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Lance.SprintLength, sprintLength);
+            FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Lance.SprintLength, sprintLength,
+                    null, null);
             shown = true;
         }
         return shown;

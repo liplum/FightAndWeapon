@@ -157,24 +157,21 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
-        boolean shown = super.addAttributesTooltip(stack, tooltip, isAdvanced);
-        float ap = core.getAbilityPower();
-        if (ap > 0) {
-            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.AbilityPower, ap);
-            shown = true;
-        }
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, boolean isAdvanced) {
+        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, isAdvanced);
 
         double radius = core.getRadius();
         if (radius > 0) {
-            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Harp.Radius, radius);
+            FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Harp.Radius, radius,
+                    "%.1f", I18ns.Tooltip.Unit.Unit);
             shown = true;
         }
         if (isAdvanced) {
             int frequency = core.getFrequency();
             if (frequency > 0) {
                 float frequencyDecimal = (float) frequency / Vanilla.TPS;
-                FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Harp.Frequency, frequencyDecimal, "%.1f");
+                FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Harp.Frequency, frequencyDecimal,
+                        "%.1f", I18ns.Tooltip.Unit.TriggerPerSecond);
                 shown = true;
             }
         }

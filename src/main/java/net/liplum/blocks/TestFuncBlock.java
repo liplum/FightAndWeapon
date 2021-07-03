@@ -1,6 +1,6 @@
 package net.liplum.blocks;
 
-import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.items.GemstoneItem;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;

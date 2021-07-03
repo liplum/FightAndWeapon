@@ -3,7 +3,7 @@ package net.liplum.gui.server;
 import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IWeaponCore;
-import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.gui.Property;
 import net.liplum.lib.items.WeaponBaseItem;

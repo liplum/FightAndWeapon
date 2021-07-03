@@ -2,8 +2,10 @@ package net.liplum.lib.items;
 
 import net.liplum.AttributeDefault;
 import net.liplum.I18ns;
+import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.IMagicToolCore;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.lib.utils.FawItemUtil;
@@ -24,6 +26,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.LinkedList;
 import java.util.List;
 
 public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawItem {
@@ -51,28 +54,51 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
         if (gemstone != null) {
             passiveSkills = gemstone.getPassiveSkillsOf(core);
         }
+        LinkedList<String> gemstoneTooltip = new LinkedList<>();
+        LinkedList<String> attributesTooltip = new LinkedList<>();
+        LinkedList<String> passiveSkillsTooltip = new LinkedList<>();
 
-        if (addGemstoneTooltip(stack, gemstone, tooltip, isAdvanced)) {
-            tooltip.add("");
+        boolean gemstoneShown = addGemstoneTooltip(stack, gemstone, gemstoneTooltip, isAdvanced)
+                && gemstoneTooltip.size() != 0;
+
+        boolean attributesShown = addAttributesTooltip(stack, attributesTooltip, isAdvanced)
+                && attributesTooltip.size() != 0;
+
+        boolean passiveSkillsShown = addPassiveSkillsTooltip(stack, passiveSkills, passiveSkillsTooltip, isAdvanced)
+                && attributesTooltip.size() != 0;
+
+        if (gemstoneShown) {
+            tooltip.addAll(gemstoneTooltip);
+            if (attributesShown || passiveSkillsShown) {
+                tooltip.add("");
+            }
         }
-        if (addAttributesTooltip(stack, tooltip, isAdvanced)) {
-            tooltip.add("");
+        if (attributesShown) {
+            tooltip.addAll(attributesTooltip);
+            if (passiveSkillsShown) {
+                tooltip.add("");
+            }
         }
-        addPassiveSkillsTooltip(stack, passiveSkills, tooltip, isAdvanced);
+        if (passiveSkillsShown) {
+            tooltip.addAll(passiveSkillsTooltip);
+            if (flagIn.isAdvanced()) {
+                tooltip.add("");
+            }
+        }
     }
 
     /**
      * @return whether it was added something.
      */
     @SideOnly(Side.CLIENT)
-    public boolean addGemstoneTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> tooltip, boolean isAdvanced) {
+    public boolean addGemstoneTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> gemstoneTooltip, boolean isAdvanced) {
         if (gemstone != null) {
-            tooltip.add(
+            gemstoneTooltip.add(
                     I18n.format(I18ns.Tooltip.Inlaid) + " " +
                             TextFormatting.RED +
                             I18n.format(GemUtil.getNameI18nKey(gemstone)));
         } else {
-            tooltip.add(I18n.format(I18ns.Tooltip.NoGemstone));
+            gemstoneTooltip.add(I18n.format(I18ns.Tooltip.NoGemstone));
         }
         return true;
     }
@@ -81,23 +107,35 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
      * @return whether it was added something.
      */
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> tooltip, boolean isAdvanced) {
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, boolean isAdvanced) {
         boolean added = false;
         CoreType core = getCore();
         float strength = core.getStrength();
         if (strength > 0 && strength != AttributeDefault.Generic.Strength) {
-            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.Strength, strength);
+            FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.Strength, strength,null,null);
             added = true;
         }
-        int coolDown = core.getCoolDown();
-        if (coolDown > 0) {
-            FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.CoolDown, coolDown);
-            added = true;
+        if (core instanceof IMagicToolCore) {
+            IMagicToolCore magicCore = (IMagicToolCore) core;
+            float ap = magicCore.getAbilityPower();
+            if (ap > 0) {
+                FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.AbilityPower, ap,null,null);
+                added = true;
+            }
         }
         if (isAdvanced) {
+            int coolDown = core.getCoolDown();
+            if (coolDown > 0) {
+                float coolDownSecond = (float) coolDown / Vanilla.TPS;
+                FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.CoolDown, coolDownSecond,
+                        "%.1f",I18ns.Tooltip.Unit.Second);
+                added = true;
+            }
+
             double attackReach = core.getAttackReach();
             if (attackReach > 0 && attackReach != AttributeDefault.Generic.AttackReach) {
-                FawItemUtil.addAttributeTooltip(tooltip, I18ns.Attribute.Generic.AttackReach, attackReach, "%.1f");
+                FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.AttackReach, attackReach,
+                        "%.1f",I18ns.Tooltip.Unit.Unit);
                 added = true;
             }
         }
@@ -108,10 +146,10 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
      * @return whether it was added something.
      */
     @SideOnly(Side.CLIENT)
-    public boolean addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nullable IPassiveSkill<?>[] passiveSkills, @Nonnull List<String> tooltip, boolean isAdvanced) {
+    public boolean addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nullable IPassiveSkill<?>[] passiveSkills, @Nonnull List<String> passiveSkillsTooltip, boolean isAdvanced) {
         if (passiveSkills != null) {
             for (IPassiveSkill<?> passiveSkill : passiveSkills) {
-                FawItemUtil.addPassiveSkillTooltip(tooltip, passiveSkill);
+                FawItemUtil.addPassiveSkillTooltip(passiveSkillsTooltip, passiveSkill);
             }
             return true;
         }

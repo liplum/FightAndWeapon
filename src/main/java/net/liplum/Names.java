@@ -19,6 +19,7 @@ public final class Names {
         public static final String Attributes = "attributes";
         public static final String Blueprint = "blueprint";
         public static final String Parts = "parts";
+        public static final String Unit = "unit";
     }
 
     public static final class Item {

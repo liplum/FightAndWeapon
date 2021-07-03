@@ -1,4 +1,4 @@
-package net.liplum.lib.items.gemstone;
+package net.liplum.lib.items;
 
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;

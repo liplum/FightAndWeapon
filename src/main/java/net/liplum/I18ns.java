@@ -89,9 +89,23 @@ public final class I18ns {
     }
 
     public static final class Tooltip {
-        public static final String Inlaid = prefixTooltip(Names.Special.Weapon, "inlaid");
-        public static final String NoGemstone = prefixTooltip(Names.Special.Weapon, "noGemstone");
-        public static final String NoSuchWeaponPart = prefixTooltip(Names.Special.Weapon, "noSuchWeaponPart");
+        public static final String Inlaid = weapon("inlaid");
+        public static final String NoGemstone = weapon("noGemstone");
+        public static final String NoSuchWeaponPart = weapon("noSuchWeaponPart");
+
+        private static String weapon(String name) {
+            return prefixTooltip(Names.Special.Weapon, name);
+        }
+
+        public static final class Unit {
+            public static final String Second = unit("Second");
+            public static final String TriggerPerSecond = unit("TriggerPerSecond");
+            public static final String Unit = unit("Unit");
+        }
+
+        private static String unit(String name) {
+            return prefixTooltip(Names.Special.Unit, name);
+        }
     }
 
     public static final class Attribute {

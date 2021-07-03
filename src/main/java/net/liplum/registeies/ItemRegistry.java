@@ -7,7 +7,7 @@ import net.liplum.Names;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.items.CastBlueprintItem;
 import net.liplum.items.WeaponPartItem;
-import net.liplum.items.gemstones.GemstoneItem;
+import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.BlacksmithGloveItem;
 import net.liplum.items.tools.ForgeHammerItem;
 import net.liplum.items.tools.InlayingToolItem;

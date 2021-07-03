@@ -1,4 +1,4 @@
-package net.liplum.items.gemstones;
+package net.liplum.items;
 
 
 import net.liplum.api.weapon.IGemstone;
@@ -7,7 +7,7 @@ import net.minecraft.item.Item;
 import javax.annotation.Nonnull;
 
 public class GemstoneItem extends Item {
-    private IGemstone gemstone;
+    private final IGemstone gemstone;
 
     public GemstoneItem(@Nonnull IGemstone gemstone, int maxStackSize) {
         this.gemstone = gemstone;

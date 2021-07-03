@@ -24,6 +24,11 @@ tooltip.faw.weapon.inlaid=Inlaid
 tooltip.faw.weapon.noGemstone=No Gemstone
 tooltip.faw.weapon.noSuchWeaponPart=No Such Weapon Part
 
+#Tooltips--unit
+tooltip.faw.unit.Second=s
+tooltip.faw.unit.TriggerPerSecond=s/t
+tooltip.faw.unit.Unit=unit
+
 #Attributes
 attributes.faw.generic.Strength=Strength
 attributes.faw.generic.CoolDown=Cool Down
