@@ -1,5 +1,6 @@
 package net.liplum.api.weapon;
 
+import net.liplum.lib.items.WeaponBaseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -13,6 +14,7 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     private EntityLivingBase attacker;
     private Entity target;
     private IWeaponCore weaponCore;
+    private IGemstone gemstone;
     private IModifier<?> modifier;
     private ItemStack itemStack;
     private DamageArgs initialDamage;
@@ -91,6 +93,15 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     @Nonnull
     public This setInitialDamage(@Nonnull DamageArgs initialDamage) {
         this.initialDamage = initialDamage;
+        return (This) this;
+    }
+
+    public IGemstone getGemstone() {
+        return gemstone;
+    }
+
+    public This setGemstone(IGemstone gemstone) {
+        this.gemstone = gemstone;
         return (This) this;
     }
 }

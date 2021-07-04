@@ -1,5 +1,11 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.lib.FawDamage;
+import net.liplum.lib.items.Gemstone;
+import net.liplum.lib.items.WeaponBaseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -13,6 +19,7 @@ import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class EntityUtil {
@@ -60,6 +67,32 @@ public class EntityUtil {
 
     public static DamageSource genDamageSource(EntityLivingBase entity) {
         return entity instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) entity) : DamageSource.causeMobDamage(entity);
+    }
+
+    public static FawDamage genFawDamage(EntityLivingBase attacker, IWeaponCore weaponCore, @Nullable IGemstone gemstone) {
+        FawDamage damage;
+        if (attacker instanceof EntityPlayer) {
+            damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);
+        } else {
+            damage = FawDamage.byMob(attacker, weaponCore);
+        }
+        if (gemstone != null) {
+            damage.setGemstone(gemstone);
+        }
+        return damage;
+    }
+
+    public static FawDamage genFawDamage(EntityLivingBase attacker, IWeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable IModifier<?> modifier) {
+        FawDamage damage;
+        if (attacker instanceof EntityPlayer) {
+            damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);
+        } else {
+            damage = FawDamage.byMob(attacker, weaponCore);
+        }
+        if (gemstone != null && modifier != null) {
+            damage.setGemstone(gemstone, modifier);
+        }
+        return damage;
     }
 
     public static void setRooting(EntityLivingBase livingEntity, double originX, double originY, double originZ) {

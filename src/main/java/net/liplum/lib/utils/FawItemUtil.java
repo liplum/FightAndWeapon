@@ -2,18 +2,17 @@ package net.liplum.lib.utils;
 
 import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.weapon.DamageArgs;
-import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
-import net.liplum.api.weapon.WeaponPart;
+import net.liplum.api.weapon.*;
 import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
+import net.liplum.lib.FawDamage;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
+import net.liplum.lib.items.Gemstone;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.minecraft.client.resources.I18n;
@@ -117,6 +116,7 @@ public final class FawItemUtil {
 
         IWeaponCore core = weapon.getCore();
         float strengthBase = core.getStrength();
+        IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
         IModifier<?> modifier = GemUtil.getModifierFrom(itemStack);
         if (modifier != null) {
             finalDamage += calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
@@ -131,7 +131,7 @@ public final class FawItemUtil {
             finalDamage *= (0.2F + cooldown * cooldown * 0.8F);
         }
 
-        DamageSource damageSource = EntityUtil.genDamageSource(attacker);
+        FawDamage damageSource = EntityUtil.genFawDamage(attacker, core, gemstone, modifier);
 
         DamageArgs initialDamage = new DamageArgs(finalDamage, damageSource, target);
         WeaponAttackingArgs attackingArgs = new WeaponAttackingArgs();
@@ -341,7 +341,7 @@ public final class FawItemUtil {
         String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
         String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
-                valueContent +
+                valueContent + " " +
                 unitContent;
         tooltip.add(content);
     }
@@ -351,7 +351,7 @@ public final class FawItemUtil {
         String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
         String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
-                valueContent +
+                valueContent + " " +
                 unitContent;
         tooltip.add(content);
     }
@@ -361,7 +361,7 @@ public final class FawItemUtil {
         String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
         String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
-                valueContent +
+                valueContent + " " +
                 unitContent;
         tooltip.add(content);
     }

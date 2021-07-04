@@ -4,6 +4,7 @@ import net.liplum.I18ns;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
+import net.liplum.lib.TooltipOption;
 import net.liplum.lib.cores.lance.ILanceCore;
 import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.items.WeaponBaseItem;
@@ -82,8 +83,8 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, boolean isAdvanced) {
-        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, isAdvanced);
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, option);
         float sprintLength = core.getSprintLength();
         if (sprintLength > 0) {
             FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Lance.SprintLength, sprintLength,

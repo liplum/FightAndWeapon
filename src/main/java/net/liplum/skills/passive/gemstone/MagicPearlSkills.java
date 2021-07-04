@@ -5,8 +5,12 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.api.weapon.DamageArgs;
+import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.IWeaponCore;
 import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
+import net.liplum.lib.FawDamage;
 import net.liplum.lib.utils.EntityUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -30,15 +34,22 @@ public final class MagicPearlSkills {
                         public PSkillResult onTrigger(@Nonnull WeaponAttackingEvent event) {
                             WeaponAttackingArgs args = event.getArgs();
                             EntityLivingBase attacker = args.getAttacker();
+                            IWeaponCore weaponCore = args.getWeaponCore();
+                            IGemstone gemstone = args.getGemstone();
+                            IModifier<?> modifier = args.getModifier();
                             List<DamageArgs> allDamages = args.getAllDamages();
                             DamageArgs initialDamage = args.getInitialDamage();
                             float initialDamageValue = initialDamage.getDamage();
                             Entity target = initialDamage.getTarget();
 
-                            DamageSource normalDamage = EntityUtil.genDamageSource(attacker);
-                            DamageSource magicDamage = EntityUtil.genDamageSource(attacker)
-                                    .setMagicDamage().setDamageBypassesArmor();
+                            FawDamage normalDamage = EntityUtil.genFawDamage(attacker,
+                                    weaponCore,
+                                    gemstone, modifier);
+                            FawDamage magicDamage = EntityUtil.genFawDamage(attacker,
+                                    weaponCore,
+                                    gemstone, modifier);
 
+                            magicDamage.setMagicDamage().setDamageBypassesArmor();
                             args.setInitialDamage(new DamageArgs(initialDamageValue / 2, normalDamage, target));
                             allDamages.add(new DamageArgs(initialDamageValue / 2, magicDamage, target));
 

@@ -5,6 +5,7 @@ import net.liplum.Vanilla;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
+import net.liplum.lib.TooltipOption;
 import net.liplum.lib.cores.harp.ContinuousHarpArgs;
 import net.liplum.lib.cores.harp.IHarpCore;
 import net.liplum.lib.cores.harp.SingleHarpArgs;
@@ -157,8 +158,8 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, boolean isAdvanced) {
-        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, isAdvanced);
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, option);
 
         double radius = core.getRadius();
         if (radius > 0) {
@@ -166,12 +167,12 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
                     "%.1f", I18ns.Tooltip.Unit.Unit);
             shown = true;
         }
-        if (isAdvanced) {
+        if (option.isMoreDetailsShown()) {
             int frequency = core.getFrequency();
             if (frequency > 0) {
                 float frequencyDecimal = (float) frequency / Vanilla.TPS;
                 FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Harp.Frequency, frequencyDecimal,
-                        "%.1f", I18ns.Tooltip.Unit.TriggerPerSecond);
+                        "%.1f",option.isUnitShown() ? I18ns.Tooltip.Unit.TriggerPerSecond:null);
                 shown = true;
             }
         }
