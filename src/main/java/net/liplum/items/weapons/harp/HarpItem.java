@@ -29,6 +29,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class HarpItem extends WeaponBaseItem<IHarpCore> {
@@ -41,7 +42,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
         double radius = core.getRadius();
         float ap = core.getAbilityPower();
         ItemStack held = playerIn.getHeldItem(handIn);
@@ -158,21 +159,31 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, TooltipOption option) {
-        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, option);
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable IModifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+        boolean shown = super.addAttributesTooltip(stack, modifier, attributesTooltip, option);
+        HarpModifier harpModifier = null;
+        if (modifier instanceof HarpModifier) {
+            harpModifier = (HarpModifier) modifier;
+        }
 
         double radius = core.getRadius();
+        if (harpModifier != null) {
+            radius = FawItemUtil.calcuAttribute(radius, harpModifier.getRadiusDelta(), harpModifier.getRadiusRate());
+        }
         if (radius > 0) {
             FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Harp.Radius, radius,
-                    "%.1f", I18ns.Tooltip.Unit.Unit);
+                    "%.1f", option.isUnitShown() ? I18ns.Tooltip.Unit.Unit : null);
             shown = true;
         }
         if (option.isMoreDetailsShown()) {
             int frequency = core.getFrequency();
+            if (harpModifier != null) {
+                frequency = FawItemUtil.calcuAttribute(frequency, harpModifier.getFrequencyDelta(), harpModifier.getFrequencyRate());
+            }
             if (frequency > 0) {
                 float frequencyDecimal = (float) frequency / Vanilla.TPS;
                 FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Harp.Frequency, frequencyDecimal,
-                        "%.1f",option.isUnitShown() ? I18ns.Tooltip.Unit.TriggerPerSecond:null);
+                        "%.1f", option.isUnitShown() ? I18ns.Tooltip.Unit.TriggerPerSecond : null);
                 shown = true;
             }
         }

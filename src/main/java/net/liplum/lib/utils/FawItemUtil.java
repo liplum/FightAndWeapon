@@ -12,7 +12,6 @@ import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
 import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
-import net.liplum.lib.items.Gemstone;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.minecraft.client.resources.I18n;
@@ -337,17 +336,46 @@ public final class FawItemUtil {
     }
 
     public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, @Nullable String format, @Nullable String unit) {
-        String valueContent = format != null ? String.format(format, value) : Float.toString(value);
-        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
-        String content = TextFormatting.YELLOW +
-                I18n.format(attrTranslateKey) + " : " +
-                valueContent + " " +
-                unitContent;
-        tooltip.add(content);
+        addAttributeTooltip(tooltip, attrTranslateKey, value, format, true, unit);
     }
 
     public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, @Nullable String format, @Nullable String unit) {
-        String valueContent = format != null ? String.format(format, value) : Double.toString(value);
+        addAttributeTooltip(tooltip, attrTranslateKey, value, format, true, unit);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format, @Nullable String unit) {
+        addAttributeTooltip(tooltip, attrTranslateKey, value, format, true, unit);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, @Nullable String format) {
+        addAttributeTooltip(tooltip, attrTranslateKey, value, format, null);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, @Nullable String format) {
+        addAttributeTooltip(tooltip, attrTranslateKey, value, format, null);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format) {
+        addAttributeTooltip(tooltip, attrTranslateKey, value, format, null);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value) {
+        addAttributeTooltip(tooltip, attrTranslateKey, value, null);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value) {
+        addAttributeTooltip(tooltip, attrTranslateKey, value, null);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value) {
+        addAttributeTooltip(tooltip, attrTranslateKey, value, null);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
+        String valueContent = format != null ? String.format(format, value) : Float.toString(value);
+        if (isStripTrailingZero) {
+            valueContent = StringUtil.stripTrailingZero(valueContent);
+        }
         String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
         String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
@@ -356,8 +384,24 @@ public final class FawItemUtil {
         tooltip.add(content);
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format, @Nullable String unit) {
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
+        String valueContent = format != null ? String.format(format, value) : Double.toString(value);
+        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
+        if (isStripTrailingZero) {
+            valueContent = StringUtil.stripTrailingZero(valueContent);
+        }
+        String content = TextFormatting.YELLOW +
+                I18n.format(attrTranslateKey) + " : " +
+                valueContent + " " +
+                unitContent;
+        tooltip.add(content);
+    }
+
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
         String valueContent = format != null ? String.format(format, value) : Integer.toString(value);
+        if (isStripTrailingZero) {
+            valueContent = StringUtil.stripTrailingZero(valueContent);
+        }
         String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
         String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +

@@ -24,6 +24,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class LanceItem extends WeaponBaseItem<ILanceCore> {
@@ -49,7 +50,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> {
             if (!cancelRelease) {
                 float length = core.getSprintLength();
                 float dmg = core.getStrength();
-                boolean releasedSuccessfully = false;
+                boolean releasedSuccessfully;
                 LanceArgs args = new LanceArgs()
                         .setWorld(worldIn)
                         .setPlayer(playerIn)
@@ -67,7 +68,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> {
                 } else {
                     args.setSprintLength(length)
                             .setStrength(dmg);
-                    releasedSuccessfully |= core.releaseSkill(args);
+                    releasedSuccessfully = core.releaseSkill(args);
                 }
                 if (releasedSuccessfully) {
                     ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown);
@@ -83,12 +84,16 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nonnull List<String> attributesTooltip, TooltipOption option) {
-        boolean shown = super.addAttributesTooltip(stack, attributesTooltip, option);
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable IModifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+        boolean shown = super.addAttributesTooltip(stack, modifier, attributesTooltip, option);
         float sprintLength = core.getSprintLength();
+        if (modifier instanceof LanceModifier) {
+            LanceModifier lanceModifier = (LanceModifier) modifier;
+            sprintLength = FawItemUtil.calcuAttribute(sprintLength, lanceModifier.getSprintLengthDelta(), lanceModifier.getSprintLengthRate());
+        }
         if (sprintLength > 0) {
             FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Lance.SprintLength, sprintLength,
-                    null, null);
+                    "%.1f");
             shown = true;
         }
         return shown;
