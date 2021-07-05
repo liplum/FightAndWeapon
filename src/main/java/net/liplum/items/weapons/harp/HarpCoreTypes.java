@@ -1,8 +1,5 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.lib.cores.harp.ContinuousHarpArgs;
-import net.liplum.lib.cores.harp.IHarpCore;
-import net.liplum.lib.cores.harp.SingleHarpArgs;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -18,7 +15,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public final class HarpCoreTypes {
-    public static final IHarpCore Empty = new IHarpCore() {
+    public static final HarpCore Empty = new HarpCore() {
         @Override
         public float getAbilityPower() {
             return 0;
@@ -50,7 +47,7 @@ public final class HarpCoreTypes {
         }
     };
 
-    public static final IHarpCore Normal = new IHarpCore() {
+    public static final HarpCore Normal = new HarpCore() {
         @Override
         public float getAbilityPower() {
             return 5;

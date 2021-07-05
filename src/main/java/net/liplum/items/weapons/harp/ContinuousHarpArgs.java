@@ -1,4 +1,4 @@
-package net.liplum.lib.cores.harp;
+package net.liplum.items.weapons.harp;
 
 public class ContinuousHarpArgs extends AbstractHarpArgs<ContinuousHarpArgs> {
     private int releasedCount = 0;

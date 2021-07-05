@@ -5,7 +5,7 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.events.skill.LanceSprintEvent;
-import net.liplum.lib.cores.lance.LanceArgs;
+import net.liplum.items.weapons.lance.LanceArgs;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;

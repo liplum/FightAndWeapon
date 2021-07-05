@@ -3,7 +3,7 @@ package net.liplum.lib;
 import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.api.weapon.WeaponCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EntityDamageSource;
@@ -13,24 +13,24 @@ import javax.annotation.Nullable;
 
 public class FawDamage extends EntityDamageSource {
     @Nonnull
-    private final IWeaponCore weaponCore;
+    private final WeaponCore weaponCore;
     @Nullable
     private IGemstone gemstone;
     @Nullable
     private IModifier<?> modifier;
 
-    private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull IWeaponCore weaponCore) {
+    private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull WeaponCore weaponCore) {
         super(damageType, attacker);
         this.weaponCore = weaponCore;
     }
 
     @Nonnull
-    public static FawDamage byPlayer(@Nonnull EntityPlayer playerAttacker, @Nonnull IWeaponCore weaponCore) {
+    public static FawDamage byPlayer(@Nonnull EntityPlayer playerAttacker, @Nonnull WeaponCore weaponCore) {
         return new FawDamage(Vanilla.DamageType.Player, playerAttacker, weaponCore);
     }
 
     @Nonnull
-    public static FawDamage byMob(@Nonnull EntityLivingBase entityAttacker, @Nonnull IWeaponCore weaponCore) {
+    public static FawDamage byMob(@Nonnull EntityLivingBase entityAttacker, @Nonnull WeaponCore weaponCore) {
         return new FawDamage(Vanilla.DamageType.Mob, entityAttacker, weaponCore);
     }
 
@@ -40,7 +40,7 @@ public class FawDamage extends EntityDamageSource {
     }
 
     @Nonnull
-    public IWeaponCore getWeaponCore() {
+    public WeaponCore getWeaponCore() {
         return weaponCore;
     }
 

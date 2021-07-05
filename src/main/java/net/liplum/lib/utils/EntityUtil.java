@@ -2,10 +2,8 @@ package net.liplum.lib.utils;
 
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.FawDamage;
-import net.liplum.lib.items.Gemstone;
-import net.liplum.lib.items.WeaponBaseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -69,7 +67,7 @@ public class EntityUtil {
         return entity instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) entity) : DamageSource.causeMobDamage(entity);
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, IWeaponCore weaponCore, @Nullable IGemstone gemstone) {
+    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
             damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);
@@ -82,7 +80,7 @@ public class EntityUtil {
         return damage;
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, IWeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable IModifier<?> modifier) {
+    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable IModifier<?> modifier) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
             damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);

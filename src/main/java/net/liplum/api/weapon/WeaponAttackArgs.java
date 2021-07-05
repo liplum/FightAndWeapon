@@ -1,6 +1,5 @@
 package net.liplum.api.weapon;
 
-import net.liplum.lib.items.WeaponBaseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -13,7 +12,7 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     private World world;
     private EntityLivingBase attacker;
     private Entity target;
-    private IWeaponCore weaponCore;
+    private WeaponCore weaponCore;
     private IGemstone gemstone;
     private IModifier<?> modifier;
     private ItemStack itemStack;
@@ -53,12 +52,12 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     }
 
     @Nonnull
-    public IWeaponCore getWeaponCore() {
+    public WeaponCore getWeaponCore() {
         return weaponCore;
     }
 
     @Nonnull
-    public This setWeaponCore(@Nullable IWeaponCore weaponCore) {
+    public This setWeaponCore(@Nullable WeaponCore weaponCore) {
         this.weaponCore = weaponCore;
         return (This) this;
     }

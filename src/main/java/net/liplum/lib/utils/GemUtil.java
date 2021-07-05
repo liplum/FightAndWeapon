@@ -4,7 +4,7 @@ import net.liplum.I18ns;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.nbt.FawNbtTool;
 import net.liplum.lib.nbt.FawNbts;
@@ -57,11 +57,11 @@ public final class GemUtil {
         return false;
     }
 
-    public static boolean canInlayGemstone(IWeaponCore core, IGemstone gemstone) {
+    public static boolean canInlayGemstone(WeaponCore core, IGemstone gemstone) {
         return gemstone.hasAnyAmplifier(core);
     }
 
-    public static boolean canInlayGemstone(IWeaponCore core, String gemstoneName) {
+    public static boolean canInlayGemstone(WeaponCore core, String gemstoneName) {
         IGemstone gemstone = GemstoneRegistry.getGemstone(gemstoneName);
         if (gemstone == null) {
             return false;

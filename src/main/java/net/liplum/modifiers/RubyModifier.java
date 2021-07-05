@@ -1,8 +1,8 @@
 package net.liplum.modifiers;
 
 import net.liplum.items.weapons.lance.LanceCoreTypes;
-import net.liplum.lib.cores.lance.ILanceCore;
-import net.liplum.lib.modifiers.LanceModifier;
+import net.liplum.items.weapons.lance.LanceCore;
+import net.liplum.items.weapons.lance.LanceModifier;
 
 public final class RubyModifier {
     public final static LanceModifier Light_Lance = new LanceModifier() {
@@ -27,7 +27,7 @@ public final class RubyModifier {
         }
 
         @Override
-        public ILanceCore getCoreType() {
+        public LanceCore getCoreType() {
             return LanceCoreTypes.LightLance;
         }
     };

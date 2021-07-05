@@ -1,4 +1,4 @@
-package net.liplum.lib.cores.harp;
+package net.liplum.items.weapons.harp;
 
 import net.liplum.api.weapon.MagicToolArgs;
 

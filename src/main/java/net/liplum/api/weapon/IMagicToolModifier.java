@@ -1,6 +1,6 @@
 package net.liplum.api.weapon;
 
-public interface IMagicToolModifier<CoreType extends IWeaponCore> extends IModifier<CoreType> {
+public interface IMagicToolModifier<CoreType extends WeaponCore> extends IModifier<CoreType> {
     default int getAbilityPowerDelta() {
         return 0;
     }

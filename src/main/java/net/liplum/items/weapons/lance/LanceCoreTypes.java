@@ -1,12 +1,13 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.Attributes;
+import net.liplum.attributes.BasicAttrValue;
+import net.liplum.attributes.DataType;
 import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.IWaitable;
 import net.liplum.coroutine.WaitForNextTick;
 import net.liplum.enumerator.Yield;
 import net.liplum.events.skill.LanceSprintEvent;
-import net.liplum.lib.cores.lance.ILanceCore;
-import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
@@ -28,47 +29,31 @@ import java.util.List;
 import java.util.Set;
 
 public final class LanceCoreTypes {
-    public static final ILanceCore Empty = new ILanceCore() {
-
-        @Override
-        public int getCoolDown() {
-            return 0;
-        }
+    public static final LanceCore Empty = new LanceCore() {
 
         @Override
         public boolean releaseSkill(LanceArgs args) {
             return false;
         }
 
-        @Override
-        public float getSprintLength() {
-            return 0;
-        }
     };
 
-    public static final ILanceCore TrainingLance = new ILanceCore() {
+    public static final LanceCore TrainingLance = new LanceCore() {
         @Override
         public boolean releaseSkill(LanceArgs args) {
             return false;
         }
 
         @Override
-        public float getSprintLength() {
-            return 0;
-        }
-
-        @Override
-        public int getCoolDown() {
-            return 0;
-        }
-
-        @Override
-        public float getStrength() {
-            return 5;
+        protected void buildAttributes(AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.add(
+                    Attributes.Generic.Strength, new BasicAttrValue(5, DataType.Float)
+            );
         }
     };
 
-    public static final ILanceCore LightLance = new ILanceCore() {
+    public static final LanceCore LightLance = new LanceCore() {
         @Override
         public boolean releaseSkill(LanceArgs args) {
             boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
@@ -108,35 +93,22 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        public int getCoolDown() {
-            return 20 * 6;
-        }
-
-        /**
-         * It means you can dash 4 units.
-         */
-        @Override
-        public float getSprintLength() {
-            return 2F;
-        }
-
-        @Override
-        public float getStrength() {
-            return 5;
-        }
-
-        @Override
-        public double getAttackReach() {
-            return 8;
+        protected void buildAttributes(AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.add(
+                    //  It means you can dash 4 units.
+                    Attributes.Lance.SprintStrength, new BasicAttrValue(2, DataType.Float)
+            ).add(
+                    Attributes.Generic.CoolDown, new BasicAttrValue(6 * 20, DataType.Int)
+            ).add(
+                    Attributes.Generic.Strength, new BasicAttrValue(5, DataType.Float)
+            ).add(
+                    Attributes.Generic.AttackReach, new BasicAttrValue(8, DataType.Float)
+            );
         }
     };
 
-    public static final ILanceCore KnightLance = new ILanceCore() {
-
-        @Override
-        public int getCoolDown() {
-            return 10 * 20;
-        }
+    public static final LanceCore KnightLance = new LanceCore() {
 
         @Override
         public boolean releaseSkill(LanceArgs args) {
@@ -159,17 +131,19 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        public float getSprintLength() {
-            return 4;
-        }
-
-        @Override
-        public float getStrength() {
-            return 6;
+        protected void buildAttributes(AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.add(
+                    Attributes.Lance.SprintStrength, new BasicAttrValue(4, DataType.Float)
+            ).add(
+                    Attributes.Generic.CoolDown, new BasicAttrValue(10 * 20, DataType.Int)
+            ).add(
+                    Attributes.Generic.Strength, new BasicAttrValue(6, DataType.Float)
+            );
         }
     };
 
-    public static final ILanceCore ArenaLance = new ILanceCore() {
+    public static final LanceCore ArenaLance = new LanceCore() {
         @Override
         public boolean releaseSkill(LanceArgs args) {
             EntityPlayer player = args.getPlayer();
@@ -216,23 +190,19 @@ public final class LanceCoreTypes {
             return true;
         }
 
-        @Override
-        public float getSprintLength() {
-            return 0;
-        }
 
         @Override
-        public int getCoolDown() {
-            return 200;
-        }
-
-        @Override
-        public float getStrength() {
-            return 6;
+        protected void buildAttributes(AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.add(
+                    Attributes.Generic.CoolDown, new BasicAttrValue(10 * 20, DataType.Int)
+            ).add(
+                    Attributes.Generic.Strength, new BasicAttrValue(6, DataType.Float)
+            );
         }
     };
 
-    public static final ILanceCore TestLance = new ILanceCore() {
+    public static final LanceCore TestLance = new LanceCore() {
         @Override
         public boolean releaseSkill(LanceArgs args) {
             EntityPlayer player = args.getPlayer();
@@ -248,13 +218,14 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        public float getSprintLength() {
-            return 10;
-        }
-
-        @Override
-        public int getCoolDown() {
-            return 20;
+        protected void buildAttributes(AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.add(
+                    //  It means you can dash 4 units.
+                    Attributes.Lance.SprintStrength, new BasicAttrValue(10, DataType.Float)
+            ).add(
+                    Attributes.Generic.CoolDown, new BasicAttrValue(20, DataType.Int)
+            );
         }
     };
 }

@@ -2,7 +2,7 @@ package net.liplum.eventhandlers;
 
 import net.liplum.AttributeDefault;
 import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -38,7 +38,7 @@ public class ClientHandler {
             if (!player.isHandActive()) {
                 if (item instanceof WeaponBaseItem<?>) {
                     WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
-                    IWeaponCore core = weapon.getCore();
+                    WeaponCore core = weapon.getCore();
                     double reach = core.getAttackReach();
                     IModifier<?> modifier = GemUtil.getModifierFrom(mainHand);
                     if (modifier != null) {

@@ -10,35 +10,35 @@ public interface IGemstone {
 
     String getRegisterName();
 
-    boolean hasModifierOf(IWeaponCore core);
+    boolean hasModifierOf(WeaponCore core);
 
     /**
      * @param core
      * @return the modifier or null if it didn't has a corresponding modifier of the core in this gemstone.
      */
     @Nullable
-    IModifier<?> getModifierOf(IWeaponCore core);
+    IModifier<?> getModifierOf(WeaponCore core);
 
     @Nonnull
-    IPassiveSkill<?>[] getPassiveSkillsOf(IWeaponCore core);
+    IPassiveSkill<?>[] getPassiveSkillsOf(WeaponCore core);
 
     IGemstone addModifier(IModifier<?> newModifier);
 
-    IGemstone addPassiveSkillToCore(IWeaponCore core, IPassiveSkill<?> newPassiveSkill);
+    IGemstone addPassiveSkillToCore(WeaponCore core, IPassiveSkill<?> newPassiveSkill);
 
     IGemstone addPassiveSkillToWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> newPassiveSkill);
 
     IGemstone addPassiveSkillToAll(IPassiveSkill<?> newPassiveSkill);
 
-    IGemstone removeModifier(IWeaponCore core);
+    IGemstone removeModifier(WeaponCore core);
 
     IGemstone removeModifier(IModifier<?> modifier);
 
-    IGemstone removePassiveSkillFromCore(IWeaponCore core, IPassiveSkill<?> passiveSkill);
+    IGemstone removePassiveSkillFromCore(WeaponCore core, IPassiveSkill<?> passiveSkill);
 
     IGemstone removePassiveSkillFromWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> passiveSkill);
 
     IGemstone removePassiveSkillFromAll(IPassiveSkill<?> passiveSkill);
 
-    boolean hasAnyAmplifier(IWeaponCore core);
+    boolean hasAnyAmplifier(WeaponCore core);
 }

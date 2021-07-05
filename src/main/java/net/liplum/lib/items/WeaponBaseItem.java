@@ -29,7 +29,7 @@ import javax.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.List;
 
-public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawItem {
+public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawItem {
     public WeaponBaseItem() {
         super();
     }
@@ -128,8 +128,8 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
                     "%.1f");
             added = true;
         }
-        if (core instanceof IMagicToolCore) {
-            IMagicToolCore magicCore = (IMagicToolCore) core;
+        if (core instanceof MagicToolCore) {
+            MagicToolCore magicCore = (MagicToolCore) core;
             float ap = magicCore.getAbilityPower();
             if (modifier instanceof IMagicToolModifier<?>) {
                 IMagicToolModifier<?> magicModifier = (IMagicToolModifier<?>) modifier;

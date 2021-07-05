@@ -3,7 +3,7 @@ package net.liplum.lib.utils;
 import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +35,7 @@ public final class SkillUtil {
             //First, gets the passive skills from weapon's gemstone
             WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
             Class<WeaponBaseItem<?>> clz = (Class<WeaponBaseItem<?>>) weapon.getClass();
-            IWeaponCore core = weapon.getCore();
+            WeaponCore core = weapon.getCore();
             IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
             if (gemstone != null) {
                 //I told it can be converted so that it must can be converted!!!

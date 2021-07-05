@@ -1,7 +1,7 @@
 package net.liplum.events.skill;
 
 import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
+import net.liplum.api.weapon.WeaponCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -14,13 +14,13 @@ import javax.annotation.Nullable;
 public abstract class WeaponSkillReleaseBaseEvent extends Event {
     protected final World world;
     protected final EntityPlayer player;
-    protected final IWeaponCore weaponCore;
+    protected final WeaponCore weaponCore;
     protected final IModifier<?> modifier;
     protected final ItemStack itemStack;
     protected final EnumHand hand;
 
     public WeaponSkillReleaseBaseEvent(@Nonnull World world, @Nonnull EntityPlayer player,
-                                       @Nonnull IWeaponCore weaponCore, @Nullable IModifier modifier,
+                                       @Nonnull WeaponCore weaponCore, @Nullable IModifier modifier,
                                        @Nonnull ItemStack itemStack, @Nonnull EnumHand hand) {
         this.world = world;
         this.player = player;
@@ -38,7 +38,7 @@ public abstract class WeaponSkillReleaseBaseEvent extends Event {
         return player;
     }
 
-    public IWeaponCore getWeaponCore() {
+    public WeaponCore getWeaponCore() {
         return weaponCore;
     }
 

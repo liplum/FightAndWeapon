@@ -1,7 +1,5 @@
 package net.liplum.items.weapons.battleaxe;
 
-import net.liplum.lib.cores.battleaxe.BattleAxeArgs;
-import net.liplum.lib.cores.battleaxe.IBattleAxeCore;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
@@ -17,7 +15,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 public final class BattleAxeCoreTypes {
-    public static final IBattleAxeCore Empty = new IBattleAxeCore() {
+    public static final BattleAxeCore Empty = new BattleAxeCore() {
 
         @Override
         public boolean releaseSkill(BattleAxeArgs args) {
@@ -35,7 +33,7 @@ public final class BattleAxeCoreTypes {
         }
     };
 
-    public static final IBattleAxeCore Normal = new IBattleAxeCore() {
+    public static final BattleAxeCore Normal = new BattleAxeCore() {
         private final int coolDown = 20 * 5;
 
         @Override

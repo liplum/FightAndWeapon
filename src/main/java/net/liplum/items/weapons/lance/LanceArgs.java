@@ -1,4 +1,4 @@
-package net.liplum.lib.cores.lance;
+package net.liplum.items.weapons.lance;
 
 import net.liplum.api.weapon.WeaponArgs;
 

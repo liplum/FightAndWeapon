@@ -3,8 +3,7 @@ package net.liplum.lib.items;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IModifier;
-import net.liplum.api.weapon.IWeaponCore;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponCore;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +25,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public boolean hasModifierOf(IWeaponCore core) {
+    public boolean hasModifierOf(WeaponCore core) {
         return amplifierOfCores.hasAnyAmplifier(core);
     }
 
@@ -36,13 +35,13 @@ public class Gemstone implements IGemstone {
      */
     @Override
     @Nullable
-    public IModifier<?> getModifierOf(IWeaponCore core) {
+    public IModifier<?> getModifierOf(WeaponCore core) {
         return amplifierOfCores.getModifierOf(core);
     }
 
     @Nonnull
     @Override
-    public IPassiveSkill<?>[] getPassiveSkillsOf(IWeaponCore core) {
+    public IPassiveSkill<?>[] getPassiveSkillsOf(WeaponCore core) {
         Collection<IPassiveSkill<?>> psFromAll = amplifierOfAllWeaponTypes.getPassiveSkills();
         Set<IPassiveSkill<?>> skills = new HashSet<>(psFromAll);
 
@@ -67,7 +66,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone addPassiveSkillToCore(IWeaponCore core, IPassiveSkill<?> newPassiveSkill) {
+    public IGemstone addPassiveSkillToCore(WeaponCore core, IPassiveSkill<?> newPassiveSkill) {
         amplifierOfCores.addPassiveSkills(core, newPassiveSkill);
         return this;
     }
@@ -85,7 +84,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone removeModifier(IWeaponCore core) {
+    public IGemstone removeModifier(WeaponCore core) {
         amplifierOfCores.removeModifier(core);
         return this;
     }
@@ -97,7 +96,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone removePassiveSkillFromCore(IWeaponCore core, IPassiveSkill<?> passiveSkill) {
+    public IGemstone removePassiveSkillFromCore(WeaponCore core, IPassiveSkill<?> passiveSkill) {
         amplifierOfCores.removePassiveSkill(core, passiveSkill);
         return this;
     }
@@ -115,7 +114,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public boolean hasAnyAmplifier(IWeaponCore core) {
+    public boolean hasAnyAmplifier(WeaponCore core) {
         if (hasModifierOf(core)) {
             return true;
         }
@@ -127,16 +126,16 @@ public class Gemstone implements IGemstone {
 
 
     private static class AmplifierOfCores {
-        private final Map<IWeaponCore, CoreAmplifier> amplifiers = new HashMap<>();
+        private final Map<WeaponCore, CoreAmplifier> amplifiers = new HashMap<>();
 
-        public IModifier<?> getModifierOf(IWeaponCore core) {
+        public IModifier<?> getModifierOf(WeaponCore core) {
             if (amplifiers.containsKey(core)) {
                 return amplifiers.get(core).getModifier();
             }
             return null;
         }
 
-        public boolean hasAnyAmplifier(IWeaponCore core) {
+        public boolean hasAnyAmplifier(WeaponCore core) {
             if (amplifiers.containsKey(core)) {
                 return amplifiers.get(core).hasAny();
             }
@@ -144,7 +143,7 @@ public class Gemstone implements IGemstone {
         }
 
         @Nullable
-        public Collection<IPassiveSkill<?>> getPassiveSkillsOf(IWeaponCore core) {
+        public Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponCore core) {
             if (this.amplifiers.containsKey(core)) {
                 return this.amplifiers.get(core).getPassiveSkills();
             }
@@ -152,7 +151,7 @@ public class Gemstone implements IGemstone {
         }
 
         public void addModifier(IModifier<?> modifier) {
-            IWeaponCore core = modifier.getCoreType();
+            WeaponCore core = modifier.getCoreType();
             if (amplifiers.containsKey(core)) {
                 amplifiers.get(core).setModifier(modifier);
             } else {
@@ -162,7 +161,7 @@ public class Gemstone implements IGemstone {
             }
         }
 
-        public void addPassiveSkills(IWeaponCore core, IPassiveSkill<?> passiveSkill) {
+        public void addPassiveSkills(WeaponCore core, IPassiveSkill<?> passiveSkill) {
             if (amplifiers.containsKey(core)) {
                 amplifiers.get(core).addPassiveSkills(passiveSkill);
             } else {
@@ -172,13 +171,13 @@ public class Gemstone implements IGemstone {
             }
         }
 
-        public void removeModifier(IWeaponCore core) {
+        public void removeModifier(WeaponCore core) {
             if (amplifiers.containsKey(core)) {
                 amplifiers.get(core).removeModifier();
             }
         }
 
-        public void removePassiveSkill(IWeaponCore core, IPassiveSkill<?> passiveSkill) {
+        public void removePassiveSkill(WeaponCore core, IPassiveSkill<?> passiveSkill) {
             if (amplifiers.containsKey(core)) {
                 amplifiers.get(core).removePassiveSkill(passiveSkill);
             }

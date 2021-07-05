@@ -1,14 +1,12 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.Attributes;
 import net.liplum.I18ns;
 import net.liplum.api.weapon.IModifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.TooltipOption;
-import net.liplum.lib.cores.lance.ILanceCore;
-import net.liplum.lib.cores.lance.LanceArgs;
 import net.liplum.lib.items.WeaponBaseItem;
-import net.liplum.lib.modifiers.LanceModifier;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
@@ -27,20 +25,20 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class LanceItem extends WeaponBaseItem<ILanceCore> {
-    private final ILanceCore core;
+public class LanceItem extends WeaponBaseItem<LanceCore> {
+    private final LanceCore core;
 
-    public LanceItem(@Nonnull ILanceCore core) {
+    public LanceItem(@Nonnull LanceCore core) {
         super();
         this.core = core;
     }
 
     @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
-        int coolDown = core.getCoolDown();
+        int coolDown = core.getValue(Attributes.Generic.CoolDown).getInt();
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
             IModifier<?> modifier = GemUtil.getModifierFrom(held);
@@ -48,8 +46,8 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> {
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
             if (!cancelRelease) {
-                float length = core.getSprintLength();
-                float dmg = core.getStrength();
+                float length = core.getValue(Attributes.Lance.SprintStrength).getFloat();
+                float dmg = core.getValue(Attributes.Generic.Strength).getFloat();
                 boolean releasedSuccessfully;
                 LanceArgs args = new LanceArgs()
                         .setWorld(worldIn)
@@ -86,7 +84,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> {
     @SideOnly(Side.CLIENT)
     public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable IModifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
         boolean shown = super.addAttributesTooltip(stack, modifier, attributesTooltip, option);
-        float sprintLength = core.getSprintLength();
+        float sprintLength = core.getValue(Attributes.Lance.SprintStrength).getFloat();
         if (modifier instanceof LanceModifier) {
             LanceModifier lanceModifier = (LanceModifier) modifier;
             sprintLength = FawItemUtil.calcuAttribute(sprintLength, lanceModifier.getSprintLengthDelta(), lanceModifier.getSprintLengthRate());
@@ -107,7 +105,7 @@ public class LanceItem extends WeaponBaseItem<ILanceCore> {
 
     @Nonnull
     @Override
-    public ILanceCore getCore() {
+    public LanceCore getCore() {
         return core;
     }
 }

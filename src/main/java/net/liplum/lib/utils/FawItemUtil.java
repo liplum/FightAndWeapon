@@ -115,7 +115,7 @@ public final class FawItemUtil {
         float baseDamage = (float) attacker.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).getAttributeValue();
         float finalDamage = baseDamage;
 
-        IWeaponCore core = weapon.getCore();
+        WeaponCore core = weapon.getCore();
         float strengthBase = core.getStrength();
         IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
         IModifier<?> modifier = GemUtil.getModifierFrom(itemStack);
@@ -209,7 +209,7 @@ public final class FawItemUtil {
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
     public static float calcuAttribute(float base, float deltaMaster) {
-        return calcuAttribute(base, deltaMaster, 0, 0);
+        return calcuAttribute(base, 0, 0, deltaMaster);
 
     }
 
@@ -222,17 +222,17 @@ public final class FawItemUtil {
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
     public static float calcuAttribute(float base, float deltaGem, float rateGem) {
-        return calcuAttribute(base, 0, deltaGem, rateGem);
+        return calcuAttribute(base, deltaGem, rateGem, 0);
     }
 
     /**
      * @param base
-     * @param deltaMaster
-     * @param rateGem
      * @param deltaGem
+     * @param rateGem
+     * @param deltaMaster
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
-    public static float calcuAttribute(float base, float deltaMaster, float deltaGem, float rateGem) {
+    public static float calcuAttribute(float base, float deltaGem, float rateGem, float deltaMaster) {
         if (base < 0) {
             return -1;
         }
@@ -240,45 +240,6 @@ public final class FawItemUtil {
         return MathUtil.fixMin(res, 0);
     }
 
-    /**
-     * Calculate the final value of attribute without gemstone's amplification.
-     *
-     * @param base
-     * @param deltaMaster
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static double calcuAttribute(double base, double deltaMaster) {
-        return calcuAttribute(base, deltaMaster, 0, 0);
-
-    }
-
-    /**
-     * Calculate the final value of attribute without master's amplification.
-     *
-     * @param base
-     * @param rateGem
-     * @param deltaGem
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static double calcuAttribute(double base, double deltaGem, float rateGem) {
-        return calcuAttribute(base, 0, deltaGem, rateGem);
-    }
-
-
-    /**
-     * @param base
-     * @param deltaMaster
-     * @param rateGem
-     * @param deltaGem
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static double calcuAttribute(double base, double deltaMaster, double deltaGem, float rateGem) {
-        if (base < 0) {
-            return -1;
-        }
-        double res = ((base + deltaMaster) + deltaGem) * (1 + rateGem);
-        return MathUtil.fixMin(res, 0);
-    }
 
     /**
      * Calculate the final value of attribute without gemstone's amplification.
@@ -288,7 +249,7 @@ public final class FawItemUtil {
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
     public static int calcuAttribute(int base, int deltaMaster) {
-        return calcuAttribute(base, deltaMaster, 0, 0);
+        return calcuAttribute(base, 0, 0, deltaMaster);
 
     }
 
@@ -301,18 +262,18 @@ public final class FawItemUtil {
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
     public static int calcuAttribute(int base, int deltaGem, float rateGem) {
-        return calcuAttribute(base, 0, deltaGem, rateGem);
+        return calcuAttribute(base, deltaGem, rateGem, 0);
     }
 
 
     /**
      * @param base
-     * @param deltaMaster
-     * @param rateGem
      * @param deltaGem
+     * @param rateGem
+     * @param deltaMaster
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
-    public static int calcuAttribute(int base, int deltaMaster, int deltaGem, float rateGem) {
+    public static int calcuAttribute(int base, int deltaGem, float rateGem, int deltaMaster) {
         if (base < 0) {
             return -1;
         }
@@ -335,6 +296,19 @@ public final class FawItemUtil {
             return base;
         }
         return (int) (base * (1 + rate));
+    }
+/**
+     * @param base
+     * @param rate
+     * @return
+     */
+    public static float calcuAttributeInRate(float base, float rate) {
+        if (base < 0) {
+            return -1;
+        } else if (rate == 0) {
+            return base;
+        }
+        return base * (1 + rate);
     }
 
     @SideOnly(Side.CLIENT)

@@ -2,8 +2,8 @@ package net.liplum.api.weapon;
 
 import net.liplum.AttributeDefault;
 
-public interface IMagicToolCore extends IWeaponCore {
-    default float getAbilityPower() {
+public abstract class MagicToolCore extends WeaponCore {
+   /* public float getAbilityPower() {
         return AttributeDefault.Generic.AbilityPower;
-    }
+    }*/
 }

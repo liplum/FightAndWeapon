@@ -6,12 +6,8 @@ import net.liplum.api.weapon.IModifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.TooltipOption;
-import net.liplum.lib.cores.harp.ContinuousHarpArgs;
-import net.liplum.lib.cores.harp.IHarpCore;
-import net.liplum.lib.cores.harp.SingleHarpArgs;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
-import net.liplum.lib.modifiers.HarpModifier;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
@@ -32,10 +28,10 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class HarpItem extends WeaponBaseItem<IHarpCore> {
-    private final IHarpCore core;
+public class HarpItem extends WeaponBaseItem<HarpCore> {
+    private final HarpCore core;
 
-    public HarpItem(@Nonnull IHarpCore core) {
+    public HarpItem(@Nonnull HarpCore core) {
         super();
         this.core = core;
     }
@@ -192,7 +188,7 @@ public class HarpItem extends WeaponBaseItem<IHarpCore> {
 
     @Nonnull
     @Override
-    public IHarpCore getCore() {
+    public HarpCore getCore() {
         return core;
     }
 }

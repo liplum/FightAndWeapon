@@ -1,4 +1,4 @@
-package net.liplum.lib.cores.battleaxe;
+package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.api.weapon.WeaponArgs;
 

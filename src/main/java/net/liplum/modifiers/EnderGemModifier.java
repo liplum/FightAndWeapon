@@ -1,11 +1,11 @@
 package net.liplum.modifiers;
 
 import net.liplum.items.weapons.lance.LanceCoreTypes;
-import net.liplum.lib.cores.lance.ILanceCore;
-import net.liplum.lib.cores.lance.LanceArgs;
+import net.liplum.items.weapons.lance.LanceCore;
+import net.liplum.items.weapons.lance.LanceArgs;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.modifiers.LanceModifier;
+import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
@@ -23,7 +23,7 @@ import java.util.List;
 public final class EnderGemModifier {
     public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
-        public ILanceCore getCoreType() {
+        public LanceCore getCoreType() {
             return LanceCoreTypes.LightLance;
         }
 
@@ -38,7 +38,7 @@ public final class EnderGemModifier {
         }
 
         @Override
-        public boolean releaseSkill(ILanceCore core, LanceArgs args) {
+        public boolean releaseSkill(LanceCore core, LanceArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
             float strength = args.getStrength();

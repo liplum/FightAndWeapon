@@ -1,11 +1,8 @@
-package net.liplum.lib.modifiers;
+package net.liplum.items.weapons.harp;
 
 import net.liplum.api.weapon.IMagicToolModifier;
-import net.liplum.lib.cores.harp.ContinuousHarpArgs;
-import net.liplum.lib.cores.harp.IHarpCore;
-import net.liplum.lib.cores.harp.SingleHarpArgs;
 
-public abstract class HarpModifier implements IMagicToolModifier<IHarpCore> {
+public abstract class HarpModifier implements IMagicToolModifier<HarpCore> {
     public double getRadiusDelta() {
         return 0;
     }
@@ -30,11 +27,11 @@ public abstract class HarpModifier implements IMagicToolModifier<IHarpCore> {
         return 0;
     }
 
-    public boolean continueSkill(IHarpCore core, ContinuousHarpArgs args) {
+    public boolean continueSkill(HarpCore core, ContinuousHarpArgs args) {
         return core.continueSkill(args);
     }
 
-    public boolean releaseSkill(IHarpCore core, SingleHarpArgs args) {
+    public boolean releaseSkill(HarpCore core, SingleHarpArgs args) {
         return core.releaseSkill(args);
     }
 }

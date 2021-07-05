@@ -1,6 +1,6 @@
 package net.liplum.api.weapon;
 
-public interface IModifier<CoreType extends IWeaponCore> {
+public interface IModifier<CoreType extends WeaponCore> {
 
     default float getCoolDownRate() {
         return 0;
