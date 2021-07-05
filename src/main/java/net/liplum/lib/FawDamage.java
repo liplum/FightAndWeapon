@@ -24,14 +24,17 @@ public class FawDamage extends EntityDamageSource {
         this.weaponCore = weaponCore;
     }
 
+    @Nonnull
     public static FawDamage byPlayer(@Nonnull EntityPlayer playerAttacker, @Nonnull IWeaponCore weaponCore) {
         return new FawDamage(Vanilla.DamageType.Player, playerAttacker, weaponCore);
     }
 
+    @Nonnull
     public static FawDamage byMob(@Nonnull EntityLivingBase entityAttacker, @Nonnull IWeaponCore weaponCore) {
         return new FawDamage(Vanilla.DamageType.Mob, entityAttacker, weaponCore);
     }
 
+    @Nonnull
     public EntityLivingBase getAttacker() {
         return (EntityLivingBase) damageSourceEntity;
     }
@@ -41,12 +44,14 @@ public class FawDamage extends EntityDamageSource {
         return weaponCore;
     }
 
+    @Nonnull
     public FawDamage setGemstone(@Nonnull IGemstone gemstone) {
         this.gemstone = gemstone;
         this.modifier = gemstone.getModifierOf(weaponCore);
         return this;
     }
 
+    @Nonnull
     public FawDamage setGemstone(@Nonnull IGemstone gemstone, @Nonnull IModifier<?> modifier) {
         this.gemstone = gemstone;
         this.modifier = modifier;

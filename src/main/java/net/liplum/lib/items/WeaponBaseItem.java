@@ -71,7 +71,7 @@ public abstract class WeaponBaseItem<CoreType extends IWeaponCore> extends FawIt
                 && attributesTooltip.size() != 0;
 
         boolean passiveSkillsShown = addPassiveSkillsTooltip(stack, passiveSkills, passiveSkillsTooltip, tooltipOption)
-                && attributesTooltip.size() != 0;
+                && passiveSkillsTooltip.size() != 0;
 
         if (gemstoneShown) {
             tooltip.addAll(gemstoneTooltip);

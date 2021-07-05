@@ -27,6 +27,8 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -335,81 +337,39 @@ public final class FawItemUtil {
         return (int) (base * (1 + rate));
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, @Nullable String format, @Nullable String unit) {
+    @SideOnly(Side.CLIENT)
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,
+                                           @Nullable String format, @Nullable String unit) {
         addAttributeTooltip(tooltip, attrTranslateKey, value, format, true, unit);
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, @Nullable String format, @Nullable String unit) {
-        addAttributeTooltip(tooltip, attrTranslateKey, value, format, true, unit);
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format, @Nullable String unit) {
-        addAttributeTooltip(tooltip, attrTranslateKey, value, format, true, unit);
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, @Nullable String format) {
+    @SideOnly(Side.CLIENT)
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,
+                                           @Nullable String format) {
         addAttributeTooltip(tooltip, attrTranslateKey, value, format, null);
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, @Nullable String format) {
-        addAttributeTooltip(tooltip, attrTranslateKey, value, format, null);
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format) {
-        addAttributeTooltip(tooltip, attrTranslateKey, value, format, null);
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value) {
+    @SideOnly(Side.CLIENT)
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value) {
         addAttributeTooltip(tooltip, attrTranslateKey, value, null);
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value) {
-        addAttributeTooltip(tooltip, attrTranslateKey, value, null);
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value) {
-        addAttributeTooltip(tooltip, attrTranslateKey, value, null);
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, float value, @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
-        String valueContent = format != null ? String.format(format, value) : Float.toString(value);
+    @SideOnly(Side.CLIENT)
+    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,
+                                           @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
+        String valueContent = format != null ? String.format(format, value) : value.toString();
         if (isStripTrailingZero) {
             valueContent = StringUtil.stripTrailingZero(valueContent);
         }
-        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
+        String unitContent = unit != null ? " " + TextFormatting.WHITE + I18n.format(unit) : "";
         String content = TextFormatting.YELLOW +
                 I18n.format(attrTranslateKey) + " : " +
-                valueContent + " " +
+                valueContent +
                 unitContent;
         tooltip.add(content);
     }
 
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, double value, @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
-        String valueContent = format != null ? String.format(format, value) : Double.toString(value);
-        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
-        if (isStripTrailingZero) {
-            valueContent = StringUtil.stripTrailingZero(valueContent);
-        }
-        String content = TextFormatting.YELLOW +
-                I18n.format(attrTranslateKey) + " : " +
-                valueContent + " " +
-                unitContent;
-        tooltip.add(content);
-    }
-
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, int value, @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
-        String valueContent = format != null ? String.format(format, value) : Integer.toString(value);
-        if (isStripTrailingZero) {
-            valueContent = StringUtil.stripTrailingZero(valueContent);
-        }
-        String unitContent = unit != null ? TextFormatting.WHITE + I18n.format(unit) : "";
-        String content = TextFormatting.YELLOW +
-                I18n.format(attrTranslateKey) + " : " +
-                valueContent + " " +
-                unitContent;
-        tooltip.add(content);
-    }
-
+    @SideOnly(Side.CLIENT)
     public static void addPassiveSkillTooltip(@Nonnull List<String> tooltip, @Nonnull IPassiveSkill<?> passiveSkill) {
         tooltip.add(TextFormatting.BLUE +
                 I18n.format(SkillUtil.getNameI18nKey(passiveSkill)));
