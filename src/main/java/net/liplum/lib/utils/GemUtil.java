@@ -3,7 +3,7 @@ package net.liplum.lib.utils;
 import net.liplum.I18ns;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.nbt.FawNbtTool;
@@ -23,7 +23,7 @@ public final class GemUtil {
      * @return
      */
     @Nullable
-    public static IModifier<?> getModifierFrom(ItemStack itemStack) {
+    public static Modifier<?> getModifierFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem<?>)) {
             return null;

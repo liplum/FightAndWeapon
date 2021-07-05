@@ -1,7 +1,7 @@
 package net.liplum.networks;
 
 import io.netty.buffer.ByteBuf;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -52,7 +52,7 @@ public class AttackMsg implements IMessage {
                     if (FawItemUtil.isFawWeapon(itemStack) && !player.isHandActive()) {
                         WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
                         double reach = weapon.getCore().getAttackReach();
-                        IModifier<?> modifier = GemUtil.getModifierFrom(itemStack);
+                        Modifier<?> modifier = GemUtil.getModifierFrom(itemStack);
                         if (modifier != null) {
                             reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
                         }

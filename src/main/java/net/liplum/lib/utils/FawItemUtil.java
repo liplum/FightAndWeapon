@@ -118,7 +118,7 @@ public final class FawItemUtil {
         WeaponCore core = weapon.getCore();
         float strengthBase = core.getStrength();
         IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
-        IModifier<?> modifier = GemUtil.getModifierFrom(itemStack);
+        Modifier<?> modifier = GemUtil.getModifierFrom(itemStack);
         if (modifier != null) {
             finalDamage += calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
         } else {

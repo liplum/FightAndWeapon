@@ -2,7 +2,7 @@ package net.liplum.items.weapons.lance;
 
 import net.liplum.Attributes;
 import net.liplum.I18ns;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.TooltipOption;
@@ -41,7 +41,7 @@ public class LanceItem extends WeaponBaseItem<LanceCore> {
         int coolDown = core.getValue(Attributes.Generic.CoolDown).getInt();
         //Player can't sprint in the sky.
         if (playerIn.onGround && playerIn.isSneaking()) {
-            IModifier<?> modifier = GemUtil.getModifierFrom(held);
+            Modifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
@@ -82,7 +82,7 @@ public class LanceItem extends WeaponBaseItem<LanceCore> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable IModifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
         boolean shown = super.addAttributesTooltip(stack, modifier, attributesTooltip, option);
         float sprintLength = core.getValue(Attributes.Lance.SprintStrength).getFloat();
         if (modifier instanceof LanceModifier) {

@@ -2,7 +2,7 @@ package net.liplum.items.weapons.harp;
 
 import net.liplum.I18ns;
 import net.liplum.Vanilla;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.TooltipOption;
@@ -44,7 +44,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
         ItemStack held = playerIn.getHeldItem(handIn);
         int coolDown = core.getCoolDown();
         if (playerIn.isSneaking()) {
-            IModifier<?> modifier = GemUtil.getModifierFrom(held);
+            Modifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
@@ -80,7 +80,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
     @Override
     public void onUsingTick(ItemStack stack, @Nonnull EntityLivingBase player, int count) {
         Item held = stack.getItem();
-        IModifier<?> modifier = GemUtil.getModifierFrom(stack);
+        Modifier<?> modifier = GemUtil.getModifierFrom(stack);
         EntityPlayer p = (EntityPlayer) player;
         EnumHand hand = ItemTool.inWhichHand(p, stack);
         if (hand == null) {
@@ -155,7 +155,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable IModifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
         boolean shown = super.addAttributesTooltip(stack, modifier, attributesTooltip, option);
         HarpModifier harpModifier = null;
         if (modifier instanceof HarpModifier) {

@@ -3,6 +3,7 @@ package net.liplum.api.weapon;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.BasicAttrValue;
 import net.liplum.attributes.IAttributeProvider;
+import net.liplum.attributes.IBasicAttrValueBuilder;
 import net.liplum.lib.items.WeaponBaseItem;
 
 import javax.annotation.Nonnull;
@@ -13,7 +14,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private final Map<Attribute, BasicAttrValue> allAttributes = new HashMap<>();
 
     public WeaponCore() {
-        buildAttributes(Attribute.genAllBasicAttributes(new AttributeBuilder()));
+        buildAttributes(Attribute.genAllBasicAttrValue(new AttributeBuilder()));
     }
 
     /**
@@ -74,7 +75,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     public abstract Class<? extends WeaponBaseItem<?>> getWeaponType();
 
-    public class AttributeBuilder {
+    protected class AttributeBuilder implements IBasicAttrValueBuilder {
+        @Override
         public AttributeBuilder add(@Nonnull Attribute attribute, @Nonnull BasicAttrValue value) {
             allAttributes.put(attribute, value);
             return this;

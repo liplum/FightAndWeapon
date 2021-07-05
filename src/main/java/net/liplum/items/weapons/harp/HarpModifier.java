@@ -1,8 +1,8 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.api.weapon.IMagicToolModifier;
+import net.liplum.api.weapon.MagicToolModifier;
 
-public abstract class HarpModifier implements IMagicToolModifier<HarpCore> {
+public abstract class HarpModifier implements MagicToolModifier<HarpCore> {
     public double getRadiusDelta() {
         return 0;
     }

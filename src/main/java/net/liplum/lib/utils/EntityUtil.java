@@ -1,7 +1,7 @@
 package net.liplum.lib.utils;
 
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.FawDamage;
 import net.minecraft.entity.Entity;
@@ -80,7 +80,7 @@ public class EntityUtil {
         return damage;
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable IModifier<?> modifier) {
+    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable Modifier<?> modifier) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
             damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);

@@ -1,7 +1,7 @@
 package net.liplum.eventhandlers;
 
 import net.liplum.AttributeDefault;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
@@ -40,7 +40,7 @@ public class ClientHandler {
                     WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
                     WeaponCore core = weapon.getCore();
                     double reach = core.getAttackReach();
-                    IModifier<?> modifier = GemUtil.getModifierFrom(mainHand);
+                    Modifier<?> modifier = GemUtil.getModifierFrom(mainHand);
                     if (modifier != null) {
                         reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
                     }

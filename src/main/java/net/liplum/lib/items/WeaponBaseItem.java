@@ -53,7 +53,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
         TooltipOption tooltipOption = new TooltipOption(shiftPressed, altPressed, vanillaAdvanced);
         CoreType core = getCore();
         IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
-        IModifier<?> modifier = null;
+        Modifier<?> modifier = null;
         IPassiveSkill<?>[] passiveSkills = null;
         if (gemstone != null) {
             passiveSkills = gemstone.getPassiveSkillsOf(core);
@@ -116,7 +116,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
      * @return whether it was added something.
      */
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable IModifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
         boolean added = false;
         CoreType core = getCore();
         float strength = core.getStrength();
@@ -131,8 +131,8 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
         if (core instanceof MagicToolCore) {
             MagicToolCore magicCore = (MagicToolCore) core;
             float ap = magicCore.getAbilityPower();
-            if (modifier instanceof IMagicToolModifier<?>) {
-                IMagicToolModifier<?> magicModifier = (IMagicToolModifier<?>) modifier;
+            if (modifier instanceof MagicToolModifier<?>) {
+                MagicToolModifier<?> magicModifier = (MagicToolModifier<?>) modifier;
                 ap = FawItemUtil.calcuAttribute(ap, magicModifier.getAbilityPowerDelta(), magicModifier.getAbilityPowerRate());
             }
             if (ap > 0) {
@@ -210,7 +210,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
     @Override
     public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
         double reach = getCore().getAttackReach();
-        IModifier<?> modifier = GemUtil.getModifierFrom(stack);
+        Modifier<?> modifier = GemUtil.getModifierFrom(stack);
         if (modifier != null) {
             reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
         }

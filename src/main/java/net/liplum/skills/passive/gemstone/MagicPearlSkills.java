@@ -6,7 +6,7 @@ import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.api.weapon.DamageArgs;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
@@ -35,7 +35,7 @@ public final class MagicPearlSkills {
                             EntityLivingBase attacker = args.getAttacker();
                             WeaponCore weaponCore = args.getWeaponCore();
                             IGemstone gemstone = args.getGemstone();
-                            IModifier<?> modifier = args.getModifier();
+                            Modifier<?> modifier = args.getModifier();
                             List<DamageArgs> allDamages = args.getAllDamages();
                             DamageArgs initialDamage = args.getInitialDamage();
                             float initialDamageValue = initialDamage.getDamage();

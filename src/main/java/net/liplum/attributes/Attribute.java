@@ -1,6 +1,5 @@
 package net.liplum.attributes;
 
-import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.utils.FawItemUtil;
 
 import javax.annotation.Nonnull;
@@ -64,9 +63,20 @@ public class Attribute {
         return new BasicAttrValue(defaultValue, dataType);
     }
 
-    public static WeaponCore.AttributeBuilder genAllBasicAttributes(WeaponCore.AttributeBuilder builder) {
+    public AttrModifier genAttrModifier() {
+        return new AttrModifier(dataType, 0, 0);
+    }
+
+    public static <T extends IBasicAttrValueBuilder> T genAllBasicAttrValue(T builder) {
         for (Attribute attribute : BasicAttribute) {
             builder.add(attribute, attribute.genBasicAttrValue());
+        }
+        return builder;
+    }
+
+    public static <T extends IAttrModifierBuilder> T genAllAttrModifiers(T builder) {
+        for (Attribute attribute : BasicAttribute) {
+            builder.add(attribute, attribute.genAttrModifier());
         }
         return builder;
     }

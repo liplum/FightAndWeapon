@@ -1,8 +1,8 @@
 package net.liplum.items.weapons.battleaxe;
 
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 
-public abstract class BattleAxeModifier implements IModifier<BattleAxeCore> {
+public abstract class BattleAxeModifier implements Modifier<BattleAxeCore> {
     public boolean releaseSkill(BattleAxeCore core, BattleAxeArgs args) {
         return core.releaseSkill(args);
     }

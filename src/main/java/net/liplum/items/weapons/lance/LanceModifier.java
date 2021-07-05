@@ -1,8 +1,8 @@
 package net.liplum.items.weapons.lance;
 
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 
-public abstract class LanceModifier implements IModifier<LanceCore> {
+public abstract class LanceModifier implements Modifier<LanceCore> {
     public float getSprintLengthDelta() {
         return 0;
     }

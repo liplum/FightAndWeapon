@@ -2,7 +2,7 @@ package net.liplum.lib;
 
 import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -17,7 +17,7 @@ public class FawDamage extends EntityDamageSource {
     @Nullable
     private IGemstone gemstone;
     @Nullable
-    private IModifier<?> modifier;
+    private Modifier<?> modifier;
 
     private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull WeaponCore weaponCore) {
         super(damageType, attacker);
@@ -52,7 +52,7 @@ public class FawDamage extends EntityDamageSource {
     }
 
     @Nonnull
-    public FawDamage setGemstone(@Nonnull IGemstone gemstone, @Nonnull IModifier<?> modifier) {
+    public FawDamage setGemstone(@Nonnull IGemstone gemstone, @Nonnull Modifier<?> modifier) {
         this.gemstone = gemstone;
         this.modifier = modifier;
         return this;
@@ -64,7 +64,7 @@ public class FawDamage extends EntityDamageSource {
     }
 
     @Nullable
-    public IModifier<?> getModifier() {
+    public Modifier<?> getModifier() {
         return modifier;
     }
 }

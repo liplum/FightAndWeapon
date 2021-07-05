@@ -2,7 +2,7 @@ package net.liplum.lib.items;
 
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 
 import javax.annotation.Nonnull;
@@ -35,7 +35,7 @@ public class Gemstone implements IGemstone {
      */
     @Override
     @Nullable
-    public IModifier<?> getModifierOf(WeaponCore core) {
+    public Modifier<?> getModifierOf(WeaponCore core) {
         return amplifierOfCores.getModifierOf(core);
     }
 
@@ -60,7 +60,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone addModifier(IModifier<?> newModifier) {
+    public IGemstone addModifier(Modifier<?> newModifier) {
         amplifierOfCores.addModifier(newModifier);
         return this;
     }
@@ -90,7 +90,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone removeModifier(IModifier<?> modifier) {
+    public IGemstone removeModifier(Modifier<?> modifier) {
         amplifierOfCores.removeModifier(modifier.getCoreType());
         return this;
     }
@@ -128,7 +128,7 @@ public class Gemstone implements IGemstone {
     private static class AmplifierOfCores {
         private final Map<WeaponCore, CoreAmplifier> amplifiers = new HashMap<>();
 
-        public IModifier<?> getModifierOf(WeaponCore core) {
+        public Modifier<?> getModifierOf(WeaponCore core) {
             if (amplifiers.containsKey(core)) {
                 return amplifiers.get(core).getModifier();
             }
@@ -150,7 +150,7 @@ public class Gemstone implements IGemstone {
             return null;
         }
 
-        public void addModifier(IModifier<?> modifier) {
+        public void addModifier(Modifier<?> modifier) {
             WeaponCore core = modifier.getCoreType();
             if (amplifiers.containsKey(core)) {
                 amplifiers.get(core).setModifier(modifier);
@@ -185,14 +185,14 @@ public class Gemstone implements IGemstone {
 
         private static class CoreAmplifier {
             private final Set<IPassiveSkill<?>> passiveSkills = new HashSet<>();
-            private IModifier<?> modifier = null;
+            private Modifier<?> modifier = null;
 
             @Nullable
-            public IModifier<?> getModifier() {
+            public Modifier<?> getModifier() {
                 return modifier;
             }
 
-            public void setModifier(IModifier<?> modifier) {
+            public void setModifier(Modifier<?> modifier) {
                 this.modifier = modifier;
             }
 

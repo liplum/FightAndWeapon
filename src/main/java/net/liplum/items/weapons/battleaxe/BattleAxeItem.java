@@ -1,6 +1,6 @@
 package net.liplum.items.weapons.battleaxe;
 
-import net.liplum.api.weapon.IModifier;
+import net.liplum.api.weapon.Modifier;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.items.WeaponBaseItem;
@@ -37,7 +37,7 @@ public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
         //Default is PASS
         //If play were not sneaking, didn't detect.
         if (!playerIn.isSneaking()) {
-            IModifier<?> modifier = GemUtil.getModifierFrom(held);
+            Modifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );

@@ -17,12 +17,12 @@ public interface IGemstone {
      * @return the modifier or null if it didn't has a corresponding modifier of the core in this gemstone.
      */
     @Nullable
-    IModifier<?> getModifierOf(WeaponCore core);
+    Modifier<?> getModifierOf(WeaponCore core);
 
     @Nonnull
     IPassiveSkill<?>[] getPassiveSkillsOf(WeaponCore core);
 
-    IGemstone addModifier(IModifier<?> newModifier);
+    IGemstone addModifier(Modifier<?> newModifier);
 
     IGemstone addPassiveSkillToCore(WeaponCore core, IPassiveSkill<?> newPassiveSkill);
 
@@ -32,7 +32,7 @@ public interface IGemstone {
 
     IGemstone removeModifier(WeaponCore core);
 
-    IGemstone removeModifier(IModifier<?> modifier);
+    IGemstone removeModifier(Modifier<?> modifier);
 
     IGemstone removePassiveSkillFromCore(WeaponCore core, IPassiveSkill<?> passiveSkill);
 

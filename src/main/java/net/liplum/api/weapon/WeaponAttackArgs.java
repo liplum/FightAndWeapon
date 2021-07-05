@@ -14,7 +14,7 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     private Entity target;
     private WeaponCore weaponCore;
     private IGemstone gemstone;
-    private IModifier<?> modifier;
+    private Modifier<?> modifier;
     private ItemStack itemStack;
     private DamageArgs initialDamage;
 
@@ -63,12 +63,12 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     }
 
     @Nullable
-    public IModifier<?> getModifier() {
+    public Modifier<?> getModifier() {
         return modifier;
     }
 
     @Nonnull
-    public This setModifier(@Nullable IModifier<?> modifier) {
+    public This setModifier(@Nullable Modifier<?> modifier) {
         this.modifier = modifier;
         return (This) this;
     }
