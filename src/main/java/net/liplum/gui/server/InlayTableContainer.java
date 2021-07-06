@@ -6,7 +6,7 @@ import net.liplum.api.weapon.WeaponCore;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.gui.Property;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.GuiUtil;

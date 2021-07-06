@@ -1,7 +1,9 @@
 package net.liplum.items.weapons.lance;
 
 import net.liplum.Attributes;
+import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.Attribute;
 
 import javax.annotation.Nonnull;
@@ -25,7 +27,7 @@ public abstract class LanceCore extends WeaponCore {
 
     @Nonnull
     @Override
-    public Class<LanceItem> getWeaponType() {
-        return LanceItem.class;
+    public WeaponType getWeaponType() {
+        return WeaponTypes.Lance;
     }
 }

@@ -1,6 +1,6 @@
 package net.liplum.api.fight;
 
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -11,7 +11,7 @@ public interface IMaster {
     String getRegisterName();
 
     @Nonnull
-    Class<? extends WeaponBaseItem<?>> getWeaponType();
+    WeaponType getWeaponType();
 
     @Nonnull
     Map<String, Number> getAttributeAmplifier(int level);

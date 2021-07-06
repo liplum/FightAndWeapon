@@ -4,7 +4,6 @@ import net.liplum.attributes.Attribute;
 import net.liplum.attributes.BasicAttrValue;
 import net.liplum.attributes.IAttributeProvider;
 import net.liplum.attributes.IBasicAttrValueBuilder;
-import net.liplum.lib.items.WeaponBaseItem;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -39,7 +38,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     protected abstract void buildAttributes(AttributeBuilder builder);
 
     @Nonnull
-    public abstract Class<? extends WeaponBaseItem<?>> getWeaponType();
+    public abstract WeaponType getWeaponType();
 
     protected class AttributeBuilder implements IBasicAttrValueBuilder {
         @Override

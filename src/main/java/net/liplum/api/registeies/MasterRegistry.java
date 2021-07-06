@@ -1,7 +1,8 @@
 package net.liplum.api.registeies;
 
 import net.liplum.api.fight.IMaster;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -9,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public final class MasterRegistry {
-    private static final Map<Class<? extends WeaponBaseItem<?>>, IMaster> MasterMap = new HashMap<>();
+    private static final Map<WeaponType, IMaster> MasterMap = new HashMap<>();
 
     @Nonnull
     public static IMaster register(@Nonnull IMaster master) {
@@ -18,10 +19,7 @@ public final class MasterRegistry {
     }
 
     @Nullable
-    public static IMaster getMasterOf(@Nonnull Class<? extends WeaponBaseItem<?>> weaponType) {
-        if (MasterMap.containsKey(weaponType)) {
-            return MasterMap.get(weaponType);
-        }
-        return null;
+    public static IMaster getMasterOf(@Nonnull WeaponType weaponType) {
+        return MasterMap.get(weaponType);
     }
 }

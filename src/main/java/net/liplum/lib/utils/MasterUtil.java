@@ -3,10 +3,11 @@ package net.liplum.lib.utils;
 import net.liplum.api.fight.IMaster;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.MasterRegistry;
+import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.Attribute;
 import net.liplum.capabilities.MasterCapability;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.masters.LvExpPair;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -83,7 +84,7 @@ public final class MasterUtil {
     }
 
     @Nonnull
-    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull Class<WeaponBaseItem<?>> weaponType) {
+    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
         IMaster master = MasterRegistry.getMasterOf(weaponType);
         if (master != null) {
             return getPassiveSkills(player, master);
@@ -91,7 +92,7 @@ public final class MasterUtil {
         return new HashSet<>();
     }
 
-    public static AttrDelta getAttributeValue(@Nonnull MasterCapability masterCapability, @Nonnull Class<WeaponBaseItem<?>> weaponType, @Nonnull Attribute attribute) {
+    public static AttrDelta getAttributeValue(@Nonnull MasterCapability masterCapability, @Nonnull WeaponType weaponType, @Nonnull Attribute attribute) {
         IMaster master = MasterRegistry.getMasterOf(weaponType);
         if (master != null) {
             LvExpPair levelAndExp = masterCapability.getLevelAndExp(master.getRegisterName());

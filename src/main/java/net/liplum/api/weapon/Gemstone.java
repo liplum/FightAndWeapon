@@ -1,9 +1,6 @@
-package net.liplum.lib.items;
+package net.liplum.api.weapon;
 
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.Modifier;
-import net.liplum.api.weapon.WeaponCore;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -72,7 +69,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone addPassiveSkillToWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> newPassiveSkill) {
+    public IGemstone addPassiveSkillToWeaponType(WeaponType weaponType, IPassiveSkill<?> newPassiveSkill) {
         amplifierOfWeaponTypes.addPassiveSkills(weaponType, newPassiveSkill);
         return this;
     }
@@ -102,7 +99,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone removePassiveSkillFromWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> passiveSkill) {
+    public IGemstone removePassiveSkillFromWeaponType(WeaponType weaponType, IPassiveSkill<?> passiveSkill) {
         amplifierOfWeaponTypes.removePassiveSkill(weaponType, passiveSkill);
         return this;
     }
@@ -220,17 +217,17 @@ public class Gemstone implements IGemstone {
     }
 
     private static class AmplifierOfWeaponTypes {
-        private final Map<Class<? extends WeaponBaseItem<?>>, Set<IPassiveSkill<?>>> amplifiers = new HashMap<>();
+        private final Map<WeaponType, Set<IPassiveSkill<?>>> amplifiers = new HashMap<>();
 
         @Nullable
-        public Collection<IPassiveSkill<?>> getPassiveSkills(Class<? extends WeaponBaseItem<?>> weaponType) {
+        public Collection<IPassiveSkill<?>> getPassiveSkills(WeaponType weaponType) {
             if (amplifiers.containsKey(weaponType)) {
                 return amplifiers.get(weaponType);
             }
             return null;
         }
 
-        public void addPassiveSkills(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> passiveSkill) {
+        public void addPassiveSkills(WeaponType weaponType, IPassiveSkill<?> passiveSkill) {
             if (amplifiers.containsKey(weaponType)) {
                 amplifiers.get(weaponType).add(passiveSkill);
             } else {
@@ -240,13 +237,13 @@ public class Gemstone implements IGemstone {
             }
         }
 
-        public void removePassiveSkill(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> passiveSkill) {
+        public void removePassiveSkill(WeaponType weaponType, IPassiveSkill<?> passiveSkill) {
             if (amplifiers.containsKey(weaponType)) {
                 amplifiers.get(weaponType).remove(passiveSkill);
             }
         }
 
-        public boolean hasAnyAmplifier(Class<?> weaponType) {
+        public boolean hasAnyAmplifier(WeaponType weaponType) {
             return amplifiers.containsKey(weaponType);
         }
     }

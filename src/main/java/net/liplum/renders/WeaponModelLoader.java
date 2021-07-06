@@ -1,7 +1,7 @@
 package net.liplum.renders;
 
 import net.liplum.Resources;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.utils.ResourceUtil;
 import net.minecraft.client.resources.IResourceManager;
 import net.minecraft.util.ResourceLocation;

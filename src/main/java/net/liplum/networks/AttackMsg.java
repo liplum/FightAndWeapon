@@ -5,7 +5,7 @@ import net.liplum.Attributes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.attributes.FinalAttrValue;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.Entity;

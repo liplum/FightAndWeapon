@@ -20,7 +20,7 @@ import net.liplum.items.weapons.harp.HarpCoreTypes;
 import net.liplum.items.weapons.harp.HarpItem;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceItem;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -148,7 +148,6 @@ public final class ItemRegistry {
     }
 
     public static Item weapon(WeaponBaseItem<?> weapon, String name) {
-        WeaponRegistry.register(name, weapon);
         return with(weapon, name, ItemGroupRegistry.FawWeapons);
     }
 

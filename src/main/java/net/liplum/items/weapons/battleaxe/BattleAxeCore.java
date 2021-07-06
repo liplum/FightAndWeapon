@@ -1,7 +1,9 @@
 package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.Attributes;
+import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.Attribute;
 
 import javax.annotation.Nonnull;
@@ -26,7 +28,7 @@ public abstract class BattleAxeCore extends WeaponCore {
 
     @Nonnull
     @Override
-    public Class<BattleAxeItem> getWeaponType() {
-        return BattleAxeItem.class;
+    public WeaponType getWeaponType() {
+        return WeaponTypes.BattleAxe;
     }
 }

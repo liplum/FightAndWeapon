@@ -1,4 +1,4 @@
-package net.liplum.lib.items;
+package net.liplum.api.weapon;
 
 import net.liplum.Names;
 

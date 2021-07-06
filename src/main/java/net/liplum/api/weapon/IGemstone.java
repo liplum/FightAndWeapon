@@ -1,7 +1,6 @@
 package net.liplum.api.weapon;
 
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.lib.items.WeaponBaseItem;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -26,7 +25,7 @@ public interface IGemstone {
 
     IGemstone addPassiveSkillToCore(WeaponCore core, IPassiveSkill<?> newPassiveSkill);
 
-    IGemstone addPassiveSkillToWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> newPassiveSkill);
+    IGemstone addPassiveSkillToWeaponType(WeaponType weaponType, IPassiveSkill<?> newPassiveSkill);
 
     IGemstone addPassiveSkillToAll(IPassiveSkill<?> newPassiveSkill);
 
@@ -36,7 +35,7 @@ public interface IGemstone {
 
     IGemstone removePassiveSkillFromCore(WeaponCore core, IPassiveSkill<?> passiveSkill);
 
-    IGemstone removePassiveSkillFromWeaponType(Class<? extends WeaponBaseItem<?>> weaponType, IPassiveSkill<?> passiveSkill);
+    IGemstone removePassiveSkillFromWeaponType(WeaponType weaponType, IPassiveSkill<?> passiveSkill);
 
     IGemstone removePassiveSkillFromAll(IPassiveSkill<?> passiveSkill);
 

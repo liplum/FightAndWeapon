@@ -4,7 +4,8 @@ import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.WeaponCore;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -34,7 +35,7 @@ public final class SkillUtil {
 
             //First, gets the passive skills from weapon's gemstone
             WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
-            Class<WeaponBaseItem<?>> clz = (Class<WeaponBaseItem<?>>) weapon.getClass();
+            WeaponType weaponType = weapon.getWeaponType();
             WeaponCore core = weapon.getCore();
             IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
             if (gemstone != null) {
@@ -50,7 +51,7 @@ public final class SkillUtil {
             //Then, gets the passive skills from entity's master if the entity is a player
             if (entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) entity;
-                Set<IPassiveSkill<?>> skillsFromMaster = MasterUtil.getPassiveSkills(player, clz);
+                Set<IPassiveSkill<?>> skillsFromMaster = MasterUtil.getPassiveSkills(player, weaponType);
                 for (IPassiveSkill<?> skill : skillsFromMaster) {
                     if (skill.getEventType() == eventType) {
                         allSkills.add((IPassiveSkill<Event>) skill);

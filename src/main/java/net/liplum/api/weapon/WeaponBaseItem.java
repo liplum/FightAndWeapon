@@ -1,10 +1,8 @@
-package net.liplum.lib.items;
+package net.liplum.api.weapon;
 
 import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.Modifier;
-import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.TooltipOption;
@@ -35,10 +33,11 @@ import static net.liplum.Attributes.Generic.*;
 
 public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawItem {
     @Nonnull
-    private final List<Attribute> allAttributes;
+    protected final List<Attribute> allAttributes;
 
     public WeaponBaseItem() {
         super();
+        WeaponRegistry.register(this.getWeaponType(), this);
         this.allAttributes = initAllAttributes();
     }
 
@@ -234,5 +233,8 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
      */
     @Nonnull
     public abstract CoreType getCore();
+
+    @Nonnull
+    public abstract WeaponType getWeaponType();
 
 }

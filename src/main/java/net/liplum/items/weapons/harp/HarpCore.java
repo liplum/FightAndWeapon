@@ -1,7 +1,9 @@
 package net.liplum.items.weapons.harp;
 
 import net.liplum.Attributes;
+import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.MagicToolCore;
+import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.Attribute;
 
 import javax.annotation.Nonnull;
@@ -30,7 +32,7 @@ public abstract class HarpCore extends MagicToolCore {
 
     @Nonnull
     @Override
-    public Class<HarpItem> getWeaponType() {
-        return HarpItem.class;
+    public WeaponType getWeaponType() {
+        return WeaponTypes.Harp;
     }
 }

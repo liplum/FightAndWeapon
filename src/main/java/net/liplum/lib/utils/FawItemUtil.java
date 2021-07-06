@@ -12,9 +12,9 @@ import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
-import net.liplum.lib.items.Category;
-import net.liplum.lib.items.FawItem;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.Category;
+import net.liplum.api.weapon.FawItem;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.client.resources.I18n;
@@ -371,7 +371,7 @@ public final class FawItemUtil {
         }
         AttrDelta masterValue = null;
         if (master != null) {
-            masterValue = MasterUtil.getAttributeValue(master, (Class<WeaponBaseItem<?>>) core.getWeaponType(), attribute);
+            masterValue = MasterUtil.getAttributeValue(master, core.getWeaponType(), attribute);
         }
 
         //Modifier

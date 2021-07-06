@@ -4,7 +4,8 @@ import net.liplum.api.fight.IActiveSkill;
 import net.liplum.api.fight.IMaster;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.SkillRegistry;
-import net.liplum.lib.items.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;
 import java.util.LinkedList;
@@ -12,11 +13,11 @@ import java.util.List;
 import java.util.Map;
 
 public class Master implements IMaster {
-    private final Class<? extends WeaponBaseItem<?>> weaponType;
+    private final WeaponType weaponType;
     private final String registerName;
     private Routine routine;
 
-    public Master(String registerName, Class<? extends WeaponBaseItem<?>> weaponType) {
+    public Master(String registerName, WeaponType weaponType) {
         this.weaponType = weaponType;
         this.registerName = registerName;
     }
@@ -37,7 +38,7 @@ public class Master implements IMaster {
 
     @Nonnull
     @Override
-    public Class<? extends WeaponBaseItem<?>> getWeaponType() {
+    public WeaponType getWeaponType() {
         return weaponType;
     }
 
