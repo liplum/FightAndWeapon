@@ -149,11 +149,11 @@ public class MathUtil {
     }
 
     public static int fixMax(int value, int max) {
-        return value > max ? max : value;
+        return Math.min(value, max);
     }
 
     public static int fixMin(int value, int min) {
-        return value < min ? min : value;
+        return Math.max(value, min);
     }
 
     public static short fixMax(short value, short max) {
@@ -173,27 +173,27 @@ public class MathUtil {
     }
 
     public static float fixMax(float value, float max) {
-        return value > max ? max : value;
+        return Math.min(value, max);
     }
 
     public static float fixMin(float value, float min) {
-        return value < min ? min : value;
+        return Math.max(value, min);
     }
 
     public static double fixMax(double value, double max) {
-        return value > max ? max : value;
+        return Math.min(value, max);
     }
 
     public static double fixMin(double value, double min) {
-        return value < min ? min : value;
+        return Math.max(value, min);
     }
 
     public static long fixMax(long value, long max) {
-        return value > max ? max : value;
+        return Math.min(value, max);
     }
 
     public static long fixMin(long value, long min) {
-        return value < min ? min : value;
+        return Math.max(value, min);
     }
 
     public static Vec3d from2D(Vector2D v2d) {

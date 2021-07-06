@@ -1,5 +1,6 @@
 package net.liplum.modifiers;
 
+import net.liplum.api.weapon.Modifier;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceArgs;
@@ -17,6 +18,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import static net.liplum.Attributes.Lance.*;
+import static net.liplum.Attributes.Generic.*;
 
 import java.util.List;
 
@@ -28,13 +31,11 @@ public final class EnderGemModifier {
         }
 
         @Override
-        public float getSprintLengthDelta() {
-            return 2;
-        }
-
-        @Override
-        public float getSprintLengthRate() {
-            return 0;
+        protected void buildAttributes(Modifier<LanceCore>.AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.set(
+                    SprintStrength,SprintStrength.newAttrModifier(2,0)
+            );
         }
 
         @Override

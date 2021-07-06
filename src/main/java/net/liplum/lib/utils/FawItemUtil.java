@@ -3,6 +3,8 @@ package net.liplum.lib.utils;
 import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
+import net.liplum.attributes.*;
+import net.liplum.capabilities.MasterCapability;
 import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
@@ -14,6 +16,7 @@ import net.liplum.lib.items.Category;
 import net.liplum.lib.items.FawItem;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
+import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -33,6 +36,9 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+
+import static net.liplum.Attributes.Generic.EnemyBreakingTime;
+import static net.liplum.Attributes.Generic.Strength;
 
 public final class FawItemUtil {
     private FawItemUtil() {
@@ -116,14 +122,10 @@ public final class FawItemUtil {
         float finalDamage = baseDamage;
 
         WeaponCore core = weapon.getCore();
-        float strengthBase = core.getStrength();
         IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
         Modifier<?> modifier = GemUtil.getModifierFrom(itemStack);
-        if (modifier != null) {
-            finalDamage += calcuAttribute(strengthBase, modifier.getStrengthDelta(), modifier.getStrengthRate());
-        } else {
-            finalDamage += strengthBase;
-        }
+        FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, attackPlayer);
+        finalDamage += finalStrength.getFloat();
         SoundEvent sound = null;
 
         if (attackPlayer != null) {
@@ -164,10 +166,8 @@ public final class FawItemUtil {
             sound = SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE;
         } else {
             //calcu enemy breaking time
-            int enemyBreakingTime = core.getEnemyBreakingTime();
-            if (modifier != null) {
-                enemyBreakingTime = calcuAttribute(enemyBreakingTime, modifier.getEnemyBreakingTimeDelta(), modifier.getEnemyBreakingTimeRate());
-            }
+            FinalAttrValue finalEnemyBreakingTime = FawItemUtil.calcuAttribute(EnemyBreakingTime, core, modifier, attackPlayer);
+            int enemyBreakingTime = finalEnemyBreakingTime.getInt();
 
             if (enemyBreakingTime >= 0) {
                 target.hurtResistantTime = enemyBreakingTime;
@@ -297,7 +297,8 @@ public final class FawItemUtil {
         }
         return (int) (base * (1 + rate));
     }
-/**
+
+    /**
      * @param base
      * @param rate
      * @return
@@ -351,5 +352,34 @@ public final class FawItemUtil {
 
     public static String getNameI18nKey(WeaponPart weaponPart) {
         return I18ns.endWithName(I18ns.prefixItem(weaponPart.getRegisterName()));
+    }
+
+    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core) {
+        return calcuAttribute(attribute, core, null, null);
+    }
+
+    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier) {
+        return calcuAttribute(attribute, core, modifier, null);
+    }
+
+    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player) {
+        BasicAttrValue baseAttrValue = core.getValue(attribute);
+        //Master
+        MasterCapability master = null;
+        if (player != null) {
+            master = player.getCapability(CapabilityRegistry.Master_Capability, null);
+        }
+        AttrDelta masterValue = null;
+        if (master != null) {
+            masterValue = MasterUtil.getAttributeValue(master, (Class<WeaponBaseItem<?>>) core.getWeaponType(), attribute);
+        }
+
+        //Modifier
+        AttrModifier attrModifier = null;
+        if (modifier != null) {
+            attrModifier = modifier.getValue(attribute);
+        }
+
+        return attribute.compute(baseAttrValue, attrModifier, masterValue);
     }
 }

@@ -1,8 +1,8 @@
 package net.liplum.eventhandlers;
 
-import net.liplum.AttributeDefault;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
+import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -19,6 +19,8 @@ import net.minecraftforge.client.event.MouseEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import static net.liplum.Attributes.Generic.AttackReach;
 
 @SideOnly(Side.CLIENT)
 public class ClientHandler {
@@ -39,13 +41,10 @@ public class ClientHandler {
                 if (item instanceof WeaponBaseItem<?>) {
                     WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
                     WeaponCore core = weapon.getCore();
-                    double reach = core.getAttackReach();
                     Modifier<?> modifier = GemUtil.getModifierFrom(mainHand);
-                    if (modifier != null) {
-                        reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
-                    }
-                    if (reach != AttributeDefault.Generic.AttackReach) {
-                        RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(core.getAttackReach());
+                    FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(AttackReach, core, modifier, player);
+                    if (!AttackReach.isDefaultValue(finalAttackReach)) {
+                        RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(finalAttackReach.getFloat());
                         if (rayTrace != null) {
                             MessageManager.sendMessageToServer(
                                     new AttackMsg(rayTrace.entityHit.getEntityId())

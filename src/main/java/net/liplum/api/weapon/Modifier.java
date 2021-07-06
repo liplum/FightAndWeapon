@@ -7,14 +7,21 @@ import net.liplum.attributes.IAttributeProvider;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class Modifier<CoreType extends WeaponCore> implements IAttributeProvider<AttrModifier> {
     private final Map<Attribute, AttrModifier> allAttributeModifiers = new HashMap<>();
 
     public Modifier() {
-        buildAttributes(Attribute.genAllAttrModifiers(new AttributeBuilder()));
+        AttributeBuilder builder = Attribute.genAllAttrModifiers(new AttributeBuilder());
+        for (Attribute attribute : initAllAttributes()) {
+            builder.set(attribute, attribute.genAttrModifier());
+        }
+        buildAttributes(builder);
     }
+
+    protected abstract List<Attribute> initAllAttributes();
 
     /**
      * Get the corresponding value via the attribute
@@ -34,7 +41,7 @@ public abstract class Modifier<CoreType extends WeaponCore> implements IAttribut
 
     protected class AttributeBuilder implements IAttrModifierBuilder {
         @Override
-        public AttributeBuilder add(@Nonnull Attribute attribute, @Nonnull AttrModifier modifier) {
+        public AttributeBuilder set(@Nonnull Attribute attribute, @Nonnull AttrModifier modifier) {
             allAttributeModifiers.put(attribute, modifier);
             return this;
         }

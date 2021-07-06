@@ -6,6 +6,10 @@ public class AttrDelta extends AttrValue {
         super(dataType);
         this.delta = delta;
     }
+    public AttrDelta(DataType dataType) {
+        super(dataType);
+        this.delta = 0;
+    }
 
     protected final Number delta;
 

@@ -8,14 +8,21 @@ import net.liplum.lib.items.WeaponBaseItem;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private final Map<Attribute, BasicAttrValue> allAttributes = new HashMap<>();
 
     public WeaponCore() {
-        buildAttributes(Attribute.genAllBasicAttrValue(new AttributeBuilder()));
+        AttributeBuilder builder = Attribute.genAllBasicAttrValue(new AttributeBuilder());
+        for (Attribute attribute : initAllAttributes()) {
+            builder.set(attribute, attribute.genBasicAttrValue());
+        }
+        buildAttributes(builder);
     }
+
+    protected abstract List<Attribute> initAllAttributes();
 
     /**
      * Get the corresponding value via the attribute
@@ -77,7 +84,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
     protected class AttributeBuilder implements IBasicAttrValueBuilder {
         @Override
-        public AttributeBuilder add(@Nonnull Attribute attribute, @Nonnull BasicAttrValue value) {
+        public AttributeBuilder set(@Nonnull Attribute attribute, @Nonnull BasicAttrValue value) {
             allAttributes.put(attribute, value);
             return this;
         }

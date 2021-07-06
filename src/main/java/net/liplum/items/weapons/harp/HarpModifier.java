@@ -1,30 +1,25 @@
 package net.liplum.items.weapons.harp;
 
+import net.liplum.Attributes;
 import net.liplum.api.weapon.MagicToolModifier;
+import net.liplum.attributes.Attribute;
 
-public abstract class HarpModifier implements MagicToolModifier<HarpCore> {
-    public double getRadiusDelta() {
-        return 0;
+import java.util.LinkedList;
+import java.util.List;
+
+public abstract class HarpModifier extends MagicToolModifier<HarpCore> {
+    @Override
+    protected void buildAttributes(AttributeBuilder builder) {
+
     }
 
-    public float getRadiusRate() {
-        return 0;
-    }
-
-    public int getMaxUseDelta() {
-        return 0;
-    }
-
-    public float getMaxUseRate() {
-        return 0;
-    }
-
-    public int getFrequencyDelta() {
-        return 0;
-    }
-
-    public float getFrequencyRate() {
-        return 0;
+    @Override
+    protected List<Attribute> initAllAttributes() {
+        LinkedList<Attribute> list = new LinkedList<>();
+        list.add(Attributes.Harp.Frequency);
+        list.add(Attributes.Harp.MaxUseDuration);
+        list.add(Attributes.Harp.Radius);
+        return list;
     }
 
     public boolean continueSkill(HarpCore core, ContinuousHarpArgs args) {

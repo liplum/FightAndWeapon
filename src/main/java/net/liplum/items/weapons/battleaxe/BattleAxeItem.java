@@ -1,6 +1,7 @@
 package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.api.weapon.Modifier;
+import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.items.WeaponBaseItem;
@@ -19,6 +20,10 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 
+import static net.liplum.Attributes.BattleAxe.SweepRange;
+import static net.liplum.Attributes.Generic.CoolDown;
+import static net.liplum.Attributes.Generic.Strength;
+
 public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
     private final BattleAxeCore core;
 
@@ -33,7 +38,6 @@ public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         ItemStack offHeld = playerIn.getHeldItemOffhand();
-        int coolDown = core.getCoolDown();
         //Default is PASS
         //If play were not sneaking, didn't detect.
         if (!playerIn.isSneaking()) {
@@ -42,28 +46,24 @@ public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
             if (!cancelRelease) {
-                float sweepRange = core.getSweepRange();
-                float dmg = core.getStrength();
-                boolean releaseSkilled = false;
+                FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
+                FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, playerIn);
+                FinalAttrValue finalSweepRange = FawItemUtil.calcuAttribute(SweepRange, core, modifier, playerIn);
+                int coolDown = finalCoolDown.getInt();
+                boolean releaseSkilled;
                 BattleAxeArgs args = new BattleAxeArgs()
                         .setWorld(worldIn)
                         .setPlayer(playerIn)
                         .setItemStack(held)
-                        .setHand(handIn);
+                        .setHand(handIn)
+                        .setStrength(finalStrength.getFloat())
+                        .setSweepRange(finalSweepRange.getFloat())
+                        .setModifier(modifier);
                 if (modifier != null) {
                     BattleAxeModifier mod = (BattleAxeModifier) modifier;
-                    sweepRange = FawItemUtil.calcuAttribute(sweepRange, mod.getSweepRangeDelta(), mod.getSweepRate());
-                    dmg = FawItemUtil.calcuAttribute(dmg, mod.getStrengthDelta(), mod.getStrengthRate());
-                    coolDown = FawItemUtil.calcuAttributeInRate(coolDown, mod.getCoolDownRate());
-                    args.setStrength(dmg)
-                            .setSweepRange(sweepRange)
-                            .setModifier(mod);
-
-                    releaseSkilled |= mod.releaseSkill(core, args);
+                    releaseSkilled = mod.releaseSkill(core, args);
                 } else {
-                    args.setStrength(dmg)
-                            .setSweepRange(sweepRange);
-                    releaseSkilled |= core.releaseSkill(args);
+                    releaseSkilled = core.releaseSkill(args);
                 }
 
                 if (releaseSkilled) {

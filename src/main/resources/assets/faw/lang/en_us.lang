@@ -35,7 +35,7 @@ attributes.faw.generic.CoolDown=Cool Down
 attributes.faw.generic.AttackReach=Attack Reach
 attributes.faw.generic.AbilityPower=AP
 
-attributes.faw.lance.SprintLength=Sprint Length
+attributes.faw.lance.SprintStrength=Sprint Strength
 
 attributes.faw.harp.Radius=Radius
 attributes.faw.harp.Frequency=Frequency

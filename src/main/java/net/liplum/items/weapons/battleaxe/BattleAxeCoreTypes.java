@@ -11,6 +11,9 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import static net.liplum.Attributes.BattleAxe.*;
+import static net.liplum.Attributes.Generic.*;
+
 
 import java.util.List;
 
@@ -22,19 +25,9 @@ public final class BattleAxeCoreTypes {
             return false;
         }
 
-        @Override
-        public float getSweepRange() {
-            return 0;
-        }
-
-        @Override
-        public int getCoolDown() {
-            return 0;
-        }
     };
 
     public static final BattleAxeCore Normal = new BattleAxeCore() {
-        private final int coolDown = 20 * 5;
 
         @Override
         public boolean releaseSkill(BattleAxeArgs args) {
@@ -73,18 +66,15 @@ public final class BattleAxeCoreTypes {
         }
 
         @Override
-        public float getSweepRange() {
-            return 3;
-        }
-
-        @Override
-        public int getCoolDown() {
-            return coolDown;
-        }
-
-        @Override
-        public float getStrength() {
-            return 7;
+        protected void buildAttributes(AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.set(
+                    SweepRange, SweepRange.newAttrModifier(3)
+            ).set(
+              Strength, Strength.newAttrModifier(7)
+            ).set(
+                    CoolDown, CoolDown.newAttrModifier(5*20)
+            );
         }
     };
 

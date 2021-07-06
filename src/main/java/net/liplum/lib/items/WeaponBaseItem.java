@@ -1,10 +1,12 @@
 package net.liplum.lib.items;
 
-import net.liplum.AttributeDefault;
 import net.liplum.I18ns;
-import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.weapon.*;
+import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.Modifier;
+import net.liplum.api.weapon.WeaponCore;
+import net.liplum.attributes.Attribute;
+import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -29,9 +31,15 @@ import javax.annotation.Nullable;
 import java.util.LinkedList;
 import java.util.List;
 
+import static net.liplum.Attributes.Generic.*;
+
 public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawItem {
+    @Nonnull
+    private final List<Attribute> allAttributes;
+
     public WeaponBaseItem() {
         super();
+        this.allAttributes = initAllAttributes();
     }
 
     @Override
@@ -42,6 +50,16 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
     @Override
     public boolean isDamageable() {
         return super.isDamageable();
+    }
+
+    @Nonnull
+    protected List<Attribute> initAllAttributes() {
+        LinkedList<Attribute> list = new LinkedList<>();
+        list.add(Strength);
+        list.add(AbilityPower);
+        list.add(AttackReach);
+        list.add(CoolDown);
+        return list;
     }
 
     @SideOnly(Side.CLIENT)
@@ -67,7 +85,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
         boolean gemstoneShown = addGemstoneTooltip(stack, gemstone, gemstoneTooltip, tooltipOption)
                 && gemstoneTooltip.size() != 0;
 
-        boolean attributesShown = addAttributesTooltip(stack, modifier, attributesTooltip, tooltipOption)
+        boolean attributesShown = addAttributesTooltip(stack, modifier, player, tooltipOption, attributesTooltip)
                 && attributesTooltip.size() != 0;
 
         boolean passiveSkillsShown = addPassiveSkillsTooltip(stack, passiveSkills, passiveSkillsTooltip, tooltipOption)
@@ -116,50 +134,23 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
      * @return whether it was added something.
      */
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nonnull List<String> attributesTooltip, TooltipOption option) {
+    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, TooltipOption option, @Nonnull List<String> attributesTooltip) {
         boolean added = false;
         CoreType core = getCore();
-        float strength = core.getStrength();
-        if (modifier != null) {
-            strength = FawItemUtil.calcuAttribute(strength, modifier.getStrengthDelta(), modifier.getStrengthRate());
-        }
-        if (strength > 0 && strength != AttributeDefault.Generic.Strength) {
-            FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.Strength, strength,
-                    "%.1f");
-            added = true;
-        }
-        if (core instanceof MagicToolCore) {
-            MagicToolCore magicCore = (MagicToolCore) core;
-            float ap = magicCore.getAbilityPower();
-            if (modifier instanceof MagicToolModifier<?>) {
-                MagicToolModifier<?> magicModifier = (MagicToolModifier<?>) modifier;
-                ap = FawItemUtil.calcuAttribute(ap, magicModifier.getAbilityPowerDelta(), magicModifier.getAbilityPowerRate());
-            }
-            if (ap > 0) {
-                FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.AbilityPower, ap);
-                added = true;
-            }
-        }
-        if (option.isMoreDetailsShown()) {
-            int coolDown = core.getCoolDown();
-            if (modifier != null) {
-                coolDown = FawItemUtil.calcuAttributeInRate(coolDown, modifier.getCoolDownRate());
-            }
-            if (coolDown > 0) {
-                float coolDownSecond = (float) coolDown / Vanilla.TPS;
-                FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.CoolDown, coolDownSecond,
-                        "%.1f", option.isUnitShown() ? I18ns.Tooltip.Unit.Second : null);
-                added = true;
-            }
-
-            double attackReach = core.getAttackReach();
-            if (modifier != null) {
-                attackReach = FawItemUtil.calcuAttribute(attackReach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
-            }
-            if (attackReach > 0 && attackReach != AttributeDefault.Generic.AttackReach) {
-                FawItemUtil.addAttributeTooltip(attributesTooltip, I18ns.Attribute.Generic.AttackReach, attackReach,
-                        "%.1f", option.isUnitShown() ? I18ns.Tooltip.Unit.Unit : null);
-                added = true;
+        for (Attribute attribute : allAttributes) {
+            if ((!attribute.needMoreDetailsToShown()) ||
+                    (attribute.needMoreDetailsToShown() && option.isMoreDetailsShown())
+            ) {
+                FinalAttrValue finalValue = FawItemUtil.calcuAttribute(attribute, core, modifier, player);
+                if (attribute.canTooltipShow(finalValue.getNumber())) {
+                    FawItemUtil.addAttributeTooltip(
+                            attributesTooltip, attribute.getI18nKey(),
+                            attribute.getTooltipShownValue(finalValue.getNumber()),
+                            attribute.getFormat(),
+                            (attribute.hasUnit() && option.isUnitShown()) ?
+                                    attribute.getUnit() : null);
+                    added = true;
+                }
             }
         }
         return added;
@@ -209,12 +200,9 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
 
     @Override
     public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
-        double reach = getCore().getAttackReach();
         Modifier<?> modifier = GemUtil.getModifierFrom(stack);
-        if (modifier != null) {
-            reach = FawItemUtil.calcuAttribute(reach, modifier.getAttackReachDelta(), modifier.getAttackReachRate());
-        }
-        if (reach == AttributeDefault.Generic.AttackReach) {
+        FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(AttackReach, getCore(), modifier, player);
+        if (AttackReach.isDefaultValue(finalAttackReach)) {
             return attackEntity(stack, player, entity);
         } else {
             return true;

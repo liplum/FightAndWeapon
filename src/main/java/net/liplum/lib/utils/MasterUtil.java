@@ -3,6 +3,8 @@ package net.liplum.lib.utils;
 import net.liplum.api.fight.IMaster;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.MasterRegistry;
+import net.liplum.attributes.AttrDelta;
+import net.liplum.attributes.Attribute;
 import net.liplum.capabilities.MasterCapability;
 import net.liplum.lib.items.WeaponBaseItem;
 import net.liplum.lib.masters.LvExpPair;
@@ -11,6 +13,7 @@ import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 public final class MasterUtil {
@@ -86,5 +89,17 @@ public final class MasterUtil {
             return getPassiveSkills(player, master);
         }
         return new HashSet<>();
+    }
+
+    public static AttrDelta getAttributeValue(@Nonnull MasterCapability masterCapability, @Nonnull Class<WeaponBaseItem<?>> weaponType, @Nonnull Attribute attribute) {
+        IMaster master = MasterRegistry.getMasterOf(weaponType);
+        if (master != null) {
+            LvExpPair levelAndExp = masterCapability.getLevelAndExp(master.getRegisterName());
+            int lv = levelAndExp.getLevel();
+            Map<String, Number> attributeAmplifier = master.getAttributeAmplifier(lv);
+            Number value = attributeAmplifier.get(attribute.getRegisterName());
+            return attribute.newAttrDelta(value);
+        }
+        return attribute.genAttrDelta();
     }
 }

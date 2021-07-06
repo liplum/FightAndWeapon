@@ -47,6 +47,11 @@ public final class Names {
             public static final String TypeName = "harp";
             public static final String HarpItem = "harp";
         }
+
+        public static final class BattleAxe {
+            public static final String TypeName = "battle_axe";
+            public static final String BattleAxeItem = "battle_axe";
+        }
     }
 
     public static final class Attribute {
@@ -56,15 +61,21 @@ public final class Names {
             public static final String CoolDown = "CoolDown";
             public static final String AttackReach = "AttackReach";
             public static final String AbilityPower = "AbilityPower";
+            public static final String EnemyBreakingTime = "EnemyBreakingTime";
+            public static final String KnockbackStrength = "KnockbackStrength";
         }
 
         public static final class Lance {
-            public static final String SprintLength = "SprintLength";
+            public static final String SprintStrength = "SprintStrength";
+        }
+        public static final class BattleAxe {
+            public static final String SweepRange = "SweepRange";
         }
 
         public static final class Harp {
             public static final String Radius = "Radius";
             public static final String Frequency = "Frequency";
+            public static final String MaxUseDuration = "MaxUseDuration";
         }
     }
 

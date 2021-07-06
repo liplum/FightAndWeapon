@@ -1,8 +1,5 @@
 package net.liplum.items.weapons.lance;
 
-import net.liplum.Attributes;
-import net.liplum.attributes.BasicAttrValue;
-import net.liplum.attributes.DataType;
 import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.IWaitable;
 import net.liplum.coroutine.WaitForNextTick;
@@ -28,6 +25,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import static net.liplum.Attributes.Generic.*;
+import static net.liplum.Attributes.Lance.SprintStrength;
+
 public final class LanceCoreTypes {
     public static final LanceCore Empty = new LanceCore() {
 
@@ -47,8 +47,8 @@ public final class LanceCoreTypes {
         @Override
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
-            builder.add(
-                    Attributes.Generic.Strength, new BasicAttrValue(5, DataType.Float)
+            builder.set(
+                    Strength, Strength.newAttrModifier(5)
             );
         }
     };
@@ -95,15 +95,15 @@ public final class LanceCoreTypes {
         @Override
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
-            builder.add(
+            builder.set(
                     //  It means you can dash 4 units.
-                    Attributes.Lance.SprintStrength, new BasicAttrValue(2, DataType.Float)
-            ).add(
-                    Attributes.Generic.CoolDown, new BasicAttrValue(6 * 20, DataType.Int)
-            ).add(
-                    Attributes.Generic.Strength, new BasicAttrValue(5, DataType.Float)
-            ).add(
-                    Attributes.Generic.AttackReach, new BasicAttrValue(8, DataType.Float)
+                    SprintStrength, SprintStrength.newAttrModifier(2)
+            ).set(
+                    CoolDown, SprintStrength.newAttrModifier(6 * 20)
+            ).set(
+                    Strength, SprintStrength.newAttrModifier(5)
+            ).set(
+                    AttackReach, AttackReach.newAttrModifier(8)
             );
         }
     };
@@ -133,12 +133,12 @@ public final class LanceCoreTypes {
         @Override
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
-            builder.add(
-                    Attributes.Lance.SprintStrength, new BasicAttrValue(4, DataType.Float)
-            ).add(
-                    Attributes.Generic.CoolDown, new BasicAttrValue(10 * 20, DataType.Int)
-            ).add(
-                    Attributes.Generic.Strength, new BasicAttrValue(6, DataType.Float)
+            builder.set(
+                    SprintStrength, SprintStrength.newAttrModifier(4)
+            ).set(
+                    CoolDown, CoolDown.newAttrModifier(10 * 20)
+            ).set(
+                    Strength, Strength.newAttrModifier(6)
             );
         }
     };
@@ -194,10 +194,10 @@ public final class LanceCoreTypes {
         @Override
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
-            builder.add(
-                    Attributes.Generic.CoolDown, new BasicAttrValue(10 * 20, DataType.Int)
-            ).add(
-                    Attributes.Generic.Strength, new BasicAttrValue(6, DataType.Float)
+            builder.set(
+                    CoolDown, CoolDown.newAttrModifier(10 * 20)
+            ).set(
+                    Strength, Strength.newAttrModifier(6)
             );
         }
     };
@@ -220,11 +220,10 @@ public final class LanceCoreTypes {
         @Override
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
-            builder.add(
-                    //  It means you can dash 4 units.
-                    Attributes.Lance.SprintStrength, new BasicAttrValue(10, DataType.Float)
-            ).add(
-                    Attributes.Generic.CoolDown, new BasicAttrValue(20, DataType.Int)
+            builder.set(
+                    SprintStrength, SprintStrength.newAttrModifier(10)
+            ).set(
+                    CoolDown, CoolDown.newAttrModifier(20)
             );
         }
     };

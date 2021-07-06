@@ -14,23 +14,12 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import static net.liplum.Attributes.Generic.AbilityPower;
+import static net.liplum.Attributes.Generic.CoolDown;
+import static net.liplum.Attributes.Harp.*;
+
 public final class HarpCoreTypes {
     public static final HarpCore Empty = new HarpCore() {
-        @Override
-        public float getAbilityPower() {
-            return 0;
-        }
-
-        @Override
-        public double getRadius() {
-            return 0;
-        }
-
-        @Override
-        public int getFrequency() {
-            return 72000;
-        }
-
         @Override
         public boolean continueSkill(ContinuousHarpArgs args) {
             return false;
@@ -40,27 +29,24 @@ public final class HarpCoreTypes {
         public boolean releaseSkill(SingleHarpArgs args) {
             return false;
         }
-
-        @Override
-        public int getCoolDown() {
-            return 0;
-        }
     };
 
     public static final HarpCore Normal = new HarpCore() {
-        @Override
-        public float getAbilityPower() {
-            return 5;
-        }
 
         @Override
-        public double getRadius() {
-            return 4;
-        }
-
-        @Override
-        public int getFrequency() {
-            return 40;
+        protected void buildAttributes(AttributeBuilder builder) {
+            super.buildAttributes(builder);
+            builder.set(
+                    AbilityPower, AbilityPower.newAttrModifier(5)
+            ).set(
+                    Frequency, Frequency.newAttrModifier(40)
+            ).set(
+                    Radius, Radius.newAttrModifier(4)
+            ).set(
+                    CoolDown, CoolDown.newAttrModifier(200)
+            ).set(
+                    MaxUseDuration, MaxUseDuration.newAttrModifier(400)
+            );
         }
 
         @Override
@@ -122,16 +108,6 @@ public final class HarpCoreTypes {
                 target.addPotionEffect(new PotionEffect(MobEffects.HASTE, 60, 0));
             }
             return true;
-        }
-
-        @Override
-        public int getCoolDown() {
-            return 200;
-        }
-
-        @Override
-        public int getMaxUseDuration() {
-            return 400;
         }
     };
 }

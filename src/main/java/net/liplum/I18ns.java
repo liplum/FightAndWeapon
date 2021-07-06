@@ -109,32 +109,20 @@ public final class I18ns {
     }
 
     public static final class Attribute {
-        public static final class Generic {
-            public static final String Strength = with(Names.Attribute.Generic.Strength);
-            public static final String CoolDown = with(Names.Attribute.Generic.CoolDown);
-            public static final String AttackReach = with(Names.Attribute.Generic.AttackReach);
-            public static final String AbilityPower = with(Names.Attribute.Generic.AbilityPower);
-
-            private static String with(String attributeName) {
-                return prefixAttr(Names.Special.Generic, attributeName);
-            }
+        public static String Generic(String attributeName) {
+            return prefixAttr(Names.Special.Generic, attributeName);
         }
 
-        public static final class Lance {
-            public static final String SprintLength = with(Names.Attribute.Lance.SprintLength);
-
-            private static String with(String attributeName) {
-                return prefixAttr(Names.Item.Lance.TypeName, attributeName);
-            }
+        public static String Lance(String attributeName) {
+            return prefixAttr(Names.Item.Lance.TypeName, attributeName);
         }
 
-        public static final class Harp {
-            public static final String Radius = with(Names.Attribute.Harp.Radius);
-            public static final String Frequency = with(Names.Attribute.Harp.Frequency);
+        public static String Harp(String attributeName) {
+            return prefixAttr(Names.Item.Harp.TypeName, attributeName);
+        }
 
-            private static String with(String attributeName) {
-                return prefixAttr(Names.Item.Harp.TypeName, attributeName);
-            }
+        public static String BattleAxe(String attributeName){
+            return prefixAttr(Names.Item.BattleAxe.TypeName, attributeName);
         }
     }
 }

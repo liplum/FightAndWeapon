@@ -1,14 +1,19 @@
 package net.liplum.attributes;
 
 public class AttrModifier extends AttrDelta {
-    private final float rate;
+    private final float deltaRate;
 
-    public AttrModifier(DataType dataType, Number delta, float rate) {
+    public AttrModifier(DataType dataType, Number delta, float deltaRate) {
         super(dataType, delta);
-        this.rate = rate;
+        this.deltaRate = deltaRate;
     }
 
-    public float getRate() {
-        return rate;
+    public AttrModifier(DataType dataType) {
+        super(dataType, 0);
+        this.deltaRate = 0;
+    }
+
+    public float getDeltaRate() {
+        return deltaRate;
     }
 }
