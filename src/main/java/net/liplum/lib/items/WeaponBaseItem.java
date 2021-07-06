@@ -147,8 +147,10 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
                             attributesTooltip, attribute.getI18nKey(),
                             attribute.getTooltipShownValue(finalValue.getNumber()),
                             attribute.getFormat(),
-                            (attribute.hasUnit() && option.isUnitShown()) ?
-                                    attribute.getUnit() : null);
+                            attribute.isStripTrailingZero(),
+                            ((attribute.hasUnit() && option.isUnitShown()) ?
+                                    attribute.getUnit() : null)
+                    );
                     added = true;
                 }
             }

@@ -11,7 +11,6 @@ import java.util.List;
 public abstract class BattleAxeCore extends WeaponCore {
     public abstract boolean releaseSkill(BattleAxeArgs args);
 
-/*    public abstract float getSweepRange();*/
 
     @Override
     protected List<Attribute> initAllAttributes() {

@@ -32,6 +32,9 @@ public final class Attributes {
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
                 .setDefaultValue(0);
+        /**
+         * Gets the upcoming invincible time of a enemy who was attacked by this weapon.(unit:tick)
+         */
         public static final Attribute EnemyBreakingTime = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.EnemyBreakingTime)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
@@ -40,6 +43,9 @@ public final class Attributes {
                 .setComputeType(ComputeType.Only_Gemstone)
                 .setShownInTooltip(false)
                 .setDefaultValue(20);
+        /**
+         * Gets the cool down time of weapon.(unit:tick)
+         */
         public static final Attribute CoolDown = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.CoolDown)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
@@ -49,8 +55,11 @@ public final class Attributes {
                 .setComputeType(ComputeType.Only_Rate)
                 .setHasUnit(I18ns.Tooltip.Unit.Second)
                 .setNeedMoreDetailsToShown()
-                .setTooltipShownMapping(n -> n.floatValue() / Vanilla.TPS)
+                .setTooltipShownMapping(Vanilla::PerSecond)
                 .setDefaultValue(0);
+        /**
+         * Gets the knock back. The basic is 1.0F.
+         */
         public static final Attribute KnockbackStrength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.KnockbackStrength)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
@@ -62,6 +71,9 @@ public final class Attributes {
     }
 
     public static final class Lance {
+        /**
+         * The float value of this is the Strength of a sprint.
+         */
         public static final Attribute SprintStrength = new Attribute()
                 .setRegisterName(Names.Attribute.Lance.SprintStrength)
                 .setHowToGetI18nKey(I18ns.Attribute::Lance)
@@ -82,6 +94,9 @@ public final class Attributes {
     }
 
     public static final class Harp {
+        /**
+         * Gets the radius of the range
+         */
         public static final Attribute Radius = new Attribute()
                 .setRegisterName(Names.Attribute.Harp.Radius)
                 .setHowToGetI18nKey(I18ns.Attribute::Harp)
@@ -90,6 +105,9 @@ public final class Attributes {
                 .setHasUnit(I18ns.Tooltip.Unit.Unit)
                 .setComputeType(ComputeType.Full)
                 .setDefaultValue(1);
+        /**
+         * The default one equals 60 minutes
+         */
         public static final Attribute Frequency = new Attribute()
                 .setRegisterName(Names.Attribute.Harp.Frequency)
                 .setHowToGetI18nKey(I18ns.Attribute::Harp)
@@ -98,9 +116,12 @@ public final class Attributes {
                 .setHasUnit(I18ns.Tooltip.Unit.TriggerPerSecond)
                 .setNeedMoreDetailsToShown()
                 .setComputeType(ComputeType.Only_Rate)
-                .setTooltipShownMapping(n -> n.floatValue() / Vanilla.TPS)
+                .setTooltipShownMapping(Vanilla::PerSecond)
                 .setDefaultValue(72000)
                 .setMinimum(1);
+        /**
+         * The default one equals 60 minutes
+         */
         public static final Attribute MaxUseDuration = new Attribute()
                 .setRegisterName(Names.Attribute.Harp.MaxUseDuration)
                 .setHowToGetI18nKey(I18ns.Attribute::Harp)

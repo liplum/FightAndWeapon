@@ -8,13 +8,15 @@ public class BasicAttrValue extends AttrValue {
         this.value = value;
     }
 
-    public Number getNumber(){return value;}
+    public Number getNumber() {
+        return value;
+    }
 
-    public int getInt(){
+    public int getInt() {
         return value.intValue();
     }
 
-    public float getFloat(){
+    public float getFloat() {
         return value.floatValue();
     }
 }

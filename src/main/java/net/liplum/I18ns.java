@@ -97,14 +97,14 @@ public final class I18ns {
             return prefixTooltip(Names.Special.Weapon, name);
         }
 
+        private static String unit(String name) {
+            return prefixTooltip(Names.Special.Unit, name);
+        }
+
         public static final class Unit {
             public static final String Second = unit("Second");
             public static final String TriggerPerSecond = unit("TriggerPerSecond");
             public static final String Unit = unit("Unit");
-        }
-
-        private static String unit(String name) {
-            return prefixTooltip(Names.Special.Unit, name);
         }
     }
 
@@ -121,7 +121,7 @@ public final class I18ns {
             return prefixAttr(Names.Item.Harp.TypeName, attributeName);
         }
 
-        public static String BattleAxe(String attributeName){
+        public static String BattleAxe(String attributeName) {
             return prefixAttr(Names.Item.BattleAxe.TypeName, attributeName);
         }
     }

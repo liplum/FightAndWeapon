@@ -46,6 +46,8 @@ public class Attribute {
     @Nullable
     private Number minimum;
 
+    private boolean isStripTrailingZero = true;
+
     @Nonnull
     private Function<Number, Number> tooltipShownMapping = n -> n;
 
@@ -60,20 +62,36 @@ public class Attribute {
     @Nonnull
     private Function<String, String> I18nKeyMapping = str -> str;
 
+    @Nullable
+    public static Attribute getAttribute(@Nonnull String registerName) {
+        return AttributesMap.get(registerName);
+    }
+
+    @Nonnull
+    public static <T extends IBasicAttrValueBuilder> T genAllBasicAttrValue(@Nonnull T builder) {
+        for (Attribute attribute : BasicAttribute) {
+            builder.set(attribute, attribute.genBasicAttrValue());
+        }
+        return builder;
+    }
+
+    @Nonnull
+    public static <T extends IAttrModifierBuilder> T genAllAttrModifiers(@Nonnull T builder) {
+        for (Attribute attribute : BasicAttribute) {
+            builder.set(attribute, attribute.genAttrModifier());
+        }
+        return builder;
+    }
+
     public Attribute setBasic() {
         isBasic = true;
         BasicAttribute.add(this);
         return this;
     }
 
-    public Attribute setDataType(@Nonnull DataType dataType) {
-        this.dataType = dataType;
-        return this;
-    }
-
-    public Attribute setDefaultValue(@Nonnull Number defaultValue) {
-        this.defaultValue = defaultValue;
-        return this;
+    @Nonnull
+    public String getRegisterName() {
+        return registerName;
     }
 
     @Nonnull
@@ -83,16 +101,6 @@ public class Attribute {
         return this;
     }
 
-    @Nullable
-    public static Attribute getAttribute(@Nonnull String registerName) {
-        return AttributesMap.get(registerName);
-    }
-
-    @Nonnull
-    public String getRegisterName() {
-        return registerName;
-    }
-
     public boolean isShownInTooltip() {
         return shownInTooltip;
     }
@@ -100,6 +108,12 @@ public class Attribute {
     @Nonnull
     public Attribute setShownInTooltip(boolean shownInTooltip) {
         this.shownInTooltip = shownInTooltip;
+        return this;
+    }
+
+    @Nonnull
+    public Attribute setIsStripTrailingZero(boolean isStripTrailingZero) {
+        this.isStripTrailingZero = isStripTrailingZero;
         return this;
     }
 
@@ -130,16 +144,14 @@ public class Attribute {
         return this.needMoreDetailsToShown;
     }
 
+    public boolean isStripTrailingZero() {
+        return this.isStripTrailingZero;
+    }
+
     @Nonnull
     public Attribute setHasUnit(@Nonnull String unit) {
         this.hasUnit = true;
         this.unit = unit;
-        return this;
-    }
-
-    @Nonnull
-    public Attribute setFormat(@Nonnull String format) {
-        this.format = format;
         return this;
     }
 
@@ -206,6 +218,12 @@ public class Attribute {
         return format;
     }
 
+    @Nonnull
+    public Attribute setFormat(@Nonnull String format) {
+        this.format = format;
+        return this;
+    }
+
     public boolean isBasic() {
         return isBasic;
     }
@@ -215,9 +233,19 @@ public class Attribute {
         return dataType;
     }
 
+    public Attribute setDataType(@Nonnull DataType dataType) {
+        this.dataType = dataType;
+        return this;
+    }
+
     @Nonnull
     public ComputeType getComputeType() {
         return computeType;
+    }
+
+    public Attribute setComputeType(@Nonnull ComputeType computeType) {
+        this.computeType = computeType;
+        return this;
     }
 
     @Nonnull
@@ -225,8 +253,8 @@ public class Attribute {
         return defaultValue;
     }
 
-    public Attribute setComputeType(@Nonnull ComputeType computeType) {
-        this.computeType = computeType;
+    public Attribute setDefaultValue(@Nonnull Number defaultValue) {
+        this.defaultValue = defaultValue;
         return this;
     }
 
@@ -272,22 +300,6 @@ public class Attribute {
 
     public boolean isDefaultValue(@Nonnull FinalAttrValue value) {
         return value.getNumber().equals(this.defaultValue);
-    }
-
-    @Nonnull
-    public static <T extends IBasicAttrValueBuilder> T genAllBasicAttrValue(@Nonnull T builder) {
-        for (Attribute attribute : BasicAttribute) {
-            builder.set(attribute, attribute.genBasicAttrValue());
-        }
-        return builder;
-    }
-
-    @Nonnull
-    public static <T extends IAttrModifierBuilder> T genAllAttrModifiers(@Nonnull T builder) {
-        for (Attribute attribute : BasicAttribute) {
-            builder.set(attribute, attribute.genAttrModifier());
-        }
-        return builder;
     }
 
     @Nonnull

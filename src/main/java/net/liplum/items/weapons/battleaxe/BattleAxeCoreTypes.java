@@ -11,11 +11,12 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import static net.liplum.Attributes.BattleAxe.*;
-import static net.liplum.Attributes.Generic.*;
-
 
 import java.util.List;
+
+import static net.liplum.Attributes.BattleAxe.SweepRange;
+import static net.liplum.Attributes.Generic.CoolDown;
+import static net.liplum.Attributes.Generic.Strength;
 
 public final class BattleAxeCoreTypes {
     public static final BattleAxeCore Empty = new BattleAxeCore() {
@@ -71,9 +72,9 @@ public final class BattleAxeCoreTypes {
             builder.set(
                     SweepRange, SweepRange.newAttrModifier(3)
             ).set(
-              Strength, Strength.newAttrModifier(7)
+                    Strength, Strength.newAttrModifier(7)
             ).set(
-                    CoolDown, CoolDown.newAttrModifier(5*20)
+                    CoolDown, CoolDown.newAttrModifier(5 * 20)
             );
         }
     };

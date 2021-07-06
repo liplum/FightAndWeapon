@@ -37,7 +37,7 @@ public class Offset {
     }
 
     public Offset minus(Offset other) {
-        return this.minus(other.x,other.y);
+        return this.minus(other.x, other.y);
     }
 
     public Offset minus(int x, int y) {

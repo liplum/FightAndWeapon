@@ -68,6 +68,7 @@ public final class Names {
         public static final class Lance {
             public static final String SprintStrength = "SprintStrength";
         }
+
         public static final class BattleAxe {
             public static final String SweepRange = "SweepRange";
         }

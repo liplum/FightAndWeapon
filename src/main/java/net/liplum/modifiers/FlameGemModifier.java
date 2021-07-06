@@ -1,8 +1,8 @@
 package net.liplum.modifiers;
 
-import net.liplum.items.weapons.lance.LanceCoreTypes;
-import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceArgs;
+import net.liplum.items.weapons.lance.LanceCore;
+import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.utils.EntityUtil;
 import net.minecraft.entity.player.EntityPlayer;

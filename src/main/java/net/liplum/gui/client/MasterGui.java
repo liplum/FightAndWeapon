@@ -2,9 +2,9 @@ package net.liplum.gui.client;
 
 import net.liplum.Resources;
 import net.liplum.gui.server.MasterContainer;
-import net.liplum.lib.gui.View;
 import net.liplum.lib.gui.Texture;
 import net.liplum.lib.gui.TextureFactory;
+import net.liplum.lib.gui.View;
 import net.liplum.lib.gui.controls.Button;
 import net.liplum.lib.utils.GuiUtil;
 import net.minecraft.client.gui.GuiButton;

@@ -23,14 +23,6 @@ public abstract class LanceCore extends WeaponCore {
 
     }
 
-    /**
-     * The double value of this is the true length of a sprint.
-     *
-     * @return
-     *//*
-
-    public abstract float getSprintLength();
-*/
     @Nonnull
     @Override
     public Class<LanceItem> getWeaponType() {

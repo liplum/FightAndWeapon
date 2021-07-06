@@ -23,12 +23,4 @@ public abstract class BattleAxeModifier extends Modifier<BattleAxeCore> {
     protected void buildAttributes(AttributeBuilder builder) {
 
     }
-
-    /* public float getSweepRangeDelta() {
-        return 0;
-    }
-
-    public float getSweepRate() {
-        return 0;
-    }*/
 }

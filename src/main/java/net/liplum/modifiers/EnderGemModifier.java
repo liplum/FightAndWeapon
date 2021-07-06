@@ -1,12 +1,12 @@
 package net.liplum.modifiers;
 
 import net.liplum.api.weapon.Modifier;
-import net.liplum.items.weapons.lance.LanceCoreTypes;
-import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceArgs;
+import net.liplum.items.weapons.lance.LanceCore;
+import net.liplum.items.weapons.lance.LanceCoreTypes;
+import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
@@ -18,10 +18,10 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import static net.liplum.Attributes.Lance.*;
-import static net.liplum.Attributes.Generic.*;
 
 import java.util.List;
+
+import static net.liplum.Attributes.Lance.SprintStrength;
 
 public final class EnderGemModifier {
     public final static LanceModifier Normal_Lance = new LanceModifier() {
@@ -34,7 +34,7 @@ public final class EnderGemModifier {
         protected void buildAttributes(Modifier<LanceCore>.AttributeBuilder builder) {
             super.buildAttributes(builder);
             builder.set(
-                    SprintStrength,SprintStrength.newAttrModifier(2,0)
+                    SprintStrength, SprintStrength.newAttrModifier(2, 0)
             );
         }
 

@@ -9,24 +9,12 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class HarpCore extends MagicToolCore {
-    /*
-     */
 
     @Override
     protected void buildAttributes(AttributeBuilder builder) {
 
     }
 
-    /**
-     * Gets the radius of the range
-     *
-     * @return the radius of the skill.
-     *//*
-
-   public abstract double getRadius();
-
-
-    */
     @Override
     protected List<Attribute> initAllAttributes() {
         LinkedList<Attribute> list = new LinkedList<>();
@@ -36,16 +24,6 @@ public abstract class HarpCore extends MagicToolCore {
         return list;
     }
 
-    /**
-     * The default one equals 60 minutes
-     *
-     * @return
-     *//*
-    public int getMaxUseDuration() {
-        return 72000;
-    }
-
-    public abstract int getFrequency();*/
     public abstract boolean continueSkill(ContinuousHarpArgs args);
 
     public abstract boolean releaseSkill(SingleHarpArgs args);

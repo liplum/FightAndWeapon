@@ -4,6 +4,10 @@ public final class Vanilla {
     public static final int TPS = 20;
     public static final int PlayerInventoryCount = 36;
 
+    public static Number PerSecond(Number value) {
+        return value.floatValue() / TPS;
+    }
+
     public static final class Color {
         public static final int BlackColor = 0x404040;
     }

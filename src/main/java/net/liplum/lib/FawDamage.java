@@ -45,13 +45,6 @@ public class FawDamage extends EntityDamageSource {
     }
 
     @Nonnull
-    public FawDamage setGemstone(@Nonnull IGemstone gemstone) {
-        this.gemstone = gemstone;
-        this.modifier = gemstone.getModifierOf(weaponCore);
-        return this;
-    }
-
-    @Nonnull
     public FawDamage setGemstone(@Nonnull IGemstone gemstone, @Nonnull Modifier<?> modifier) {
         this.gemstone = gemstone;
         this.modifier = modifier;
@@ -61,6 +54,13 @@ public class FawDamage extends EntityDamageSource {
     @Nullable
     public IGemstone getGemstone() {
         return gemstone;
+    }
+
+    @Nonnull
+    public FawDamage setGemstone(@Nonnull IGemstone gemstone) {
+        this.gemstone = gemstone;
+        this.modifier = gemstone.getModifierOf(weaponCore);
+        return this;
     }
 
     @Nullable
