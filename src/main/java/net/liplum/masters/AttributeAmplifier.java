@@ -1,8 +1,10 @@
-package net.liplum.lib.masters;
+package net.liplum.masters;
+
+import net.liplum.attributes.DataType;
 
 public class AttributeAmplifier {
     private String attributeName;
-    private AttributeType type;
+    private DataType type;
     private Number value;
 
     public String getAttributeName() {
@@ -13,11 +15,11 @@ public class AttributeAmplifier {
         this.attributeName = attributeName;
     }
 
-    public AttributeType getType() {
+    public DataType getType() {
         return type;
     }
 
-    public void setType(AttributeType type) {
+    public void setType(DataType type) {
         this.type = type;
     }
 

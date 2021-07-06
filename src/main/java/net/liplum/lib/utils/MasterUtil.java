@@ -7,8 +7,7 @@ import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.Attribute;
 import net.liplum.capabilities.MasterCapability;
-import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.lib.masters.LvExpPair;
+import net.liplum.masters.LvExpPair;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 

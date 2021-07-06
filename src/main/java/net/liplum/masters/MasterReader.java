@@ -1,4 +1,4 @@
-package net.liplum.lib.masters;
+package net.liplum.masters;
 
 import net.liplum.api.fight.IMasterReader;
 

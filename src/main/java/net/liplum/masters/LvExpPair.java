@@ -1,4 +1,4 @@
-package net.liplum.lib.masters;
+package net.liplum.masters;
 
 public class LvExpPair implements Cloneable {
     public static int BaseLevel = 1;

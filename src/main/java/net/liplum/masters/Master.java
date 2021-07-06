@@ -1,10 +1,9 @@
-package net.liplum.lib.masters;
+package net.liplum.masters;
 
 import net.liplum.api.fight.IActiveSkill;
 import net.liplum.api.fight.IMaster;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.SkillRegistry;
-import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;
@@ -14,12 +13,10 @@ import java.util.Map;
 
 public class Master implements IMaster {
     private final WeaponType weaponType;
-    private final String registerName;
     private Routine routine;
 
-    public Master(String registerName, WeaponType weaponType) {
+    public Master(WeaponType weaponType) {
         this.weaponType = weaponType;
-        this.registerName = registerName;
     }
 
     public Routine getRoutine() {
@@ -33,7 +30,7 @@ public class Master implements IMaster {
     @Nonnull
     @Override
     public String getRegisterName() {
-        return registerName;
+        return weaponType.getRegisterName();
     }
 
     @Nonnull
