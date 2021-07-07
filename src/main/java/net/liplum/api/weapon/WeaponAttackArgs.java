@@ -17,6 +17,7 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     private Modifier<?> modifier;
     private ItemStack itemStack;
     private DamageArgs initialDamage;
+    private boolean isFullAttack;
 
     @Nonnull
     public World getWorld() {
@@ -101,6 +102,15 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
 
     public This setGemstone(IGemstone gemstone) {
         this.gemstone = gemstone;
+        return (This) this;
+    }
+
+    public boolean isFullAttack() {
+        return isFullAttack;
+    }
+
+    public This setFullAttack(boolean fullAttack) {
+        isFullAttack = fullAttack;
         return (This) this;
     }
 }

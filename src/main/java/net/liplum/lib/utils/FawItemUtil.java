@@ -126,10 +126,12 @@ public final class FawItemUtil {
         finalDamage += finalStrength.getFloat();
         SoundEvent sound = null;
 
+        boolean isFullAttack = true;
         if (attackPlayer != null) {
             float cooldown = ((EntityPlayer) attacker).getCooledAttackStrength(0.5F);
             sound = cooldown > 0.9f ? SoundEvents.ENTITY_PLAYER_ATTACK_STRONG : SoundEvents.ENTITY_PLAYER_ATTACK_WEAK;
             finalDamage *= (0.2F + cooldown * cooldown * 0.8F);
+            isFullAttack = cooldown >= 1F;
         }
 
         FawDamage damageSource = EntityUtil.genFawDamage(attacker, core, gemstone, modifier);
@@ -142,7 +144,8 @@ public final class FawItemUtil {
                 .setItemStack(itemStack)
                 .setModifier(modifier)
                 .setWeaponCore(core)
-                .setInitialDamage(initialDamage);
+                .setInitialDamage(initialDamage)
+                .setFullAttack(isFullAttack);
 
         WeaponAttackingEvent attackingEvent = new WeaponAttackingEvent(attackingArgs);
         MinecraftForge.EVENT_BUS.post(attackingEvent);
@@ -191,7 +194,8 @@ public final class FawItemUtil {
                 .setInitialDamage(initialDamage)
                 .setWeaponCore(core)
                 .setHitSuccessfully(isHitSuccessfully)
-                .setTotalDamage(totalDamage);
+                .setTotalDamage(totalDamage)
+                .setFullAttack(isFullAttack);
 
         WeaponAttackedEvent postAttackEvent = new WeaponAttackedEvent(postArgs);
         MinecraftForge.EVENT_BUS.post(postAttackEvent);
@@ -381,10 +385,10 @@ public final class FawItemUtil {
      * Calculate the final value of this attribute in this weapon.<br/>
      * NOTE: All Attributes' access must be via this.
      *
-     * @param attribute the attribute which you want to calculate in this weapon
-     * @param core      the weapon core which can provide the basic value of this attribute
-     * @param modifier  (optional) the modifier of this weapon which can provide the modifier value of this attribute
-     * @param player    (optional) the player which can provide the master capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
+     * @param attribute         the attribute which you want to calculate in this weapon
+     * @param core              the weapon core which can provide the basic value of this attribute
+     * @param modifier          (optional) the modifier of this weapon which can provide the modifier value of this attribute
+     * @param player            (optional) the player which can provide the master capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
      * @param postAccessedEvent Whether it posts the {@link AttributeAccessedEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
      */

@@ -24,7 +24,7 @@ public final class ForestgemSkills {
                         @Override
                         public PSkillResult onTrigger(@Nonnull WeaponAttackedEvent event) {
                             WeaponAttackedArgs args = event.getArgs();
-                            if (args.isHitSuccessfully()) {
+                            if (args.isHitSuccessfully() && args.isFullAttack()) {
                                 EntityLivingBase attacker = args.getAttacker();
                                 float dmg = args.getInitialDamage().getDamage();
                                 attacker.heal(dmg * 0.3F);
