@@ -7,22 +7,24 @@ import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.Attribute;
 
 import javax.annotation.Nonnull;
-import java.util.LinkedList;
 import java.util.List;
+
+import static net.liplum.Attributes.Generic.AttackSpeed;
 
 public abstract class LanceCore extends WeaponCore {
     public abstract boolean releaseSkill(LanceArgs args);
 
     @Override
-    protected List<Attribute> initAllAttributes() {
-        LinkedList<Attribute> list = new LinkedList<>();
-        list.add(Attributes.Lance.SprintStrength);
-        return list;
+    protected void initAllAttributes(List<Attribute> attributes) {
+        super.initAllAttributes(attributes);
+        attributes.add(Attributes.Lance.SprintStrength);
     }
 
     @Override
     protected void buildAttributes(AttributeBuilder builder) {
-
+        builder.set(
+                AttackSpeed, AttackSpeed.newBasicAttrValue(2F)
+        );
     }
 
     @Nonnull

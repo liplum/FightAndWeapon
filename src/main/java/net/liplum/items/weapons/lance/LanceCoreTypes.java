@@ -48,7 +48,7 @@ public final class LanceCoreTypes {
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
             builder.set(
-                    Strength, Strength.newAttrModifier(5)
+                    Strength, Strength.newBasicAttrValue(5)
             );
         }
     };
@@ -97,13 +97,13 @@ public final class LanceCoreTypes {
             super.buildAttributes(builder);
             builder.set(
                     //  It means you can dash 4 units.
-                    SprintStrength, SprintStrength.newAttrModifier(2)
+                    SprintStrength, SprintStrength.newBasicAttrValue(2)
             ).set(
-                    CoolDown, SprintStrength.newAttrModifier(6 * 20)
+                    CoolDown, SprintStrength.newBasicAttrValue(6 * 20)
             ).set(
-                    Strength, SprintStrength.newAttrModifier(5)
+                    Strength, SprintStrength.newBasicAttrValue(5)
             ).set(
-                    AttackReach, AttackReach.newAttrModifier(8)
+                    AttackReach, AttackReach.newBasicAttrValue(8)
             );
         }
     };
@@ -134,11 +134,11 @@ public final class LanceCoreTypes {
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
             builder.set(
-                    SprintStrength, SprintStrength.newAttrModifier(4)
+                    SprintStrength, SprintStrength.newBasicAttrValue(4)
             ).set(
-                    CoolDown, CoolDown.newAttrModifier(10 * 20)
+                    CoolDown, CoolDown.newBasicAttrValue(10 * 20)
             ).set(
-                    Strength, Strength.newAttrModifier(6)
+                    Strength, Strength.newBasicAttrValue(6)
             );
         }
     };
@@ -195,9 +195,9 @@ public final class LanceCoreTypes {
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
             builder.set(
-                    CoolDown, CoolDown.newAttrModifier(10 * 20)
+                    CoolDown, CoolDown.newBasicAttrValue(10 * 20)
             ).set(
-                    Strength, Strength.newAttrModifier(6)
+                    Strength, Strength.newBasicAttrValue(6)
             );
         }
     };
@@ -221,9 +221,9 @@ public final class LanceCoreTypes {
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
             builder.set(
-                    SprintStrength, SprintStrength.newAttrModifier(10)
+                    SprintStrength, SprintStrength.newBasicAttrValue(10)
             ).set(
-                    CoolDown, CoolDown.newAttrModifier(20)
+                    CoolDown, CoolDown.newBasicAttrValue(20)
             );
         }
     };

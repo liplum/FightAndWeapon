@@ -1,6 +1,5 @@
 package net.liplum.lib.utils;
 
-import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.*;
@@ -9,12 +8,10 @@ import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
+import net.liplum.events.skill.AttributeAccessedEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
-import net.liplum.api.weapon.Category;
-import net.liplum.api.weapon.FawItem;
-import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.client.resources.I18n;
@@ -76,6 +73,7 @@ public final class FawItemUtil {
     public static boolean isInlayingTool(Item item) {
         return item instanceof InlayingToolItem;
     }
+
 
     /**
      * It calls {@link WeaponBaseItem#dealDamage(ItemStack, EntityLivingBase, Entity, DamageSource, float)} to deal damage to the target.
@@ -347,22 +345,50 @@ public final class FawItemUtil {
     @SideOnly(Side.CLIENT)
     public static void addPassiveSkillTooltip(@Nonnull List<String> tooltip, @Nonnull IPassiveSkill<?> passiveSkill) {
         tooltip.add(TextFormatting.BLUE +
-                I18n.format(SkillUtil.getNameI18nKey(passiveSkill)));
+                I18n.format(FawI18n.getNameI18nKey(passiveSkill)));
     }
 
-    public static String getNameI18nKey(WeaponPart weaponPart) {
-        return I18ns.endWithName(I18ns.prefixItem(weaponPart.getRegisterName()));
-    }
-
+    /**
+     * Calculate the final value of this attribute in this weapon(WITHOUT MODIFIER AND MASTER CAPABILITY).<br/>
+     * NOTE: All Attributes' access must be via this.
+     *
+     * @param attribute the attribute which you want to calculate in this weapon
+     * @param core      the weapon core which can provide the basic value of this attribute
+     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
+     */
     public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core) {
         return calcuAttribute(attribute, core, null, null);
     }
 
+    /**
+     * Calculate the final value of this attribute in this weapon(WITHOUT MASTER CAPABILITY).<br/>
+     * NOTE: All Attributes' access must be via this.
+     *
+     * @param attribute the attribute which you want to calculate in this weapon
+     * @param core      the weapon core which can provide the basic value of this attribute
+     * @param modifier  (optional) the modifier of this weapon which can provide the modifier value of this attribute
+     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
+     */
     public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier) {
         return calcuAttribute(attribute, core, modifier, null);
     }
 
     public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player) {
+        return calcuAttribute(attribute, core, modifier, player, true);
+    }
+
+    /**
+     * Calculate the final value of this attribute in this weapon.<br/>
+     * NOTE: All Attributes' access must be via this.
+     *
+     * @param attribute the attribute which you want to calculate in this weapon
+     * @param core      the weapon core which can provide the basic value of this attribute
+     * @param modifier  (optional) the modifier of this weapon which can provide the modifier value of this attribute
+     * @param player    (optional) the player which can provide the master capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
+     * @param postAccessedEvent Whether it posts the {@link AttributeAccessedEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
+     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
+     */
+    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
         BasicAttrValue baseAttrValue = core.getValue(attribute);
         //Master
         MasterCapability master = null;
@@ -380,6 +406,12 @@ public final class FawItemUtil {
             attrModifier = modifier.getValue(attribute);
         }
 
-        return attribute.compute(baseAttrValue, attrModifier, masterValue);
+        FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masterValue);
+        if (postAccessedEvent) {
+            AttributeAccessedEvent attributeAccessedEvent = new AttributeAccessedEvent(attribute, finalAttrValue, core, modifier, player);
+            MinecraftForge.EVENT_BUS.post(attributeAccessedEvent);
+            finalAttrValue = attributeAccessedEvent.getFinalAttrValue();
+        }
+        return finalAttrValue;
     }
 }

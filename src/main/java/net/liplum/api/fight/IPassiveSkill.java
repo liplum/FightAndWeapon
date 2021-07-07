@@ -13,4 +13,8 @@ public interface IPassiveSkill<EventType extends Event> extends ISkill {
 
     @Nonnull
     String getRegisterName();
+
+    default boolean isShownInTooltip() {
+        return true;
+    }
 }

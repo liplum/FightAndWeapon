@@ -7,21 +7,26 @@ import net.liplum.attributes.IAttributeProvider;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class Modifier<CoreType extends WeaponCore> implements IAttributeProvider<AttrModifier> {
-    private final Map<Attribute, AttrModifier> allAttributeModifiers = new HashMap<>();
+    private final Map<Attribute, AttrModifier> AttributeModifierMap = new HashMap<>();
+    protected List<Attribute> allAttributes = new LinkedList<>();
 
     public Modifier() {
-        AttributeBuilder builder = Attribute.genAllAttrModifiers(new AttributeBuilder());
-        for (Attribute attribute : initAllAttributes()) {
-            builder.set(attribute, attribute.genAttrModifier());
+        AttributeBuilder builder = new AttributeBuilder();
+        initAllAttributes(allAttributes);
+        for (Attribute attribute : allAttributes) {
+            builder.set(attribute, attribute.emptyAttrModifier());
         }
         buildAttributes(builder);
     }
 
-    protected abstract List<Attribute> initAllAttributes();
+    protected void initAllAttributes(List<Attribute> attributes){
+        attributes.addAll(Attribute.getAllBasicAttributes());
+    }
 
     /**
      * Get the corresponding value via the attribute
@@ -32,7 +37,7 @@ public abstract class Modifier<CoreType extends WeaponCore> implements IAttribut
      */
     @Override
     public AttrModifier getValue(@Nonnull Attribute attribute) {
-        return allAttributeModifiers.get(attribute);
+        return AttributeModifierMap.get(attribute);
     }
 
     protected abstract void buildAttributes(AttributeBuilder builder);
@@ -42,7 +47,7 @@ public abstract class Modifier<CoreType extends WeaponCore> implements IAttribut
     protected class AttributeBuilder implements IAttrModifierBuilder {
         @Override
         public AttributeBuilder set(@Nonnull Attribute attribute, @Nonnull AttrModifier modifier) {
-            allAttributeModifiers.put(attribute, modifier);
+            AttributeModifierMap.put(attribute, modifier);
             return this;
         }
     }

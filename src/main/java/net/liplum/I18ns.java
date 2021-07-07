@@ -67,6 +67,11 @@ public final class I18ns {
                 weaponType + '.' + attributeName;
     }
 
+    public static String prefixWeaponType(String weaponType) {
+        return Names.Special.WeaponType + '.' +
+                weaponType;
+    }
+
     public static final class PassiveSkill {
         public static final String Description = "description";
     }

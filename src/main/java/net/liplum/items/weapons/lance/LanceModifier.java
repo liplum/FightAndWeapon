@@ -4,15 +4,13 @@ import net.liplum.Attributes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.attributes.Attribute;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class LanceModifier extends Modifier<LanceCore> {
     @Override
-    protected List<Attribute> initAllAttributes() {
-        LinkedList<Attribute> list = new LinkedList<>();
-        list.add(Attributes.Lance.SprintStrength);
-        return list;
+    protected void initAllAttributes(List<Attribute> attributes) {
+        super.initAllAttributes(attributes);
+        attributes.add(Attributes.Lance.SprintStrength);
     }
 
     @Override

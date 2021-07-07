@@ -11,6 +11,8 @@ public final class Names {
         return namedObject.setRegistryName(MetaData.MOD_ID, registerName);
     }
 
+    public static final String WeaponAttributeModifier = "Weapon Modifier";
+
     public static final class Special {
         public static final String Weapon = "weapon";
         public static final String Master = "master";
@@ -20,6 +22,7 @@ public final class Names {
         public static final String Blueprint = "blueprint";
         public static final String Parts = "parts";
         public static final String Unit = "unit";
+        public static final String WeaponType = "weaponType";
     }
 
     public static final class Item {
@@ -52,6 +55,12 @@ public final class Names {
             public static final String TypeName = "battle_axe";
             public static final String BattleAxeItem = "battle_axe";
         }
+
+        public static final class Sword {
+            public static final String TypeName = "sword";
+            public static final String MagicSwordItem = "magic_sword";
+            public static final String GemstoneSwordItem = "gemstone_sword";
+        }
     }
 
     public static final class Attribute {
@@ -60,6 +69,7 @@ public final class Names {
             public static final String Strength = "Strength";
             public static final String CoolDown = "CoolDown";
             public static final String AttackReach = "AttackReach";
+            public static final String AttackSpeed = "AttackSpeed";
             public static final String AbilityPower = "AbilityPower";
             public static final String EnemyBreakingTime = "EnemyBreakingTime";
             public static final String KnockbackStrength = "KnockbackStrength";

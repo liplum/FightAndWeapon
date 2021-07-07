@@ -1,11 +1,10 @@
 package net.liplum.lib.utils;
 
-import net.liplum.I18ns;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
-import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.nbt.FawNbtTool;
 import net.liplum.lib.nbt.FawNbts;
 import net.minecraft.item.Item;
@@ -34,10 +33,6 @@ public final class GemUtil {
             return null;
         }
         return gemstone.getModifierOf(weapon.getCore());
-    }
-
-    public static String getNameI18nKey(IGemstone gemstone) {
-        return I18ns.endWithName(I18ns.prefixItem(gemstone.getRegisterName()));
     }
 
     public static boolean hasGemstone(ItemStack itemStack) {

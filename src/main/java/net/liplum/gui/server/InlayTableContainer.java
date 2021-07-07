@@ -2,11 +2,11 @@ package net.liplum.gui.server;
 
 import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.gui.Property;
-import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.GuiUtil;
@@ -33,18 +33,18 @@ public class InlayTableContainer extends ContainerBase {
     private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
-    private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
+    private final Slot gemstoneSlot =
+            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    return false;
+                    Item item = stack.getItem();
+                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
                 }
 
                 @Override
-                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
-                    ItemStack newWeapon = super.onTake(thePlayer, stack);
-                    onTookOutput();
-                    return newWeapon;
+                public void onSlotChanged() {
+                    super.onSlotChanged();
+                    onInputChanged();
                 }
             };
     private final Slot weaponSlot =
@@ -59,18 +59,18 @@ public class InlayTableContainer extends ContainerBase {
                     onInputChanged();
                 }
             };
-    private final Slot gemstoneSlot =
-            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
+    private final Slot outputSlot =
+            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    Item item = stack.getItem();
-                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
+                    return false;
                 }
 
                 @Override
-                public void onSlotChanged() {
-                    super.onSlotChanged();
-                    onInputChanged();
+                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
+                    ItemStack newWeapon = super.onTake(thePlayer, stack);
+                    onTookOutput();
+                    return newWeapon;
                 }
             };
 

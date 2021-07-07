@@ -1,8 +1,8 @@
 package net.liplum;
 
 import net.liplum.api.registeies.GemstoneRegistry;
-import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Gemstone;
+import net.liplum.api.weapon.IGemstone;
 import net.liplum.modifiers.EnderGemModifier;
 import net.liplum.modifiers.RubyModifier;
 import net.liplum.skills.passive.gemstone.*;

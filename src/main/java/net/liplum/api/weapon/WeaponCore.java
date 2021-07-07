@@ -7,21 +7,26 @@ import net.liplum.attributes.IBasicAttrValueBuilder;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
-    private final Map<Attribute, BasicAttrValue> allAttributes = new HashMap<>();
+    private final Map<Attribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
+    protected List<Attribute> allAttributes = new LinkedList<>();
 
     public WeaponCore() {
-        AttributeBuilder builder = Attribute.genAllBasicAttrValue(new AttributeBuilder());
-        for (Attribute attribute : initAllAttributes()) {
-            builder.set(attribute, attribute.genBasicAttrValue());
+        AttributeBuilder builder = new AttributeBuilder();
+        initAllAttributes(allAttributes);
+        for (Attribute attribute : allAttributes) {
+            builder.set(attribute, attribute.emptyBasicAttrValue());
         }
         buildAttributes(builder);
     }
 
-    protected abstract List<Attribute> initAllAttributes();
+    protected void initAllAttributes(List<Attribute> attributes) {
+        attributes.addAll(Attribute.getAllBasicAttributes());
+    }
 
     /**
      * Get the corresponding value via the attribute
@@ -32,7 +37,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      */
     @Override
     public BasicAttrValue getValue(@Nonnull Attribute attribute) {
-        return allAttributes.get(attribute);
+        return AttributeValueMap.get(attribute);
     }
 
     protected abstract void buildAttributes(AttributeBuilder builder);
@@ -43,7 +48,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     protected class AttributeBuilder implements IBasicAttrValueBuilder {
         @Override
         public AttributeBuilder set(@Nonnull Attribute attribute, @Nonnull BasicAttrValue value) {
-            allAttributes.put(attribute, value);
+            AttributeValueMap.put(attribute, value);
             return this;
         }
     }

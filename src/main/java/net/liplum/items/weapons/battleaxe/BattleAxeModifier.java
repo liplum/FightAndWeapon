@@ -4,15 +4,13 @@ import net.liplum.Attributes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.attributes.Attribute;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class BattleAxeModifier extends Modifier<BattleAxeCore> {
     @Override
-    protected List<Attribute> initAllAttributes() {
-        LinkedList<Attribute> list = new LinkedList<>();
-        list.add(Attributes.BattleAxe.SweepRange);
-        return list;
+    protected void initAllAttributes(List<Attribute> attributes) {
+        super.initAllAttributes(attributes);
+        attributes.add(Attributes.BattleAxe.SweepRange);
     }
 
     public boolean releaseSkill(BattleAxeCore core, BattleAxeArgs args) {

@@ -5,17 +5,16 @@ import net.liplum.lib.utils.FawItemUtil;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
 public class Attribute {
+    @Nonnull
     private static final Map<String, Attribute> AttributesMap = new HashMap<>();
 
-    private static final Set<Attribute> BasicAttribute = new HashSet<>();
+    @Nonnull
+    private static final LinkedList<Attribute> BasicAttributes = new LinkedList<>();
 
     private boolean isBasic = false;
 
@@ -69,23 +68,30 @@ public class Attribute {
 
     @Nonnull
     public static <T extends IBasicAttrValueBuilder> T genAllBasicAttrValue(@Nonnull T builder) {
-        for (Attribute attribute : BasicAttribute) {
-            builder.set(attribute, attribute.genBasicAttrValue());
+        for (Attribute attribute : BasicAttributes) {
+            builder.set(attribute, attribute.emptyBasicAttrValue());
         }
         return builder;
     }
 
     @Nonnull
-    public static <T extends IAttrModifierBuilder> T genAllAttrModifiers(@Nonnull T builder) {
-        for (Attribute attribute : BasicAttribute) {
-            builder.set(attribute, attribute.genAttrModifier());
+    public static <T extends IAttrModifierBuilder> T genAllBasicAttrModifiers(@Nonnull T builder) {
+        for (Attribute attribute : BasicAttributes) {
+            builder.set(attribute, attribute.emptyAttrModifier());
         }
         return builder;
     }
 
+    @Nonnull
+    public static List<Attribute> getAllBasicAttributes(){
+        return BasicAttributes;
+    }
+
     public Attribute setBasic() {
-        isBasic = true;
-        BasicAttribute.add(this);
+        if (!isBasic) {
+            BasicAttributes.add(this);
+            isBasic = true;
+        }
         return this;
     }
 
@@ -259,17 +265,17 @@ public class Attribute {
     }
 
     @Nonnull
-    public BasicAttrValue genBasicAttrValue() {
+    public BasicAttrValue emptyBasicAttrValue() {
         return new BasicAttrValue(dataType, defaultValue);
     }
 
     @Nonnull
-    public BasicAttrValue newAttrModifier(@Nonnull Number value) {
+    public BasicAttrValue newBasicAttrValue(@Nonnull Number value) {
         return new BasicAttrValue(dataType, value);
     }
 
     @Nonnull
-    public AttrModifier genAttrModifier() {
+    public AttrModifier emptyAttrModifier() {
         return new AttrModifier(dataType);
     }
 
@@ -279,7 +285,7 @@ public class Attribute {
     }
 
     @Nonnull
-    public AttrDelta genAttrDelta() {
+    public AttrDelta emptyAttrDelta() {
         return new AttrDelta(dataType);
     }
 
@@ -289,7 +295,7 @@ public class Attribute {
     }
 
     @Nonnull
-    public FinalAttrValue genFinalAttrValue() {
+    public FinalAttrValue emptyFinalAttrValue() {
         return new FinalAttrValue(dataType, 0);
     }
 

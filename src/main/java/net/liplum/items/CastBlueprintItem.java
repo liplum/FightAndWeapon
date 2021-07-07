@@ -6,7 +6,7 @@ import net.liplum.api.registeies.WeaponPartRegistry;
 import net.liplum.api.weapon.WeaponPart;
 import net.liplum.capabilities.CastStudyCapability;
 import net.liplum.lib.nbt.FawNbtTool;
-import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.FawI18n;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
@@ -58,7 +58,7 @@ public class CastBlueprintItem extends Item {
         String weaponPartName = FawNbtTool.getWeaponPart(stack);
         WeaponPart weaponPart = WeaponPartRegistry.getWeaponPart(weaponPartName);
         if (weaponPart != null) {
-            tooltip.add(TextFormatting.BLUE + I18n.format(FawItemUtil.getNameI18nKey(weaponPart)));
+            tooltip.add(TextFormatting.BLUE + I18n.format(FawI18n.getNameI18nKey(weaponPart)));
         } else {
             tooltip.add(TextFormatting.RED + I18n.format(I18ns.Tooltip.NoSuchWeaponPart));
         }

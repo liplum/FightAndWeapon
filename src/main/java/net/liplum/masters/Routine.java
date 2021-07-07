@@ -13,6 +13,13 @@ public class Routine {
     public Routine() {
     }
 
+    private static Number add(DataType dataType, Number summand, Number addend) {
+        if (dataType == DataType.Int) {
+            return Utils.intAdd(summand, addend);
+        }
+        return Utils.floatAdd(summand, addend);
+    }
+
     @Nonnull
     public ArrayList<Node> getAllNodes() {
         return allNodes;
@@ -39,13 +46,6 @@ public class Routine {
             }
         }
         return res;
-    }
-
-    private static Number add(DataType dataType, Number summand, Number addend) {
-        if (dataType == DataType.Int) {
-            return Utils.intAdd(summand, addend);
-        }
-        return Utils.floatAdd(summand, addend);
     }
 
     @Nullable

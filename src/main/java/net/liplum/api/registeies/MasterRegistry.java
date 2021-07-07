@@ -1,7 +1,6 @@
 package net.liplum.api.registeies;
 
 import net.liplum.api.fight.IMaster;
-import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;

@@ -1,14 +1,15 @@
 package net.liplum.api.weapon;
 
+import com.google.common.collect.Multimap;
 import net.liplum.I18ns;
+import net.liplum.Names;
+import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.TooltipOption;
-import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.Utils;
+import net.liplum.lib.utils.*;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -16,7 +17,10 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.text.TextFormatting;
@@ -77,18 +81,24 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
             modifier = gemstone.getModifierOf(core);
         }
         EntityPlayerSP player = Minecraft.getMinecraft().player;
+        LinkedList<String> weaponTypeTooltip = new LinkedList<>();
         LinkedList<String> gemstoneTooltip = new LinkedList<>();
         LinkedList<String> attributesTooltip = new LinkedList<>();
         LinkedList<String> passiveSkillsTooltip = new LinkedList<>();
 
-        boolean gemstoneShown = addGemstoneTooltip(stack, gemstone, gemstoneTooltip, tooltipOption)
-                && gemstoneTooltip.size() != 0;
+        addWeaponTypeTooltip(stack, gemstone, weaponTypeTooltip, tooltipOption);
+        addGemstoneTooltip(stack, gemstone, gemstoneTooltip, tooltipOption);
+        addAttributesTooltip(stack, modifier, player, tooltipOption, attributesTooltip);
+        addPassiveSkillsTooltip(stack, passiveSkills, passiveSkillsTooltip, tooltipOption);
 
-        boolean attributesShown = addAttributesTooltip(stack, modifier, player, tooltipOption, attributesTooltip)
-                && attributesTooltip.size() != 0;
+        boolean weaponTypeShown = weaponTypeTooltip.size() != 0;
+        boolean gemstoneShown = gemstoneTooltip.size() != 0;
+        boolean attributesShown = attributesTooltip.size() != 0;
+        boolean passiveSkillsShown = passiveSkillsTooltip.size() != 0;
 
-        boolean passiveSkillsShown = addPassiveSkillsTooltip(stack, passiveSkills, passiveSkillsTooltip, tooltipOption)
-                && passiveSkillsTooltip.size() != 0;
+        if (weaponTypeShown) {
+            tooltip.addAll(weaponTypeTooltip);
+        }
 
         if (gemstoneShown) {
             tooltip.addAll(gemstoneTooltip);
@@ -113,28 +123,25 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
         }
     }
 
-    /**
-     * @return whether it was added something.
-     */
     @SideOnly(Side.CLIENT)
-    public boolean addGemstoneTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> gemstoneTooltip, TooltipOption option) {
+    public void addWeaponTypeTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> weaponTypeTooltip, TooltipOption option) {
+        weaponTypeTooltip.add(I18n.format(FawI18n.getNameI18nKey(getWeaponType())));
+    }
+
+    @SideOnly(Side.CLIENT)
+    public void addGemstoneTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> gemstoneTooltip, TooltipOption option) {
         if (gemstone != null) {
             gemstoneTooltip.add(
                     I18n.format(I18ns.Tooltip.Inlaid) + " " +
                             TextFormatting.RED +
-                            I18n.format(GemUtil.getNameI18nKey(gemstone)));
+                            I18n.format(FawI18n.getNameI18nKey(gemstone)));
         } else {
             gemstoneTooltip.add(I18n.format(I18ns.Tooltip.NoGemstone));
         }
-        return true;
     }
 
-    /**
-     * @return whether it was added something.
-     */
     @SideOnly(Side.CLIENT)
-    public boolean addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, TooltipOption option, @Nonnull List<String> attributesTooltip) {
-        boolean added = false;
+    public void addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, TooltipOption option, @Nonnull List<String> attributesTooltip) {
         CoreType core = getCore();
         for (Attribute attribute : allAttributes) {
             if ((!attribute.needMoreDetailsToShown()) ||
@@ -150,35 +157,20 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
                             ((attribute.hasUnit() && option.isUnitShown()) ?
                                     attribute.getUnit() : null)
                     );
-                    added = true;
                 }
             }
         }
-        return added;
     }
 
-    /**
-     * @return whether it was added something.
-     */
     @SideOnly(Side.CLIENT)
-    public boolean addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nullable IPassiveSkill<?>[] passiveSkills, @Nonnull List<String> passiveSkillsTooltip, TooltipOption option) {
+    public void addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nullable IPassiveSkill<?>[] passiveSkills, @Nonnull List<String> passiveSkillsTooltip, TooltipOption option) {
         if (passiveSkills != null) {
             for (IPassiveSkill<?> passiveSkill : passiveSkills) {
-                FawItemUtil.addPassiveSkillTooltip(passiveSkillsTooltip, passiveSkill);
+                if (passiveSkill.isShownInTooltip()) {
+                    FawItemUtil.addPassiveSkillTooltip(passiveSkillsTooltip, passiveSkill);
+                }
             }
-            return true;
         }
-        return false;
-    }
-
-    /**
-     * Gets the basic attack speed and it can be changed by modifier.
-     * Range : (0,no limit]. A greater value stands for a slower speed.(Normal items are 4)
-     *
-     * @return the basic attack speed
-     */
-    public double getBaseAttackSpeed() {
-        return 4;
     }
 
     /**
@@ -224,6 +216,20 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
      */
     public boolean isEffective(IBlockState state) {
         return false;
+    }
+
+    @Nonnull
+    @Override
+    public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
+        Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
+        if (slot == EntityEquipmentSlot.MAINHAND) {
+            Modifier<?> modifier = GemUtil.getModifierFrom(stack);
+            FinalAttrValue finalAttackSpeed = FawItemUtil.calcuAttribute(AttackSpeed, getCore(), modifier);
+            double attackSpeed = finalAttackSpeed.getFloat() - Vanilla.DefaultAttackSpeed;
+            map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
+                    ItemTool.genAttrModifier(ATTACK_SPEED_MODIFIER, Vanilla.AttrModifierType.DeltaAddition, Names.WeaponAttributeModifier, attackSpeed));
+        }
+        return map;
     }
 
     /**

@@ -18,12 +18,11 @@ public abstract class HarpCore extends MagicToolCore {
     }
 
     @Override
-    protected List<Attribute> initAllAttributes() {
-        LinkedList<Attribute> list = new LinkedList<>();
-        list.add(Attributes.Harp.Frequency);
-        list.add(Attributes.Harp.MaxUseDuration);
-        list.add(Attributes.Harp.Radius);
-        return list;
+    protected void initAllAttributes(List<Attribute> attributes) {
+        super.initAllAttributes(attributes);
+        attributes.add(Attributes.Harp.Frequency);
+        attributes.add(Attributes.Harp.MaxUseDuration);
+        attributes.add(Attributes.Harp.Radius);
     }
 
     public abstract boolean continueSkill(ContinuousHarpArgs args);

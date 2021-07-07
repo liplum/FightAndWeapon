@@ -3,9 +3,22 @@ package net.liplum;
 public final class Vanilla {
     public static final int TPS = 20;
     public static final int PlayerInventoryCount = 36;
+    public static final double DefaultAttackSpeed = 4D;
 
     public static Number PerSecond(Number value) {
         return value.floatValue() / TPS;
+    }
+
+    public enum AttrModifierType {
+        DeltaAddition(0),
+        RateAddition(1),
+        CompoundInterest(2);
+
+        public final int type;
+
+        AttrModifierType(int type) {
+            this.type = type;
+        }
     }
 
     public static final class Color {

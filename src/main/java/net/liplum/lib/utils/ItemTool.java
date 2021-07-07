@@ -1,5 +1,7 @@
 package net.liplum.lib.utils;
 
+import net.liplum.Vanilla;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -7,6 +9,7 @@ import net.minecraft.util.EnumHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.UUID;
 import java.util.function.Predicate;
 
 public class ItemTool {
@@ -76,5 +79,13 @@ public class ItemTool {
         if (itemStack != ItemStack.EMPTY) {
             player.dropItem(itemStack, false);
         }
+    }
+
+    public static AttributeModifier genAttrModifier(@Nonnull UUID uuid, @Nonnull Vanilla.AttrModifierType type, @Nonnull String modifierName, double amount) {
+        return new AttributeModifier(uuid, modifierName, amount, type.type);
+    }
+
+    public static AttributeModifier genAttrModifier(@Nonnull Vanilla.AttrModifierType type, @Nonnull String modifierName, double amount) {
+        return new AttributeModifier(modifierName, amount, type.type);
     }
 }

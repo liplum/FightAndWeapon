@@ -4,7 +4,6 @@ import net.liplum.Attributes;
 import net.liplum.api.weapon.MagicToolModifier;
 import net.liplum.attributes.Attribute;
 
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class HarpModifier extends MagicToolModifier<HarpCore> {
@@ -14,12 +13,11 @@ public abstract class HarpModifier extends MagicToolModifier<HarpCore> {
     }
 
     @Override
-    protected List<Attribute> initAllAttributes() {
-        LinkedList<Attribute> list = new LinkedList<>();
-        list.add(Attributes.Harp.Frequency);
-        list.add(Attributes.Harp.MaxUseDuration);
-        list.add(Attributes.Harp.Radius);
-        return list;
+    protected void initAllAttributes(List<Attribute> attributes) {
+        super.initAllAttributes(attributes);
+        attributes.add(Attributes.Harp.Frequency);
+        attributes.add(Attributes.Harp.MaxUseDuration);
+        attributes.add(Attributes.Harp.Radius);
     }
 
     public boolean continueSkill(HarpCore core, ContinuousHarpArgs args) {

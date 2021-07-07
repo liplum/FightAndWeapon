@@ -15,8 +15,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 import static net.liplum.Attributes.BattleAxe.SweepRange;
-import static net.liplum.Attributes.Generic.CoolDown;
-import static net.liplum.Attributes.Generic.Strength;
+import static net.liplum.Attributes.Generic.*;
 
 public final class BattleAxeCoreTypes {
     public static final BattleAxeCore Empty = new BattleAxeCore() {
@@ -70,11 +69,11 @@ public final class BattleAxeCoreTypes {
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
             builder.set(
-                    SweepRange, SweepRange.newAttrModifier(3)
+                    SweepRange, SweepRange.newBasicAttrValue(3)
             ).set(
-                    Strength, Strength.newAttrModifier(7)
+                    Strength, Strength.newBasicAttrValue(7)
             ).set(
-                    CoolDown, CoolDown.newAttrModifier(5 * 20)
+                    CoolDown, CoolDown.newBasicAttrValue(5 * 20)
             );
         }
     };

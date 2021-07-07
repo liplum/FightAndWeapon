@@ -19,6 +19,12 @@ commands.inlay.failure.noSuchGemstone=Couldn't inlay the gemstone called %s as i
 #Potions
 potion.effect.faw.unstoppable=Unstoppable
 
+#WeaponType
+weaponType.lance=Lance
+weaponType.harp=Harp
+weaponType.battle_axe=Battle_axe
+weaponType.sword=Sword
+
 #Tooltips
 tooltip.faw.weapon.inlaid=Inlaid
 tooltip.faw.weapon.noGemstone=No Gemstone
@@ -33,6 +39,7 @@ tooltip.faw.unit.Unit=unit
 attributes.faw.generic.Strength=Strength
 attributes.faw.generic.CoolDown=Cool Down
 attributes.faw.generic.AttackReach=Attack Reach
+attributes.faw.generic.AttackSpeed=Attack Speed
 attributes.faw.generic.AbilityPower=AP
 
 attributes.faw.lance.SprintStrength=Sprint Strength
@@ -51,14 +58,15 @@ tile.faw.forge.name=Forge
 
 #Skills
 #---Passive Skills
-pskill.faw.Fireproof.name=Fireproof
-pskill.faw.Magicize.name=Magicize
-pskill.faw.MagicAttach.name=Magic Attach
-pskill.faw.GentlyLand.name=Gently Land
-pskill.faw.Feather.name=Feather
-pskill.faw.FireResistance.name=Fire Resistance
-pskill.faw.Levitation.name=Levitation
-pskill.faw.NutrientAbsorption.name=Nutrient Absorption
+pskill.faw.Fireproof=Fireproof
+pskill.faw.Magicize=Magicize
+pskill.faw.MagicAttach=Magic Attach
+pskill.faw.GentlyLand=Gently Land
+pskill.faw.Feather=Feather
+pskill.faw.FireResistance=Fire Resistance
+pskill.faw.Levitation=Levitation
+pskill.faw.NutrientAbsorption=Nutrient Absorption
+pskill.faw.ScorchingTouch=Scorching Touch
 
 
 #Items

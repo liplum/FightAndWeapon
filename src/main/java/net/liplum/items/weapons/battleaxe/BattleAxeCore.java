@@ -10,20 +10,23 @@ import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
 
+import static net.liplum.Attributes.Generic.AttackSpeed;
+
 public abstract class BattleAxeCore extends WeaponCore {
     public abstract boolean releaseSkill(BattleAxeArgs args);
 
 
     @Override
-    protected List<Attribute> initAllAttributes() {
-        LinkedList<Attribute> list = new LinkedList<>();
-        list.add(Attributes.BattleAxe.SweepRange);
-        return list;
+    protected void initAllAttributes(List<Attribute> attributes) {
+        super.initAllAttributes(attributes);
+        attributes.add(Attributes.BattleAxe.SweepRange);
     }
 
     @Override
     protected void buildAttributes(AttributeBuilder builder) {
-
+        builder.set(
+                AttackSpeed, AttackSpeed.newBasicAttrValue(1.2F)
+        );
     }
 
     @Nonnull

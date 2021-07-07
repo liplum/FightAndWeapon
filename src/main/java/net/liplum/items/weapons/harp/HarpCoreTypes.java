@@ -37,15 +37,15 @@ public final class HarpCoreTypes {
         protected void buildAttributes(AttributeBuilder builder) {
             super.buildAttributes(builder);
             builder.set(
-                    AbilityPower, AbilityPower.newAttrModifier(5)
+                    AbilityPower, AbilityPower.newBasicAttrValue(5)
             ).set(
-                    Frequency, Frequency.newAttrModifier(40)
+                    Frequency, Frequency.newBasicAttrValue(40)
             ).set(
-                    Radius, Radius.newAttrModifier(4)
+                    Radius, Radius.newBasicAttrValue(4)
             ).set(
-                    CoolDown, CoolDown.newAttrModifier(200)
+                    CoolDown, CoolDown.newBasicAttrValue(200)
             ).set(
-                    MaxUseDuration, MaxUseDuration.newAttrModifier(400)
+                    MaxUseDuration, MaxUseDuration.newBasicAttrValue(400)
             );
         }
 

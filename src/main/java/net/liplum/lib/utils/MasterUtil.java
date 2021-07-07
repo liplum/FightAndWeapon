@@ -100,6 +100,6 @@ public final class MasterUtil {
             Number value = attributeAmplifier.get(attribute.getRegisterName());
             return attribute.newAttrDelta(value);
         }
-        return attribute.genAttrDelta();
+        return attribute.emptyAttrDelta();
     }
 }

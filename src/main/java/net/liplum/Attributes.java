@@ -24,6 +24,19 @@ public final class Attributes {
                 .setHasUnit(I18ns.Tooltip.Unit.Unit)
                 .setHowCanTooltipShow(n -> n.floatValue() != 4.5F)
                 .setDefaultValue(4.5F);
+        /**
+         * Gets the basic attack speed and it can be changed by modifier.
+         * Range : (0,no limit]. A smaller value stands for a slower speed.(Normal items are 4)
+         */
+        public static final Attribute AttackSpeed = new Attribute()
+                .setRegisterName(Names.Attribute.Generic.AttackSpeed)
+                .setHowToGetI18nKey(I18ns.Attribute::Generic)
+                .setBasic()
+                .setDataType(DataType.Float)
+                .setFormat("%.1f")
+                .setComputeType(ComputeType.Only_Gemstone)
+                .setHowCanTooltipShow(n -> n.floatValue() != 4F)
+                .setDefaultValue(4F);
         public static final Attribute AbilityPower = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AbilityPower)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
