@@ -31,8 +31,8 @@ public final class EnderGemModifier {
         }
 
         @Override
-        protected void buildAttributes(Modifier<LanceCore>.AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(Modifier.ModifierBuilder builder) {
+            super.build(builder);
             builder.set(
                     SprintStrength, SprintStrength.newAttrModifier(2, 0)
             );
@@ -44,7 +44,7 @@ public final class EnderGemModifier {
             EntityPlayer player = args.getPlayer();
             float strength = args.getStrength();
 
-            float sprintLength = args.getSprintLength();
+            float sprintLength = args.getSprintStrength();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world

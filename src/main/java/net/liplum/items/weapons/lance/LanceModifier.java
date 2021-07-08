@@ -14,7 +14,7 @@ public abstract class LanceModifier extends Modifier<LanceCore> {
     }
 
     @Override
-    protected void buildAttributes(Modifier<LanceCore>.AttributeBuilder builder) {
+    protected void build(ModifierBuilder builder) {
 
     }
 

@@ -7,13 +7,12 @@ import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.Attribute;
 
 import javax.annotation.Nonnull;
-import java.util.LinkedList;
 import java.util.List;
 
 public abstract class HarpCore extends MagicToolCore {
 
     @Override
-    protected void buildAttributes(AttributeBuilder builder) {
+    protected void build(WeaponCoreBuilder builder) {
 
     }
 

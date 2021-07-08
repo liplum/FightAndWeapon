@@ -12,16 +12,19 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Modifier<CoreType extends WeaponCore> implements IAttributeProvider<AttrModifier> {
+    @Nonnull
     private final Map<Attribute, AttrModifier> AttributeModifierMap = new HashMap<>();
+    @Nonnull
     protected List<Attribute> allAttributes = new LinkedList<>();
 
     public Modifier() {
-        AttributeBuilder builder = new AttributeBuilder();
         initAllAttributes(allAttributes);
+
+        ModifierBuilder builder = new ModifierBuilder();
         for (Attribute attribute : allAttributes) {
             builder.set(attribute, attribute.emptyAttrModifier());
         }
-        buildAttributes(builder);
+        build(builder);
     }
 
     protected void initAllAttributes(List<Attribute> attributes){
@@ -40,13 +43,13 @@ public abstract class Modifier<CoreType extends WeaponCore> implements IAttribut
         return AttributeModifierMap.get(attribute);
     }
 
-    protected abstract void buildAttributes(AttributeBuilder builder);
+    protected abstract void build(ModifierBuilder builder);
 
     public abstract CoreType getCoreType();
 
-    protected class AttributeBuilder implements IAttrModifierBuilder {
+    protected class ModifierBuilder implements IAttrModifierBuilder {
         @Override
-        public AttributeBuilder set(@Nonnull Attribute attribute, @Nonnull AttrModifier modifier) {
+        public ModifierBuilder set(@Nonnull Attribute attribute, @Nonnull AttrModifier modifier) {
             AttributeModifierMap.put(attribute, modifier);
             return this;
         }

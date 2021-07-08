@@ -34,8 +34,8 @@ public final class HarpCoreTypes {
     public static final HarpCore Normal = new HarpCore() {
 
         @Override
-        protected void buildAttributes(AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
             builder.set(
                     AbilityPower, AbilityPower.newBasicAttrValue(5)
             ).set(

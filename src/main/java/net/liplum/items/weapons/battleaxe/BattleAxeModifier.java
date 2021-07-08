@@ -18,7 +18,7 @@ public abstract class BattleAxeModifier extends Modifier<BattleAxeCore> {
     }
 
     @Override
-    protected void buildAttributes(AttributeBuilder builder) {
+    protected void build(ModifierBuilder builder) {
 
     }
 }

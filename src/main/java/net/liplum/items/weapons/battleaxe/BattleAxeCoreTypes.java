@@ -66,8 +66,8 @@ public final class BattleAxeCoreTypes {
         }
 
         @Override
-        protected void buildAttributes(AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
             builder.set(
                     SweepRange, SweepRange.newBasicAttrValue(3)
             ).set(

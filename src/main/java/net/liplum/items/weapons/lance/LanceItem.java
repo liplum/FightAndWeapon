@@ -39,7 +39,7 @@ public class LanceItem extends WeaponBaseItem<LanceCore> {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         //Player can't sprint in the sky.
-        if (playerIn.onGround && playerIn.isSneaking()) {
+        if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
@@ -55,7 +55,7 @@ public class LanceItem extends WeaponBaseItem<LanceCore> {
                         .setPlayer(playerIn)
                         .setItemStack(held)
                         .setHand(handIn)
-                        .setSprintLength(finalSprintStrength.getFloat())
+                        .setSprintStrength(finalSprintStrength.getFloat())
                         .setStrength(finalStrength.getFloat());
 
                 if (modifier != null) {

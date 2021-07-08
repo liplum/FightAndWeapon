@@ -8,7 +8,7 @@ import java.util.List;
 
 public abstract class HarpModifier extends MagicToolModifier<HarpCore> {
     @Override
-    protected void buildAttributes(AttributeBuilder builder) {
+    protected void build(ModifierBuilder builder) {
 
     }
 

@@ -45,8 +45,8 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void buildAttributes(AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
             builder.set(
                     Strength, Strength.newBasicAttrValue(5)
             );
@@ -64,7 +64,7 @@ public final class LanceCoreTypes {
             EntityPlayer player = args.getPlayer();
             float strength = args.getStrength();
 
-            float sprintLength = args.getSprintLength();
+            float sprintLength = args.getSprintStrength();
 
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
@@ -93,8 +93,8 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void buildAttributes(AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
             builder.set(
                     //  It means you can dash 4 units.
                     SprintStrength, SprintStrength.newBasicAttrValue(2)
@@ -116,7 +116,7 @@ public final class LanceCoreTypes {
             EntityPlayer player = args.getPlayer();
             float strength = args.getStrength();
 
-            float sprintLength = args.getSprintLength();
+            float sprintLength = args.getSprintStrength();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
@@ -131,8 +131,8 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void buildAttributes(AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
             builder.set(
                     SprintStrength, SprintStrength.newBasicAttrValue(4)
             ).set(
@@ -192,8 +192,8 @@ public final class LanceCoreTypes {
 
 
         @Override
-        protected void buildAttributes(AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
             builder.set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
             ).set(
@@ -206,7 +206,7 @@ public final class LanceCoreTypes {
         @Override
         public boolean releaseSkill(LanceArgs args) {
             EntityPlayer player = args.getPlayer();
-            float sprintLength = args.getSprintLength();
+            float sprintLength = args.getSprintStrength();
 
 
             Vec3d originPos = player.getPositionVector();
@@ -218,8 +218,8 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void buildAttributes(AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
             builder.set(
                     SprintStrength, SprintStrength.newBasicAttrValue(10)
             ).set(

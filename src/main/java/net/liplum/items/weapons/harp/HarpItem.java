@@ -39,7 +39,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
     @Override
     public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
-        if (playerIn.isSneaking()) {
+        if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)

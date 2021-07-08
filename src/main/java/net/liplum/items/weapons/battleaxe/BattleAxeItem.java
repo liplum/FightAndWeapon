@@ -42,7 +42,7 @@ public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
         ItemStack offHeld = playerIn.getHeldItemOffhand();
         //Default is PASS
         //If play were not sneaking, didn't detect.
-        if (!playerIn.isSneaking()) {
+        if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier<?> modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)

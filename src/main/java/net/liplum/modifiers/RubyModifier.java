@@ -11,8 +11,8 @@ public final class RubyModifier {
     public final static LanceModifier Light_Lance = new LanceModifier() {
 
         @Override
-        protected void buildAttributes(Modifier<LanceCore>.AttributeBuilder builder) {
-            super.buildAttributes(builder);
+        protected void build(Modifier.ModifierBuilder builder) {
+            super.build(builder);
             builder.set(
                     Strength, Strength.newAttrModifier(2, 0.2F)
             );

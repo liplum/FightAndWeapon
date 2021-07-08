@@ -7,7 +7,6 @@ import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.Attribute;
 
 import javax.annotation.Nonnull;
-import java.util.LinkedList;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.AttackSpeed;
@@ -23,7 +22,7 @@ public abstract class BattleAxeCore extends WeaponCore {
     }
 
     @Override
-    protected void buildAttributes(AttributeBuilder builder) {
+    protected void build(WeaponCoreBuilder builder) {
         builder.set(
                 AttackSpeed, AttackSpeed.newBasicAttrValue(1.2F)
         );
