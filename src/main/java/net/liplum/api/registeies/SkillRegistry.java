@@ -17,7 +17,7 @@ public final class SkillRegistry {
     private static final Map<String, IActiveSkill> AllActiveSkills = new HashMap<>();
 
     @Nonnull
-    public static <T extends Event> IPassiveSkill<T> registerPassiveSkill(@Nonnull IPassiveSkill<T> passiveSkill) {
+    public static <T extends Event> IPassiveSkill<T> register(@Nonnull IPassiveSkill<T> passiveSkill) {
         //Register it to passiveSkillsMap
         Class<? extends Event> eventType = passiveSkill.getEventType();
         if (PassiveSkillsMap.containsKey(eventType)) {
@@ -32,8 +32,8 @@ public final class SkillRegistry {
     }
 
     @Nonnull
-    public static IActiveSkill registerActiveSkill(@Nonnull String registerName, @Nonnull IActiveSkill activeSkill) {
-        AllActiveSkills.put(registerName, activeSkill);
+    public static IActiveSkill register(@Nonnull IActiveSkill activeSkill) {
+        AllActiveSkills.put(activeSkill.getRegisterName(), activeSkill);
         return activeSkill;
     }
 

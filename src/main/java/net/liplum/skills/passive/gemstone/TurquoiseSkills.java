@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 
 public final class TurquoiseSkills {
     public final static IPassiveSkill<LivingHurtEvent> GentlyLand =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<LivingHurtEvent>() {
                         @Nonnull
                         @Override

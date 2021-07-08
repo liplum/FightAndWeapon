@@ -11,7 +11,7 @@ import javax.annotation.Nonnull;
 
 public final class RubySkills {
     public final static IPassiveSkill<LivingHurtEvent> FireResistance =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<LivingHurtEvent>() {
                         @Nonnull
                         @Override

@@ -1,6 +1,7 @@
 package net.liplum.api.weapon;
 
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.registeies.GemstoneRegistry;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -14,6 +15,7 @@ public class Gemstone implements IGemstone {
 
     public Gemstone(String registerName) {
         this.registerName = registerName;
+        GemstoneRegistry.register(this);
     }
 
     @Override

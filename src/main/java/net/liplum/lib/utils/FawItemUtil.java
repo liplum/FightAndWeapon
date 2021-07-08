@@ -393,21 +393,25 @@ public final class FawItemUtil {
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
      */
     public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
+        ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = core.getValue(attribute);
         //Master
         MasterCapability master = null;
-        if (player != null) {
-            master = player.getCapability(CapabilityRegistry.Master_Capability, null);
-        }
         AttrDelta masterValue = null;
-        if (master != null) {
-            masterValue = MasterUtil.getAttributeValue(master, core.getWeaponType(), attribute);
+        if (computeType.computeMaster) {
+            if (player != null) {
+                master = player.getCapability(CapabilityRegistry.Master_Capability, null);
+            }
+            if (master != null) {
+                masterValue = MasterUtil.getAttributeValue(master, core.getWeaponType(), attribute);
+            }
         }
-
         //Modifier
         AttrModifier attrModifier = null;
-        if (modifier != null) {
-            attrModifier = modifier.getValue(attribute);
+        if(computeType.computeModifier) {
+            if (modifier != null) {
+                attrModifier = modifier.getValue(attribute);
+            }
         }
 
         FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masterValue);

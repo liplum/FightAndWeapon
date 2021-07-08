@@ -20,7 +20,7 @@ import java.util.List;
 
 public final class MagicPearlSkills {
     public static final IPassiveSkill<WeaponAttackingEvent> Magicize =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<WeaponAttackingEvent>() {
                         @Nonnull
                         @Override

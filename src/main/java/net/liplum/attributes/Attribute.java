@@ -2,6 +2,7 @@ package net.liplum.attributes;
 
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.masters.AttributeAmplifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -83,7 +84,7 @@ public class Attribute {
     }
 
     @Nonnull
-    public static List<Attribute> getAllBasicAttributes(){
+    public static List<Attribute> getAllBasicAttributes() {
         return BasicAttributes;
     }
 
@@ -282,6 +283,11 @@ public class Attribute {
     @Nonnull
     public AttrModifier newAttrModifier(@Nonnull Number delta, float deltaRate) {
         return new AttrModifier(dataType, delta, deltaRate);
+    }
+
+    @Nonnull
+    public AttributeAmplifier newAttributeAmplifier(@Nonnull Number value) {
+        return new AttributeAmplifier().setAttributeName(registerName).setType(dataType).setValue(value);
     }
 
     @Nonnull

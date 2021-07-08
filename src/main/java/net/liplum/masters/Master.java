@@ -3,13 +3,20 @@ package net.liplum.masters;
 import net.liplum.api.fight.IActiveSkill;
 import net.liplum.api.fight.IMaster;
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.registeies.MasterRegistry;
 import net.liplum.api.registeies.SkillRegistry;
+import net.liplum.api.registeies.WeaponTypeRegistry;
 import net.liplum.api.weapon.WeaponType;
+import net.liplum.attributes.AttrDelta;
+import net.liplum.attributes.Attribute;
 
 import javax.annotation.Nonnull;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Master implements IMaster {
     private final WeaponType weaponType;
@@ -17,14 +24,16 @@ public class Master implements IMaster {
 
     public Master(WeaponType weaponType) {
         this.weaponType = weaponType;
+        MasterRegistry.register(this);
     }
 
     public Routine getRoutine() {
         return routine;
     }
 
-    public void setRoutine(@Nonnull Routine routine) {
+    public Master setRoutine(@Nonnull Routine routine) {
         this.routine = routine;
+        return this;
     }
 
     @Nonnull
@@ -41,8 +50,16 @@ public class Master implements IMaster {
 
     @Nonnull
     @Override
-    public Map<String, Number> getAttributeAmplifier(int level) {
-        return routine.getAttributeAmplifiers(level);
+    public Map<Attribute, AttrDelta> getAttributeAmplifier(int level) {
+        Map<String, Number> source = routine.getAttributeAmplifiers(level);
+        Map<Attribute, AttrDelta> res = new HashMap<>();
+        for (Map.Entry<String, Number> entry : source.entrySet()) {
+            Attribute attribute = Attribute.getAttribute(entry.getKey());
+            if (attribute != null) {
+                res.put(attribute, attribute.newAttrDelta(entry.getValue()));
+            }
+        }
+        return res;
     }
 
     @Nonnull

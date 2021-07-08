@@ -14,14 +14,15 @@ public final class WeaponRegistry {
     private static final Map<WeaponType, Set<WeaponBaseItem<?>>> AllWeapons = new HashMap<>();
 
     @Nonnull
-    public static WeaponBaseItem<?> register(@Nonnull WeaponType type, @Nonnull WeaponBaseItem<?> weapon) {
-        if (AllWeapons.containsKey(type)) {
-            AllWeapons.get(type).add(weapon);
+    public static WeaponBaseItem<?> register(@Nonnull WeaponBaseItem<?> weapon) {
+        WeaponType weaponType = weapon.getWeaponType();
+        if (AllWeapons.containsKey(weaponType)) {
+            AllWeapons.get(weaponType).add(weapon);
             return weapon;
         }
         HashSet<WeaponBaseItem<?>> weapons = new HashSet<>();
         weapons.add(weapon);
-        AllWeapons.put(type, weapons);
+        AllWeapons.put(weaponType, weapons);
         return weapon;
     }
 

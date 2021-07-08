@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 
 public final class WindyGemstoneSkills {
     public final static IPassiveSkill<WeaponAttackedEvent> Levitation =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<WeaponAttackedEvent>() {
                         @Nonnull
                         @Override
@@ -41,7 +41,7 @@ public final class WindyGemstoneSkills {
                         }
                     });
     public final static IPassiveSkill<LivingFallEvent> Feather =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<LivingFallEvent>() {
                         @Nonnull
                         @Override

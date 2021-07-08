@@ -12,7 +12,7 @@ import javax.annotation.Nonnull;
 
 public final class ForestgemSkills {
     public static final IPassiveSkill<WeaponAttackedEvent> NutrientAbsorption =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<WeaponAttackedEvent>() {
                         @Nonnull
                         @Override

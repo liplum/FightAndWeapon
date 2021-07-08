@@ -20,7 +20,7 @@ public final class MasterPassiveSkills {
     /**
      * It can make the player unstoppable when sprinting with a lance.
      */
-    public final static IPassiveSkill<LanceSprintEvent> UnstoppableSprint = SkillRegistry.registerPassiveSkill(new IPassiveSkill<LanceSprintEvent>() {
+    public final static IPassiveSkill<LanceSprintEvent> UnstoppableSprint = SkillRegistry.register(new IPassiveSkill<LanceSprintEvent>() {
         @Nonnull
         @Override
         public Class<LanceSprintEvent> getEventType() {

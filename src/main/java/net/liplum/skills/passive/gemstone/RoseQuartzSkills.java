@@ -16,7 +16,7 @@ import java.util.List;
 
 public final class RoseQuartzSkills {
     public static final IPassiveSkill<WeaponAttackingEvent> MagicAttach =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<WeaponAttackingEvent>() {
                         @Nonnull
                         @Override

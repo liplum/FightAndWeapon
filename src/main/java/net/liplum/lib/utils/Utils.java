@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.attributes.DataType;
 import org.lwjgl.input.Keyboard;
 
 import javax.annotation.Nonnull;
@@ -142,4 +143,10 @@ public class Utils {
         return value;
     }
 
+    public static Number add(DataType dataType, Number summand, Number addend) {
+        if (dataType == DataType.Int) {
+            return intAdd(summand, addend);
+        }
+        return floatAdd(summand, addend);
+    }
 }

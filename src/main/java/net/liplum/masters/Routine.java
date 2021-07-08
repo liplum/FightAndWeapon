@@ -1,6 +1,5 @@
 package net.liplum.masters;
 
-import net.liplum.attributes.DataType;
 import net.liplum.lib.utils.Utils;
 
 import javax.annotation.Nonnull;
@@ -13,11 +12,8 @@ public class Routine {
     public Routine() {
     }
 
-    private static Number add(DataType dataType, Number summand, Number addend) {
-        if (dataType == DataType.Int) {
-            return Utils.intAdd(summand, addend);
-        }
-        return Utils.floatAdd(summand, addend);
+    public Routine(ArrayList<Node> allNodes) {
+        this.allNodes = allNodes;
     }
 
     @Nonnull
@@ -39,7 +35,7 @@ public class Routine {
                 Number value = amp.getValue();
                 if (res.containsKey(attrName)) {
                     Number sum = res.get(attrName);
-                    res.put(attrName, add(amp.getType(), sum, value));
+                    res.put(attrName, Utils.add(amp.getType(), sum, value));
                 } else {
                     res.put(attrName, value);
                 }

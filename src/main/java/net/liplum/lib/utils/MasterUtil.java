@@ -96,9 +96,11 @@ public final class MasterUtil {
         if (master != null) {
             LvExpPair levelAndExp = masterCapability.getLevelAndExp(master.getRegisterName());
             int lv = levelAndExp.getLevel();
-            Map<String, Number> attributeAmplifier = master.getAttributeAmplifier(lv);
-            Number value = attributeAmplifier.get(attribute.getRegisterName());
-            return attribute.newAttrDelta(value);
+            Map<Attribute, AttrDelta> amplifiers = master.getAttributeAmplifier(lv);
+            AttrDelta res = amplifiers.get(attribute);
+            if (res != null) {
+                return res;
+            }
         }
         return attribute.emptyAttrDelta();
     }

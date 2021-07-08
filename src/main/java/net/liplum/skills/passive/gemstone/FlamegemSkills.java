@@ -15,7 +15,7 @@ import javax.annotation.Nonnull;
 
 public final class FlamegemSkills {
     public final static IPassiveSkill<TickEvent.PlayerTickEvent> FireProof =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<TickEvent.PlayerTickEvent>() {
                         @Nonnull
                         @Override
@@ -41,7 +41,7 @@ public final class FlamegemSkills {
                     });
 
     public final static IPassiveSkill<WeaponAttackingEvent> ScorchingTouch =
-            SkillRegistry.registerPassiveSkill(
+            SkillRegistry.register(
                     new IPassiveSkill<WeaponAttackingEvent>() {
                         @Nonnull
                         @Override

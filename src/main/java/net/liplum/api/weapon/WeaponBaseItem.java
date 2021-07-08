@@ -41,7 +41,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
 
     public WeaponBaseItem() {
         super();
-        WeaponRegistry.register(this.getWeaponType(), this);
+        WeaponRegistry.register(this);
         this.allAttributes = initAllAttributes();
     }
 
@@ -68,6 +68,10 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
     @SideOnly(Side.CLIENT)
     @Override
     public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+        EntityPlayerSP player = Minecraft.getMinecraft().player;
+        if (player == null) {
+            return;
+        }
         boolean vanillaAdvanced = flagIn.isAdvanced();
         boolean shiftPressed = Utils.isShiftDown();
         boolean altPressed = Utils.isAltDown();
@@ -80,7 +84,6 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
             passiveSkills = gemstone.getPassiveSkillsOf(core);
             modifier = gemstone.getModifierOf(core);
         }
-        EntityPlayerSP player = Minecraft.getMinecraft().player;
         LinkedList<String> weaponTypeTooltip = new LinkedList<>();
         LinkedList<String> gemstoneTooltip = new LinkedList<>();
         LinkedList<String> attributesTooltip = new LinkedList<>();
