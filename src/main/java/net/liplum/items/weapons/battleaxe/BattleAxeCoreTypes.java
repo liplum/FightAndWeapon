@@ -5,7 +5,9 @@ import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -15,7 +17,8 @@ import net.minecraft.world.World;
 import java.util.List;
 
 import static net.liplum.Attributes.BattleAxe.SweepRange;
-import static net.liplum.Attributes.Generic.*;
+import static net.liplum.Attributes.Generic.CoolDown;
+import static net.liplum.Attributes.Generic.Strength;
 
 public final class BattleAxeCoreTypes {
     public static final BattleAxeCore Empty = new BattleAxeCore() {
@@ -74,6 +77,25 @@ public final class BattleAxeCoreTypes {
                     Strength, Strength.newBasicAttrValue(7)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(5 * 20)
+            );
+        }
+    };
+
+    public static final BattleAxeCore BerserkerAxe = new BattleAxeCore() {
+        @Override
+        public boolean releaseSkill(BattleAxeArgs args) {
+            EntityPlayer player = args.getPlayer();
+            player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10 * 20, 1));
+            return true;
+        }
+
+        @Override
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
+            builder.set(
+                    Strength, Strength.newBasicAttrValue(7)
+            ).set(
+                    CoolDown, CoolDown.newBasicAttrValue(15 * 20)
             );
         }
     };
