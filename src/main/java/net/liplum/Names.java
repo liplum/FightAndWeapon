@@ -15,7 +15,7 @@ public final class Names {
 
     public static final class Special {
         public static final String Weapon = "weapon";
-        public static final String Master = "master";
+        public static final String Mastery = "mastery";
         public static final String PassiveSkill = "pskill";
         public static final String Generic = "generic";
         public static final String Attributes = "attributes";
@@ -95,7 +95,7 @@ public final class Names {
     }
 
     public final static class Capability {
-        public static final String Master = "master";
+        public static final String Mastery = "mastery";
         public static final String CastStudy = "cast_study";
     }
 
@@ -165,6 +165,6 @@ public final class Names {
         public static final String NutrientAbsorption = "NutrientAbsorption";
     }
 
-    public final static class Master {
+    public final static class Mastery {
     }
 }

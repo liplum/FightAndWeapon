@@ -8,7 +8,7 @@ import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
 
-public interface IMaster {
+public interface IMastery {
     @Nonnull
     String getRegisterName();
 

@@ -2,7 +2,7 @@ package net.liplum.attributes;
 
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.masters.AttributeAmplifier;
+import net.liplum.masteries.AttributeAmplifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

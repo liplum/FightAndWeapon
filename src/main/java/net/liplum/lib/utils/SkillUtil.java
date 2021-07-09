@@ -38,11 +38,11 @@ public final class SkillUtil {
                 }
             }
 
-            //Then, gets the passive skills from entity's master if the entity is a player
+            //Then, gets the passive skills from entity's mastery if the entity is a player
             if (entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) entity;
-                Set<IPassiveSkill<?>> skillsFromMaster = MasterUtil.getPassiveSkills(player, weaponType);
-                for (IPassiveSkill<?> skill : skillsFromMaster) {
+                Set<IPassiveSkill<?>> skillsFromMastery = MasteryUtil.getPassiveSkills(player, weaponType);
+                for (IPassiveSkill<?> skill : skillsFromMastery) {
                     if (skill.getEventType() == eventType) {
                         allSkills.add((IPassiveSkill<Event>) skill);
                     }

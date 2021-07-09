@@ -1,6 +1,6 @@
 package net.liplum;
 
-import net.liplum.lib.utils.MasterUtil;
+import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.proxies.ProxyBase;
 import net.liplum.registeies.CapabilityRegistry;
 import net.liplum.registeies.CommandRegistry;
@@ -46,7 +46,7 @@ public class FawMod {
     public void init(FMLInitializationEvent event) {
         Gemstones.load();
         Logger.info("Gemstone Component loaded successfully.");
-        MasterUtil.init();
+        MasteryUtil.init();
         Proxy.init(event);
         Logger.info("Proxy Component initialized successfully.");
     }

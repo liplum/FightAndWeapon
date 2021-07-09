@@ -1,4 +1,4 @@
-package net.liplum.masters;
+package net.liplum.masteries;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;

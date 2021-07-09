@@ -42,10 +42,10 @@ public final class Tags {
     }
 
 
-    public final static class Master {
-        public static final String MasterList = "MasterList";
+    public final static class Mastery {
+        public static final String MasteryList = "MasteryList";
 
-        public final static class MasterObject {
+        public final static class MasteryObject {
             public static final String Type = "Type";
             public static final String Level = "Level";
             public static final String Exp = "Exp";

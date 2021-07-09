@@ -2,7 +2,7 @@ package net.liplum.capabilities;
 
 import net.liplum.Tags;
 import net.liplum.lib.nbt.NbtUtil;
-import net.liplum.masters.LvExpPair;
+import net.liplum.masteries.LvExpPair;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
@@ -12,20 +12,20 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MasterCapability implements INBTSerializable<NBTTagCompound> {
+public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
 
-    private HashMap<String, LvExpPair> allMasters = new HashMap<>();
+    private HashMap<String, LvExpPair> allMasteries = new HashMap<>();
 
     public HashMap<String, LvExpPair> shallowCloneAllMasters() {
-        return (HashMap<String, LvExpPair>) allMasters.clone();
+        return (HashMap<String, LvExpPair>) allMasteries.clone();
     }
 
-    public void setAllMasters(HashMap<String, LvExpPair> newMasters) {
-        allMasters = newMasters;
+    public void setAllMasteries(HashMap<String, LvExpPair> newMasters) {
+        allMasteries = newMasters;
     }
 
     public boolean hasMasterType(String masterName) {
-        return allMasters.containsKey(masterName);
+        return allMasteries.containsKey(masterName);
     }
 
     /**
@@ -34,11 +34,11 @@ public class MasterCapability implements INBTSerializable<NBTTagCompound> {
      */
     @Nonnull
     public LvExpPair getLevelAndExp(String masterName) {
-        if (allMasters.containsKey(masterName)) {
-            return allMasters.get(masterName);
+        if (allMasteries.containsKey(masterName)) {
+            return allMasteries.get(masterName);
         } else {
             LvExpPair lvExpPair = new LvExpPair();
-            allMasters.put(masterName, lvExpPair);
+            allMasteries.put(masterName, lvExpPair);
             return lvExpPair;
         }
     }
@@ -47,16 +47,16 @@ public class MasterCapability implements INBTSerializable<NBTTagCompound> {
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbt = new NBTTagCompound();
         NBTTagList allMasters = new NBTTagList();
-        nbt.setTag(Tags.Master.MasterList, allMasters);
-        for (Map.Entry<String, LvExpPair> entry : this.allMasters.entrySet()) {
+        nbt.setTag(Tags.Mastery.MasteryList, allMasters);
+        for (Map.Entry<String, LvExpPair> entry : this.allMasteries.entrySet()) {
             String masterType = entry.getKey();
             LvExpPair lvExpPair = entry.getValue();
             int lv = lvExpPair.getLevel();
             long exp = lvExpPair.getExp();
             NBTTagCompound master = new NBTTagCompound();
-            master.setString(Tags.Master.MasterObject.Type, masterType);
-            master.setInteger(Tags.Master.MasterObject.Level, lv);
-            master.setLong(Tags.Master.MasterObject.Exp, exp);
+            master.setString(Tags.Mastery.MasteryObject.Type, masterType);
+            master.setInteger(Tags.Mastery.MasteryObject.Level, lv);
+            master.setLong(Tags.Mastery.MasteryObject.Exp, exp);
             allMasters.appendTag(master);
         }
         return nbt;
@@ -64,13 +64,13 @@ public class MasterCapability implements INBTSerializable<NBTTagCompound> {
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-        NBTTagList masterList = NbtUtil.getSubListOrCreate(nbt, Tags.Master.MasterList, Tags.Type_NbtCompound);
+        NBTTagList masterList = NbtUtil.getSubListOrCreate(nbt, Tags.Mastery.MasteryList, Tags.Type_NbtCompound);
         for (NBTBase masterObject : masterList) {
             NBTTagCompound master = (NBTTagCompound) masterObject;
-            String type = master.getString(Tags.Master.MasterObject.Type);
-            int lv = master.getInteger(Tags.Master.MasterObject.Level);
-            long exp = master.getLong(Tags.Master.MasterObject.Exp);
-            allMasters.put(type, new LvExpPair(lv, exp));
+            String type = master.getString(Tags.Mastery.MasteryObject.Type);
+            int lv = master.getInteger(Tags.Mastery.MasteryObject.Level);
+            long exp = master.getLong(Tags.Mastery.MasteryObject.Exp);
+            allMasteries.put(type, new LvExpPair(lv, exp));
         }
     }
 }

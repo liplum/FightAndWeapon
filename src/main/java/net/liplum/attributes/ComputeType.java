@@ -8,10 +8,10 @@ public enum ComputeType {
     Only_Base(false, false);
 
     public final boolean computeModifier;
-    public final boolean computeMaster;
+    public final boolean computeMastery;
 
-    ComputeType(boolean computeModifier, boolean computeMaster) {
+    ComputeType(boolean computeModifier, boolean computeMastery) {
         this.computeModifier = computeModifier;
-        this.computeMaster = computeMaster;
+        this.computeMastery = computeMastery;
     }
 }

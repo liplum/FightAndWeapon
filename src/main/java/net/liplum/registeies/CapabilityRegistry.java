@@ -3,7 +3,7 @@ package net.liplum.registeies;
 import net.liplum.Names;
 import net.liplum.capabilities.CastStudyCapability;
 import net.liplum.capabilities.CastStudyProvider;
-import net.liplum.capabilities.MasterCapability;
+import net.liplum.capabilities.MasteryCapability;
 import net.liplum.capabilities.MasterProvider;
 import net.liplum.lib.CapabilityStorage;
 import net.liplum.lib.FawLocation;
@@ -22,19 +22,19 @@ public final class CapabilityRegistry {
 
     private static final LinkedList<CapabilityEntry> PlayerCapabilities = new LinkedList<>();
     private static final LinkedList<CapabilityEntry> EntityCapabilities = new LinkedList<>();
-    @CapabilityInject(MasterCapability.class)
-    public static Capability<MasterCapability> Master_Capability;
+    @CapabilityInject(MasteryCapability.class)
+    public static Capability<MasteryCapability> Mastery_Capability;
     @CapabilityInject(CastStudyCapability.class)
     public static Capability<CastStudyCapability> CastStudy_Capability;
 
     static {
-        PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.Master), MasterProvider.class));
+        PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.Mastery), MasterProvider.class));
         PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.CastStudy), CastStudyProvider.class));
     }
 
 
     public static void init() {
-        register(MasterCapability.class, new CapabilityStorage<>());
+        register(MasteryCapability.class, new CapabilityStorage<>());
         register(CastStudyCapability.class, new CapabilityStorage<>());
     }
 

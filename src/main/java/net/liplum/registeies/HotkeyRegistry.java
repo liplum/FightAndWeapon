@@ -12,7 +12,7 @@ public final class HotkeyRegistry {
     private static final LinkedList<KeyBinding> AllHotkeys = new LinkedList<>();
 
     public static final KeyBinding Master_Hotkey = with(new KeyBinding(
-            I18ns.Hotkey.Master.Master,
+            I18ns.Hotkey.Mastery.Mastery,
             KeyConflictContext.IN_GAME,
             Keyboard.KEY_K,
             I18ns.Hotkey.Faw_Category));

@@ -1,11 +1,10 @@
-package net.liplum.masters;
+package net.liplum.masteries;
 
 import net.liplum.api.fight.IActiveSkill;
-import net.liplum.api.fight.IMaster;
+import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.registeies.MasterRegistry;
+import net.liplum.api.registeies.MasteryRegistry;
 import net.liplum.api.registeies.SkillRegistry;
-import net.liplum.api.registeies.WeaponTypeRegistry;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.Attribute;
@@ -15,27 +14,25 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
 
-public class Master implements IMaster {
+public class Mastery implements IMastery {
     private final WeaponType weaponType;
     private Routine routine;
 
     /**
-     * Whenever you create the instance, it will register it self to {@link MasterRegistry} automatically.
+     * Whenever you create the instance, it will register it self to {@link MasteryRegistry} automatically.
      * @param weaponType the corresponding weapon type of this master
      */
-    public Master(WeaponType weaponType) {
+    public Mastery(WeaponType weaponType) {
         this.weaponType = weaponType;
-        MasterRegistry.register(this);
+        MasteryRegistry.register(this);
     }
 
     public Routine getRoutine() {
         return routine;
     }
 
-    public Master setRoutine(@Nonnull Routine routine) {
+    public Mastery setRoutine(@Nonnull Routine routine) {
         this.routine = routine;
         return this;
     }

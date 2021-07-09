@@ -1,4 +1,4 @@
-package net.liplum.masters;
+package net.liplum.masteries;
 
 public interface INodeReader {
     Routine toRoutine();

@@ -29,7 +29,7 @@ public final class Resources {
         public static final class GUI {
             public static final String InlayTable = Names.Block.InlayTable;
             public static final String Forge = Names.Block.Forge;
-            public static final String Master = Names.Special.Master;
+            public static final String Master = Names.Special.Mastery;
         }
     }
 }

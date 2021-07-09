@@ -3,7 +3,7 @@ package net.liplum.registeies;
 import net.liplum.MetaData;
 import net.liplum.gui.FawGuiHandler;
 import net.liplum.networks.IDataPacketHandler;
-import net.liplum.networks.MasterGuiHandler;
+import net.liplum.networks.MasteryGuiHandler;
 import net.liplum.networks.MessageManager;
 import net.minecraft.util.Tuple;
 import net.minecraftforge.fml.common.network.FMLEventChannel;
@@ -14,7 +14,7 @@ import java.util.LinkedList;
 public class FawNetworkRegistry {
     private static final LinkedList<Tuple<FMLEventChannel, IDataPacketHandler>> handlers = new LinkedList<>();
     //private static final LinkedList<MessageEntry<? extends IMessage>> Messages = new LinkedList<>();
-    public static final FMLEventChannel MasterGuiChannel = with(MasterGuiHandler.getInstance());
+    public static final FMLEventChannel MasterGuiChannel = with(MasteryGuiHandler.getInstance());
     //private static Consumer<SimpleNetworkWrapper> RegisterAction;
     //private static int ID = 0;
 

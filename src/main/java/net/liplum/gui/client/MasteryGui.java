@@ -1,7 +1,7 @@
 package net.liplum.gui.client;
 
 import net.liplum.Resources;
-import net.liplum.gui.server.MasterContainer;
+import net.liplum.gui.server.MasteryContainer;
 import net.liplum.lib.gui.Texture;
 import net.liplum.lib.gui.TextureFactory;
 import net.liplum.lib.gui.View;
@@ -17,7 +17,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import java.io.IOException;
 
-public class MasterGui extends GuiContainer {
+public class MasteryGui extends GuiContainer {
     private static final ResourceLocation Texture =
             Resources.genGuiTx(Resources.Textures.GUI.Master);
     private static final TextureFactory textureFactory = new TextureFactory(Texture);
@@ -95,8 +95,8 @@ public class MasterGui extends GuiContainer {
     }.setTextures(R_Normal, R_Hovered, R_Pressed)
             .setPosition(30, 20);
 
-    public MasterGui(EntityPlayer player, World world, int x, int y, int z) {
-        super(new MasterContainer(player, world, x, y, z));
+    public MasteryGui(EntityPlayer player, World world, int x, int y, int z) {
+        super(new MasteryContainer(player, world, x, y, z));
     }
 
     @Override

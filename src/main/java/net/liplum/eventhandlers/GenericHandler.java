@@ -1,7 +1,7 @@
 package net.liplum.eventhandlers;
 
 import net.liplum.MetaData;
-import net.liplum.capabilities.MasterCapability;
+import net.liplum.capabilities.MasteryCapability;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -19,7 +19,7 @@ public final class GenericHandler {
         World world = event.getWorld();
         if (!world.isRemote && entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            MasterCapability master = player.getCapability(CapabilityRegistry.Master_Capability, null);
+            MasteryCapability master = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
             String msg = "You have " + (master != null ? "master" : "nothing") + ".";
             TextComponentString text = new TextComponentString(msg);
             player.sendMessage(text);

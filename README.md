@@ -139,6 +139,6 @@ newGem.addPassiveSkillToWeaponType(LanceItem.class,Magicize);
 //addPassiveSkillToCore(IWeaponCore,IPassiveSkill) will make only this weapon core can trigger the skills.
 newGem.addPassiveSkillToCore(newLanceCore,Magicize);
 
-// How to register it to a master
+// How to register it to a mastery
 // To be continued...
 ```

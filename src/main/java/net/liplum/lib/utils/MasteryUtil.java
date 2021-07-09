@@ -1,13 +1,13 @@
 package net.liplum.lib.utils;
 
-import net.liplum.api.fight.IMaster;
+import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.registeies.MasterRegistry;
+import net.liplum.api.registeies.MasteryRegistry;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.Attribute;
-import net.liplum.capabilities.MasterCapability;
-import net.liplum.masters.LvExpPair;
+import net.liplum.capabilities.MasteryCapability;
+import net.liplum.masteries.LvExpPair;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 
@@ -16,7 +16,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public final class MasterUtil {
+public final class MasteryUtil {
     private static final int MaxLevel = 99;
     private static final long[] RequiredExpSheet = new long[MaxLevel];//default maximum is 100.
     private static final long BaseRequiredExp = 100;
@@ -68,14 +68,14 @@ public final class MasterUtil {
     }
 
     @Nonnull
-    public static LvExpPair getMaster(@Nonnull MasterCapability masterCapability, @Nonnull String masterName) {
-        return masterCapability.getLevelAndExp(masterName);
+    public static LvExpPair getMaster(@Nonnull MasteryCapability masteryCapability, @Nonnull String masterName) {
+        return masteryCapability.getLevelAndExp(masterName);
     }
 
-    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMaster master) {
-        MasterCapability masterCapability = player.getCapability(CapabilityRegistry.Master_Capability, null);
-        if (masterCapability != null) {
-            LvExpPair lvAndExp = getMaster(masterCapability, master.getRegisterName());
+    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMastery master) {
+        MasteryCapability masteryCapability = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
+        if (masteryCapability != null) {
+            LvExpPair lvAndExp = getMaster(masteryCapability, master.getRegisterName());
             int lv = lvAndExp.getLevel();
             return new HashSet<>(master.getPassiveSkills(lv));
         }
@@ -84,19 +84,19 @@ public final class MasterUtil {
 
     @Nonnull
     public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
-        IMaster master = MasterRegistry.getMasterOf(weaponType);
-        if (master != null) {
-            return getPassiveSkills(player, master);
+        IMastery mastery = MasteryRegistry.getMasterOf(weaponType);
+        if (mastery != null) {
+            return getPassiveSkills(player, mastery);
         }
         return new HashSet<>();
     }
 
-    public static AttrDelta getAttributeValue(@Nonnull MasterCapability masterCapability, @Nonnull WeaponType weaponType, @Nonnull Attribute attribute) {
-        IMaster master = MasterRegistry.getMasterOf(weaponType);
-        if (master != null) {
-            LvExpPair levelAndExp = masterCapability.getLevelAndExp(master.getRegisterName());
+    public static AttrDelta getAttributeValue(@Nonnull MasteryCapability masteryCapability, @Nonnull WeaponType weaponType, @Nonnull Attribute attribute) {
+        IMastery mastery = MasteryRegistry.getMasterOf(weaponType);
+        if (mastery != null) {
+            LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
             int lv = levelAndExp.getLevel();
-            Map<Attribute, AttrDelta> amplifiers = master.getAttributeAmplifier(lv);
+            Map<Attribute, AttrDelta> amplifiers = mastery.getAttributeAmplifier(lv);
             AttrDelta res = amplifiers.get(attribute);
             if (res != null) {
                 return res;

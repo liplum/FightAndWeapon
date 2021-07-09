@@ -79,8 +79,8 @@ public final class I18ns {
     public static final class Hotkey {
         public static final String Faw_Category = prefixHotkeyCategoryUnloc(MetaData.MOD_ID);
 
-        public static final class Master {
-            public static final String Master = prefixHotkeyUnloc(Names.Special.Master);
+        public static final class Mastery {
+            public static final String Mastery = prefixHotkeyUnloc(Names.Special.Mastery);
         }
     }
 

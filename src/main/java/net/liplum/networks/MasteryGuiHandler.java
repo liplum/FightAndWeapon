@@ -19,11 +19,11 @@ import javax.annotation.Nonnull;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
-public class MasterGuiHandler implements IDataPacketHandler {
-    public static final MasterGuiHandler instance = new MasterGuiHandler();
+public class MasteryGuiHandler implements IDataPacketHandler {
+    public static final MasteryGuiHandler instance = new MasteryGuiHandler();
     private static final String ChannelName = ChannelNames.Master.GUI;
 
-    public static MasterGuiHandler getInstance() {
+    public static MasteryGuiHandler getInstance() {
         return instance;
     }
 
@@ -68,7 +68,7 @@ public class MasterGuiHandler implements IDataPacketHandler {
                         PlayerList playerList = server.getPlayerList();
                         EntityPlayerMP player = playerList.getPlayerByUUID(uuid);
                         World world = player.world;
-                        player.openGui(MetaData.MOD_ID, FawGuiHandler.Master_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
+                        player.openGui(MetaData.MOD_ID, FawGuiHandler.Mastery_ID, world, (int) player.posX, (int) player.posY, (int) player.posZ);
                     }
             );
         }

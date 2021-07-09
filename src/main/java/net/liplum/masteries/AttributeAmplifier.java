@@ -1,4 +1,4 @@
-package net.liplum.masters;
+package net.liplum.masteries;
 
 import net.liplum.attributes.DataType;
 

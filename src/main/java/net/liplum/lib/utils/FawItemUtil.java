@@ -3,7 +3,7 @@ package net.liplum.lib.utils;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.*;
-import net.liplum.capabilities.MasterCapability;
+import net.liplum.capabilities.MasteryCapability;
 import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
@@ -207,16 +207,16 @@ public final class FawItemUtil {
      * Calculate the final value of attribute without gemstone's amplification.
      *
      * @param base
-     * @param deltaMaster
+     * @param deltaMastery
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
-    public static float calcuAttribute(float base, float deltaMaster) {
-        return calcuAttribute(base, 0, 0, deltaMaster);
+    public static float calcuAttribute(float base, float deltaMastery) {
+        return calcuAttribute(base, 0, 0, deltaMastery);
 
     }
 
     /**
-     * Calculate the final value of attribute without master's amplification.
+     * Calculate the final value of attribute without Mastery's amplification.
      *
      * @param base
      * @param rateGem
@@ -231,14 +231,14 @@ public final class FawItemUtil {
      * @param base
      * @param deltaGem
      * @param rateGem
-     * @param deltaMaster
+     * @param deltaMastery
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
-    public static float calcuAttribute(float base, float deltaGem, float rateGem, float deltaMaster) {
+    public static float calcuAttribute(float base, float deltaGem, float rateGem, float deltaMastery) {
         if (base < 0) {
             return -1;
         }
-        float res = ((base + deltaMaster) + deltaGem) * (1 + rateGem);
+        float res = ((base + deltaMastery) + deltaGem) * (1 + rateGem);
         return MathUtil.fixMin(res, 0);
     }
 
@@ -247,16 +247,16 @@ public final class FawItemUtil {
      * Calculate the final value of attribute without gemstone's amplification.
      *
      * @param base
-     * @param deltaMaster
+     * @param deltaMastery
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
-    public static int calcuAttribute(int base, int deltaMaster) {
-        return calcuAttribute(base, 0, 0, deltaMaster);
+    public static int calcuAttribute(int base, int deltaMastery) {
+        return calcuAttribute(base, 0, 0, deltaMastery);
 
     }
 
     /**
-     * Calculate the final value of attribute without master's amplification.
+     * Calculate the final value of attribute without Mastery's amplification.
      *
      * @param base
      * @param rateGem
@@ -272,17 +272,17 @@ public final class FawItemUtil {
      * @param base
      * @param deltaGem
      * @param rateGem
-     * @param deltaMaster
+     * @param deltaMastery
      * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
      */
-    public static int calcuAttribute(int base, int deltaGem, float rateGem, int deltaMaster) {
+    public static int calcuAttribute(int base, int deltaGem, float rateGem, int deltaMastery) {
         if (base < 0) {
             return -1;
         }
-        if (deltaMaster == 0 && deltaGem == 0 && rateGem == 0) {
+        if (deltaMastery == 0 && deltaGem == 0 && rateGem == 0) {
             return base;
         }
-        int res = (int) (((base + deltaMaster) + deltaGem) * (1 + rateGem));
+        int res = (int) (((base + deltaMastery) + deltaGem) * (1 + rateGem));
         return MathUtil.fixMin(res, 0);
     }
 
@@ -353,7 +353,7 @@ public final class FawItemUtil {
     }
 
     /**
-     * Calculate the final value of this attribute in this weapon(WITHOUT MODIFIER AND MASTER CAPABILITY).<br/>
+     * Calculate the final value of this attribute in this weapon(WITHOUT MODIFIER AND Mastery CAPABILITY).<br/>
      * NOTE: All Attributes' access must be via this.
      *
      * @param attribute the attribute which you want to calculate in this weapon
@@ -365,7 +365,7 @@ public final class FawItemUtil {
     }
 
     /**
-     * Calculate the final value of this attribute in this weapon(WITHOUT MASTER CAPABILITY).<br/>
+     * Calculate the final value of this attribute in this weapon(WITHOUT Mastery CAPABILITY).<br/>
      * NOTE: All Attributes' access must be via this.
      *
      * @param attribute the attribute which you want to calculate in this weapon
@@ -388,22 +388,22 @@ public final class FawItemUtil {
      * @param attribute         the attribute which you want to calculate in this weapon
      * @param core              the weapon core which can provide the basic value of this attribute
      * @param modifier          (optional) the modifier of this weapon which can provide the modifier value of this attribute
-     * @param player            (optional) the player which can provide the master capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
+     * @param player            (optional) the player which can provide the mastery capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
      * @param postAccessedEvent Whether it posts the {@link AttributeAccessedEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
      */
     public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = core.getValue(attribute);
-        //Master
-        MasterCapability master = null;
-        AttrDelta masterValue = null;
-        if (computeType.computeMaster) {
+        //Mastery
+        MasteryCapability mastery = null;
+        AttrDelta masteryValue = null;
+        if (computeType.computeMastery) {
             if (player != null) {
-                master = player.getCapability(CapabilityRegistry.Master_Capability, null);
+                mastery = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
             }
-            if (master != null) {
-                masterValue = MasterUtil.getAttributeValue(master, core.getWeaponType(), attribute);
+            if (mastery != null) {
+                masteryValue = MasteryUtil.getAttributeValue(mastery, core.getWeaponType(), attribute);
             }
         }
         //Modifier
@@ -414,7 +414,7 @@ public final class FawItemUtil {
             }
         }
 
-        FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masterValue);
+        FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masteryValue);
         if (postAccessedEvent) {
             AttributeAccessedEvent attributeAccessedEvent = new AttributeAccessedEvent(attribute, finalAttrValue, core, modifier, player);
             MinecraftForge.EVENT_BUS.post(attributeAccessedEvent);

@@ -10,11 +10,11 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class MasterProvider implements ICapabilitySerializable<NBTTagCompound> {
-    private final MasterCapability instance = new MasterCapability();
-    private final Capability<MasterCapability> capability;
+    private final MasteryCapability instance = new MasteryCapability();
+    private final Capability<MasteryCapability> capability;
 
     public MasterProvider() {
-        capability = CapabilityRegistry.Master_Capability;
+        capability = CapabilityRegistry.Mastery_Capability;
     }
 
     @Override
