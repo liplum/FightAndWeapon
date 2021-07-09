@@ -147,20 +147,22 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
     public void addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, TooltipOption option, @Nonnull List<String> attributesTooltip) {
         CoreType core = getCore();
         for (Attribute attribute : allAttributes) {
-            if ((!attribute.needMoreDetailsToShown()) ||
-                    (attribute.needMoreDetailsToShown() && option.isMoreDetailsShown())
-            ) {
-                FinalAttrValue finalValue = FawItemUtil.calcuAttribute(attribute, core, modifier, player);
-                if (attribute.canTooltipShow(finalValue.getNumber())) {
-                    FawItemUtil.addAttributeTooltip(
-                            attributesTooltip, attribute.getI18nKey(),
-                            attribute.getTooltipShownValue(finalValue.getNumber()),
-                            attribute.getFormat(),
-                            attribute.isStripTrailingZero(),
-                            ((attribute.hasUnit() && option.isUnitShown()) ?
-                                    attribute.getUnit() : null)
-                    );
-                }
+            if(!attribute.isShownInTooltip()){
+                continue;
+            }
+            if (attribute.needMoreDetailsToShown() && !option.isMoreDetailsShown()) {
+                continue;
+            }
+            FinalAttrValue finalValue = FawItemUtil.calcuAttribute(attribute, core, modifier, player);
+            if (attribute.canTooltipShow(finalValue.getNumber())) {
+                FawItemUtil.addAttributeTooltip(
+                        attributesTooltip, attribute.getI18nKey(),
+                        attribute.getTooltipShownValue(finalValue.getNumber()),
+                        attribute.getFormat(),
+                        attribute.isStripTrailingZero(),
+                        ((attribute.hasUnit() && option.isUnitShown()) ?
+                                attribute.getUnit() : null)
+                );
             }
         }
     }

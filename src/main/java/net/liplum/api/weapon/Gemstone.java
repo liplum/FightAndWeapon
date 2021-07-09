@@ -7,12 +7,17 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
+
 public class Gemstone implements IGemstone {
     private final String registerName;
     private final AmplifierOfCores amplifierOfCores = new AmplifierOfCores();
     private final AmplifierOfWeaponTypes amplifierOfWeaponTypes = new AmplifierOfWeaponTypes();
     private final AmplifierOfAllWeaponTypes amplifierOfAllWeaponTypes = new AmplifierOfAllWeaponTypes();
 
+    /**
+     * Whenever you create the instance, it will register it self to {@link GemstoneRegistry} automatically.
+     * @param registerName the name to register itself
+     */
     public Gemstone(String registerName) {
         this.registerName = registerName;
         GemstoneRegistry.register(this);

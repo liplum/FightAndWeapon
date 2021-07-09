@@ -103,6 +103,9 @@ public class Attribute {
 
     @Nonnull
     public Attribute setRegisterName(@Nonnull String registerName) {
+        String former = this.registerName;
+        AttributesMap.remove(former);
+
         this.registerName = registerName;
         AttributesMap.put(registerName, this);
         return this;
@@ -181,6 +184,11 @@ public class Attribute {
     @Nonnull
     public Attribute setHowCanTooltipShow(@Nonnull Predicate<Number> predicate) {
         return setHowCanTooltipShow(predicate, true);
+    }
+
+    @Nonnull
+    public Attribute setNeedIsNotDefaultValueCanTooltipShow(){
+        return setHowCanTooltipShow(this::isNotDefaultValue,true);
     }
 
     @Nonnull
@@ -310,8 +318,20 @@ public class Attribute {
         return new FinalAttrValue(dataType, fixMin(value));
     }
 
+    public boolean isDefaultValue(@Nonnull Number value) {
+        return value.equals(this.defaultValue);
+    }
+
     public boolean isDefaultValue(@Nonnull FinalAttrValue value) {
-        return value.getNumber().equals(this.defaultValue);
+        return isDefaultValue(value.getNumber());
+    }
+
+    public boolean isNotDefaultValue(@Nonnull Number value){
+        return !isDefaultValue(value);
+    }
+
+    public boolean isNotDefaultValue(@Nonnull FinalAttrValue value) {
+        return isNotDefaultValue(value.getNumber());
     }
 
     @Nonnull

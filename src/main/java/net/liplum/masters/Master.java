@@ -22,6 +22,10 @@ public class Master implements IMaster {
     private final WeaponType weaponType;
     private Routine routine;
 
+    /**
+     * Whenever you create the instance, it will register it self to {@link MasterRegistry} automatically.
+     * @param weaponType the corresponding weapon type of this master
+     */
     public Master(WeaponType weaponType) {
         this.weaponType = weaponType;
         MasterRegistry.register(this);

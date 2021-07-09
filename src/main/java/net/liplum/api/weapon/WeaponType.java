@@ -11,6 +11,10 @@ public class WeaponType {
     @Nonnull
     private IWeaponSkillPredicate weaponSkillPredicate = (world, player, weapon) -> true;
 
+    /**
+     * Whenever you create the instance, it will register it self to {@link WeaponTypeRegistry} automatically.
+     * @param registerName the name to register itself
+     */
     public WeaponType(@Nonnull String registerName) {
         this.registerName = registerName;
         WeaponTypeRegistry.register(this);
