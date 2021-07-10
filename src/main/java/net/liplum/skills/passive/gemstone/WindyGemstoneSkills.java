@@ -3,6 +3,7 @@ package net.liplum.skills.passive.gemstone;
 import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
+import net.liplum.api.fight.PassiveSkill;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
@@ -15,14 +16,7 @@ import javax.annotation.Nonnull;
 
 public final class WindyGemstoneSkills {
     public final static IPassiveSkill<WeaponAttackedEvent> Levitation =
-            SkillRegistry.register(
-                    new IPassiveSkill<WeaponAttackedEvent>() {
-                        @Nonnull
-                        @Override
-                        public Class<WeaponAttackedEvent> getEventType() {
-                            return WeaponAttackedEvent.class;
-                        }
-
+                    new PassiveSkill<WeaponAttackedEvent>(Names.PassiveSkill.Levitation, WeaponAttackedEvent.class) {
                         @Nonnull
                         @Override
                         public PSkillResult onTrigger(@Nonnull WeaponAttackedEvent event) {
@@ -33,21 +27,10 @@ public final class WindyGemstoneSkills {
                             }
                             return PSkillResult.Complete;
                         }
+                    };
 
-                        @Nonnull
-                        @Override
-                        public String getRegisterName() {
-                            return Names.PassiveSkill.Levitation;
-                        }
-                    });
     public final static IPassiveSkill<LivingFallEvent> Feather =
-            SkillRegistry.register(
-                    new IPassiveSkill<LivingFallEvent>() {
-                        @Nonnull
-                        @Override
-                        public Class<LivingFallEvent> getEventType() {
-                            return LivingFallEvent.class;
-                        }
+                    new PassiveSkill<LivingFallEvent>(Names.PassiveSkill.Feather, LivingFallEvent.class) {
 
                         @Nonnull
                         @Override
@@ -55,11 +38,5 @@ public final class WindyGemstoneSkills {
                             event.setCanceled(true);
                             return PSkillResult.CancelTrigger;
                         }
-
-                        @Nonnull
-                        @Override
-                        public String getRegisterName() {
-                            return Names.PassiveSkill.Feather;
-                        }
-                    });
+                    };
 }

@@ -3,6 +3,7 @@ package net.liplum.skills.passive.gemstone;
 import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
+import net.liplum.api.fight.PassiveSkill;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.api.weapon.DamageArgs;
 import net.liplum.api.weapon.IGemstone;
@@ -20,14 +21,7 @@ import java.util.List;
 
 public final class MagicPearlSkills {
     public static final IPassiveSkill<WeaponAttackingEvent> Magicize =
-            SkillRegistry.register(
-                    new IPassiveSkill<WeaponAttackingEvent>() {
-                        @Nonnull
-                        @Override
-                        public Class<WeaponAttackingEvent> getEventType() {
-                            return WeaponAttackingEvent.class;
-                        }
-
+                    new PassiveSkill<WeaponAttackingEvent>( Names.PassiveSkill.Magicize,WeaponAttackingEvent.class) {
                         @Nonnull
                         @Override
                         public PSkillResult onTrigger(@Nonnull WeaponAttackingEvent event) {
@@ -54,12 +48,6 @@ public final class MagicPearlSkills {
 
                             return PSkillResult.Complete;
                         }
-
-                        @Nonnull
-                        @Override
-                        public String getRegisterName() {
-                            return Names.PassiveSkill.Magicize;
-                        }
-                    });
+                    };
 
 }

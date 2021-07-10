@@ -32,7 +32,7 @@ public final class SkillUtil {
                 //I told it can be converted so that it must can be converted!!!
                 IPassiveSkill<?>[] skillsFromGemstone = gemstone.getPassiveSkillsOf(core);
                 for (IPassiveSkill<?> skill : skillsFromGemstone) {
-                    if (skill.getEventType() == eventType) {
+                    if (skill.getEventTypeArgs().has(eventType)) {
                         allSkills.add((IPassiveSkill<Event>) skill);
                     }
                 }
@@ -43,7 +43,7 @@ public final class SkillUtil {
                 EntityPlayer player = (EntityPlayer) entity;
                 Set<IPassiveSkill<?>> skillsFromMastery = MasteryUtil.getPassiveSkills(player, weaponType);
                 for (IPassiveSkill<?> skill : skillsFromMastery) {
-                    if (skill.getEventType() == eventType) {
+                    if (skill.getEventTypeArgs().has(eventType)) {
                         allSkills.add((IPassiveSkill<Event>) skill);
                     }
                 }

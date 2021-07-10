@@ -1,6 +1,7 @@
 package net.liplum.api.registeies;
 
 import net.liplum.api.fight.IActiveSkill;
+import net.liplum.api.fight.IEventTypeArgs;
 import net.liplum.api.fight.IPassiveSkill;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -12,22 +13,24 @@ import java.util.Map;
 import java.util.Set;
 
 public final class SkillRegistry {
-    private static final Map<Class<?>, Set<IPassiveSkill<?>>> PassiveSkillsMap = new HashMap<>();
+    private static final Map<Class<?>, Set<IPassiveSkill<?>>> EventTypePassiveSkillMap = new HashMap<>();
     private static final Map<String, IPassiveSkill<?>> AllPassiveSkills = new HashMap<>();
     private static final Map<String, IActiveSkill> AllActiveSkills = new HashMap<>();
 
     @Nonnull
     public static <T extends Event> IPassiveSkill<T> register(@Nonnull IPassiveSkill<T> passiveSkill) {
         //Register it to passiveSkillsMap
-        Class<? extends Event> eventType = passiveSkill.getEventType();
-        if (PassiveSkillsMap.containsKey(eventType)) {
-            PassiveSkillsMap.get(eventType).add(passiveSkill);
-        }
-        Set<IPassiveSkill<?>> skills = new HashSet<>();
-        PassiveSkillsMap.put(eventType, skills);
+        IEventTypeArgs eventTypeArgs = passiveSkill.getEventTypeArgs();
+        for (Class<? extends Event> eventType : eventTypeArgs.getAllEventType()) {
+            if (EventTypePassiveSkillMap.containsKey(eventType)) {
+                EventTypePassiveSkillMap.get(eventType).add(passiveSkill);
+            }
+            Set<IPassiveSkill<?>> skills = new HashSet<>();
+            EventTypePassiveSkillMap.put(eventType, skills);
 
-        //Register it to all passive skills
-        AllPassiveSkills.put(passiveSkill.getRegisterName(), passiveSkill);
+            //Register it to all passive skills
+            AllPassiveSkills.put(passiveSkill.getRegisterName(), passiveSkill);
+        }
         return passiveSkill;
     }
 
@@ -67,8 +70,8 @@ public final class SkillRegistry {
      */
     @Nullable
     public static IPassiveSkill<?>[] getPassiveSkillsFromEvent(@Nonnull Class<? extends Event> eventType) {
-        if (PassiveSkillsMap.containsKey(eventType)) {
-            return PassiveSkillsMap.get(eventType).toArray(new IPassiveSkill[0]);
+        if (EventTypePassiveSkillMap.containsKey(eventType)) {
+            return EventTypePassiveSkillMap.get(eventType).toArray(new IPassiveSkill[0]);
         }
         return null;
     }

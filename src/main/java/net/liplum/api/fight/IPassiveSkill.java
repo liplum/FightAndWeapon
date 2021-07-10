@@ -4,9 +4,9 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
 
-public interface IPassiveSkill<EventType extends Event> extends ISkill {
+public interface IPassiveSkill<EventType extends Event> {
     @Nonnull
-    Class<EventType> getEventType();
+    IEventTypeArgs getEventTypeArgs();
 
     @Nonnull
     PSkillResult onTrigger(@Nonnull EventType event);
