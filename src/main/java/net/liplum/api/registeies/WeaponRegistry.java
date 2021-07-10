@@ -4,7 +4,6 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -26,8 +25,12 @@ public final class WeaponRegistry {
         return weapon;
     }
 
-    @Nullable
-    public static Set<WeaponBaseItem<?>> getWeaponOf(@Nonnull WeaponType type) {
-        return AllWeapons.get(type);
+    @Nonnull
+    public static Set<WeaponBaseItem<?>> getWeaponsOf(@Nonnull WeaponType type) {
+        Set<WeaponBaseItem<?>> weapons = AllWeapons.get(type);
+        if (weapons == null) {
+            return new HashSet<>();
+        }
+        return weapons;
     }
 }

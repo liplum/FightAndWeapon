@@ -21,7 +21,7 @@ public class ItemTool {
      * @param coolDownTime how much time need to cool down
      * @return if player is in survival mode, it'll return ture and heat the weapon, otherwise, return false.
      */
-    public static boolean heatWeaponIfSurvival(EntityPlayer player, Item item, int coolDownTime) {
+    public static boolean heatItemIfSurvival(EntityPlayer player, Item item, int coolDownTime) {
         if (player.isCreative() || coolDownTime <= 0) {
             return false;
         }

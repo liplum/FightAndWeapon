@@ -8,6 +8,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.event.entity.living.LivingDamageEvent;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
@@ -25,4 +27,21 @@ public final class GenericHandler {
             player.sendMessage(text);
         }
     }
+
+    @SubscribeEvent
+    public static void onPlayerHurt(LivingHurtEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityPlayer) {
+            entity.sendMessage(new TextComponentString("You hurt " + event.getAmount() + "."));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerHurt(LivingDamageEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityPlayer) {
+            entity.sendMessage(new TextComponentString("You damaged " + event.getAmount() + "."));
+        }
+    }
+
 }

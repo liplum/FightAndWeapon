@@ -11,8 +11,7 @@ import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.lib.utils.SkillUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraftforge.event.entity.living.LivingFallEvent;
-import net.minecraftforge.event.entity.living.LivingHurtEvent;
+import net.minecraftforge.event.entity.living.*;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.EventPriority;
@@ -38,33 +37,66 @@ public class PassiveSkillHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onPlayerHurtEvent(LivingHurtEvent e) {
+    public static void onLivingEntityHurtEvent(LivingHurtEvent e) {
         EntityLivingBase entity = e.getEntityLiving();
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            Set<IPassiveSkill<Event>> skills =
-                    SkillUtil.getPassiveSkills(LivingHurtEvent.class, player);
-            for (IPassiveSkill<Event> skill : skills) {
-                PSkillResult res = skill.onTrigger(e);
-                if (res == PSkillResult.CancelTrigger) {
-                    break;
-                }
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(LivingHurtEvent.class, entity);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
             }
         }
     }
 
     @SubscribeEvent(priority = EventPriority.LOWEST)
-    public static void onPlayerFallEvent(LivingFallEvent e) {
+    public static void onLivingEntityDamageEvent(LivingDamageEvent e) {
         EntityLivingBase entity = e.getEntityLiving();
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            Set<IPassiveSkill<Event>> skills =
-                    SkillUtil.getPassiveSkills(LivingFallEvent.class, player);
-            for (IPassiveSkill<Event> skill : skills) {
-                PSkillResult res = skill.onTrigger(e);
-                if (res == PSkillResult.CancelTrigger) {
-                    break;
-                }
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(LivingDamageEvent.class, entity);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onLivingEntityDeathEvent(LivingDeathEvent e) {
+        EntityLivingBase entity = e.getEntityLiving();
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(LivingDeathEvent.class, entity);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onLivingEntityHealEvent(LivingHealEvent e) {
+        EntityLivingBase entity = e.getEntityLiving();
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(LivingHealEvent.class, entity);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onLivingEntityFallEvent(LivingFallEvent e) {
+        EntityLivingBase entity = e.getEntityLiving();
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(LivingFallEvent.class, entity);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
             }
         }
     }

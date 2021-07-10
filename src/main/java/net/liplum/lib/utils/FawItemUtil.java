@@ -1,6 +1,7 @@
 package net.liplum.lib.utils;
 
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.*;
 import net.liplum.capabilities.MasteryCapability;
@@ -19,6 +20,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -408,7 +410,7 @@ public final class FawItemUtil {
         }
         //Modifier
         AttrModifier attrModifier = null;
-        if(computeType.computeModifier) {
+        if (computeType.computeModifier) {
             if (modifier != null) {
                 attrModifier = modifier.getValue(attribute);
             }
@@ -421,5 +423,13 @@ public final class FawItemUtil {
             finalAttrValue = attributeAccessedEvent.getFinalAttrValue();
         }
         return finalAttrValue;
+    }
+
+    public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType, int coolDownTime) {
+        boolean hasOneSucceed = false;
+        for (WeaponBaseItem<?> weapon : WeaponRegistry.getWeaponsOf(weaponType)) {
+            hasOneSucceed |= ItemTool.heatItemIfSurvival(player, weapon, coolDownTime);
+        }
+        return hasOneSucceed;
     }
 }

@@ -66,7 +66,7 @@ public class LanceItem extends WeaponBaseItem<LanceCore> {
                     releasedSuccessfully = core.releaseSkill(args);
                 }
                 if (releasedSuccessfully) {
-                    ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), finalCoolDown.getInt());
+                    FawItemUtil.heatWeaponType(playerIn, getWeaponType(), finalCoolDown.getInt());
                     result = EnumActionResult.SUCCESS;
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillPostReleasedEvent(worldIn, playerIn, core, modifier, held, handIn)

@@ -63,7 +63,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
                     releasedSuccessfully = core.releaseSkill(args);
                 }
                 if (releasedSuccessfully) {
-                    ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), finalCoolDown.getInt());
+                    FawItemUtil.heatWeaponType(playerIn, getWeaponType(), finalCoolDown.getInt());
                     playerIn.resetActiveHand();
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillPostReleasedEvent(worldIn, playerIn, core, modifier, held, handIn)
@@ -113,7 +113,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
             }
         }
         if (currentDuration == maxUseDuration - 1) {
-            ItemTool.heatWeaponIfSurvival(p, held, finalCoolDown.getInt());
+            FawItemUtil.heatWeaponType(p, getWeaponType(), finalCoolDown.getInt());
         }
     }
 
@@ -126,7 +126,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
             EntityPlayer p = (EntityPlayer) entityLiving;
             Modifier<?> modifier = GemUtil.getModifierFrom(stack);
             FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
-            ItemTool.heatWeaponIfSurvival(p, held, finalCoolDown.getInt());
+            FawItemUtil.heatWeaponType(p, getWeaponType(), finalCoolDown.getInt());
             p.resetActiveHand();
         }
     }

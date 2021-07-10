@@ -73,6 +73,7 @@ public final class ItemRegistry {
 
     //Battle Axe
     public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCoreTypes.Normal), Names.Item.BattleAxeItem);
+    public static final Item Berserker_Axe_Item = weapon(new BattleAxeItem(BattleAxeCoreTypes.BerserkerAxe), Names.Item.BerserkerAxeItem);
 
     //Lance
     public static final Item Training_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TrainingLance), Names.Item.Lance.TrainingLanceItem);

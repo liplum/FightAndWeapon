@@ -69,7 +69,7 @@ public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
                 }
 
                 if (releaseSkilled) {
-                    if (ItemTool.heatWeaponIfSurvival(playerIn, held.getItem(), coolDown)) {
+                    if (FawItemUtil.heatWeaponType(playerIn, getWeaponType(), coolDown)) {
                         //When you release the skill, it will make your shield hot.
                         //Don't worry about the EMPTY, if that it'll return Items.AIR (no exception).
                         if (offHeld.getItem() == Items.SHIELD) {

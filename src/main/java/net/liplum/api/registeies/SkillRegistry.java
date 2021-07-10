@@ -18,7 +18,7 @@ public final class SkillRegistry {
     private static final Map<String, IActiveSkill> AllActiveSkills = new HashMap<>();
 
     @Nonnull
-    public static <T extends Event> IPassiveSkill<T> register(@Nonnull IPassiveSkill<T> passiveSkill) {
+    public static <T extends IPassiveSkill<? extends Event>> T register(@Nonnull T passiveSkill) {
         //Register it to passiveSkillsMap
         IEventTypeArgs eventTypeArgs = passiveSkill.getEventTypeArgs();
         for (Class<? extends Event> eventType : eventTypeArgs.getAllEventType()) {
