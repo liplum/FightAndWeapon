@@ -1,15 +1,15 @@
 package net.liplum.lib.utils;
 
+import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.*;
 import net.liplum.capabilities.MasteryCapability;
+import net.liplum.events.AttributeAccessedEvent;
 import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
-import net.liplum.events.AttributeAccessedEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
@@ -20,6 +20,7 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -33,10 +34,12 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
-import static net.liplum.Attributes.Generic.EnemyBreakingTime;
-import static net.liplum.Attributes.Generic.Strength;
+import static net.liplum.Attributes.Generic.*;
 
 public final class FawItemUtil {
     private FawItemUtil() {
@@ -424,14 +427,59 @@ public final class FawItemUtil {
         return finalAttrValue;
     }
 
-    public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType, int coolDownTime) {
+    public static Iterable<ItemStack> getAllPossibleFawWeaponSlotsFormPlayerInventory(EntityPlayer player) {
+        return () -> new Iterator<ItemStack>() {
+            private int currentIndex = 0;
+            private final InventoryPlayer inventory = player.inventory;
+
+            @Override
+            public boolean hasNext() {
+                return currentIndex < Vanilla.PlayerAllInventorySlotCount;
+            }
+
+            @Override
+            public ItemStack next() {
+                ItemStack itemStack = inventory.getStackInSlot(currentIndex);
+                currentIndex++;
+                if (currentIndex == Vanilla.PlayerMainInventorySlotCount) {
+                    currentIndex += Vanilla.PlayerArmorInventorySlotCount;
+                }
+                return itemStack;
+            }
+        };
+    }
+
+    public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType) {
+        Map<WeaponBaseItem, Integer> weaponAndMinimumCoolDown = new HashMap<>();
+        for (ItemStack itemStack : getAllPossibleFawWeaponSlotsFormPlayerInventory(player)) {
+            Item item = itemStack.getItem();
+            if (item instanceof WeaponBaseItem) {
+                WeaponBaseItem weapon = (WeaponBaseItem) item;
+                if (weapon.getWeaponType() == weaponType) {
+                    Modifier modifier = GemUtil.getModifierFrom(itemStack);
+                    FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, weapon.getCore(), modifier, player);
+                    int coolDown = finalCoolDown.getInt();
+                    if (coolDown != 0) {
+                        if (weaponAndMinimumCoolDown.containsKey(weapon)) {
+                            Integer formerCoolDown = weaponAndMinimumCoolDown.get(weapon);
+                            if (coolDown < formerCoolDown) {
+                                weaponAndMinimumCoolDown.put(weapon, coolDown);
+                            }
+                        } else {
+                            weaponAndMinimumCoolDown.put(weapon, coolDown);
+                        }
+                    }
+                }
+            }
+        }
         boolean hasOneSucceed = false;
-        for (WeaponBaseItem weapon : WeaponRegistry.getWeaponsOf(weaponType)) {
-            hasOneSucceed |= ItemTool.heatItemIfSurvival(player, weapon, coolDownTime);
+        if (weaponAndMinimumCoolDown.size() > 0) {
+            for (Map.Entry<WeaponBaseItem, Integer> entry : weaponAndMinimumCoolDown.entrySet()) {
+                hasOneSucceed |= ItemTool.heatItemIfSurvival(player, entry.getKey(), entry.getValue());
+            }
         }
         return hasOneSucceed;
     }
-
 
     public static boolean releaseWeaponSkill(@Nonnull WeaponCore core, @Nullable Modifier modifier, @Nonnull WeaponSkillArgs args) {
         if (modifier != null) {

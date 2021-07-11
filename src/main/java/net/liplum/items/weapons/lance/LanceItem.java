@@ -43,8 +43,6 @@ public class LanceItem extends WeaponBaseItem {
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, this, modifier, held, handIn)
             );
             if (!cancelRelease) {
-                FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
-
                 WeaponSkillArgs args = new WeaponSkillArgs()
                         .setWorld(worldIn)
                         .setPlayer(playerIn)
@@ -56,7 +54,7 @@ public class LanceItem extends WeaponBaseItem {
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
 
                 if (releasedSuccessfully) {
-                    FawItemUtil.heatWeaponType(playerIn, getWeaponType(), finalCoolDown.getInt());
+                    FawItemUtil.heatWeaponType(playerIn, getWeaponType());
                     result = EnumActionResult.SUCCESS;
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillPostReleasedEvent(worldIn, playerIn, this, modifier, held, handIn)

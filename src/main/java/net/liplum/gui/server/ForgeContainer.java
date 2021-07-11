@@ -20,7 +20,7 @@ public class ForgeContainer extends ContainerBase {
     public static final int MaterialIconXOffset = 108;
     public static final int MaterialIconYOffset = 96;
     private static final int InlayTableSlotCount = 2;
-    private static final int PlayerInventoryEndIndex = InlayTableSlotCount + Vanilla.PlayerInventoryCount;
+    private static final int PlayerInventoryEndIndex = InlayTableSlotCount + Vanilla.PlayerMainInventorySlotCount;
     @Nonnull
     public final Property<Boolean> materialSlotHasItem = new Property<>(false);
     @Nonnull

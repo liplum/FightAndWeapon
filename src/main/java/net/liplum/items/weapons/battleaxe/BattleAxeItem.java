@@ -10,7 +10,6 @@ import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
@@ -23,9 +22,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 
-import static net.liplum.Attributes.BattleAxe.SweepRange;
 import static net.liplum.Attributes.Generic.CoolDown;
-import static net.liplum.Attributes.Generic.Strength;
 
 public class BattleAxeItem extends WeaponBaseItem {
     private final BattleAxeCore core;
@@ -63,7 +60,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
 
                 if (releasedSuccessfully) {
-                    if (FawItemUtil.heatWeaponType(playerIn, getWeaponType(), coolDown)) {
+                    if (FawItemUtil.heatWeaponType(playerIn, getWeaponType())) {
                         //When you release the skill, it will make your shield hot.
                         //Don't worry about the EMPTY, if that it'll return Items.AIR (no exception).
                         if (offHeld.getItem() == Items.SHIELD) {

@@ -1,8 +1,8 @@
 # [FAW] Fight And Weapon
 
-Major Author : Liplum , Frost_Ansel , B1ackTea233
+Major Author : Liplum , Frost_Ansel
 
-Programing : Liplum , B1ackTea233
+Programing : Liplum
 
 Designer : Frost_Ansel
 

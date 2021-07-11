@@ -2,7 +2,14 @@ package net.liplum;
 
 public final class Vanilla {
     public static final int TPS = 20;
-    public static final int PlayerInventoryCount = 36;
+    public static final int PlayerMainInventorySlotCount = 36;
+    public static final int PlayerArmorInventorySlotCount = 4;
+    public static final int PlayerOffHandInventorySlotCount = 1;
+    /**
+     * Order: Main(36) -> Armor(4) -> Off Hand(1)
+     */
+    public static final int PlayerAllInventorySlotCount =
+            PlayerMainInventorySlotCount + PlayerArmorInventorySlotCount + PlayerOffHandInventorySlotCount;
     public static final double DefaultAttackSpeed = 4D;
 
     public static Number PerSecond(Number value) {

@@ -24,7 +24,7 @@ import javax.annotation.Nonnull;
 
 public class InlayTableContainer extends ContainerBase {
     private static final int InlayTableSlotCount = 3;
-    private static final int PlayerInventoryEndIndex = InlayTableSlotCount + Vanilla.PlayerInventoryCount;
+    private static final int PlayerInventoryEndIndex = InlayTableSlotCount + Vanilla.PlayerMainInventorySlotCount;
     @Nonnull
     public final Property<Boolean> canDo = new Property<>(true);
     private final InventoryPlayer playerInventory;
