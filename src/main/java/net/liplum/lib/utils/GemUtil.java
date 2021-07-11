@@ -22,12 +22,12 @@ public final class GemUtil {
      * @return
      */
     @Nullable
-    public static Modifier<?> getModifierFrom(ItemStack itemStack) {
+    public static Modifier getModifierFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
-        if (!(item instanceof WeaponBaseItem<?>)) {
+        if (!(item instanceof WeaponBaseItem)) {
             return null;
         }
-        WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
+        WeaponBaseItem weapon = (WeaponBaseItem) item;
         IGemstone gemstone = getGemstoneFrom(itemStack);
         if (gemstone == null) {
             return null;
@@ -37,7 +37,7 @@ public final class GemUtil {
 
     public static boolean hasGemstone(ItemStack itemStack) {
         Item item = itemStack.getItem();
-        if (!(item instanceof WeaponBaseItem<?>)) {
+        if (!(item instanceof WeaponBaseItem)) {
             return false;
         }
         NBTTagList gemList = FawNbtTool.getGemstoneList(itemStack);
@@ -71,7 +71,7 @@ public final class GemUtil {
     @Nullable
     public static IGemstone getGemstoneFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
-        if (!(item instanceof WeaponBaseItem<?>)) {
+        if (!(item instanceof WeaponBaseItem)) {
             return null;
         }
         NBTTagList gemList = FawNbtTool.getGemstoneList(itemStack);

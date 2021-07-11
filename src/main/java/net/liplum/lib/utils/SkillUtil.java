@@ -21,10 +21,10 @@ public final class SkillUtil {
 
     private static void addPassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull Set<IPassiveSkill<Event>> allSkills, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity) {
         Item item = itemStack.getItem();
-        if (item instanceof WeaponBaseItem<?>) {
+        if (item instanceof WeaponBaseItem) {
 
             //First, gets the passive skills from weapon's gemstone
-            WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
+            WeaponBaseItem weapon = (WeaponBaseItem) item;
             WeaponType weaponType = weapon.getWeaponType();
             WeaponCore core = weapon.getCore();
             IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);

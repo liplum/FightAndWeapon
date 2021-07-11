@@ -38,10 +38,10 @@ public class ClientHandler {
             ItemStack mainHand = player.getHeldItem(EnumHand.MAIN_HAND);
             Item item = mainHand.getItem();
             if (!player.isHandActive()) {
-                if (item instanceof WeaponBaseItem<?>) {
-                    WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
+                if (item instanceof WeaponBaseItem) {
+                    WeaponBaseItem weapon = (WeaponBaseItem) item;
                     WeaponCore core = weapon.getCore();
-                    Modifier<?> modifier = GemUtil.getModifierFrom(mainHand);
+                    Modifier modifier = GemUtil.getModifierFrom(mainHand);
                     FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(AttackReach, core, modifier, player);
                     if (!AttackReach.isDefaultValue(finalAttackReach)) {
                         RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(finalAttackReach.getFloat());

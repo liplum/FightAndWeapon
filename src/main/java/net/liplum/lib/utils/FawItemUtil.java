@@ -20,7 +20,6 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -61,7 +60,7 @@ public final class FawItemUtil {
     }
 
     public static boolean isFawWeapon(@Nonnull Item item) {
-        return item instanceof WeaponBaseItem<?>;
+        return item instanceof WeaponBaseItem;
     }
 
     public static boolean isGemstone(@Nonnull Item item) {
@@ -87,7 +86,7 @@ public final class FawItemUtil {
      * @param target    the target
      * @return whether this attack is successful
      */
-    public static boolean attackEntity(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem<?> weapon, EntityLivingBase attacker, Entity target) {
+    public static boolean attackEntity(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weapon, EntityLivingBase attacker, Entity target) {
         //Nobody did and nobody was hit.
         if (attacker == null || target == null ||
                 //the target can't be hit by item
@@ -123,7 +122,7 @@ public final class FawItemUtil {
 
         WeaponCore core = weapon.getCore();
         IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
-        Modifier<?> modifier = GemUtil.getModifierFrom(itemStack);
+        Modifier modifier = GemUtil.getModifierFrom(itemStack);
         FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, attackPlayer);
         finalDamage += finalStrength.getFloat();
         SoundEvent sound = null;
@@ -375,11 +374,11 @@ public final class FawItemUtil {
      * @param modifier  (optional) the modifier of this weapon which can provide the modifier value of this attribute
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
      */
-    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier) {
+    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier) {
         return calcuAttribute(attribute, core, modifier, null);
     }
 
-    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player) {
+    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player) {
         return calcuAttribute(attribute, core, modifier, player, true);
     }
 
@@ -394,7 +393,7 @@ public final class FawItemUtil {
      * @param postAccessedEvent Whether it posts the {@link AttributeAccessedEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
      */
-    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
+    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = core.getValue(attribute);
         //Mastery
@@ -427,9 +426,18 @@ public final class FawItemUtil {
 
     public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType, int coolDownTime) {
         boolean hasOneSucceed = false;
-        for (WeaponBaseItem<?> weapon : WeaponRegistry.getWeaponsOf(weaponType)) {
+        for (WeaponBaseItem weapon : WeaponRegistry.getWeaponsOf(weaponType)) {
             hasOneSucceed |= ItemTool.heatItemIfSurvival(player, weapon, coolDownTime);
         }
         return hasOneSucceed;
+    }
+
+
+    public static boolean releaseWeaponSkill(@Nonnull WeaponCore core, @Nullable Modifier modifier, @Nonnull WeaponSkillArgs args) {
+        if (modifier != null) {
+            return modifier.releaseSkill(core, args);
+        } else {
+            return core.releaseSkill(args);
+        }
     }
 }

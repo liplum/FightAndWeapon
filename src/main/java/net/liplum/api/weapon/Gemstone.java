@@ -39,7 +39,7 @@ public class Gemstone implements IGemstone {
      */
     @Override
     @Nullable
-    public Modifier<?> getModifierOf(WeaponCore core) {
+    public Modifier getModifierOf(WeaponCore core) {
         return amplifierOfCores.getModifierOf(core);
     }
 
@@ -64,7 +64,7 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone addModifier(Modifier<?> newModifier) {
+    public IGemstone addModifier(Modifier newModifier) {
         amplifierOfCores.addModifier(newModifier);
         return this;
     }
@@ -94,8 +94,8 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone removeModifier(Modifier<?> modifier) {
-        amplifierOfCores.removeModifier(modifier.getCoreType());
+    public IGemstone removeModifier(Modifier modifier) {
+        amplifierOfCores.removeModifier(modifier.getCore());
         return this;
     }
 
@@ -132,7 +132,7 @@ public class Gemstone implements IGemstone {
     private static class AmplifierOfCores {
         private final Map<WeaponCore, CoreAmplifier> amplifiers = new HashMap<>();
 
-        public Modifier<?> getModifierOf(WeaponCore core) {
+        public Modifier getModifierOf(WeaponCore core) {
             if (amplifiers.containsKey(core)) {
                 return amplifiers.get(core).getModifier();
             }
@@ -154,8 +154,8 @@ public class Gemstone implements IGemstone {
             return null;
         }
 
-        public void addModifier(Modifier<?> modifier) {
-            WeaponCore core = modifier.getCoreType();
+        public void addModifier(Modifier modifier) {
+            WeaponCore core = modifier.getCore();
             if (amplifiers.containsKey(core)) {
                 amplifiers.get(core).setModifier(modifier);
             } else {
@@ -189,14 +189,14 @@ public class Gemstone implements IGemstone {
 
         private static class CoreAmplifier {
             private final Set<IPassiveSkill<?>> passiveSkills = new HashSet<>();
-            private Modifier<?> modifier = null;
+            private Modifier modifier = null;
 
             @Nullable
-            public Modifier<?> getModifier() {
+            public Modifier getModifier() {
                 return modifier;
             }
 
-            public void setModifier(Modifier<?> modifier) {
+            public void setModifier(Modifier modifier) {
                 this.modifier = modifier;
             }
 

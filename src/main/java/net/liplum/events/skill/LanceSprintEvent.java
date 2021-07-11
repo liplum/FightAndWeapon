@@ -1,6 +1,6 @@
 package net.liplum.events.skill;
 
-import net.liplum.items.weapons.lance.LanceArgs;
+import net.liplum.api.weapon.WeaponSkillArgs;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
@@ -9,13 +9,13 @@ import net.minecraftforge.fml.common.eventhandler.Event;
  */
 @Cancelable
 public class LanceSprintEvent extends Event {
-    private final LanceArgs args;
+    private final WeaponSkillArgs args;
 
-    public LanceSprintEvent(LanceArgs args) {
+    public LanceSprintEvent(WeaponSkillArgs args) {
         this.args = args;
     }
 
-    public LanceArgs getArgs() {
+    public WeaponSkillArgs getArgs() {
         return args;
     }
 }

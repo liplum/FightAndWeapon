@@ -99,7 +99,7 @@ public class InlayTableContainer extends ContainerBase {
             return;
         }
         //Now we have a weapon and a "gemstone(maybe)"
-        WeaponBaseItem<?> weaponType = (WeaponBaseItem<?>) weaponStack.getItem();
+        WeaponBaseItem weaponType = (WeaponBaseItem) weaponStack.getItem();
         WeaponCore core = weaponType.getCore();
         Item maybeGemstoneItem = gemstoneStack.getItem();
 

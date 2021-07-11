@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public abstract class Modifier<CoreType extends WeaponCore> implements IAttributeProvider<AttrModifier> {
+public abstract class Modifier implements IAttributeProvider<AttrModifier> {
     @Nonnull
     private final Map<Attribute, AttrModifier> AttributeModifierMap = new HashMap<>();
     @Nonnull
@@ -45,7 +45,11 @@ public abstract class Modifier<CoreType extends WeaponCore> implements IAttribut
 
     protected abstract void build(ModifierBuilder builder);
 
-    public abstract CoreType getCoreType();
+    public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
+        return core.releaseSkill(args);
+    }
+
+    public abstract WeaponCore getCore();
 
     protected class ModifierBuilder implements IAttrModifierBuilder {
         @Override

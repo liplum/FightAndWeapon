@@ -1,6 +1,11 @@
 package net.liplum.items.weapons.harp;
 
+import net.liplum.api.weapon.Modifier;
+import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.utils.EntityUtil;
+import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
@@ -26,7 +31,7 @@ public final class HarpCoreTypes {
         }
 
         @Override
-        public boolean releaseSkill(SingleHarpArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
         }
     };
@@ -53,8 +58,11 @@ public final class HarpCoreTypes {
         public boolean continueSkill(ContinuousHarpArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            double radius = args.getRadius();
+            WeaponCore core = args.getWeaponCore();
+            Modifier modifier = args.getModifier();
+            FinalAttrValue finalRadius = FawItemUtil.calcuAttribute(Radius, core, modifier, player);
 
+            double radius = finalRadius.getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
@@ -94,11 +102,14 @@ public final class HarpCoreTypes {
         }
 
         @Override
-        public boolean releaseSkill(SingleHarpArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            double radius = args.getRadius();
+            WeaponCore core = args.getWeaponCore();
+            Modifier modifier = args.getModifier();
+            FinalAttrValue finalRadius = FawItemUtil.calcuAttribute(Radius, core, modifier, player);
 
+            double radius = finalRadius.getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world

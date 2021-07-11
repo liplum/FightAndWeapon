@@ -147,7 +147,7 @@ public final class ItemRegistry {
         return with(item, item.getGemstone().getRegisterName(), ItemGroupRegistry.FawGemstones);
     }
 
-    public static Item weapon(WeaponBaseItem<?> weapon, String name) {
+    public static Item weapon(WeaponBaseItem weapon, String name) {
         return with(weapon, name, ItemGroupRegistry.FawWeapons);
     }
 

@@ -2,11 +2,12 @@ package net.liplum.items.weapons.harp;
 
 import net.liplum.Attributes;
 import net.liplum.api.weapon.MagicToolModifier;
+import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.Attribute;
 
 import java.util.List;
 
-public abstract class HarpModifier extends MagicToolModifier<HarpCore> {
+public abstract class HarpModifier extends MagicToolModifier {
     @Override
     protected void build(ModifierBuilder builder) {
 
@@ -22,9 +23,5 @@ public abstract class HarpModifier extends MagicToolModifier<HarpCore> {
 
     public boolean continueSkill(HarpCore core, ContinuousHarpArgs args) {
         return core.continueSkill(args);
-    }
-
-    public boolean releaseSkill(HarpCore core, SingleHarpArgs args) {
-        return core.releaseSkill(args);
     }
 }

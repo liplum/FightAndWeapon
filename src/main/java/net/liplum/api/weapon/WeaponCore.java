@@ -48,6 +48,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
     protected abstract void build(WeaponCoreBuilder builder);
 
+    public abstract boolean releaseSkill(WeaponSkillArgs args);
+
     @Nonnull
     public IWeaponSkillPredicate getWeaponSkillPredicate() {
         return weaponSkillPredicate;

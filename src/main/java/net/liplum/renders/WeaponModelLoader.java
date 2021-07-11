@@ -15,7 +15,7 @@ import java.util.Map;
 public class WeaponModelLoader implements ICustomModelLoader {
 
     private static final WeaponModelLoader instance = new WeaponModelLoader();
-    private static final Map<ResourceLocation, WeaponBaseItem<?>> weaponModelMap = new HashMap<>();
+    private static final Map<ResourceLocation, WeaponBaseItem> weaponModelMap = new HashMap<>();
 
     protected WeaponModelLoader() {
 
@@ -25,7 +25,7 @@ public class WeaponModelLoader implements ICustomModelLoader {
         return instance;
     }
 
-    private static void addWeaponMapping(ResourceLocation resourceLocation, WeaponBaseItem<?> weapon) {
+    private static void addWeaponMapping(ResourceLocation resourceLocation, WeaponBaseItem weapon) {
         weaponModelMap.put(resourceLocation, weapon);
     }
 

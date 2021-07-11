@@ -19,7 +19,7 @@ public final class RubyModifier {
         }
 
         @Override
-        public LanceCore getCoreType() {
+        public LanceCore getCore() {
             return LanceCoreTypes.LightLance;
         }
     };

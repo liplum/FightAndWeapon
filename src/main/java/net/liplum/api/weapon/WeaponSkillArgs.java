@@ -8,36 +8,26 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class WeaponArgs<This extends WeaponArgs> {
-    private float strength = 0;
+public class WeaponSkillArgs {
     private World world = null;
     private EntityPlayer player = null;
+    private WeaponBaseItem weapon = null;
     private ItemStack itemStack = null;
-    private Modifier<?> modifier = null;
+    private Modifier modifier = null;
     private EnumHand hand = null;
 
     /**
      * @return the modifier or null if this weapon didn't have a modifier.
      */
     @Nullable
-    public Modifier<?> getModifier() {
+    public Modifier getModifier() {
         return modifier;
     }
 
     @Nonnull
-    public This setModifier(@Nullable Modifier<?> modifier) {
+    public WeaponSkillArgs setModifier(@Nullable Modifier modifier) {
         this.modifier = modifier;
-        return (This) this;
-    }
-
-    public float getStrength() {
-        return strength;
-    }
-
-    @Nonnull
-    public This setStrength(float strength) {
-        this.strength = strength;
-        return (This) this;
+        return this;
     }
 
     @Nonnull
@@ -46,9 +36,9 @@ public class WeaponArgs<This extends WeaponArgs> {
     }
 
     @Nonnull
-    public This setWorld(@Nonnull World world) {
+    public WeaponSkillArgs setWorld(@Nonnull World world) {
         this.world = world;
-        return (This) this;
+        return this;
     }
 
     @Nonnull
@@ -57,9 +47,9 @@ public class WeaponArgs<This extends WeaponArgs> {
     }
 
     @Nonnull
-    public This setPlayer(@Nonnull EntityPlayer player) {
+    public WeaponSkillArgs setPlayer(@Nonnull EntityPlayer player) {
         this.player = player;
-        return (This) this;
+        return this;
     }
 
     @Nonnull
@@ -68,9 +58,9 @@ public class WeaponArgs<This extends WeaponArgs> {
     }
 
     @Nonnull
-    public This setItemStack(@Nonnull ItemStack itemStack) {
+    public WeaponSkillArgs setItemStack(@Nonnull ItemStack itemStack) {
         this.itemStack = itemStack;
-        return (This) this;
+        return this;
     }
 
     @Nonnull
@@ -79,8 +69,25 @@ public class WeaponArgs<This extends WeaponArgs> {
     }
 
     @Nonnull
-    public This setHand(@Nonnull EnumHand hand) {
+    public WeaponSkillArgs setHand(@Nonnull EnumHand hand) {
         this.hand = hand;
-        return (This) this;
+        return this;
+    }
+
+    public WeaponBaseItem getWeapon() {
+        return weapon;
+    }
+
+    public WeaponType getWeaponType() {
+        return weapon.getWeaponType();
+    }
+
+    public WeaponCore getWeaponCore() {
+        return weapon.getCore();
+    }
+
+    public WeaponSkillArgs setWeapon(WeaponBaseItem weapon) {
+        this.weapon = weapon;
+        return this;
     }
 }

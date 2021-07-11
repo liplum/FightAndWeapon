@@ -80,7 +80,7 @@ public class EntityUtil {
         return damage;
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable Modifier<?> modifier) {
+    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable Modifier modifier) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
             damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);

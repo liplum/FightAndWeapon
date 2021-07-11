@@ -1,13 +1,16 @@
 package net.liplum.modifiers;
 
 import net.liplum.api.weapon.Modifier;
-import net.liplum.items.weapons.lance.LanceArgs;
+import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.FinalAttrValue;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
+import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -21,12 +24,13 @@ import net.minecraft.world.World;
 
 import java.util.List;
 
+import static net.liplum.Attributes.Generic.Strength;
 import static net.liplum.Attributes.Lance.SprintStrength;
 
 public final class EnderGemModifier {
     public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
-        public LanceCore getCoreType() {
+        public LanceCore getCore() {
             return LanceCoreTypes.LightLance;
         }
 
@@ -39,12 +43,15 @@ public final class EnderGemModifier {
         }
 
         @Override
-        public boolean releaseSkill(LanceCore core, LanceArgs args) {
+        public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            float strength = args.getStrength();
+            Modifier modifier = args.getModifier();
+            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
+            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
 
-            float sprintLength = args.getSprintStrength();
+            float strength = finalStrength.getFloat();
+            float sprintLength = finalSprintStrength.getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world

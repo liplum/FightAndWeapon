@@ -53,9 +53,9 @@ public class AttackMsg implements IMessage {
                     ItemStack itemStack = player.getHeldItem(EnumHand.MAIN_HAND);
                     Item item = itemStack.getItem();
                     if (FawItemUtil.isFawWeapon(itemStack) && !player.isHandActive()) {
-                        WeaponBaseItem<?> weapon = (WeaponBaseItem<?>) item;
+                        WeaponBaseItem weapon = (WeaponBaseItem) item;
                         WeaponCore core = weapon.getCore();
-                        Modifier<?> modifier = GemUtil.getModifierFrom(itemStack);
+                        Modifier modifier = GemUtil.getModifierFrom(itemStack);
                         FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(Attributes.Generic.AttackReach, core, modifier, player);
                         float reach = finalAttackReach.getFloat();
                         if (player.getDistanceSq(target) < reach * reach) {

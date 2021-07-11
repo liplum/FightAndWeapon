@@ -1,5 +1,9 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.api.weapon.Modifier;
+import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.FinalAttrValue;
 import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.IWaitable;
 import net.liplum.coroutine.WaitForNextTick;
@@ -9,6 +13,7 @@ import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
+import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
@@ -32,7 +37,7 @@ public final class LanceCoreTypes {
     public static final LanceCore Empty = new LanceCore() {
 
         @Override
-        public boolean releaseSkill(LanceArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
         }
 
@@ -40,7 +45,7 @@ public final class LanceCoreTypes {
 
     public static final LanceCore TrainingLance = new LanceCore() {
         @Override
-        public boolean releaseSkill(LanceArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
         }
 
@@ -55,16 +60,20 @@ public final class LanceCoreTypes {
 
     public static final LanceCore LightLance = new LanceCore() {
         @Override
-        public boolean releaseSkill(LanceArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
             if (canceled) {
                 return false;
             }
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            float strength = args.getStrength();
+            WeaponCore core = args.getWeaponCore();
+            Modifier modifier = args.getModifier();
+            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
+            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
 
-            float sprintLength = args.getSprintStrength();
+            float strength = finalStrength.getFloat();
+            float sprintLength = finalSprintStrength.getFloat();
 
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
@@ -111,12 +120,17 @@ public final class LanceCoreTypes {
     public static final LanceCore KnightLance = new LanceCore() {
 
         @Override
-        public boolean releaseSkill(LanceArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            float strength = args.getStrength();
+            WeaponCore core = args.getWeaponCore();
+            Modifier modifier = args.getModifier();
+            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
+            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
 
-            float sprintLength = args.getSprintStrength();
+            float strength = finalStrength.getFloat();
+
+            float sprintLength = finalSprintStrength.getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
@@ -145,13 +159,19 @@ public final class LanceCoreTypes {
 
     public static final LanceCore ArenaLance = new LanceCore() {
         @Override
-        public boolean releaseSkill(LanceArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             EntityPlayer player = args.getPlayer();
             World world = args.getWorld();
             double x = player.posX,
                     y = player.posY,
                     z = player.posZ;
-            float strength = args.getStrength();
+            WeaponCore core = args.getWeaponCore();
+            Modifier modifier = args.getModifier();
+            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
+
+            float strength = finalStrength.getFloat();
+
+
             if (!world.isRemote) {
                 CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Coroutine(new Yield<IWaitable>() {
                     private int duration = 20;
@@ -204,10 +224,15 @@ public final class LanceCoreTypes {
 
     public static final LanceCore TestLance = new LanceCore() {
         @Override
-        public boolean releaseSkill(LanceArgs args) {
+        public boolean releaseSkill(WeaponSkillArgs args) {
             EntityPlayer player = args.getPlayer();
-            float sprintLength = args.getSprintStrength();
 
+            WeaponCore core = args.getWeaponCore();
+            Modifier modifier = args.getModifier();
+            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
+
+
+            float sprintLength = finalSprintStrength.getFloat();
 
             Vec3d originPos = player.getPositionVector();
             Vec3d playerFace = player.getLookVec();

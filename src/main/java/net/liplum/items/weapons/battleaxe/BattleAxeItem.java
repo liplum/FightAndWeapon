@@ -3,6 +3,7 @@ package net.liplum.items.weapons.battleaxe;
 import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
@@ -26,7 +27,7 @@ import static net.liplum.Attributes.BattleAxe.SweepRange;
 import static net.liplum.Attributes.Generic.CoolDown;
 import static net.liplum.Attributes.Generic.Strength;
 
-public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
+public class BattleAxeItem extends WeaponBaseItem {
     private final BattleAxeCore core;
 
     public BattleAxeItem(@Nonnull BattleAxeCore core) {
@@ -43,32 +44,25 @@ public class BattleAxeItem extends WeaponBaseItem<BattleAxeCore> {
         //Default is PASS
         //If play were not sneaking, didn't detect.
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
-            Modifier<?> modifier = GemUtil.getModifierFrom(held);
+            Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
-                FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, playerIn);
-                FinalAttrValue finalSweepRange = FawItemUtil.calcuAttribute(SweepRange, core, modifier, playerIn);
                 int coolDown = finalCoolDown.getInt();
-                boolean releaseSkilled;
-                BattleAxeArgs args = new BattleAxeArgs()
+
+                WeaponSkillArgs args = new WeaponSkillArgs()
                         .setWorld(worldIn)
                         .setPlayer(playerIn)
                         .setItemStack(held)
                         .setHand(handIn)
-                        .setStrength(finalStrength.getFloat())
-                        .setSweepRange(finalSweepRange.getFloat())
-                        .setModifier(modifier);
-                if (modifier != null) {
-                    BattleAxeModifier mod = (BattleAxeModifier) modifier;
-                    releaseSkilled = mod.releaseSkill(core, args);
-                } else {
-                    releaseSkilled = core.releaseSkill(args);
-                }
+                        .setModifier(modifier)
+                        .setWeapon(this);
 
-                if (releaseSkilled) {
+                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
+
+                if (releasedSuccessfully) {
                     if (FawItemUtil.heatWeaponType(playerIn, getWeaponType(), coolDown)) {
                         //When you release the skill, it will make your shield hot.
                         //Don't worry about the EMPTY, if that it'll return Items.AIR (no exception).

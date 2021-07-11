@@ -3,6 +3,7 @@ package net.liplum.items.weapons.harp;
 import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
@@ -27,7 +28,7 @@ import static net.liplum.Attributes.Generic.AbilityPower;
 import static net.liplum.Attributes.Generic.CoolDown;
 import static net.liplum.Attributes.Harp.*;
 
-public class HarpItem extends WeaponBaseItem<HarpCore> {
+public class HarpItem extends WeaponBaseItem {
     private final HarpCore core;
 
     public HarpItem(@Nonnull HarpCore core) {
@@ -40,7 +41,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
     public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
-            Modifier<?> modifier = GemUtil.getModifierFrom(held);
+            Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
@@ -48,20 +49,15 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
             FinalAttrValue finalAP = FawItemUtil.calcuAttribute(AbilityPower, core, modifier, playerIn);
             FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
             if (!cancelRelease) {
-                SingleHarpArgs args = new SingleHarpArgs()
+                WeaponSkillArgs args = new WeaponSkillArgs()
                         .setWorld(worldIn)
                         .setPlayer(playerIn)
                         .setItemStack(held)
                         .setHand(handIn)
-                        .setAbilityPower(finalAP.getFloat())
-                        .setRadius(finalRadius.getFloat());
-                boolean releasedSuccessfully;
-                if (modifier != null) {
-                    HarpModifier mod = (HarpModifier) modifier;
-                    releasedSuccessfully = mod.releaseSkill(core, args);
-                } else {
-                    releasedSuccessfully = core.releaseSkill(args);
-                }
+                        .setWeapon(this)
+                        .setModifier(modifier);
+
+                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
                 if (releasedSuccessfully) {
                     FawItemUtil.heatWeaponType(playerIn, getWeaponType(), finalCoolDown.getInt());
                     playerIn.resetActiveHand();
@@ -79,15 +75,13 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
     @Override
     public void onUsingTick(ItemStack stack, @Nonnull EntityLivingBase player, int count) {
         Item held = stack.getItem();
-        Modifier<?> modifier = GemUtil.getModifierFrom(stack);
+        Modifier modifier = GemUtil.getModifierFrom(stack);
         EntityPlayer p = (EntityPlayer) player;
         EnumHand hand = ItemTool.inWhichHand(p, stack);
         if (hand == null) {
             return;
         }
         World world = player.world;
-        FinalAttrValue finalRadius = FawItemUtil.calcuAttribute(Radius, core, modifier, p);
-        FinalAttrValue finalAP = FawItemUtil.calcuAttribute(AbilityPower, core, modifier, p);
         FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
         FinalAttrValue finalFrequency = FawItemUtil.calcuAttribute(Frequency, core, modifier);
         FinalAttrValue finalMaxUseDuration = FawItemUtil.calcuAttribute(MaxUseDuration, core, modifier);
@@ -98,13 +92,12 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
         int releasedCount = currentDuration / frequency;
         if (currentDuration % frequency == 0) {
             ContinuousHarpArgs args = new ContinuousHarpArgs()
-                    .setWorld(world)
+                    .setReleasedCount(releasedCount);
+            args.setWorld(world)
                     .setPlayer(p)
                     .setItemStack(stack)
                     .setHand(hand)
-                    .setAbilityPower(finalAP.getFloat())
-                    .setRadius(finalRadius.getFloat())
-                    .setReleasedCount(releasedCount);
+                    .setWeapon(this);
             if (modifier != null) {
                 HarpModifier mod = (HarpModifier) modifier;
                 mod.continueSkill(core, args);
@@ -124,7 +117,7 @@ public class HarpItem extends WeaponBaseItem<HarpCore> {
         //I'm not quite sure that the entityLiving is truly a EntityPlayer.
         if (entityLiving instanceof EntityPlayer) {
             EntityPlayer p = (EntityPlayer) entityLiving;
-            Modifier<?> modifier = GemUtil.getModifierFrom(stack);
+            Modifier modifier = GemUtil.getModifierFrom(stack);
             FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
             FawItemUtil.heatWeaponType(p, getWeaponType(), finalCoolDown.getInt());
             p.resetActiveHand();

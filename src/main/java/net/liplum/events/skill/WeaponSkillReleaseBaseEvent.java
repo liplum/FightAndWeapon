@@ -15,7 +15,7 @@ public abstract class WeaponSkillReleaseBaseEvent extends Event {
     protected final World world;
     protected final EntityPlayer player;
     protected final WeaponCore weaponCore;
-    protected final Modifier<?> modifier;
+    protected final Modifier modifier;
     protected final ItemStack itemStack;
     protected final EnumHand hand;
 
@@ -42,7 +42,7 @@ public abstract class WeaponSkillReleaseBaseEvent extends Event {
         return weaponCore;
     }
 
-    public Modifier<?> getModifier() {
+    public Modifier getModifier() {
         return modifier;
     }
 

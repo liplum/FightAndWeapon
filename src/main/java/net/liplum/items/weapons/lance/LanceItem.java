@@ -3,13 +3,13 @@ package net.liplum.items.weapons.lance;
 import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -22,10 +22,8 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nonnull;
 
 import static net.liplum.Attributes.Generic.CoolDown;
-import static net.liplum.Attributes.Generic.Strength;
-import static net.liplum.Attributes.Lance.SprintStrength;
 
-public class LanceItem extends WeaponBaseItem<LanceCore> {
+public class LanceItem extends WeaponBaseItem {
     private final LanceCore core;
 
     public LanceItem(@Nonnull LanceCore core) {
@@ -40,31 +38,23 @@ public class LanceItem extends WeaponBaseItem<LanceCore> {
         ItemStack held = playerIn.getHeldItem(handIn);
         //Player can't sprint in the sky.
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
-            Modifier<?> modifier = GemUtil.getModifierFrom(held);
+            Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
-                FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, playerIn);
-                FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, playerIn);
 
-                boolean releasedSuccessfully;
-                LanceArgs args = new LanceArgs()
+                WeaponSkillArgs args = new WeaponSkillArgs()
                         .setWorld(worldIn)
                         .setPlayer(playerIn)
                         .setItemStack(held)
                         .setHand(handIn)
-                        .setSprintStrength(finalSprintStrength.getFloat())
-                        .setStrength(finalStrength.getFloat());
+                        .setWeapon(this)
+                        .setModifier(modifier);
 
-                if (modifier != null) {
-                    LanceModifier mod = (LanceModifier) modifier;
-                    args.setModifier(mod);
-                    releasedSuccessfully = mod.releaseSkill(core, args);
-                } else {
-                    releasedSuccessfully = core.releaseSkill(args);
-                }
+                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
+
                 if (releasedSuccessfully) {
                     FawItemUtil.heatWeaponType(playerIn, getWeaponType(), finalCoolDown.getInt());
                     result = EnumActionResult.SUCCESS;

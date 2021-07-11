@@ -1,6 +1,7 @@
 package net.liplum.modifiers;
 
-import net.liplum.items.weapons.lance.LanceArgs;
+import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceModifier;
@@ -13,12 +14,12 @@ import net.minecraft.world.World;
 public class FlameGemModifier {
     public final static LanceModifier Normal_Lance = new LanceModifier() {
         @Override
-        public LanceCore getCoreType() {
+        public LanceCore getCore() {
             return LanceCoreTypes.LightLance;
         }
 
         @Override
-        public boolean releaseSkill(LanceCore core, LanceArgs args) {
+        public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
 

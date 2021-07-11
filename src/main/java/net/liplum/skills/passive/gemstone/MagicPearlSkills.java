@@ -29,7 +29,7 @@ public final class MagicPearlSkills {
                             EntityLivingBase attacker = args.getAttacker();
                             WeaponCore weaponCore = args.getWeaponCore();
                             IGemstone gemstone = args.getGemstone();
-                            Modifier<?> modifier = args.getModifier();
+                            Modifier modifier = args.getModifier();
                             List<DamageArgs> allDamages = args.getAllDamages();
                             DamageArgs initialDamage = args.getInitialDamage();
                             float initialDamageValue = initialDamage.getDamage();

@@ -16,13 +16,13 @@ public class AttributeAccessedEvent extends Event {
     @Nonnull
     protected final WeaponCore weaponCore;
     @Nullable
-    protected final Modifier<?> modifier;
+    protected final Modifier modifier;
     @Nullable
     protected final EntityPlayer player;
     @Nonnull
     protected FinalAttrValue finalAttrValue;
 
-    public AttributeAccessedEvent(@Nonnull Attribute attribute, @Nonnull FinalAttrValue finalAttrValue, @Nonnull WeaponCore weaponCore, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player) {
+    public AttributeAccessedEvent(@Nonnull Attribute attribute, @Nonnull FinalAttrValue finalAttrValue, @Nonnull WeaponCore weaponCore, @Nullable Modifier modifier, @Nullable EntityPlayer player) {
         this.attribute = attribute;
         this.finalAttrValue = finalAttrValue;
         this.weaponCore = weaponCore;
@@ -50,7 +50,7 @@ public class AttributeAccessedEvent extends Event {
     }
 
     @Nullable
-    public Modifier<?> getModifier() {
+    public Modifier getModifier() {
         return modifier;
     }
 

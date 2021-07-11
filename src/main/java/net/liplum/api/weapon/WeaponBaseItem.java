@@ -35,7 +35,7 @@ import java.util.List;
 
 import static net.liplum.Attributes.Generic.*;
 
-public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawItem {
+public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
     protected final List<Attribute> allAttributes;
 
@@ -76,9 +76,9 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
         boolean shiftPressed = Utils.isShiftDown();
         boolean altPressed = Utils.isAltDown();
         TooltipOption tooltipOption = new TooltipOption(shiftPressed, altPressed, vanillaAdvanced);
-        CoreType core = getCore();
+        WeaponCore core = getCore();
         IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
-        Modifier<?> modifier = null;
+        Modifier modifier = null;
         IPassiveSkill<?>[] passiveSkills = null;
         if (gemstone != null) {
             passiveSkills = gemstone.getPassiveSkillsOf(core);
@@ -144,10 +144,10 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
     }
 
     @SideOnly(Side.CLIENT)
-    public void addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier<?> modifier, @Nullable EntityPlayer player, TooltipOption option, @Nonnull List<String> attributesTooltip) {
-        CoreType core = getCore();
+    public void addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier modifier, @Nullable EntityPlayer player, TooltipOption option, @Nonnull List<String> attributesTooltip) {
+        WeaponCore core = getCore();
         for (Attribute attribute : allAttributes) {
-            if(!attribute.isShownInTooltip()){
+            if (!attribute.isShownInTooltip()) {
                 continue;
             }
             if (attribute.needMoreDetailsToShown() && !option.isMoreDetailsShown()) {
@@ -198,7 +198,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
 
     @Override
     public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
-        Modifier<?> modifier = GemUtil.getModifierFrom(stack);
+        Modifier modifier = GemUtil.getModifierFrom(stack);
         FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(AttackReach, getCore(), modifier, player);
         if (AttackReach.isDefaultValue(finalAttackReach)) {
             return attackEntity(stack, player, entity);
@@ -228,7 +228,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
     public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
         if (slot == EntityEquipmentSlot.MAINHAND) {
-            Modifier<?> modifier = GemUtil.getModifierFrom(stack);
+            Modifier modifier = GemUtil.getModifierFrom(stack);
             FinalAttrValue finalAttackSpeed = FawItemUtil.calcuAttribute(AttackSpeed, getCore(), modifier);
             double attackSpeed = finalAttackSpeed.getFloat() - Vanilla.DefaultAttackSpeed;
             map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
@@ -243,7 +243,7 @@ public abstract class WeaponBaseItem<CoreType extends WeaponCore> extends FawIte
      * @return A core of this weapon.
      */
     @Nonnull
-    public abstract CoreType getCore();
+    public abstract WeaponCore getCore();
 
     @Nonnull
     public abstract WeaponType getWeaponType();

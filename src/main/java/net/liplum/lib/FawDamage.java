@@ -17,7 +17,7 @@ public class FawDamage extends EntityDamageSource {
     @Nullable
     private IGemstone gemstone;
     @Nullable
-    private Modifier<?> modifier;
+    private Modifier modifier;
 
     private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull WeaponCore weaponCore) {
         super(damageType, attacker);
@@ -45,7 +45,7 @@ public class FawDamage extends EntityDamageSource {
     }
 
     @Nonnull
-    public FawDamage setGemstone(@Nonnull IGemstone gemstone, @Nonnull Modifier<?> modifier) {
+    public FawDamage setGemstone(@Nonnull IGemstone gemstone, @Nonnull Modifier modifier) {
         this.gemstone = gemstone;
         this.modifier = modifier;
         return this;
@@ -64,7 +64,7 @@ public class FawDamage extends EntityDamageSource {
     }
 
     @Nullable
-    public Modifier<?> getModifier() {
+    public Modifier getModifier() {
         return modifier;
     }
 }
