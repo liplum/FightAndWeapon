@@ -9,7 +9,7 @@ import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
 import net.liplum.events.attack.WeaponAttackingEvent;
-import net.liplum.events.skill.AttributeAccessedEvent;
+import net.liplum.events.AttributeAccessedEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;

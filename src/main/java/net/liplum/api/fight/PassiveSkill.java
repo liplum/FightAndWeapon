@@ -14,7 +14,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
     private final EventTypeArgs eventTypeArgs;
 
     /**
-     * Whenever you create the instance, it will register it self to {@link SkillRegistry} automatically.
+     * Whenever you create the instance, it will register itself to {@link SkillRegistry} automatically.
      * @param registerName the name to register itself
      * @param eventTypeClz the class of the event which you want to subscribe
      */

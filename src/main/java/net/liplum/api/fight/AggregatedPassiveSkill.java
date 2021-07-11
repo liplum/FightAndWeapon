@@ -21,9 +21,10 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
     @Nonnull
     private final AggregatedEventTypeArgs eventTypeArgs = new AggregatedEventTypeArgs();
 
+    private boolean built = false;
+
     public AggregatedPassiveSkill(@Nonnull String registerName) {
         this.registerName = registerName;
-        SkillRegistry.register(this);
     }
 
     @Nonnull
@@ -44,6 +45,16 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
         return this;
     }
 
+
+    /**
+     * Register itself to {@link SkillRegistry} and you should call it only once.
+     */
+    public AggregatedPassiveSkill build() {
+        SkillRegistry.register(this);
+        built = true;
+        return this;
+    }
+
     @Nonnull
     @Override
     public String getRegisterName() {
@@ -53,6 +64,14 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
     @Override
     public boolean isShownInTooltip() {
         return isShownInTooltip;
+    }
+
+    public void aggregate(AggregatedPassiveSkill other) {
+        if (!built) {
+            for (Map.Entry<Class<Event>, Function<Event, PSkillResult>> entry : other.allSkills.entrySet()) {
+                this.add(entry.getKey(), entry.getValue());
+            }
+        }
     }
 
     public AggregatedPassiveSkill setShownInTooltip() {
@@ -68,7 +87,7 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
         }
 
         @Override
-        public List<Class<? extends Event>> getAllEventType() {
+        public List<Class<? extends Event>> getAllEventTypes() {
             return allEventTypes;
         }
     }

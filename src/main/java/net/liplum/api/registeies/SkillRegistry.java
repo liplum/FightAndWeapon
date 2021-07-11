@@ -21,7 +21,7 @@ public final class SkillRegistry {
     public static <T extends IPassiveSkill<? extends Event>> T register(@Nonnull T passiveSkill) {
         //Register it to passiveSkillsMap
         IEventTypeArgs eventTypeArgs = passiveSkill.getEventTypeArgs();
-        for (Class<? extends Event> eventType : eventTypeArgs.getAllEventType()) {
+        for (Class<? extends Event> eventType : eventTypeArgs.getAllEventTypes()) {
             if (EventTypePassiveSkillMap.containsKey(eventType)) {
                 EventTypePassiveSkillMap.get(eventType).add(passiveSkill);
             }

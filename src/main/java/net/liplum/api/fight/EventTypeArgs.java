@@ -24,7 +24,7 @@ public class EventTypeArgs implements IEventTypeArgs {
     }
 
     @Override
-    public List<Class<? extends Event>> getAllEventType() {
+    public List<Class<? extends Event>> getAllEventTypes() {
         return eventType;
     }
 

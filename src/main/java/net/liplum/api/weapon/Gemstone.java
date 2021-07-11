@@ -15,7 +15,7 @@ public class Gemstone implements IGemstone {
     private final AmplifierOfAllWeaponTypes amplifierOfAllWeaponTypes = new AmplifierOfAllWeaponTypes();
 
     /**
-     * Whenever you create the instance, it will register it self to {@link GemstoneRegistry} automatically.
+     * Whenever you create the instance, it will register itself to {@link GemstoneRegistry} automatically.
      * @param registerName the name to register itself
      */
     public Gemstone(String registerName) {

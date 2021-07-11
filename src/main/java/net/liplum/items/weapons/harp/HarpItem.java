@@ -43,7 +43,7 @@ public class HarpItem extends WeaponBaseItem {
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
+                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, this, modifier, held, handIn)
             );
             FinalAttrValue finalRadius = FawItemUtil.calcuAttribute(Radius, core, modifier, playerIn);
             FinalAttrValue finalAP = FawItemUtil.calcuAttribute(AbilityPower, core, modifier, playerIn);
@@ -62,7 +62,7 @@ public class HarpItem extends WeaponBaseItem {
                     FawItemUtil.heatWeaponType(playerIn, getWeaponType(), finalCoolDown.getInt());
                     playerIn.resetActiveHand();
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, core, modifier, held, handIn)
+                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, this, modifier, held, handIn)
                     );
                 }
             }

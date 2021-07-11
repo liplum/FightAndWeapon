@@ -46,7 +46,7 @@ public class BattleAxeItem extends WeaponBaseItem {
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, core, modifier, held, handIn)
+                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, this, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
@@ -72,7 +72,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                     }
                     result = EnumActionResult.SUCCESS;
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, core, modifier, held, handIn)
+                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, this, modifier, held, handIn)
                     );
                 }
             }

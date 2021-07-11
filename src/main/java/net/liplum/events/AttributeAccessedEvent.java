@@ -1,4 +1,4 @@
-package net.liplum.events.skill;
+package net.liplum.events;
 
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;

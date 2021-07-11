@@ -1,11 +1,13 @@
 package net.liplum.api.weapon;
 
+import net.liplum.api.fight.AggregatedPassiveSkill;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.BasicAttrValue;
 import net.liplum.attributes.IAttributeProvider;
 import net.liplum.attributes.IBasicAttrValueBuilder;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -18,6 +20,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     protected List<Attribute> allAttributes = new LinkedList<>();
     @Nonnull
     protected IWeaponSkillPredicate weaponSkillPredicate;
+    @Nullable
+    protected AggregatedPassiveSkill weaponPassiveSkills;
 
     public WeaponCore() {
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
@@ -28,6 +32,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             builder.set(attribute, attribute.emptyBasicAttrValue());
         }
         build(builder);
+        if (weaponPassiveSkills != null) {
+            weaponPassiveSkills.build();
+        }
     }
 
     protected void initAllAttributes(List<Attribute> attributes) {
@@ -46,6 +53,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         return AttributeValueMap.get(attribute);
     }
 
+    /**
+     * It will be called in constructor.
+     *
+     * @param builder the weapon core builder
+     */
     protected abstract void build(WeaponCoreBuilder builder);
 
     public abstract boolean releaseSkill(WeaponSkillArgs args);
@@ -62,6 +74,16 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         @Override
         public WeaponCoreBuilder set(@Nonnull Attribute attribute, @Nonnull BasicAttrValue value) {
             AttributeValueMap.put(attribute, value);
+            return this;
+        }
+
+        public WeaponCoreBuilder addPassiveSkills(@Nonnull AggregatedPassiveSkill passiveSkills) {
+            WeaponCore thisCore = WeaponCore.this;
+            if (thisCore.weaponPassiveSkills == null) {
+                thisCore.weaponPassiveSkills = passiveSkills;
+            } else {
+                thisCore.weaponPassiveSkills.aggregate(passiveSkills);
+            }
             return this;
         }
 

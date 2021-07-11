@@ -7,5 +7,5 @@ import java.util.List;
 public interface IEventTypeArgs{
     boolean has(Class<? extends Event> eventType);
 
-    List<Class<? extends Event>> getAllEventType();
+    List<Class<? extends Event>> getAllEventTypes();
 }
