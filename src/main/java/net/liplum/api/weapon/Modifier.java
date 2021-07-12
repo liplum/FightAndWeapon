@@ -1,9 +1,6 @@
 package net.liplum.api.weapon;
 
-import net.liplum.attributes.AttrModifier;
-import net.liplum.attributes.Attribute;
-import net.liplum.attributes.IAttrModifierBuilder;
-import net.liplum.attributes.IAttributeProvider;
+import net.liplum.attributes.*;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -36,11 +33,15 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
      *
      * @param attribute the attribute
      * @return the value or delta which can be used to compute final attribute value.<br/>
-     * If this didn't contain any attribute value which can match the attribute type, it would return null.
+     * If this didn't contain any attribute value which can match the attribute type, it would throw {@link HasNoSuchAttributeException}.
      */
     @Override
     public AttrModifier getValue(@Nonnull Attribute attribute) {
-        return AttributeModifierMap.get(attribute);
+        AttrModifier attrModifier = AttributeModifierMap.get(attribute);
+        if(attrModifier == null){
+            throw new HasNoSuchAttributeException(attribute);
+        }
+        return attrModifier;
     }
 
     protected abstract void build(ModifierBuilder builder);

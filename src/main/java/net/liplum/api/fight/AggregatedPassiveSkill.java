@@ -17,7 +17,7 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
     @Nonnull
     private final Map<Class<Event>, Function<Event, PSkillResult>> allSkills = new HashMap<>();
     @Nonnull
-    private final LinkedList<Class<? extends Event>> allEventTypes = new LinkedList<>();
+    private final LinkedList<Class<Event>> allEventTypes = new LinkedList<>();
     @Nonnull
     private final AggregatedEventTypeArgs eventTypeArgs = new AggregatedEventTypeArgs();
 
@@ -66,12 +66,22 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
         return isShownInTooltip;
     }
 
-    public void aggregate(AggregatedPassiveSkill other) {
+    public boolean aggregate(AggregatedPassiveSkill other) {
         if (!built) {
             for (Map.Entry<Class<Event>, Function<Event, PSkillResult>> entry : other.allSkills.entrySet()) {
                 this.add(entry.getKey(), entry.getValue());
             }
+            return true;
         }
+        return false;
+    }
+
+    public boolean aggregate(PassiveSkill<Event> other) {
+        if (!built) {
+            this.add(other.getEventTypeArgs().getAllEventTypes().get(0), other::onTrigger);
+            return true;
+        }
+        return false;
     }
 
     public AggregatedPassiveSkill setShownInTooltip() {
@@ -82,12 +92,12 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
     public class AggregatedEventTypeArgs implements IEventTypeArgs {
 
         @Override
-        public boolean has(Class<? extends Event> eventType) {
+        public boolean has(Class<Event> eventType) {
             return allEventTypes.contains(eventType);
         }
 
         @Override
-        public List<Class<? extends Event>> getAllEventTypes() {
+        public List<Class<Event>> getAllEventTypes() {
             return allEventTypes;
         }
     }

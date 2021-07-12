@@ -5,7 +5,7 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 import java.util.List;
 
 public interface IEventTypeArgs{
-    boolean has(Class<? extends Event> eventType);
+    boolean has(Class<Event> eventType);
 
-    List<Class<? extends Event>> getAllEventTypes();
+    List<Class<Event>> getAllEventTypes();
 }

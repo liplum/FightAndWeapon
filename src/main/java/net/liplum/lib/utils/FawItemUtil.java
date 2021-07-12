@@ -13,7 +13,6 @@ import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
-import net.liplum.lib.math.MathUtil;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -207,116 +206,6 @@ public final class FawItemUtil {
         return isHitSuccessfully;
     }
 
-    /**
-     * Calculate the final value of attribute without gemstone's amplification.
-     *
-     * @param base
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static float calcuAttribute(float base, float deltaMastery) {
-        return calcuAttribute(base, 0, 0, deltaMastery);
-
-    }
-
-    /**
-     * Calculate the final value of attribute without Mastery's amplification.
-     *
-     * @param base
-     * @param rateGem
-     * @param deltaGem
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static float calcuAttribute(float base, float deltaGem, float rateGem) {
-        return calcuAttribute(base, deltaGem, rateGem, 0);
-    }
-
-    /**
-     * @param base
-     * @param deltaGem
-     * @param rateGem
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static float calcuAttribute(float base, float deltaGem, float rateGem, float deltaMastery) {
-        if (base < 0) {
-            return -1;
-        }
-        float res = ((base + deltaMastery) + deltaGem) * (1 + rateGem);
-        return MathUtil.fixMin(res, 0);
-    }
-
-
-    /**
-     * Calculate the final value of attribute without gemstone's amplification.
-     *
-     * @param base
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static int calcuAttribute(int base, int deltaMastery) {
-        return calcuAttribute(base, 0, 0, deltaMastery);
-
-    }
-
-    /**
-     * Calculate the final value of attribute without Mastery's amplification.
-     *
-     * @param base
-     * @param rateGem
-     * @param deltaGem
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static int calcuAttribute(int base, int deltaGem, float rateGem) {
-        return calcuAttribute(base, deltaGem, rateGem, 0);
-    }
-
-
-    /**
-     * @param base
-     * @param deltaGem
-     * @param rateGem
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    public static int calcuAttribute(int base, int deltaGem, float rateGem, int deltaMastery) {
-        if (base < 0) {
-            return -1;
-        }
-        if (deltaMastery == 0 && deltaGem == 0 && rateGem == 0) {
-            return base;
-        }
-        int res = (int) (((base + deltaMastery) + deltaGem) * (1 + rateGem));
-        return MathUtil.fixMin(res, 0);
-    }
-
-    /**
-     * @param base
-     * @param rate
-     * @return
-     */
-    public static int calcuAttributeInRate(int base, float rate) {
-        if (base < 0) {
-            return -1;
-        } else if (rate == 0) {
-            return base;
-        }
-        return (int) (base * (1 + rate));
-    }
-
-    /**
-     * @param base
-     * @param rate
-     * @return
-     */
-    public static float calcuAttributeInRate(float base, float rate) {
-        if (base < 0) {
-            return -1;
-        } else if (rate == 0) {
-            return base;
-        }
-        return base * (1 + rate);
-    }
 
     @SideOnly(Side.CLIENT)
     public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,

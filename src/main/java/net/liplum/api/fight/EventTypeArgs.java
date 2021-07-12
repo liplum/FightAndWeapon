@@ -8,23 +8,23 @@ import java.util.List;
 
 public class EventTypeArgs implements IEventTypeArgs {
     @Nonnull
-    private final Class<? extends Event> clz;
+    private final Class<Event> clz;
     @Nonnull
-    private final LinkedList<Class<? extends Event>> eventType;
+    private final LinkedList<Class<Event>> eventType;
 
-    public EventTypeArgs(@Nonnull Class<? extends Event> clz) {
+    public EventTypeArgs(@Nonnull Class<Event> clz) {
         this.clz = clz;
         this.eventType = new LinkedList<>();
         this.eventType.add(clz);
     }
 
     @Override
-    public boolean has(Class<? extends Event> eventType) {
+    public boolean has(Class<Event> eventType) {
         return clz == eventType;
     }
 
     @Override
-    public List<Class<? extends Event>> getAllEventTypes() {
+    public List<Class<Event>> getAllEventTypes() {
         return eventType;
     }
 

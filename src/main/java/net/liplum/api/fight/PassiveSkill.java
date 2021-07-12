@@ -20,7 +20,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
      */
     public PassiveSkill(@Nonnull String registerName, Class<EventType> eventTypeClz) {
         this.registerName = registerName;
-        this.eventTypeArgs = new EventTypeArgs(eventTypeClz);
+        this.eventTypeArgs = new EventTypeArgs((Class<Event>) eventTypeClz);
         SkillRegistry.register(this);
     }
 

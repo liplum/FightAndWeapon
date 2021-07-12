@@ -1,10 +1,7 @@
 package net.liplum.api.weapon;
 
 import net.liplum.api.fight.AggregatedPassiveSkill;
-import net.liplum.attributes.Attribute;
-import net.liplum.attributes.BasicAttrValue;
-import net.liplum.attributes.IAttributeProvider;
-import net.liplum.attributes.IBasicAttrValueBuilder;
+import net.liplum.attributes.*;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -46,11 +43,15 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      *
      * @param attribute the attribute
      * @return the value or delta which can be used to compute final attribute value.<br/>
-     * If this didn't contain any attribute value which can match the attribute type, it would return null.
+     * If this didn't contain any attribute value which can match the attribute type, it would throw {@link HasNoSuchAttributeException}.
      */
     @Override
     public BasicAttrValue getValue(@Nonnull Attribute attribute) {
-        return AttributeValueMap.get(attribute);
+        BasicAttrValue basicAttrValue = AttributeValueMap.get(attribute);
+        if(basicAttrValue == null){
+            throw new HasNoSuchAttributeException(attribute);
+        }
+        return basicAttrValue;
     }
 
     /**

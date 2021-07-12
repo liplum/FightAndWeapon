@@ -8,7 +8,7 @@ public interface IAttributeProvider<T extends AttrValue> {
      *
      * @param attribute the attribute
      * @return the value or delta which can be used to compute final attribute value.<br/>
-     * If this didn't contain any attribute value which can match the attribute type, it would return null.
+     * If this didn't contain any attribute value which can match the attribute type, it would throw {@link HasNoSuchAttributeException}.
      */
     T getValue(@Nonnull Attribute attribute);
 }

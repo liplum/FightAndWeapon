@@ -19,7 +19,7 @@ import java.util.Set;
 public final class SkillUtil {
 
 
-    private static void addPassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull Set<IPassiveSkill<Event>> allSkills, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity) {
+    private static void addPassiveSkills(@Nonnull Class<Event> eventType, @Nonnull Set<IPassiveSkill<Event>> allSkills, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity) {
         Item item = itemStack.getItem();
         if (item instanceof WeaponBaseItem) {
 
@@ -55,10 +55,10 @@ public final class SkillUtil {
     public static Set<IPassiveSkill<Event>> getPassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
         Set<IPassiveSkill<Event>> skills = new HashSet<>();
         ItemStack mainHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        addPassiveSkills(eventType, skills, mainHandHeld, entity);
+        addPassiveSkills((Class<Event>) eventType, skills, mainHandHeld, entity);
 
         ItemStack offHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
-        addPassiveSkills(eventType, skills, offHandHeld, entity);
+        addPassiveSkills((Class<Event>) eventType, skills, offHandHeld, entity);
 
         return skills;
     }
