@@ -1,13 +1,11 @@
 package net.liplum.items.weapons.battleaxe;
 
-import net.liplum.api.weapon.Modifier;
-import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
-import net.liplum.lib.utils.FawItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -24,7 +22,6 @@ import java.util.List;
 import static net.liplum.Attributes.BattleAxe.SweepRange;
 import static net.liplum.Attributes.Generic.CoolDown;
 import static net.liplum.Attributes.Generic.Strength;
-import static net.liplum.Attributes.Lance.SprintStrength;
 
 public final class BattleAxeCoreTypes {
     public static final BattleAxeCore Empty = new BattleAxeCore() {
@@ -42,13 +39,13 @@ public final class BattleAxeCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            WeaponCore core = args.getWeaponCore();
-            Modifier modifier = args.getModifier();
-            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
-            FinalAttrValue finalSweepRange = FawItemUtil.calcuAttribute(SweepRange, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(args.getWeaponCore())
+                    .setPlayer(player)
+                    .setModifier(args.getModifier());
 
-            float strength = finalStrength.getFloat();
-            float sweepRange = finalSweepRange.getFloat();
+            float strength = calculator.calcu(Strength).getFloat();
+            float sweepRange = calculator.calcu(SweepRange).getFloat();
 
             float knockBackAngleToX = MathHelper.sin((float) MathUtil.toRadian(player.rotationYaw));
             float knockBackAngleToY = -MathHelper.cos((float) MathUtil.toRadian(player.rotationYaw));

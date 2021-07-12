@@ -5,6 +5,7 @@ import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponType;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
@@ -19,6 +20,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import org.w3c.dom.Attr;
 
 import javax.annotation.Nonnull;
 
@@ -46,7 +48,10 @@ public class BattleAxeItem extends WeaponBaseItem {
                     new WeaponSkillPreReleaseEvent(worldIn, playerIn, this, modifier, held, handIn)
             );
             if (!cancelRelease) {
-                FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, core, modifier);
+                AttrCalculator calculator = new AttrCalculator()
+                        .setWeaponCore(core)
+                        .setModifier(modifier);
+                FinalAttrValue finalCoolDown = calculator.calcu(CoolDown);
                 int coolDown = finalCoolDown.getInt();
 
                 WeaponSkillArgs args = new WeaponSkillArgs()

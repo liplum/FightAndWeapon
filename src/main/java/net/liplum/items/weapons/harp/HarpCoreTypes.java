@@ -3,6 +3,7 @@ package net.liplum.items.weapons.harp;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
@@ -58,11 +59,12 @@ public final class HarpCoreTypes {
         public boolean continueSkill(ContinuousHarpArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            WeaponCore core = args.getWeaponCore();
-            Modifier modifier = args.getModifier();
-            FinalAttrValue finalRadius = FawItemUtil.calcuAttribute(Radius, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(args.getWeaponCore())
+                    .setPlayer(player)
+                    .setModifier(args.getModifier());
 
-            double radius = finalRadius.getFloat();
+            double radius = calculator.calcu(Radius).getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
@@ -105,11 +107,12 @@ public final class HarpCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            WeaponCore core = args.getWeaponCore();
-            Modifier modifier = args.getModifier();
-            FinalAttrValue finalRadius = FawItemUtil.calcuAttribute(Radius, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(args.getWeaponCore())
+                    .setPlayer(player)
+                    .setModifier(args.getModifier());
 
-            double radius = finalRadius.getFloat();
+            double radius = calculator.calcu(Radius).getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world

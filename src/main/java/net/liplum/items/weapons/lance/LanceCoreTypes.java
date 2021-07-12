@@ -3,6 +3,7 @@ package net.liplum.items.weapons.lance;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.IWaitable;
@@ -13,7 +14,6 @@ import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
-import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
@@ -67,13 +67,13 @@ public final class LanceCoreTypes {
             }
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            WeaponCore core = args.getWeaponCore();
-            Modifier modifier = args.getModifier();
-            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
-            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(args.getWeaponCore())
+                    .setPlayer(player)
+                    .setModifier(args.getModifier());
 
-            float strength = finalStrength.getFloat();
-            float sprintLength = finalSprintStrength.getFloat();
+            float strength = calculator.calcu(Strength).getFloat();
+            float sprintLength = calculator.calcu(SprintStrength).getFloat();
 
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
@@ -123,14 +123,13 @@ public final class LanceCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            WeaponCore core = args.getWeaponCore();
-            Modifier modifier = args.getModifier();
-            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
-            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(args.getWeaponCore())
+                    .setPlayer(player)
+                    .setModifier(args.getModifier());
 
-            float strength = finalStrength.getFloat();
-
-            float sprintLength = finalSprintStrength.getFloat();
+            float strength = calculator.calcu(Strength).getFloat();
+            float sprintLength = calculator.calcu(SprintStrength).getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
@@ -165,11 +164,13 @@ public final class LanceCoreTypes {
             double x = player.posX,
                     y = player.posY,
                     z = player.posZ;
-            WeaponCore core = args.getWeaponCore();
-            Modifier modifier = args.getModifier();
-            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(args.getWeaponCore())
+                    .setPlayer(player)
+                    .setModifier(args.getModifier());
 
-            float strength = finalStrength.getFloat();
+
+            float strength = calculator.calcu(Strength).getFloat();
 
 
             if (!world.isRemote) {
@@ -227,12 +228,12 @@ public final class LanceCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             EntityPlayer player = args.getPlayer();
 
-            WeaponCore core = args.getWeaponCore();
-            Modifier modifier = args.getModifier();
-            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(args.getWeaponCore())
+                    .setPlayer(player)
+                    .setModifier(args.getModifier());
 
-
-            float sprintLength = finalSprintStrength.getFloat();
+            float sprintLength = calculator.calcu(SprintStrength).getFloat();
 
             Vec3d originPos = player.getPositionVector();
             Vec3d playerFace = player.getLookVec();

@@ -5,6 +5,7 @@ import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponType;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
@@ -24,8 +25,6 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 
-import static net.liplum.Attributes.Generic.AbilityPower;
-import static net.liplum.Attributes.Generic.CoolDown;
 import static net.liplum.Attributes.Harp.*;
 
 public class HarpItem extends WeaponBaseItem {
@@ -78,8 +77,12 @@ public class HarpItem extends WeaponBaseItem {
             return;
         }
         World world = player.world;
-        FinalAttrValue finalFrequency = FawItemUtil.calcuAttribute(Frequency, core, modifier);
-        FinalAttrValue finalMaxUseDuration = FawItemUtil.calcuAttribute(MaxUseDuration, core, modifier);
+        AttrCalculator calculator = new AttrCalculator()
+                .setWeaponCore(core)
+                .setModifier(modifier)
+                .setPlayer(p);
+        FinalAttrValue finalFrequency = calculator.calcu(Frequency);
+        FinalAttrValue finalMaxUseDuration = calculator.calcu(MaxUseDuration);
         int frequency = finalFrequency.getInt();
         int maxUseDuration = finalMaxUseDuration.getInt();
 
@@ -125,7 +128,7 @@ public class HarpItem extends WeaponBaseItem {
 
     @Override
     public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
-        return FawItemUtil.calcuAttribute(MaxUseDuration, core).getInt();
+        return new AttrCalculator(core).calcu(MaxUseDuration).getInt();
     }
 
     @Nonnull

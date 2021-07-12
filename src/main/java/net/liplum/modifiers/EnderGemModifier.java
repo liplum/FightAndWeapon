@@ -3,6 +3,7 @@ package net.liplum.modifiers;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
@@ -10,7 +11,6 @@ import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
-import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -47,11 +47,13 @@ public final class EnderGemModifier {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
             Modifier modifier = args.getModifier();
-            FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, player);
-            FinalAttrValue finalSprintStrength = FawItemUtil.calcuAttribute(SprintStrength, core, modifier, player);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(core)
+                    .setModifier(modifier)
+                    .setPlayer(player);
 
-            float strength = finalStrength.getFloat();
-            float sprintLength = finalSprintStrength.getFloat();
+            float strength = calculator.calcu(Strength).getFloat();
+            float sprintLength = calculator.calcu(SprintStrength).getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world

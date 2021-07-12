@@ -5,6 +5,7 @@ import net.liplum.Attributes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -19,6 +20,8 @@ import net.minecraft.world.WorldServer;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
+
+import static net.liplum.Attributes.Generic.AttackReach;
 
 public class AttackMsg implements IMessage {
 
@@ -54,9 +57,11 @@ public class AttackMsg implements IMessage {
                     Item item = itemStack.getItem();
                     if (FawItemUtil.isFawWeapon(itemStack) && !player.isHandActive()) {
                         WeaponBaseItem weapon = (WeaponBaseItem) item;
-                        WeaponCore core = weapon.getCore();
-                        Modifier modifier = GemUtil.getModifierFrom(itemStack);
-                        FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(Attributes.Generic.AttackReach, core, modifier, player);
+                        AttrCalculator calculator = new AttrCalculator()
+                                .setWeaponCore(weapon.getCore())
+                                .setModifier(GemUtil.getModifierFrom(itemStack))
+                                .setPlayer(player);
+                        FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
                         float reach = finalAttackReach.getFloat();
                         if (player.getDistanceSq(target) < reach * reach) {
                             RayTraceResult rayTrace = serverWorld.rayTraceBlocks(

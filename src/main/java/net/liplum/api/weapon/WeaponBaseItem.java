@@ -6,6 +6,7 @@ import net.liplum.Names;
 import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.WeaponRegistry;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.TooltipOption;
@@ -146,6 +147,10 @@ public abstract class WeaponBaseItem extends FawItem {
     @SideOnly(Side.CLIENT)
     public void addAttributesTooltip(@Nonnull ItemStack stack, @Nullable Modifier modifier, @Nullable EntityPlayer player, TooltipOption option, @Nonnull List<String> attributesTooltip) {
         WeaponCore core = getCore();
+        AttrCalculator calculator = new AttrCalculator()
+                .setWeaponCore(core)
+                .setModifier(modifier)
+                .setPlayer(player);
         for (Attribute attribute : allAttributes) {
             if (!attribute.isShownInTooltip()) {
                 continue;
@@ -153,7 +158,7 @@ public abstract class WeaponBaseItem extends FawItem {
             if (attribute.needMoreDetailsToShown() && !option.isMoreDetailsShown()) {
                 continue;
             }
-            FinalAttrValue finalValue = FawItemUtil.calcuAttribute(attribute, core, modifier, player);
+            FinalAttrValue finalValue = calculator.calcu(attribute);
             if (attribute.canTooltipShow(finalValue.getNumber())) {
                 FawItemUtil.addAttributeTooltip(
                         attributesTooltip, attribute.getI18nKey(),
@@ -199,7 +204,11 @@ public abstract class WeaponBaseItem extends FawItem {
     @Override
     public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
         Modifier modifier = GemUtil.getModifierFrom(stack);
-        FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(AttackReach, getCore(), modifier, player);
+        AttrCalculator calculator = new AttrCalculator()
+                .setWeaponCore(getCore())
+                .setModifier(modifier)
+                .setPlayer(player);
+        FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
         if (AttackReach.isDefaultValue(finalAttackReach)) {
             return attackEntity(stack, player, entity);
         } else {
@@ -229,7 +238,10 @@ public abstract class WeaponBaseItem extends FawItem {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
         if (slot == EntityEquipmentSlot.MAINHAND) {
             Modifier modifier = GemUtil.getModifierFrom(stack);
-            FinalAttrValue finalAttackSpeed = FawItemUtil.calcuAttribute(AttackSpeed, getCore(), modifier);
+            AttrCalculator calculator = new AttrCalculator()
+                    .setWeaponCore(getCore())
+                    .setModifier(modifier);
+            FinalAttrValue finalAttackSpeed = calculator.calcu(AttackSpeed);
             double attackSpeed = finalAttackSpeed.getFloat() - Vanilla.DefaultAttackSpeed;
             map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
                     ItemTool.genAttrModifier(ATTACK_SPEED_MODIFIER, Vanilla.AttrModifierType.DeltaAddition, Names.WeaponAttributeModifier, attackSpeed));

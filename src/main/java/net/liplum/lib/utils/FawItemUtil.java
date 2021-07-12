@@ -4,8 +4,6 @@ import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.*;
-import net.liplum.capabilities.MasteryCapability;
-import net.liplum.events.AttributeAccessedEvent;
 import net.liplum.events.attack.WeaponAttackedArgs;
 import net.liplum.events.attack.WeaponAttackedEvent;
 import net.liplum.events.attack.WeaponAttackingArgs;
@@ -13,7 +11,6 @@ import net.liplum.events.attack.WeaponAttackingEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
-import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -125,7 +122,13 @@ public final class FawItemUtil {
         WeaponCore core = weapon.getCore();
         IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
         Modifier modifier = GemUtil.getModifierFrom(itemStack);
-        FinalAttrValue finalStrength = FawItemUtil.calcuAttribute(Strength, core, modifier, attackPlayer);
+        AttrCalculator calculator = new AttrCalculator()
+                .setWeaponCore(core)
+                .setPlayer(attackPlayer)
+                .setModifier(modifier);
+
+        FinalAttrValue finalStrength = calculator.calcu(Strength);
+
         finalDamage += finalStrength.getFloat();
         SoundEvent sound = null;
 
@@ -170,7 +173,7 @@ public final class FawItemUtil {
             sound = SoundEvents.ENTITY_PLAYER_ATTACK_NODAMAGE;
         } else {
             //calcu enemy breaking time
-            FinalAttrValue finalEnemyBreakingTime = FawItemUtil.calcuAttribute(EnemyBreakingTime, core, modifier, attackPlayer);
+            FinalAttrValue finalEnemyBreakingTime = calculator.calcu(EnemyBreakingTime);
             int enemyBreakingTime = finalEnemyBreakingTime.getInt();
 
             if (enemyBreakingTime >= 0) {
@@ -245,77 +248,6 @@ public final class FawItemUtil {
                 I18n.format(FawI18n.getNameI18nKey(passiveSkill)));
     }
 
-    /**
-     * Calculate the final value of this attribute in this weapon(WITHOUT MODIFIER AND Mastery CAPABILITY).<br/>
-     * NOTE: All Attributes' access must be via this.
-     *
-     * @param attribute the attribute which you want to calculate in this weapon
-     * @param core      the weapon core which can provide the basic value of this attribute
-     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
-     */
-    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core) {
-        return calcuAttribute(attribute, core, null, null);
-    }
-
-    /**
-     * Calculate the final value of this attribute in this weapon(WITHOUT Mastery CAPABILITY).<br/>
-     * NOTE: All Attributes' access must be via this.
-     *
-     * @param attribute the attribute which you want to calculate in this weapon
-     * @param core      the weapon core which can provide the basic value of this attribute
-     * @param modifier  (optional) the modifier of this weapon which can provide the modifier value of this attribute
-     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
-     */
-    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier) {
-        return calcuAttribute(attribute, core, modifier, null);
-    }
-
-    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player) {
-        return calcuAttribute(attribute, core, modifier, player, true);
-    }
-
-    /**
-     * Calculate the final value of this attribute in this weapon.<br/>
-     * NOTE: All Attributes' access must be via this.
-     *
-     * @param attribute         the attribute which you want to calculate in this weapon
-     * @param core              the weapon core which can provide the basic value of this attribute
-     * @param modifier          (optional) the modifier of this weapon which can provide the modifier value of this attribute
-     * @param player            (optional) the player which can provide the mastery capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
-     * @param postAccessedEvent Whether it posts the {@link AttributeAccessedEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
-     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
-     */
-    public static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
-        ComputeType computeType = attribute.getComputeType();
-        BasicAttrValue baseAttrValue = core.getValue(attribute);
-        //Mastery
-        MasteryCapability mastery = null;
-        AttrDelta masteryValue = null;
-        if (computeType.computeMastery) {
-            if (player != null) {
-                mastery = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
-            }
-            if (mastery != null) {
-                masteryValue = MasteryUtil.getAttributeValue(mastery, core.getWeaponType(), attribute);
-            }
-        }
-        //Modifier
-        AttrModifier attrModifier = null;
-        if (computeType.computeModifier) {
-            if (modifier != null) {
-                attrModifier = modifier.getValue(attribute);
-            }
-        }
-
-        FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masteryValue);
-        if (postAccessedEvent) {
-            AttributeAccessedEvent attributeAccessedEvent = new AttributeAccessedEvent(attribute, finalAttrValue, core, modifier, player);
-            MinecraftForge.EVENT_BUS.post(attributeAccessedEvent);
-            finalAttrValue = attributeAccessedEvent.getFinalAttrValue();
-        }
-        return finalAttrValue;
-    }
-
     public static Iterable<ItemStack> getAllPossibleFawWeaponSlotsFormPlayerInventory(EntityPlayer player) {
         return () -> new Iterator<ItemStack>() {
             private int currentIndex = 0;
@@ -340,14 +272,16 @@ public final class FawItemUtil {
 
     public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType) {
         Map<WeaponBaseItem, Integer> weaponAndMinimumCoolDown = new HashMap<>();
+        AttrCalculator calculator = new AttrCalculator()
+                .setPlayer(player);
         for (ItemStack itemStack : getAllPossibleFawWeaponSlotsFormPlayerInventory(player)) {
             Item item = itemStack.getItem();
             if (item instanceof WeaponBaseItem) {
                 WeaponBaseItem weapon = (WeaponBaseItem) item;
                 if (weapon.getWeaponType() == weaponType) {
-                    Modifier modifier = GemUtil.getModifierFrom(itemStack);
-                    FinalAttrValue finalCoolDown = FawItemUtil.calcuAttribute(CoolDown, weapon.getCore(), modifier, player);
-                    int coolDown = finalCoolDown.getInt();
+                    calculator.setWeaponCore(weapon.getCore())
+                            .setModifier(GemUtil.getModifierFrom(itemStack));
+                    int coolDown = calculator.calcu(CoolDown).getInt();
                     if (coolDown != 0) {
                         if (weaponAndMinimumCoolDown.containsKey(weapon)) {
                             Integer formerCoolDown = weaponAndMinimumCoolDown.get(weapon);

@@ -3,8 +3,8 @@ package net.liplum.eventhandlers;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
-import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.RenderUtil;
 import net.liplum.networks.AttackMsg;
@@ -41,9 +41,11 @@ public class ClientHandler {
             if (!player.isHandActive()) {
                 if (item instanceof WeaponBaseItem) {
                     WeaponBaseItem weapon = (WeaponBaseItem) item;
-                    WeaponCore core = weapon.getCore();
-                    Modifier modifier = GemUtil.getModifierFrom(mainHand);
-                    FinalAttrValue finalAttackReach = FawItemUtil.calcuAttribute(AttackReach, core, modifier, player);
+                    AttrCalculator calculator = new AttrCalculator()
+                            .setWeaponCore(weapon.getCore())
+                            .setModifier(GemUtil.getModifierFrom(mainHand))
+                            .setPlayer(player);
+                    FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
                     if (!AttackReach.isDefaultValue(finalAttackReach)) {
                         RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(finalAttackReach.getFloat());
                         if (rayTrace != null) {
