@@ -23,6 +23,7 @@ public final class Attributes {
                 .setComputeType(ComputeType.Full)
                 .setHasUnit(I18ns.Tooltip.Unit.Unit)
                 .setDefaultValue(4.5F)
+                .setNeedMoreDetailsToShown()
                 .setNeedIsNotDefaultValueCanTooltipShow();
 
         /**
@@ -37,7 +38,8 @@ public final class Attributes {
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Only_Gemstone)
                 .setDefaultValue(4F)
-                .setNeedIsNotDefaultValueCanTooltipShow();
+                .setShownInTooltip(false)
+                .setMinimum(0F);
 
         public static final Attribute AbilityPower = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AbilityPower)

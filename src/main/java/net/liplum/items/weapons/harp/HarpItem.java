@@ -1,10 +1,8 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
-import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
@@ -25,13 +23,14 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 
-import static net.liplum.Attributes.Harp.*;
+import static net.liplum.Attributes.Harp.Frequency;
+import static net.liplum.Attributes.Harp.MaxUseDuration;
 
 public class HarpItem extends WeaponBaseItem {
     private final HarpCore core;
 
     public HarpItem(@Nonnull HarpCore core) {
-        super();
+        super(core);
         this.core = core;
     }
 
@@ -129,17 +128,5 @@ public class HarpItem extends WeaponBaseItem {
     @Override
     public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
         return new AttrCalculator(core).calcu(MaxUseDuration).getInt();
-    }
-
-    @Nonnull
-    @Override
-    public HarpCore getCore() {
-        return core;
-    }
-
-    @Nonnull
-    @Override
-    public WeaponType getWeaponType() {
-        return WeaponTypes.Harp;
     }
 }

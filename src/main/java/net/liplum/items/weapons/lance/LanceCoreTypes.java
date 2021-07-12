@@ -106,13 +106,13 @@ public final class LanceCoreTypes {
             super.build(builder);
             builder.set(
                     //  It means you can dash 4 units.
-                    SprintStrength, SprintStrength.newBasicAttrValue(2)
+                    SprintStrength, SprintStrength.newBasicAttrValue(2F)
             ).set(
                     CoolDown, SprintStrength.newBasicAttrValue(6 * 20)
             ).set(
-                    Strength, SprintStrength.newBasicAttrValue(5)
+                    Strength, SprintStrength.newBasicAttrValue(5F)
             ).set(
-                    AttackReach, AttackReach.newBasicAttrValue(8)
+                    AttackReach, AttackReach.newBasicAttrValue(8F)
             );
         }
     };
@@ -147,11 +147,11 @@ public final class LanceCoreTypes {
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    SprintStrength, SprintStrength.newBasicAttrValue(4)
+                    SprintStrength, SprintStrength.newBasicAttrValue(4F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
             ).set(
-                    Strength, Strength.newBasicAttrValue(6)
+                    Strength, Strength.newBasicAttrValue(6F)
             );
         }
     };
@@ -218,7 +218,7 @@ public final class LanceCoreTypes {
             builder.set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
             ).set(
-                    Strength, Strength.newBasicAttrValue(6)
+                    Strength, Strength.newBasicAttrValue(6F)
             );
         }
     };
@@ -247,7 +247,7 @@ public final class LanceCoreTypes {
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    SprintStrength, SprintStrength.newBasicAttrValue(10)
+                    SprintStrength, SprintStrength.newBasicAttrValue(10F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(20)
             );

@@ -3,6 +3,7 @@ package net.liplum.api.weapon;
 import net.liplum.attributes.*;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -33,15 +34,12 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
      *
      * @param attribute the attribute
      * @return the value or delta which can be used to compute final attribute value.<br/>
-     * If this didn't contain any attribute value which can match the attribute type, it would throw {@link HasNoSuchAttributeException}.
+     * If this didn't contain any attribute value which can match the attribute type, it would return null.
      */
+    @Nullable
     @Override
     public AttrModifier getValue(@Nonnull Attribute attribute) {
-        AttrModifier attrModifier = AttributeModifierMap.get(attribute);
-        if(attrModifier == null){
-            throw new HasNoSuchAttributeException(attribute);
-        }
-        return attrModifier;
+        return AttributeModifierMap.get(attribute);
     }
 
     protected abstract void build(ModifierBuilder builder);

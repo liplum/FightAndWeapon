@@ -1,10 +1,8 @@
 package net.liplum.items.weapons.battleaxe;
 
-import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
-import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
@@ -20,7 +18,6 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-import org.w3c.dom.Attr;
 
 import javax.annotation.Nonnull;
 
@@ -30,7 +27,7 @@ public class BattleAxeItem extends WeaponBaseItem {
     private final BattleAxeCore core;
 
     public BattleAxeItem(@Nonnull BattleAxeCore core) {
-        super();
+        super(core);
         this.core = core;
     }
 
@@ -86,17 +83,5 @@ public class BattleAxeItem extends WeaponBaseItem {
     @Override
     public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
         return EnumAction.BLOCK;
-    }
-
-    @Nonnull
-    @Override
-    public BattleAxeCore getCore() {
-        return core;
-    }
-
-    @Nonnull
-    @Override
-    public WeaponType getWeaponType() {
-        return WeaponTypes.BattleAxe;
     }
 }

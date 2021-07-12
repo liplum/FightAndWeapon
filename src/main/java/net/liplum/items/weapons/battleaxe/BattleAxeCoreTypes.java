@@ -20,8 +20,7 @@ import net.minecraft.world.World;
 import java.util.List;
 
 import static net.liplum.Attributes.BattleAxe.SweepRange;
-import static net.liplum.Attributes.Generic.CoolDown;
-import static net.liplum.Attributes.Generic.Strength;
+import static net.liplum.Attributes.Generic.*;
 
 public final class BattleAxeCoreTypes {
     public static final BattleAxeCore Empty = new BattleAxeCore() {
@@ -79,9 +78,9 @@ public final class BattleAxeCoreTypes {
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    SweepRange, SweepRange.newBasicAttrValue(3)
+                    SweepRange, SweepRange.newBasicAttrValue(3F)
             ).set(
-                    Strength, Strength.newBasicAttrValue(7)
+                    Strength, Strength.newBasicAttrValue(7F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(5 * 20)
             );
@@ -92,7 +91,7 @@ public final class BattleAxeCoreTypes {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             EntityPlayer player = args.getPlayer();
-            player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 10 * 20, 1));
+            player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 8 * 20, 1));
             return true;
         }
 
@@ -100,9 +99,11 @@ public final class BattleAxeCoreTypes {
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Strength, Strength.newBasicAttrValue(7)
+                    Strength, Strength.newBasicAttrValue(7F)
             ).set(
-                    CoolDown, CoolDown.newBasicAttrValue(15 * 20)
+                    CoolDown, CoolDown.newBasicAttrValue(350)
+            ).set(
+                    AttackSpeed,AttackSpeed.newBasicAttrValue(1F)
             );
         }
     };

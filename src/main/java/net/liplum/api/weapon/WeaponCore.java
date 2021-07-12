@@ -14,7 +14,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     private final Map<Attribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
     @Nonnull
-    protected List<Attribute> allAttributes = new LinkedList<>();
+    private final List<Attribute> allAttributes = new LinkedList<>();
     @Nonnull
     protected IWeaponSkillPredicate weaponSkillPredicate;
     @Nullable
@@ -33,9 +33,18 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             weaponPassiveSkills.build();
         }
     }
-
+    /**
+     * It will be called in constructor.
+     *
+     * @param attributes all the attributes
+     */
     protected void initAllAttributes(List<Attribute> attributes) {
         attributes.addAll(Attribute.getAllBasicAttributes());
+    }
+
+    @Nonnull
+    public List<Attribute> getAllAttributes(){
+        return allAttributes;
     }
 
     /**
@@ -45,6 +54,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      * @return the value or delta which can be used to compute final attribute value.<br/>
      * If this didn't contain any attribute value which can match the attribute type, it would throw {@link HasNoSuchAttributeException}.
      */
+    @Nonnull
     @Override
     public BasicAttrValue getValue(@Nonnull Attribute attribute) {
         BasicAttrValue basicAttrValue = AttributeValueMap.get(attribute);

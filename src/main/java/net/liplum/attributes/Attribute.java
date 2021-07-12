@@ -153,6 +153,10 @@ public class Attribute {
         return canTooltipShow.test(n);
     }
 
+    public boolean canTooltipShow(FinalAttrValue attrValue) {
+        return canTooltipShow.test(attrValue.getNumber());
+    }
+
     public boolean hasUnit() {
         return hasUnit;
     }
@@ -233,6 +237,10 @@ public class Attribute {
 
     public Number getTooltipShownValue(Number input) {
         return tooltipShownMapping.apply(input);
+    }
+
+    public Number getTooltipShownValue(FinalAttrValue input) {
+        return tooltipShownMapping.apply(input.getNumber());
     }
 
     @Nullable

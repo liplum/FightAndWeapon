@@ -1,11 +1,8 @@
 package net.liplum.items.weapons.lance;
 
-import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
-import net.liplum.api.weapon.WeaponType;
-import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.skill.WeaponSkillPostReleasedEvent;
 import net.liplum.events.skill.WeaponSkillPreReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
@@ -21,13 +18,11 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 
-import static net.liplum.Attributes.Generic.CoolDown;
-
 public class LanceItem extends WeaponBaseItem {
     private final LanceCore core;
 
     public LanceItem(@Nonnull LanceCore core) {
-        super();
+        super(core);
         this.core = core;
     }
 
@@ -70,17 +65,5 @@ public class LanceItem extends WeaponBaseItem {
     @Override
     public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
         return EnumAction.BLOCK;
-    }
-
-    @Nonnull
-    @Override
-    public LanceCore getCore() {
-        return core;
-    }
-
-    @Nonnull
-    @Override
-    public WeaponType getWeaponType() {
-        return WeaponTypes.Lance;
     }
 }

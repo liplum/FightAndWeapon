@@ -43,11 +43,11 @@ public final class HarpCoreTypes {
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    AbilityPower, AbilityPower.newBasicAttrValue(5)
+                    AbilityPower, AbilityPower.newBasicAttrValue(5F)
             ).set(
                     Frequency, Frequency.newBasicAttrValue(40)
             ).set(
-                    Radius, Radius.newBasicAttrValue(4)
+                    Radius, Radius.newBasicAttrValue(4F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(200)
             ).set(
