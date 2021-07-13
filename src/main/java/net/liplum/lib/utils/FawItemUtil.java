@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import com.google.common.collect.Multimap;
 import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
@@ -13,9 +14,11 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -181,8 +184,8 @@ public final class FawItemUtil {
             //TODO:Something here!
             if (attackerPlayer != null && targetLiving != null) {
                 itemStack.hitEntity(targetLiving, attackerPlayer);
-                if(!attackerPlayer.isCreative()){
-                    weapon.reduceDurabilityOnHit(itemStack,attackerPlayer,totalDamage);
+                if (!attackerPlayer.isCreative()) {
+                    weapon.reduceDurabilityOnHit(itemStack, attackerPlayer, totalDamage);
                 }
             }
         }
@@ -313,6 +316,15 @@ public final class FawItemUtil {
             return modifier.releaseSkill(core, args);
         } else {
             return core.releaseSkill(args);
+        }
+    }
+
+    public static void applyAttrModifier(@Nonnull WeaponCore core, @Nullable Modifier modifier,
+                                            @Nonnull WeaponAttrModifierContext context) {
+        if (modifier != null) {
+            modifier.applyAttrModifier(core, context);
+        } else {
+            core.applyAttrModifier(context);
         }
     }
 

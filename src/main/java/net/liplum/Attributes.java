@@ -12,6 +12,7 @@ public final class Attributes {
                 .setDataType(DataType.Int)
                 .setComputeType(ComputeType.Only_Base)
                 .setDefaultValue(0)
+                .setShownInTooltip(false)
                 .setMinimum(0);
         public static final Attribute Strength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Strength)
@@ -20,6 +21,7 @@ public final class Attributes {
                 .setDataType(DataType.Float)
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
+                .setDisplayPriority(-100)
                 .setDefaultValue(0);
         public static final Attribute AttackReach = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AttackReach)
@@ -30,6 +32,7 @@ public final class Attributes {
                 .setComputeType(ComputeType.Full)
                 .setHasUnit(I18ns.Tooltip.Unit.Unit)
                 .setDefaultValue(4.5F)
+                .setDisplayPriority(100)
                 .setNeedMoreDetailsToShown()
                 .setNeedIsNotDefaultValueCanTooltipShow();
 
@@ -53,6 +56,7 @@ public final class Attributes {
                 .setDataType(DataType.Float)
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
+                .setDisplayPriority(-50)
                 .setDefaultValue(0);
         /**
          * Gets the upcoming invincible time of a enemy who was attacked by this weapon.(unit:tick)
@@ -77,6 +81,7 @@ public final class Attributes {
                 .setHasUnit(I18ns.Tooltip.Unit.Second)
                 .setNeedMoreDetailsToShown()
                 .setTooltipShownMapping(Vanilla::PerSecond)
+                .setDisplayPriority(-25)
                 .setDefaultValue(0);
         /**
          * Gets the knock back. The basic is 1.0F.
@@ -100,6 +105,7 @@ public final class Attributes {
                 .setDataType(DataType.Float)
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
+                .setDisplayPriority(50)
                 .setDefaultValue(0);
     }
 
@@ -110,6 +116,7 @@ public final class Attributes {
                 .setDataType(DataType.Float)
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
+                .setDisplayPriority(50)
                 .setDefaultValue(0F);
     }
 
@@ -124,6 +131,7 @@ public final class Attributes {
                 .setFormat("%.1f")
                 .setHasUnit(I18ns.Tooltip.Unit.Unit)
                 .setComputeType(ComputeType.Full)
+                .setDisplayPriority(50)
                 .setDefaultValue(1);
         /**
          * The default one equals 60 minutes
@@ -138,6 +146,7 @@ public final class Attributes {
                 .setComputeType(ComputeType.Only_Rate)
                 .setTooltipShownMapping(Vanilla::PerSecond)
                 .setDefaultValue(72000)
+                .setDisplayPriority(60)
                 .setMinimum(1);
         /**
          * The default one equals 60 minutes

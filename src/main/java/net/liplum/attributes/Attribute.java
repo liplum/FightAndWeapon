@@ -32,6 +32,8 @@ public class Attribute {
 
     private boolean shownInTooltip = true;
 
+    private int displayPriority = 1;
+
     private boolean hasUnit = false;
 
     @Nullable
@@ -154,11 +156,11 @@ public class Attribute {
     }
 
     public boolean canTooltipShow(FinalAttrValue attrValue) {
-        return canTooltipShow.test(attrValue.getNumber());
+        return shownInTooltip && canTooltipShow.test(attrValue.getNumber());
     }
 
     public boolean hasUnit() {
-        return hasUnit;
+        return hasUnit && unit != null;
     }
 
     public Attribute setNeedMoreDetailsToShown() {
@@ -225,6 +227,25 @@ public class Attribute {
                 return MathUtil.fixMin(value.floatValue(), minimum.floatValue());
         }
         return value;
+    }
+
+    /**
+     * Smaller number means front
+     * Larger number means later
+     *
+     * @return the priority of display
+     */
+    public int getDisplayPriority() {
+        return displayPriority;
+    }
+
+    /**
+     * Smaller number means front
+     * Larger number means later
+     */
+    public Attribute setDisplayPriority(int displayPriority) {
+        this.displayPriority = displayPriority;
+        return this;
     }
 
     public int getTooltipShownIntValue(Number input) {

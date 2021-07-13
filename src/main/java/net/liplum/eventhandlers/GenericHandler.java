@@ -22,7 +22,7 @@ public final class GenericHandler {
         if (!world.isRemote && entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
             MasteryCapability master = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
-            String msg = "You have " + (master != null ? "master" : "nothing") + ".";
+            String msg = "You have " + (master != null ? "mastery!" : "nothing...");
             TextComponentString text = new TextComponentString(msg);
             player.sendMessage(text);
         }

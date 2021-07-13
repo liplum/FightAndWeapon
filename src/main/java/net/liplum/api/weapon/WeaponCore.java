@@ -83,7 +83,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         return basicAttrValue;
     }
 
-    public void applyAttrModifier(@Nonnull EntityEquipmentSlot slot, Multimap<String, AttributeModifier> map, WeaponAttrModifierContext context) {
+    public void applyAttrModifier(@Nonnull WeaponAttrModifierContext context) {
+        EntityEquipmentSlot slot = context.slot;
+        Multimap<String, AttributeModifier> map = context.attrModifierMap;
         switch (slot) {
             case MAINHAND:
                 for (Map.Entry<String, Function<WeaponAttrModifierContext, AttributeModifier>> entry : mainHandAttributeModifierMap.entries()) {
@@ -158,18 +160,18 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return this;
         }
 
-        public WeaponCoreBuilder setWeaponSkillPredicate(@Nonnull IWeaponSkillPredicate weaponSkillPredicate) {
-            WeaponCore.this.weaponSkillPredicate = weaponSkillPredicate;
+        public WeaponCoreBuilder setWeaponSkillPredicate(@Nonnull IWeaponSkillPredicate newWeaponSkillPredicate) {
+            weaponSkillPredicate = newWeaponSkillPredicate;
             return this;
         }
 
         public WeaponCoreBuilder addMainHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
-            WeaponCore.this.mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
+            mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
         public WeaponCoreBuilder addOffHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
-            WeaponCore.this.offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
+            offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
     }

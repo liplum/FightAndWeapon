@@ -32,8 +32,10 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static net.liplum.Attributes.Generic.*;
 
@@ -102,7 +104,7 @@ public abstract class WeaponBaseItem extends FawItem {
         boolean gemstoneShown = gemstoneTooltip.size() > 0;
         boolean attributesShown = attributesTooltip.size() > 0;
         boolean passiveSkillsShown = passiveSkillsTooltip.size() > 0;
-        boolean vanillaAttackSpeedTipShown = CoolDown.canTooltipShow(calculator.calcu(CoolDown));
+        boolean vanillaAttackSpeedTipShown = !AttackSpeed.isDefaultValue(calculator.calcu(AttackSpeed));
 
         if (weaponTypeShown) {
             tooltip.addAll(weaponTypeTooltip);
@@ -151,10 +153,12 @@ public abstract class WeaponBaseItem extends FawItem {
     @SideOnly(Side.CLIENT)
     public void addAttributesTooltip(@Nonnull ItemStack stack, AttrCalculator calculator, TooltipOption option, @Nonnull List<String> attributesTooltip) {
         WeaponCore core = getCore();
-        for (Attribute attribute : core.getAllAttributes()) {
-            if (!attribute.isShownInTooltip()) {
-                continue;
-            }
+        List<Attribute> sortedAttr = core.getAllAttributes().stream()
+                .filter(Attribute::isShownInTooltip)
+                .sorted(Comparator.comparing(Attribute::getDisplayPriority))
+                .collect(Collectors.toList());
+
+        for (Attribute attribute : sortedAttr) {
             if (attribute.needMoreDetailsToShown() && !option.isMoreDetailsShown()) {
                 continue;
             }
@@ -233,10 +237,11 @@ public abstract class WeaponBaseItem extends FawItem {
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
+        Modifier modifier = GemUtil.getModifierFrom(stack);
         WeaponAttrModifierContext context = new WeaponAttrModifierContext(stack, new AttrCalculator()
                 .setWeaponCore(getCore())
-                .setModifier(GemUtil.getModifierFrom(stack)));
-        weaponCore.applyAttrModifier(slot, map, context);
+                .setModifier(modifier), slot, map);
+        FawItemUtil.applyAttrModifier(weaponCore, modifier, context);
         return map;
     }
 
