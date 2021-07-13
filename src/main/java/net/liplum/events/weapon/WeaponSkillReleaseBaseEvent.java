@@ -1,27 +1,37 @@
-package net.liplum.events.attack;
+package net.liplum.events.weapon;
 
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
-public class FawWeaponLeftClickEvent extends Event {
+import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+
+public abstract class WeaponSkillReleaseBaseEvent extends Event {
+    protected final World world;
     protected final EntityPlayer player;
     protected final WeaponBaseItem weapon;
     protected final Modifier modifier;
     protected final ItemStack itemStack;
+    protected final EnumHand hand;
 
-    public FawWeaponLeftClickEvent(EntityPlayer player, WeaponBaseItem weapon, Modifier modifier, ItemStack itemStack) {
+    public WeaponSkillReleaseBaseEvent(@Nonnull World world, @Nonnull EntityPlayer player,
+                                       @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier,
+                                       @Nonnull ItemStack itemStack, @Nonnull EnumHand hand) {
+        this.world = world;
         this.player = player;
         this.weapon = weapon;
         this.modifier = modifier;
         this.itemStack = itemStack;
+        this.hand = hand;
     }
 
     public World getWorld() {
-        return player.world;
+        return world;
     }
 
     public EntityPlayer getPlayer() {
@@ -38,5 +48,9 @@ public class FawWeaponLeftClickEvent extends Event {
 
     public ItemStack getItemStack() {
         return itemStack;
+    }
+
+    public EnumHand getHand() {
+        return hand;
     }
 }

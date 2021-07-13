@@ -1,4 +1,4 @@
-package net.liplum.events.attack;
+package net.liplum.events.weapon;
 
 import javax.annotation.Nonnull;
 

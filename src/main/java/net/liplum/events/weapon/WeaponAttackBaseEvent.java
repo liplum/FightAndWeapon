@@ -1,4 +1,4 @@
-package net.liplum.events.attack;
+package net.liplum.events.weapon;
 
 import net.liplum.api.weapon.WeaponAttackArgs;
 import net.minecraftforge.fml.common.eventhandler.Event;

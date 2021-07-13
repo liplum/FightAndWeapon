@@ -4,7 +4,7 @@ import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
-import net.liplum.events.attack.WeaponAttackingEvent;
+import net.liplum.events.weapon.WeaponAttackingEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;

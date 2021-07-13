@@ -1,4 +1,4 @@
-package net.liplum.events.attack;
+package net.liplum.events.weapon;
 
 import net.liplum.api.weapon.DamageArgs;
 import net.liplum.api.weapon.WeaponAttackArgs;

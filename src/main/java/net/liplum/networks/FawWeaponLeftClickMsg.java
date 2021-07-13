@@ -3,7 +3,7 @@ package net.liplum.networks;
 import io.netty.buffer.ByteBuf;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.events.attack.FawWeaponLeftClickEvent;
+import net.liplum.events.weapon.FawWeaponLeftClickEvent;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.Item;

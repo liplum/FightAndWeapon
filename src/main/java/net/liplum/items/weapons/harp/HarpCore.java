@@ -14,7 +14,7 @@ public abstract class HarpCore extends MagicToolCore {
 
     @Override
     protected void build(WeaponCoreBuilder builder) {
-
+        super.build(builder);
     }
 
     @Override

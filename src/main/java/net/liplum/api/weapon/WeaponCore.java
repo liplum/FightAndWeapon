@@ -1,7 +1,17 @@
 package net.liplum.api.weapon;
 
+import com.google.common.collect.HashMultimap;
+import com.google.common.collect.Multimap;
+import net.liplum.Names;
+import net.liplum.Vanilla;
 import net.liplum.api.fight.AggregatedPassiveSkill;
 import net.liplum.attributes.*;
+import net.liplum.lib.OpenItem;
+import net.liplum.lib.utils.ItemTool;
+import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.ai.attributes.IAttribute;
+import net.minecraft.inventory.EntityEquipmentSlot;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -9,6 +19,10 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Function;
+
+import static net.liplum.Attributes.Generic.AttackSpeed;
+import static net.liplum.Attributes.Generic.Durability;
 
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
@@ -19,6 +33,10 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     protected IWeaponSkillPredicate weaponSkillPredicate;
     @Nullable
     protected AggregatedPassiveSkill weaponPassiveSkills;
+    @Nonnull
+    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
+    @Nonnull
+    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
 
     public WeaponCore() {
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
@@ -33,6 +51,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             weaponPassiveSkills.build();
         }
     }
+
     /**
      * It will be called in constructor.
      *
@@ -43,7 +62,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Nonnull
-    public List<Attribute> getAllAttributes(){
+    public List<Attribute> getAllAttributes() {
         return allAttributes;
     }
 
@@ -52,16 +71,36 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      *
      * @param attribute the attribute
      * @return the value or delta which can be used to compute final attribute value.<br/>
-     * If this didn't contain any attribute value which can match the attribute type, it would throw {@link HasNoSuchAttributeException}.
+     * If this didn't contain any attribute value which can match the attribute type, it would throw {@link NotHasSuchAttributeException}.
      */
     @Nonnull
     @Override
     public BasicAttrValue getValue(@Nonnull Attribute attribute) {
         BasicAttrValue basicAttrValue = AttributeValueMap.get(attribute);
-        if(basicAttrValue == null){
-            throw new HasNoSuchAttributeException(attribute);
+        if (basicAttrValue == null) {
+            throw new NotHasSuchAttributeException(attribute);
         }
         return basicAttrValue;
+    }
+
+    public void applyAttrModifier(@Nonnull EntityEquipmentSlot slot, Multimap<String, AttributeModifier> map, WeaponAttrModifierContext context) {
+        switch (slot) {
+            case MAINHAND:
+                for (Map.Entry<String, Function<WeaponAttrModifierContext, AttributeModifier>> entry : mainHandAttributeModifierMap.entries()) {
+                    AttributeModifier modifier = entry.getValue().apply(context);
+                    if (modifier != null) {
+                        map.put(entry.getKey(), modifier);
+                    }
+                }
+                break;
+            case OFFHAND:
+                for (Map.Entry<String, Function<WeaponAttrModifierContext, AttributeModifier>> entry : offHandAttributeModifierMap.entries()) {
+                    AttributeModifier modifier = entry.getValue().apply(context);
+                    if (modifier != null) {
+                        map.put(entry.getKey(), modifier);
+                    }
+                }
+        }
     }
 
     /**
@@ -69,8 +108,29 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      *
      * @param builder the weapon core builder
      */
-    protected abstract void build(WeaponCoreBuilder builder);
+    protected void build(WeaponCoreBuilder builder) {
+        builder.addMainHand(
+                SharedMonsterAttributes.ATTACK_SPEED,
+                context -> {
+                    float attackSpeed = context.calculator.calcu(AttackSpeed).getFloat();
+                    if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
+                        double attackSpeedDelta = attackSpeed - Vanilla.DefaultAttackSpeed;
+                        return ItemTool.genAttrModifier(
+                                OpenItem.getAttackSpeedModifierUUID(),
+                                Vanilla.AttrModifierType.DeltaAddition,
+                                Names.WeaponAttributeModifier, attackSpeedDelta);
+                    }
+                    return null;
+                })
+                .set(Durability, Durability.newBasicAttrValue(100));
+    }
 
+    /**
+     * Release the Weapon Skill
+     *
+     * @param args the parameter the skill releasing may use
+     * @return whether the skill released successfully
+     */
     public abstract boolean releaseSkill(WeaponSkillArgs args);
 
     @Nonnull
@@ -100,6 +160,16 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
         public WeaponCoreBuilder setWeaponSkillPredicate(@Nonnull IWeaponSkillPredicate weaponSkillPredicate) {
             WeaponCore.this.weaponSkillPredicate = weaponSkillPredicate;
+            return this;
+        }
+
+        public WeaponCoreBuilder addMainHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+            WeaponCore.this.mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
+            return this;
+        }
+
+        public WeaponCoreBuilder addOffHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+            WeaponCore.this.offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
     }

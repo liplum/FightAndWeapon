@@ -6,6 +6,13 @@ import net.liplum.attributes.DataType;
 
 public final class Attributes {
     public static final class Generic {
+        public static final Attribute Durability = new Attribute()
+                .setRegisterName(Names.Attribute.Generic.Durability)
+                .setBasic()
+                .setDataType(DataType.Int)
+                .setComputeType(ComputeType.Only_Base)
+                .setDefaultValue(0)
+                .setMinimum(0);
         public static final Attribute Strength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Strength)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
@@ -32,10 +39,8 @@ public final class Attributes {
          */
         public static final Attribute AttackSpeed = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AttackSpeed)
-                .setHowToGetI18nKey(I18ns.Attribute::Generic)
                 .setBasic()
                 .setDataType(DataType.Float)
-                .setFormat("%.1f")
                 .setComputeType(ComputeType.Only_Gemstone)
                 .setDefaultValue(4F)
                 .setShownInTooltip(false)
@@ -54,7 +59,6 @@ public final class Attributes {
          */
         public static final Attribute EnemyBreakingTime = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.EnemyBreakingTime)
-                .setHowToGetI18nKey(I18ns.Attribute::Generic)
                 .setBasic()
                 .setDataType(DataType.Int)
                 .setComputeType(ComputeType.Only_Gemstone)
@@ -79,7 +83,6 @@ public final class Attributes {
          */
         public static final Attribute KnockbackStrength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.KnockbackStrength)
-                .setHowToGetI18nKey(I18ns.Attribute::Generic)
                 .setBasic()
                 .setDataType(DataType.Float)
                 .setComputeType(ComputeType.Full)
@@ -107,7 +110,7 @@ public final class Attributes {
                 .setDataType(DataType.Float)
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
-                .setDefaultValue(1);
+                .setDefaultValue(0F);
     }
 
     public static final class Harp {

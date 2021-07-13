@@ -1,8 +1,7 @@
-package net.liplum.events.skill;
+package net.liplum.events.weapon;
 
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponCore;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;

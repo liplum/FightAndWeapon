@@ -22,6 +22,7 @@ public abstract class LanceCore extends WeaponCore {
 
     @Override
     protected void build(WeaponCoreBuilder builder) {
+        super.build(builder);
         builder.set(
                 AttackSpeed, AttackSpeed.newBasicAttrValue(2F)
         );

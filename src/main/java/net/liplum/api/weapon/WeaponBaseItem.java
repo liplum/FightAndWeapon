@@ -2,15 +2,17 @@ package net.liplum.api.weapon;
 
 import com.google.common.collect.Multimap;
 import net.liplum.I18ns;
-import net.liplum.Names;
-import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.TooltipOption;
-import net.liplum.lib.utils.*;
+import net.liplum.lib.math.MathUtil;
+import net.liplum.lib.utils.FawI18n;
+import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.GemUtil;
+import net.liplum.lib.utils.Utils;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -18,7 +20,6 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -46,6 +47,8 @@ public abstract class WeaponBaseItem extends FawItem {
         super();
         this.weaponCore = weaponCore;
         this.weaponType = weaponCore.getWeaponType();
+        AttrCalculator calculator = new AttrCalculator(weaponCore);
+        setMaxDamage(calculator.calcu(Durability).getInt());
         WeaponRegistry.register(this);
     }
 
@@ -211,10 +214,9 @@ public abstract class WeaponBaseItem extends FawItem {
         }
     }
 
-    public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float damage) {
-        damage = Math.max(1f, damage / 10f);
-        //TODO:This
-        //ToolHelper.damageTool(stack, (int) damage, player);
+    public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float attackDamage) {
+        float weaponDamage = MathUtil.fixMin(1f, attackDamage / 10f);
+        FawItemUtil.damageWeapon(this, stack, (int) weaponDamage, player);
     }
 
     /**
@@ -231,17 +233,10 @@ public abstract class WeaponBaseItem extends FawItem {
     @Override
     public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
-        if (slot == EntityEquipmentSlot.MAINHAND) {
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(getCore())
-                    .setModifier(GemUtil.getModifierFrom(stack));
-            FinalAttrValue finalAttackSpeed = calculator.calcu(AttackSpeed);
-            if (AttackSpeed.isNotDefaultValue(finalAttackSpeed)) {
-                double attackSpeed = finalAttackSpeed.getFloat() - Vanilla.DefaultAttackSpeed;
-                map.put(SharedMonsterAttributes.ATTACK_SPEED.getName(),
-                        ItemTool.genAttrModifier(ATTACK_SPEED_MODIFIER, Vanilla.AttrModifierType.DeltaAddition, Names.WeaponAttributeModifier, attackSpeed));
-            }
-        }
+        WeaponAttrModifierContext context = new WeaponAttrModifierContext(stack, new AttrCalculator()
+                .setWeaponCore(getCore())
+                .setModifier(GemUtil.getModifierFrom(stack)));
+        weaponCore.applyAttrModifier(slot, map, context);
         return map;
     }
 

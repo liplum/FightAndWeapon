@@ -1,5 +1,7 @@
 package net.liplum;
 
+import net.liplum.lib.OpenItem;
+
 public final class Vanilla {
     public static final int TPS = 20;
     public static final int PlayerMainInventorySlotCount = 36;
@@ -11,6 +13,8 @@ public final class Vanilla {
     public static final int PlayerAllInventorySlotCount =
             PlayerMainInventorySlotCount + PlayerArmorInventorySlotCount + PlayerOffHandInventorySlotCount;
     public static final double DefaultAttackSpeed = 4D;
+
+    public static final OpenItem OpenItem = new OpenItem();
 
     public static Number PerSecond(Number value) {
         return value.floatValue() / TPS;

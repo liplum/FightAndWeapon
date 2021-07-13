@@ -37,13 +37,13 @@ public abstract class FawItem extends Item {
     }
 
     @Override
-    public boolean hasCustomEntity(ItemStack stack) {
+    public boolean hasCustomEntity(@Nonnull ItemStack stack) {
         return true;
     }
 
     @Nonnull
     @Override
-    public Entity createEntity(World world, Entity location, ItemStack itemstack) {
+    public Entity createEntity(@Nonnull World world, Entity location, @Nonnull ItemStack itemstack) {
         EntityItem entity = new IndestructibleEntityItem(world, location.posX, location.posY, location.posZ, itemstack);
         if (location instanceof EntityItem) {
             //TODO:Test

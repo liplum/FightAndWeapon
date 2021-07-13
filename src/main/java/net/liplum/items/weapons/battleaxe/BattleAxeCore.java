@@ -22,6 +22,7 @@ public abstract class BattleAxeCore extends WeaponCore {
 
     @Override
     protected void build(WeaponCoreBuilder builder) {
+        super.build(builder);
         builder.set(
                 AttackSpeed, AttackSpeed.newBasicAttrValue(1.2F)
         );

@@ -67,6 +67,7 @@ public final class Names {
     public static final class Attribute {
 
         public static final class Generic {
+            public static final String Durability = "Durability";
             public static final String Strength = "Strength";
             public static final String CoolDown = "CoolDown";
             public static final String AttackReach = "AttackReach";

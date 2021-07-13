@@ -3,11 +3,9 @@ package net.liplum.lib.utils;
 import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
-import net.liplum.attributes.*;
-import net.liplum.events.attack.WeaponAttackedArgs;
-import net.liplum.events.attack.WeaponAttackedEvent;
-import net.liplum.events.attack.WeaponAttackingArgs;
-import net.liplum.events.attack.WeaponAttackingEvent;
+import net.liplum.attributes.AttrCalculator;
+import net.liplum.attributes.FinalAttrValue;
+import net.liplum.events.weapon.*;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
@@ -98,16 +96,16 @@ public final class FawItemUtil {
         }
         World world = attacker.world;
         EntityLivingBase targetLiving = null;
-        EntityPlayer attackPlayer = null;
+        EntityPlayer attackerPlayer = null;
         if (target instanceof EntityLivingBase) {
             targetLiving = (EntityLivingBase) target;
         }
 
         if (attacker instanceof EntityPlayer) {
-            attackPlayer = (EntityPlayer) attacker;
+            attackerPlayer = (EntityPlayer) attacker;
             if (target instanceof EntityPlayer) {
                 EntityPlayer targetPlayer = (EntityPlayer) target;
-                if (!attackPlayer.canAttackPlayer(targetPlayer)) {
+                if (!attackerPlayer.canAttackPlayer(targetPlayer)) {
                     return false;
                 }
             }
@@ -124,7 +122,7 @@ public final class FawItemUtil {
         Modifier modifier = GemUtil.getModifierFrom(itemStack);
         AttrCalculator calculator = new AttrCalculator()
                 .setWeaponCore(core)
-                .setPlayer(attackPlayer)
+                .setPlayer(attackerPlayer)
                 .setModifier(modifier);
 
         FinalAttrValue finalStrength = calculator.calcu(Strength);
@@ -133,7 +131,7 @@ public final class FawItemUtil {
         SoundEvent sound = null;
 
         boolean isFullAttack = true;
-        if (attackPlayer != null) {
+        if (attackerPlayer != null) {
             float cooldown = ((EntityPlayer) attacker).getCooledAttackStrength(0.5F);
             sound = cooldown > 0.9f ? SoundEvents.ENTITY_PLAYER_ATTACK_STRONG : SoundEvents.ENTITY_PLAYER_ATTACK_WEAK;
             finalDamage *= (0.2F + cooldown * cooldown * 0.8F);
@@ -181,13 +179,19 @@ public final class FawItemUtil {
             }
 
             //TODO:Something here!
+            if (attackerPlayer != null && targetLiving != null) {
+                itemStack.hitEntity(targetLiving, attackerPlayer);
+                if(!attackerPlayer.isCreative()){
+                    weapon.reduceDurabilityOnHit(itemStack,attackerPlayer,totalDamage);
+                }
+            }
         }
         //If attacker is not a player, it will be null.
-        if (attackPlayer != null &&
+        if (attackerPlayer != null &&
                 //It actually made some sounds.
                 sound != null
         ) {
-            attackPlayer.playSound(sound, 1, 1);
+            attackerPlayer.playSound(sound, 1, 1);
         }
 
         //TODO:More!!!
@@ -309,6 +313,30 @@ public final class FawItemUtil {
             return modifier.releaseSkill(core, args);
         } else {
             return core.releaseSkill(args);
+        }
+    }
+
+    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, int amount, EntityLivingBase entity) {
+        if (amount <= 0) {
+            return;
+        }
+        WeaponDurabilityEvent.Damaged damagedEvent = new WeaponDurabilityEvent.Damaged(itemStack, weapon, entity, amount);
+        MinecraftForge.EVENT_BUS.post(damagedEvent);
+        int finalAmount = damagedEvent.getAmount();
+        if (finalAmount > 0) {
+            ItemTool.decreaseItemDurability(itemStack, finalAmount);
+        }
+    }
+
+    public static void healWeapon(WeaponBaseItem weapon, ItemStack itemStack, int amount, EntityLivingBase entity) {
+        if (amount <= 0) {
+            return;
+        }
+        WeaponDurabilityEvent.Healed healedEvent = new WeaponDurabilityEvent.Healed(itemStack, weapon, entity, amount);
+        MinecraftForge.EVENT_BUS.post(healedEvent);
+        int finalAmount = healedEvent.getAmount();
+        if (finalAmount > 0) {
+            ItemTool.increaseItemDurability(itemStack, finalAmount);
         }
     }
 }

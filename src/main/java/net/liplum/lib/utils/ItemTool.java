@@ -1,6 +1,7 @@
 package net.liplum.lib.utils;
 
 import net.liplum.Vanilla;
+import net.liplum.lib.math.MathUtil;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -87,5 +88,31 @@ public class ItemTool {
 
     public static AttributeModifier genAttrModifier(@Nonnull Vanilla.AttrModifierType type, @Nonnull String modifierName, double amount) {
         return new AttributeModifier(modifierName, amount, type.type);
+    }
+
+    public static int getCurrentDurability(ItemStack itemStack) {
+        return itemStack.getMaxDamage() - itemStack.getItemDamage();
+    }
+
+    public static void decreaseItemDurability(ItemStack itemStack, int amount) {
+        if(amount < 0){
+            return;
+        }
+        //Damage
+        int finalDamage = MathUtil.fixMax(amount, getCurrentDurability(itemStack));
+        if (finalDamage != 0) {
+            itemStack.setItemDamage(itemStack.getItemDamage() + finalDamage);
+        }
+    }
+
+    public static void increaseItemDurability(ItemStack itemStack, int amount) {
+        if(amount < 0){
+            return;
+        }
+        //Heal
+        int finalHeal = MathUtil.fixMax(amount, itemStack.getItemDamage());
+        if (finalHeal != 0) {
+            itemStack.setItemDamage(itemStack.getItemDamage() - finalHeal);
+        }
     }
 }
