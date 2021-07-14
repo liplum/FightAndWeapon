@@ -7,11 +7,12 @@ import java.util.UUID;
 
 public class OpenItem extends Item {
     @Nonnull
-    public static UUID getAttackSpeedModifierUUID(){
+    public static UUID getAttackSpeedModifierUUID() {
         return Item.ATTACK_SPEED_MODIFIER;
     }
+
     @Nonnull
-    public static UUID getAttackDamageModifierUUID(){
+    public static UUID getAttackDamageModifierUUID() {
         return Item.ATTACK_SPEED_MODIFIER;
     }
 }

@@ -4,7 +4,6 @@ import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.attributes.FinalAttrValue;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceModifier;

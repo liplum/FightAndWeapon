@@ -3,8 +3,8 @@ package net.liplum.items.weapons.lance;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
-import net.liplum.events.weapon.WeaponSkillPostReleasedEvent;
-import net.liplum.events.weapon.WeaponSkillPreReleaseEvent;
+import net.liplum.attributes.AttrCalculator;
+import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,7 +35,7 @@ public class LanceItem extends WeaponBaseItem {
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, this, modifier, held, handIn)
+                    new WeaponSkillReleaseEvent.Pre(worldIn, playerIn, this, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 WeaponSkillArgs args = new WeaponSkillArgs()
@@ -44,15 +44,18 @@ public class LanceItem extends WeaponBaseItem {
                         .setItemStack(held)
                         .setHand(handIn)
                         .setWeapon(this)
-                        .setModifier(modifier);
+                        .setModifier(modifier)
+                        .setCalculator(
+                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn)
+                        );
 
-                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
+                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
 
                 if (releasedSuccessfully) {
                     FawItemUtil.heatWeaponType(playerIn, getWeaponType());
                     result = EnumActionResult.SUCCESS;
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, this, modifier, held, handIn)
+                            new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
                 }
             }

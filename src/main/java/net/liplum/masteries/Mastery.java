@@ -21,6 +21,7 @@ public class Mastery implements IMastery {
 
     /**
      * Whenever you create the instance, it will register it self to {@link MasteryRegistry} automatically.
+     *
      * @param weaponType the corresponding weapon type of this master
      */
     public Mastery(WeaponType weaponType) {

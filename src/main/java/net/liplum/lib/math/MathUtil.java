@@ -28,6 +28,18 @@ public class MathUtil {
         return new Vec3d(-v3d.x, v3d.y, v3d.z);
     }
 
+    public static int castTo(int min, int max, int value) {
+        return fixMax(fixMin(value, min), max);
+    }
+
+    public static float castTo(float min, float max, float value) {
+        return fixMax(fixMin(value, min), max);
+    }
+
+    public static double castTo(double min, double max, double value) {
+        return fixMax(fixMin(value, min), max);
+    }
+
     public static boolean belongToOO(double left, double right, double value) {
         if ((value == left) && (value == right)) {
             return true;
@@ -66,6 +78,94 @@ public class MathUtil {
             return true;
         }
         double min = Math.min(left, right), max = Math.max(left, right);
+        if (value >= min && value <= max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToOO(float left, float right, float value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
+        if (value > min && value < max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToOC(float left, float right, float value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
+        if (value > min && value <= max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToCO(float left, float right, float value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
+        if (value >= min && value < max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToCC(float left, float right, float value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
+        if (value >= min && value <= max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToOO(int left, int right, int value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
+        if (value > min && value < max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToOC(int left, int right, int value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
+        if (value > min && value <= max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToCO(int left, int right, int value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
+        if (value >= min && value < max) {
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean belongToCC(int left, int right, int value) {
+        if ((value == left) && (value == right)) {
+            return true;
+        }
+        float min = Math.min(left, right), max = Math.max(left, right);
         if (value >= min && value <= max) {
             return true;
         }

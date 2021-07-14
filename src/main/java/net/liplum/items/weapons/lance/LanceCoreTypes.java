@@ -11,6 +11,7 @@ import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
+import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
@@ -64,10 +65,7 @@ public final class LanceCoreTypes {
             }
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(args.getWeaponCore())
-                    .setPlayer(player)
-                    .setModifier(args.getModifier());
+            AttrCalculator calculator = args.getCalculator();
 
             float strength = calculator.calcu(Strength).getFloat();
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
@@ -86,9 +84,10 @@ public final class LanceCoreTypes {
                         List<EntityLivingBase> allInRange = world
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
-                            if (EntityUtil.canAttack(player, e) && !damaged.contains(e)) {
+                            if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
                                 e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                                 damaged.add(e);
+                                FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 1, player);
                             }
                         }
                         yieldReturn(new WaitForNextTick());
@@ -120,10 +119,7 @@ public final class LanceCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(args.getWeaponCore())
-                    .setPlayer(player)
-                    .setModifier(args.getModifier());
+            AttrCalculator calculator = args.getCalculator();
 
             float strength = calculator.calcu(Strength).getFloat();
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
@@ -132,11 +128,16 @@ public final class LanceCoreTypes {
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
             Vector2D look = MathUtil.toV2D(player.getLookVec());
+            int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
                 if (EntityUtil.canAttack(player, e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player), 1.5F * strength);
+                    damagedEntityCount++;
                 }
             }
+            int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) damagedEntityCount / 3);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), weaponDamage, player);
+
             return true;
         }
 
@@ -161,11 +162,7 @@ public final class LanceCoreTypes {
             double x = player.posX,
                     y = player.posY,
                     z = player.posZ;
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(args.getWeaponCore())
-                    .setPlayer(player)
-                    .setModifier(args.getModifier());
-
+            AttrCalculator calculator = args.getCalculator();
 
             float strength = calculator.calcu(Strength).getFloat();
 
@@ -201,6 +198,7 @@ public final class LanceCoreTypes {
                                 }).toArray()[0];
                             }
                             target.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.5F * strength);
+                            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 2, player);
                         }
                     }
                 }));
@@ -225,10 +223,7 @@ public final class LanceCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             EntityPlayer player = args.getPlayer();
 
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(args.getWeaponCore())
-                    .setPlayer(player)
-                    .setModifier(args.getModifier());
+            AttrCalculator calculator = args.getCalculator();
 
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
 
@@ -237,6 +232,7 @@ public final class LanceCoreTypes {
             Vec3d sprintForce = playerFace.scale(sprintLength);
             Vec3d nowPos = new Vec3d(sprintForce.x + originPos.x, originPos.y, sprintForce.z + originPos.z);
             PhysicsTool.setPosition(player, nowPos.x, nowPos.y + 0.5, nowPos.z);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 5, player);
             return true;
         }
 

@@ -18,43 +18,41 @@ public class Attribute {
 
     @Nonnull
     private static final LinkedList<Attribute> BasicAttributes = new LinkedList<>();
-
+    @Nonnull
+    private static final AttrModifier emptyAttrModifierInt = new AttrModifier(DataType.Int, 0, 0);
+    @Nonnull
+    private static final AttrModifier emptyAttrModifierFloat = new AttrModifier(DataType.Float, 0, 0);
+    @Nonnull
+    private static final AttrDelta emptyAttrDeltaInt = new AttrDelta(DataType.Int, 0);
+    @Nonnull
+    private static final AttrDelta emptyAttrDeltaFloat = new AttrDelta(DataType.Float, 0);
+    @Nonnull
+    private static final FinalAttrValue emptyFinalAttrValueInt = new FinalAttrValue(DataType.Int, 0);
+    @Nonnull
+    private static final FinalAttrValue emptyFinalAttrValueFloat = new FinalAttrValue(DataType.Float, 0);
+    private static final Map<Attribute, FinalAttrValue> EmptyFinalAttrValueCache = new HashMap<>();
     private boolean isBasic = false;
-
     @Nonnull
     private DataType dataType = DataType.Int;
-
     @Nonnull
     private ComputeType computeType = ComputeType.Only_Rate;
-
     @Nonnull
     private String registerName = "";
-
     private boolean shownInTooltip = true;
-
     private int displayPriority = 1;
-
     private boolean hasUnit = false;
-
     @Nullable
     private String unit;
-
     @Nullable
     private String format;
-
     @Nonnull
     private Number defaultValue = 0;
-
     private boolean needMoreDetailsToShown = false;
-
     @Nullable
     private Number minimum;
-
     private boolean isStripTrailingZero = true;
-
     @Nonnull
     private Function<Number, Number> tooltipShownMapping = n -> n;
-
     @Nonnull
     private Predicate<Number> canTooltipShow = n -> {
         if (dataType == DataType.Int) {
@@ -62,27 +60,10 @@ public class Attribute {
         }
         return n.floatValue() > 0;
     };
-
     @Nonnull
     private Function<String, String> I18nKeyMapping = str -> str;
-
     @Nonnull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(defaultValue);
-
-    @Nonnull
-    private static final AttrModifier emptyAttrModifierInt = new AttrModifier(DataType.Int, 0, 0);
-    @Nonnull
-    private static final AttrModifier emptyAttrModifierFloat = new AttrModifier(DataType.Float, 0, 0);
-
-    @Nonnull
-    private static final AttrDelta emptyAttrDeltaInt = new AttrDelta(DataType.Int, 0);
-    @Nonnull
-    private static final AttrDelta emptyAttrDeltaFloat = new AttrDelta(DataType.Float, 0);
-
-    @Nonnull
-    private static final FinalAttrValue emptyFinalAttrValueInt = new FinalAttrValue(DataType.Int, 0);
-    @Nonnull
-    private static final FinalAttrValue emptyFinalAttrValueFloat = new FinalAttrValue(DataType.Float, 0);
 
     @Nullable
     public static Attribute getAttribute(@Nonnull String registerName) {
@@ -108,6 +89,115 @@ public class Attribute {
     @Nonnull
     public static List<Attribute> getAllBasicAttributes() {
         return BasicAttributes;
+    }
+
+    /**
+     * Calculate the final value of attribute without gemstone's amplification.
+     *
+     * @param base
+     * @param deltaMastery
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
+     */
+    private static float calcu(float base, float deltaMastery) {
+        return calcu(base, 0, 0, deltaMastery);
+
+    }
+
+    /**
+     * Calculate the final value of attribute without Mastery's amplification.
+     *
+     * @param base
+     * @param rateGem
+     * @param deltaGem
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
+     */
+    private static float calcu(float base, float deltaGem, float rateGem) {
+        return calcu(base, deltaGem, rateGem, 0);
+    }
+
+    /**
+     * @param base
+     * @param deltaGem
+     * @param rateGem
+     * @param deltaMastery
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
+     */
+    private static float calcu(float base, float deltaGem, float rateGem, float deltaMastery) {
+        if (base < 0) {
+            return -1;
+        }
+        float res = ((base + deltaMastery) + deltaGem) * (1 + rateGem);
+        return MathUtil.fixMin(res, 0);
+    }
+
+    /**
+     * Calculate the final value of attribute without gemstone's amplification.
+     *
+     * @param base
+     * @param deltaMastery
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
+     */
+    private static int calcu(int base, int deltaMastery) {
+        return calcu(base, 0, 0, deltaMastery);
+
+    }
+
+    /**
+     * Calculate the final value of attribute without Mastery's amplification.
+     *
+     * @param base
+     * @param rateGem
+     * @param deltaGem
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
+     */
+    private static int calcu(int base, int deltaGem, float rateGem) {
+        return calcu(base, deltaGem, rateGem, 0);
+    }
+
+    /**
+     * @param base
+     * @param deltaGem
+     * @param rateGem
+     * @param deltaMastery
+     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
+     */
+    private static int calcu(int base, int deltaGem, float rateGem, int deltaMastery) {
+        if (base < 0) {
+            return -1;
+        }
+        if (deltaMastery == 0 && deltaGem == 0 && rateGem == 0) {
+            return base;
+        }
+        int res = (int) (((base + deltaMastery) + deltaGem) * (1 + rateGem));
+        return MathUtil.fixMin(res, 0);
+    }
+
+    /**
+     * @param base
+     * @param rate
+     * @return
+     */
+    private static int calcuInRate(int base, float rate) {
+        if (base < 0) {
+            return -1;
+        } else if (rate == 0) {
+            return base;
+        }
+        return (int) (base * (1 + rate));
+    }
+
+    /**
+     * @param base
+     * @param rate
+     * @return
+     */
+    private static float calcuInRate(float base, float rate) {
+        if (base < 0) {
+            return -1;
+        } else if (rate == 0) {
+            return base;
+        }
+        return base * (1 + rate);
     }
 
     @Nonnull
@@ -340,7 +430,6 @@ public class Attribute {
         return new AttributeAmplifier().setAttributeName(registerName).setType(dataType).setValue(value);
     }
 
-
     @Nonnull
     public AttrDelta emptyAttrDelta() {
         return dataType == DataType.Int ? emptyAttrDeltaInt : emptyAttrDeltaFloat;
@@ -350,8 +439,6 @@ public class Attribute {
     public AttrDelta newAttrDelta(@Nonnull Number delta) {
         return new AttrDelta(dataType, delta);
     }
-
-    private static final Map<Attribute, FinalAttrValue> EmptyFinalAttrValueCache = new HashMap<>();
 
     @Nonnull
     public FinalAttrValue emptyFinalAttrValue() {
@@ -481,116 +568,6 @@ public class Attribute {
                         calcu(base.getFloat(), master.getDelta().floatValue())
                 );
         }
-    }
-
-
-    /**
-     * Calculate the final value of attribute without gemstone's amplification.
-     *
-     * @param base
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    private static float calcu(float base, float deltaMastery) {
-        return calcu(base, 0, 0, deltaMastery);
-
-    }
-
-    /**
-     * Calculate the final value of attribute without Mastery's amplification.
-     *
-     * @param base
-     * @param rateGem
-     * @param deltaGem
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    private static float calcu(float base, float deltaGem, float rateGem) {
-        return calcu(base, deltaGem, rateGem, 0);
-    }
-
-    /**
-     * @param base
-     * @param deltaGem
-     * @param rateGem
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    private static float calcu(float base, float deltaGem, float rateGem, float deltaMastery) {
-        if (base < 0) {
-            return -1;
-        }
-        float res = ((base + deltaMastery) + deltaGem) * (1 + rateGem);
-        return MathUtil.fixMin(res, 0);
-    }
-
-    /**
-     * Calculate the final value of attribute without gemstone's amplification.
-     *
-     * @param base
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    private static int calcu(int base, int deltaMastery) {
-        return calcu(base, 0, 0, deltaMastery);
-
-    }
-
-    /**
-     * Calculate the final value of attribute without Mastery's amplification.
-     *
-     * @param base
-     * @param rateGem
-     * @param deltaGem
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    private static int calcu(int base, int deltaGem, float rateGem) {
-        return calcu(base, deltaGem, rateGem, 0);
-    }
-
-    /**
-     * @param base
-     * @param deltaGem
-     * @param rateGem
-     * @param deltaMastery
-     * @return the modified result or negative value if the base is less than 0 (Maybe it stands for a default value).
-     */
-    private static int calcu(int base, int deltaGem, float rateGem, int deltaMastery) {
-        if (base < 0) {
-            return -1;
-        }
-        if (deltaMastery == 0 && deltaGem == 0 && rateGem == 0) {
-            return base;
-        }
-        int res = (int) (((base + deltaMastery) + deltaGem) * (1 + rateGem));
-        return MathUtil.fixMin(res, 0);
-    }
-
-    /**
-     * @param base
-     * @param rate
-     * @return
-     */
-    private static int calcuInRate(int base, float rate) {
-        if (base < 0) {
-            return -1;
-        } else if (rate == 0) {
-            return base;
-        }
-        return (int) (base * (1 + rate));
-    }
-
-    /**
-     * @param base
-     * @param rate
-     * @return
-     */
-    private static float calcuInRate(float base, float rate) {
-        if (base < 0) {
-            return -1;
-        } else if (rate == 0) {
-            return base;
-        }
-        return base * (1 + rate);
     }
 
     public Attribute setBasic() {

@@ -26,6 +26,10 @@ import static net.liplum.Attributes.Generic.Durability;
 
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
+    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
+    @Nonnull
+    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
+    @Nonnull
     private final Map<Attribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
     @Nonnull
     private final List<Attribute> allAttributes = new LinkedList<>();
@@ -33,10 +37,6 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     protected IWeaponSkillPredicate weaponSkillPredicate;
     @Nullable
     protected AggregatedPassiveSkill weaponPassiveSkills;
-    @Nonnull
-    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
-    @Nonnull
-    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
 
     public WeaponCore() {
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();

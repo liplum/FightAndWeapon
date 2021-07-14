@@ -47,6 +47,8 @@ attributes.faw.lance.SprintStrength=Sprint Strength
 attributes.faw.harp.Radius=Radius
 attributes.faw.harp.Frequency=Frequency
 
+attributes.faw.battle_axe.SweepRange=SweepRange
+
 
 #Tiles
 tile.faw.inlay_table.name=Inlay Table
@@ -101,6 +103,7 @@ item.faw.light_lance.name=Light Lance
 item.faw.knight_lance.name=Knight Lance
 
 item.faw.battle_axe.name=Battle Axe
+item.faw.berserker_axe.name=Berserker Axe
 
 item.faw.harp.name=Harp
 

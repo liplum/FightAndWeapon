@@ -1,10 +1,8 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.api.weapon.Modifier;
-import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.attributes.FinalAttrValue;
+import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.Utils;
@@ -59,10 +57,7 @@ public final class HarpCoreTypes {
         public boolean continueSkill(ContinuousHarpArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(args.getWeaponCore())
-                    .setPlayer(player)
-                    .setModifier(args.getModifier());
+            AttrCalculator calculator = args.getCalculator();
 
             double radius = calculator.calcu(Radius).getFloat();
 
@@ -70,12 +65,14 @@ public final class HarpCoreTypes {
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(radius, 0.25D, radius));
 
+            int effectedEntityCount = 0;
             for (EntityLivingBase target : allInRange) {
                 //If friend
                 if (!EntityUtil.canAttack(player, target) ||//Player's team member
                         target instanceof EntityVillager
                 ) {
                     target.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 1));
+                    effectedEntityCount++;
                 }
                 //If enemy
                 else {
@@ -85,8 +82,12 @@ public final class HarpCoreTypes {
                     } else {
                         target.addPotionEffect(new PotionEffect(MobEffects.POISON, 40, 2));
                     }
+                    effectedEntityCount++;
                 }
             }
+
+            int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) effectedEntityCount / 3);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), weaponDamage, player);
 
             double px = player.posX, py = player.posY, pz = player.posZ;
 
@@ -107,10 +108,7 @@ public final class HarpCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(args.getWeaponCore())
-                    .setPlayer(player)
-                    .setModifier(args.getModifier());
+            AttrCalculator calculator = args.getCalculator();
 
             double radius = calculator.calcu(Radius).getFloat();
 
@@ -121,6 +119,7 @@ public final class HarpCoreTypes {
             for (EntityLivingBase target : allInRange) {
                 target.addPotionEffect(new PotionEffect(MobEffects.HASTE, 60, 0));
             }
+            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 3, player);
             return true;
         }
     };

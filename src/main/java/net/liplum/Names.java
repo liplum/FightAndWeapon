@@ -3,6 +3,8 @@ package net.liplum;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
 public final class Names {
+    public static final String WeaponAttributeModifier = "Weapon Modifier";
+
     public static String prefixRegister(String name) {
         return MetaData.MOD_ID + ':' + name;
     }
@@ -10,8 +12,6 @@ public final class Names {
     public static <T extends IForgeRegistryEntry.Impl<T>> T setRegisterName(T namedObject, String registerName) {
         return namedObject.setRegistryName(MetaData.MOD_ID, registerName);
     }
-
-    public static final String WeaponAttributeModifier = "Weapon Modifier";
 
     public static final class Special {
         public static final String Weapon = "weapon";
@@ -30,8 +30,6 @@ public final class Names {
         public static final String QuartzSwordItem = "quartz_sword";
         public static final String QuartzAxeItem = "quartz_axe";
         public static final String TestSwordItem = "test_sword";
-        public static final String BattleAxeItem = "battle_axe";
-        public static final String BerserkerAxeItem = "berserker_axe";
 
         public static final String InlayingToolItem = "inlaying_tool";
         public static final String BlacksmithGloveItem = "blacksmith_glove";
@@ -55,6 +53,7 @@ public final class Names {
         public static final class BattleAxe {
             public static final String TypeName = "battle_axe";
             public static final String BattleAxeItem = "battle_axe";
+            public static final String BerserkerAxeItem = "berserker_axe";
         }
 
         public static final class Sword {

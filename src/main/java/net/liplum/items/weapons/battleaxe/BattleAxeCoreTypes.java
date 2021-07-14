@@ -2,10 +2,10 @@ package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
+import net.liplum.lib.utils.FawItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -38,10 +38,7 @@ public final class BattleAxeCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.getWorld();
             EntityPlayer player = args.getPlayer();
-            AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(args.getWeaponCore())
-                    .setPlayer(player)
-                    .setModifier(args.getModifier());
+            AttrCalculator calculator = args.getCalculator();
 
             float strength = calculator.calcu(Strength).getFloat();
             float sweepRange = calculator.calcu(SweepRange).getFloat();
@@ -55,6 +52,7 @@ public final class BattleAxeCoreTypes {
             Vec3d pLook = player.getLookVec();
             Vector2D pLook2D = new Vector2D(pLook.x, pLook.z);
             Point pp = new Point(player.posX, player.posZ);
+            int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
                 if (e != player &&//Without player self
                         (!e.isOnSameTeam(player) &&//The side entity is not on the same team with attacker
@@ -65,9 +63,13 @@ public final class BattleAxeCoreTypes {
                     if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
                         e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                         e.knockBack(player, 0.5f, knockBackAngleToX, knockBackAngleToY);
+                        damagedEntityCount++;
                     }
                 }
             }
+            int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) damagedEntityCount / 3);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), weaponDamage, player);
+
             //Some effects of attack
             player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.0f);
             player.spawnSweepParticles();
@@ -92,6 +94,7 @@ public final class BattleAxeCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             EntityPlayer player = args.getPlayer();
             player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 8 * 20, 1));
+            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 3, player);
             return true;
         }
 
@@ -103,7 +106,7 @@ public final class BattleAxeCoreTypes {
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(350)
             ).set(
-                    AttackSpeed,AttackSpeed.newBasicAttrValue(1F)
+                    AttackSpeed, AttackSpeed.newBasicAttrValue(1F)
             );
         }
     };

@@ -95,7 +95,7 @@ public class ItemTool {
     }
 
     public static void decreaseItemDurability(ItemStack itemStack, int amount) {
-        if(amount < 0){
+        if (amount < 0) {
             return;
         }
         //Damage
@@ -106,7 +106,7 @@ public class ItemTool {
     }
 
     public static void increaseItemDurability(ItemStack itemStack, int amount) {
-        if(amount < 0){
+        if (amount < 0) {
             return;
         }
         //Heal

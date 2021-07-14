@@ -5,8 +5,7 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
-import net.liplum.events.weapon.WeaponSkillPostReleasedEvent;
-import net.liplum.events.weapon.WeaponSkillPreReleaseEvent;
+import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
@@ -41,7 +40,7 @@ public class HarpItem extends WeaponBaseItem {
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, this, modifier, held, handIn)
+                    new WeaponSkillReleaseEvent.Pre(worldIn, playerIn, this, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 WeaponSkillArgs args = new WeaponSkillArgs()
@@ -50,14 +49,17 @@ public class HarpItem extends WeaponBaseItem {
                         .setItemStack(held)
                         .setHand(handIn)
                         .setWeapon(this)
-                        .setModifier(modifier);
+                        .setModifier(modifier)
+                        .setCalculator(
+                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn)
+                        );
 
-                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
+                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
                 if (releasedSuccessfully) {
                     FawItemUtil.heatWeaponType(playerIn, getWeaponType());
                     playerIn.resetActiveHand();
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, this, modifier, held, handIn)
+                            new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
                 }
             }
@@ -94,7 +96,10 @@ public class HarpItem extends WeaponBaseItem {
                     .setPlayer(p)
                     .setItemStack(stack)
                     .setHand(hand)
-                    .setWeapon(this);
+                    .setWeapon(this)
+                    .setCalculator(
+                            new AttrCalculator(core).setModifier(modifier).setPlayer(p)
+                    );
             if (modifier != null) {
                 HarpModifier mod = (HarpModifier) modifier;
                 mod.continueSkill(core, args);

@@ -13,6 +13,7 @@ public class WeaponType {
 
     /**
      * Whenever you create the instance, it will register it self to {@link WeaponTypeRegistry} automatically.
+     *
      * @param registerName the name to register itself
      */
     public WeaponType(@Nonnull String registerName) {

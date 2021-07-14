@@ -14,7 +14,7 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-public class FawWeaponLeftClickMsg  implements IMessage {
+public class FawWeaponLeftClickMsg implements IMessage {
     @Override
     public void fromBytes(ByteBuf buf) {
 

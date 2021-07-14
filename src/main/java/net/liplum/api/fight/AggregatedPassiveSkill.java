@@ -11,7 +11,6 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
-    private boolean isShownInTooltip = true;
     @Nonnull
     private final String registerName;
     @Nonnull
@@ -20,7 +19,7 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
     private final LinkedList<Class<Event>> allEventTypes = new LinkedList<>();
     @Nonnull
     private final AggregatedEventTypeArgs eventTypeArgs = new AggregatedEventTypeArgs();
-
+    private boolean isShownInTooltip = true;
     private boolean built = false;
 
     public AggregatedPassiveSkill(@Nonnull String registerName) {

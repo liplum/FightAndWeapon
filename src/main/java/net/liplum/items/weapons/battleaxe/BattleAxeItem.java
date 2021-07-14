@@ -5,8 +5,7 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
-import net.liplum.events.weapon.WeaponSkillPostReleasedEvent;
-import net.liplum.events.weapon.WeaponSkillPreReleaseEvent;
+import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayer;
@@ -42,7 +41,7 @@ public class BattleAxeItem extends WeaponBaseItem {
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier modifier = GemUtil.getModifierFrom(held);
             boolean cancelRelease = MinecraftForge.EVENT_BUS.post(
-                    new WeaponSkillPreReleaseEvent(worldIn, playerIn, this, modifier, held, handIn)
+                    new WeaponSkillReleaseEvent.Pre(worldIn, playerIn, this, modifier, held, handIn)
             );
             if (!cancelRelease) {
                 AttrCalculator calculator = new AttrCalculator()
@@ -57,9 +56,12 @@ public class BattleAxeItem extends WeaponBaseItem {
                         .setItemStack(held)
                         .setHand(handIn)
                         .setModifier(modifier)
-                        .setWeapon(this);
+                        .setWeapon(this)
+                        .setCalculator(
+                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn)
+                        );
 
-                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core,modifier,args);
+                boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
 
                 if (releasedSuccessfully) {
                     if (FawItemUtil.heatWeaponType(playerIn, getWeaponType())) {
@@ -71,7 +73,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                     }
                     result = EnumActionResult.SUCCESS;
                     MinecraftForge.EVENT_BUS.post(
-                            new WeaponSkillPostReleasedEvent(worldIn, playerIn, this, modifier, held, handIn)
+                            new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
                 }
             }

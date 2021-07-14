@@ -1,5 +1,6 @@
 package net.liplum.api.weapon;
 
+import net.liplum.attributes.AttrCalculator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -15,6 +16,7 @@ public class WeaponSkillArgs {
     private ItemStack itemStack = null;
     private Modifier modifier = null;
     private EnumHand hand = null;
+    private AttrCalculator calculator = null;
 
     /**
      * @return the modifier or null if this weapon didn't have a modifier.
@@ -78,6 +80,11 @@ public class WeaponSkillArgs {
         return weapon;
     }
 
+    public WeaponSkillArgs setWeapon(WeaponBaseItem weapon) {
+        this.weapon = weapon;
+        return this;
+    }
+
     public WeaponType getWeaponType() {
         return weapon.getWeaponType();
     }
@@ -86,8 +93,12 @@ public class WeaponSkillArgs {
         return weapon.getCore();
     }
 
-    public WeaponSkillArgs setWeapon(WeaponBaseItem weapon) {
-        this.weapon = weapon;
+    public AttrCalculator getCalculator() {
+        return calculator;
+    }
+
+    public WeaponSkillArgs setCalculator(AttrCalculator calculator) {
+        this.calculator = calculator;
         return this;
     }
 }

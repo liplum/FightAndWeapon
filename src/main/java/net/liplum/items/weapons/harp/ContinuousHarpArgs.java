@@ -2,7 +2,7 @@ package net.liplum.items.weapons.harp;
 
 import net.liplum.api.weapon.WeaponSkillArgs;
 
-public class ContinuousHarpArgs extends WeaponSkillArgs{
+public class ContinuousHarpArgs extends WeaponSkillArgs {
     private int releasedCount = 0;
 
     public ContinuousHarpArgs() {

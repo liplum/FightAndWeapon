@@ -2,7 +2,10 @@ package net.liplum.api.weapon;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.liplum.attributes.*;
+import net.liplum.attributes.AttrModifier;
+import net.liplum.attributes.Attribute;
+import net.liplum.attributes.IAttrModifierBuilder;
+import net.liplum.attributes.IAttributeProvider;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -17,14 +20,13 @@ import java.util.function.Function;
 
 public abstract class Modifier implements IAttributeProvider<AttrModifier> {
     @Nonnull
-    private final Map<Attribute, AttrModifier> AttributeModifierMap = new HashMap<>();
-    @Nonnull
-    protected List<Attribute> allAttributes = new LinkedList<>();
-    @Nonnull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
     @Nonnull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
-
+    @Nonnull
+    private final Map<Attribute, AttrModifier> AttributeModifierMap = new HashMap<>();
+    @Nonnull
+    protected List<Attribute> allAttributes = new LinkedList<>();
     private boolean applyCoreAttrModifier = true;
 
     public Modifier() {

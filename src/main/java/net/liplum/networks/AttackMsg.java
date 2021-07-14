@@ -1,10 +1,7 @@
 package net.liplum.networks;
 
 import io.netty.buffer.ByteBuf;
-import net.liplum.Attributes;
-import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponCore;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.utils.FawItemUtil;

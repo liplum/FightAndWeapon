@@ -4,7 +4,7 @@ import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
-import net.liplum.events.weapon.WeaponAttackingEvent;
+import net.liplum.events.weapon.WeaponAttackEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -27,11 +27,11 @@ public final class FlamegemSkills {
                 }
             };
 
-    public final static IPassiveSkill<WeaponAttackingEvent> ScorchingTouch =
-            new PassiveSkill<WeaponAttackingEvent>(Names.PassiveSkill.ScorchingTouch, WeaponAttackingEvent.class) {
+    public final static IPassiveSkill<WeaponAttackEvent.Attacking> ScorchingTouch =
+            new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.ScorchingTouch, WeaponAttackEvent.Attacking.class) {
                 @Nonnull
                 @Override
-                public PSkillResult onTrigger(@Nonnull WeaponAttackingEvent event) {
+                public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
                     Entity target = event.getArgs().getTarget();
                     target.setFire(3);
                     return PSkillResult.Complete;

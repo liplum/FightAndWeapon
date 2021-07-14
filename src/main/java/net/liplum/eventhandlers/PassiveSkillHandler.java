@@ -4,10 +4,12 @@ import net.liplum.MetaData;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.weapon.WeaponAttackArgs;
-import net.liplum.events.weapon.WeaponAttackBaseEvent;
-import net.liplum.events.weapon.WeaponAttackedEvent;
-import net.liplum.events.weapon.WeaponAttackingEvent;
+import net.liplum.events.AttributeAccessedEvent;
+import net.liplum.events.PlayerCollisionEvent;
 import net.liplum.events.skill.LanceSprintEvent;
+import net.liplum.events.weapon.FawWeaponLeftClickEvent;
+import net.liplum.events.weapon.WeaponAttackEvent;
+import net.liplum.events.weapon.WeaponDurabilityEvent;
 import net.liplum.lib.utils.SkillUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -102,13 +104,13 @@ public class PassiveSkillHandler {
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onWeaponAttackingEvent(WeaponAttackingEvent e) {
-        onWeaponAttack(e, WeaponAttackingEvent.class);
+    public static void onWeaponAttackingEvent(WeaponAttackEvent.Attacking e) {
+        onWeaponAttack(e, WeaponAttackEvent.Attacking.class);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
-    public static void onWeaponPostAttackEvent(WeaponAttackedEvent e) {
-        onWeaponAttack(e, WeaponAttackedEvent.class);
+    public static void onWeaponPostAttackEvent(WeaponAttackEvent.Attacked e) {
+        onWeaponAttack(e, WeaponAttackEvent.Attacked.class);
     }
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -124,7 +126,7 @@ public class PassiveSkillHandler {
         }
     }
 
-    private static void onWeaponAttack(WeaponAttackBaseEvent<?> e, Class<? extends WeaponAttackBaseEvent<?>> eventType) {
+    private static void onWeaponAttack(WeaponAttackEvent<?> e, Class<? extends WeaponAttackEvent<?>> eventType) {
         WeaponAttackArgs<?> args = e.getArgs();
         EntityLivingBase attacker = args.getAttacker();
         Set<IPassiveSkill<Event>> skills =
@@ -133,6 +135,73 @@ public class PassiveSkillHandler {
             PSkillResult res = skill.onTrigger(e);
             if (res == PSkillResult.CancelTrigger) {
                 break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onFawWeaponLeftClick(FawWeaponLeftClickEvent e) {
+        EntityPlayer player = e.getPlayer();
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(FawWeaponLeftClickEvent.class, player);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onWeaponDurabilityDamagedEvent(WeaponDurabilityEvent.Damaged e) {
+        EntityLivingBase entity = e.entity;
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(WeaponDurabilityEvent.Damaged.class, entity);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onWeaponDurabilityHealedEvent(WeaponDurabilityEvent.Healed e) {
+        EntityLivingBase entity = e.entity;
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(WeaponDurabilityEvent.Healed.class, entity);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.LOWEST)
+    public static void onWeaponDurabilityHealedEvent(PlayerCollisionEvent e) {
+        EntityPlayer player = e.player;
+        Set<IPassiveSkill<Event>> skills =
+                SkillUtil.getPassiveSkills(PlayerCollisionEvent.class, player);
+        for (IPassiveSkill<Event> skill : skills) {
+            PSkillResult res = skill.onTrigger(e);
+            if (res == PSkillResult.CancelTrigger) {
+                break;
+            }
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public static void onAttributeAccessedEvent(AttributeAccessedEvent e) {
+        EntityPlayer player = e.getPlayer();
+        if (player != null) {
+            Set<IPassiveSkill<Event>> skills =
+                    SkillUtil.getPassiveSkills(AttributeAccessedEvent.class, player);
+            for (IPassiveSkill<Event> skill : skills) {
+                PSkillResult res = skill.onTrigger(e);
+                if (res == PSkillResult.CancelTrigger) {
+                    break;
+                }
             }
         }
     }

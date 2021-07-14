@@ -19,13 +19,13 @@ public abstract class WeaponDurabilityEvent extends Event {
     private int amount;
 
     public WeaponDurabilityEvent(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem,
-                             @Nonnull EntityLivingBase entity) {
+                                 @Nonnull EntityLivingBase entity) {
         this(itemStack, weaponItem, entity, 0);
     }
 
     public WeaponDurabilityEvent(@Nonnull ItemStack itemStack,
-                             @Nonnull WeaponBaseItem weaponItem,
-                             @Nonnull EntityLivingBase entity, int amount) {
+                                 @Nonnull WeaponBaseItem weaponItem,
+                                 @Nonnull EntityLivingBase entity, int amount) {
         this.itemStack = itemStack;
         this.weaponItem = weaponItem;
         this.entity = entity;
@@ -40,7 +40,7 @@ public abstract class WeaponDurabilityEvent extends Event {
         this.amount = amount;
     }
 
-    public static class Healed extends WeaponDurabilityEvent{
+    public static class Healed extends WeaponDurabilityEvent {
 
         public Healed(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem, @Nonnull EntityLivingBase entity) {
             super(itemStack, weaponItem, entity);
@@ -52,7 +52,7 @@ public abstract class WeaponDurabilityEvent extends Event {
 
     }
 
-    public static class Damaged extends WeaponDurabilityEvent{
+    public static class Damaged extends WeaponDurabilityEvent {
 
         public Damaged(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem, @Nonnull EntityLivingBase entity) {
             super(itemStack, weaponItem, entity);

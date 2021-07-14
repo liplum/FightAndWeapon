@@ -1,12 +1,12 @@
 package net.liplum.lib.utils;
 
-import com.google.common.collect.Multimap;
 import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
-import net.liplum.events.weapon.*;
+import net.liplum.events.weapon.WeaponAttackEvent;
+import net.liplum.events.weapon.WeaponDurabilityEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.lib.FawDamage;
@@ -14,11 +14,9 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
-import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -144,7 +142,7 @@ public final class FawItemUtil {
         FawDamage damageSource = EntityUtil.genFawDamage(attacker, core, gemstone, modifier);
 
         DamageArgs initialDamage = new DamageArgs(finalDamage, damageSource, target);
-        WeaponAttackingArgs attackingArgs = new WeaponAttackingArgs();
+        WeaponAttackEvent.Attacking.Args attackingArgs = new WeaponAttackEvent.Attacking.Args();
         attackingArgs.setWorld(world)
                 .setAttacker(attacker)
                 .setTarget(target)
@@ -154,7 +152,7 @@ public final class FawItemUtil {
                 .setInitialDamage(initialDamage)
                 .setFullAttack(isFullAttack);
 
-        WeaponAttackingEvent attackingEvent = new WeaponAttackingEvent(attackingArgs);
+        WeaponAttackEvent.Attacking attackingEvent = new WeaponAttackEvent.Attacking(attackingArgs);
         MinecraftForge.EVENT_BUS.post(attackingEvent);
 
         float totalDamage = 0;
@@ -198,7 +196,7 @@ public final class FawItemUtil {
         }
 
         //TODO:More!!!
-        WeaponAttackedArgs postArgs = new WeaponAttackedArgs();
+        WeaponAttackEvent.Attacked.Args postArgs = new WeaponAttackEvent.Attacked.Args();
         postArgs.setWorld(world)
                 .setAttacker(attacker)
                 .setTarget(target)
@@ -210,7 +208,7 @@ public final class FawItemUtil {
                 .setTotalDamage(totalDamage)
                 .setFullAttack(isFullAttack);
 
-        WeaponAttackedEvent postAttackEvent = new WeaponAttackedEvent(postArgs);
+        WeaponAttackEvent.Attacked postAttackEvent = new WeaponAttackEvent.Attacked(postArgs);
         MinecraftForge.EVENT_BUS.post(postAttackEvent);
 
         return isHitSuccessfully;
@@ -257,8 +255,8 @@ public final class FawItemUtil {
 
     public static Iterable<ItemStack> getAllPossibleFawWeaponSlotsFormPlayerInventory(EntityPlayer player) {
         return () -> new Iterator<ItemStack>() {
-            private int currentIndex = 0;
             private final InventoryPlayer inventory = player.inventory;
+            private int currentIndex = 0;
 
             @Override
             public boolean hasNext() {
@@ -320,7 +318,7 @@ public final class FawItemUtil {
     }
 
     public static void applyAttrModifier(@Nonnull WeaponCore core, @Nullable Modifier modifier,
-                                            @Nonnull WeaponAttrModifierContext context) {
+                                         @Nonnull WeaponAttrModifierContext context) {
         if (modifier != null) {
             modifier.applyAttrModifier(core, context);
         } else {

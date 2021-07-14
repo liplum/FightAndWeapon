@@ -16,6 +16,7 @@ public class Gemstone implements IGemstone {
 
     /**
      * Whenever you create the instance, it will register itself to {@link GemstoneRegistry} automatically.
+     *
      * @param registerName the name to register itself
      */
     public Gemstone(String registerName) {

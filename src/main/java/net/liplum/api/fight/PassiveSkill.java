@@ -8,15 +8,15 @@ import java.util.LinkedList;
 import java.util.List;
 
 public abstract class PassiveSkill<EventType extends Event> implements IPassiveSkill<EventType> {
-    private boolean isShownInTooltip = true;
     @Nonnull
     private final String registerName;
-
     @Nonnull
     private final EventTypeArgs eventTypeArgs;
+    private boolean isShownInTooltip = true;
 
     /**
      * Whenever you create the instance, it will register itself to {@link SkillRegistry} automatically.
+     *
      * @param registerName the name to register itself
      * @param eventTypeClz the class of the event which you want to subscribe
      */

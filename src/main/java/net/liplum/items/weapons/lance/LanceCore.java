@@ -3,7 +3,6 @@ package net.liplum.items.weapons.lance;
 import net.liplum.Attributes;
 import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.WeaponCore;
-import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.Attribute;
 
