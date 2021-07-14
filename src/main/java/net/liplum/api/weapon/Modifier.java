@@ -2,12 +2,8 @@ package net.liplum.api.weapon;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
-import net.liplum.attributes.AttrModifier;
-import net.liplum.attributes.Attribute;
-import net.liplum.attributes.IAttrModifierBuilder;
-import net.liplum.attributes.IAttributeProvider;
+import net.liplum.attributes.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.inventory.EntityEquipmentSlot;
 
 import javax.annotation.Nonnull;
@@ -24,22 +20,22 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
     @Nonnull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
     @Nonnull
-    private final Map<Attribute, AttrModifier> AttributeModifierMap = new HashMap<>();
+    private final Map<IAttribute, AttrModifier> AttributeModifierMap = new HashMap<>();
     @Nonnull
-    protected List<Attribute> allAttributes = new LinkedList<>();
+    protected List<IAttribute> allAttributes = new LinkedList<>();
     private boolean applyCoreAttrModifier = true;
 
     public Modifier() {
         initAllAttributes(allAttributes);
 
         ModifierBuilder builder = new ModifierBuilder();
-        for (Attribute attribute : allAttributes) {
+        for (IAttribute attribute : allAttributes) {
             builder.set(attribute, attribute.emptyAttrModifier());
         }
         build(builder);
     }
 
-    protected void initAllAttributes(List<Attribute> attributes) {
+    protected void initAllAttributes(List<IAttribute> attributes) {
         attributes.addAll(Attribute.getAllBasicAttributes());
     }
 
@@ -79,7 +75,7 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
      */
     @Nullable
     @Override
-    public AttrModifier getValue(@Nonnull Attribute attribute) {
+    public AttrModifier getValue(@Nonnull IAttribute attribute) {
         return AttributeModifierMap.get(attribute);
     }
 
@@ -93,17 +89,17 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
 
     protected class ModifierBuilder implements IAttrModifierBuilder {
         @Override
-        public ModifierBuilder set(@Nonnull Attribute attribute, @Nonnull AttrModifier modifier) {
+        public ModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull AttrModifier modifier) {
             AttributeModifierMap.put(attribute, modifier);
             return this;
         }
 
-        public ModifierBuilder addMainHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public ModifierBuilder addMainHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
-        public ModifierBuilder addOffHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public ModifierBuilder addOffHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }

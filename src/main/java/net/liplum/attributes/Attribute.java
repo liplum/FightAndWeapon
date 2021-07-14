@@ -12,12 +12,11 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
-public class Attribute {
+public class Attribute implements IAttribute {
     @Nonnull
-    private static final Map<String, Attribute> AttributesMap = new HashMap<>();
-
+    private static final Map<String, IAttribute> AttributesMap = new HashMap<>();
     @Nonnull
-    private static final LinkedList<Attribute> BasicAttributes = new LinkedList<>();
+    private static final LinkedList<IAttribute> BasicAttributes = new LinkedList<>();
     @Nonnull
     private static final AttrModifier emptyAttrModifierInt = new AttrModifier(DataType.Int, 0, 0);
     @Nonnull
@@ -30,7 +29,9 @@ public class Attribute {
     private static final FinalAttrValue emptyFinalAttrValueInt = new FinalAttrValue(DataType.Int, 0);
     @Nonnull
     private static final FinalAttrValue emptyFinalAttrValueFloat = new FinalAttrValue(DataType.Float, 0);
-    private static final Map<Attribute, FinalAttrValue> EmptyFinalAttrValueCache = new HashMap<>();
+
+    private static final Map<IAttribute, FinalAttrValue> EmptyFinalAttrValueCache = new HashMap<>();
+
     private boolean isBasic = false;
     @Nonnull
     private DataType dataType = DataType.Int;
@@ -62,17 +63,18 @@ public class Attribute {
     };
     @Nonnull
     private Function<String, String> I18nKeyMapping = str -> str;
+
     @Nonnull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(defaultValue);
 
     @Nullable
-    public static Attribute getAttribute(@Nonnull String registerName) {
+    public static IAttribute getAttribute(@Nonnull String registerName) {
         return AttributesMap.get(registerName);
     }
 
     @Nonnull
     public static <T extends IBasicAttrValueBuilder> T genAllBasicAttrValue(@Nonnull T builder) {
-        for (Attribute attribute : BasicAttributes) {
+        for (IAttribute attribute : BasicAttributes) {
             builder.set(attribute, attribute.emptyBasicAttrValue());
         }
         return builder;
@@ -80,14 +82,14 @@ public class Attribute {
 
     @Nonnull
     public static <T extends IAttrModifierBuilder> T genAllBasicAttrModifiers(@Nonnull T builder) {
-        for (Attribute attribute : BasicAttributes) {
+        for (IAttribute attribute : BasicAttributes) {
             builder.set(attribute, attribute.emptyAttrModifier());
         }
         return builder;
     }
 
     @Nonnull
-    public static List<Attribute> getAllBasicAttributes() {
+    public static List<IAttribute> getAllBasicAttributes() {
         return BasicAttributes;
     }
 
@@ -201,6 +203,7 @@ public class Attribute {
     }
 
     @Nonnull
+    @Override
     public String getRegisterName() {
         return registerName;
     }
@@ -215,6 +218,7 @@ public class Attribute {
         return this;
     }
 
+    @Override
     public boolean isShownInTooltip() {
         return shownInTooltip;
     }
@@ -237,18 +241,21 @@ public class Attribute {
         return this;
     }
 
+    @Nonnull
+    @Override
     public String getI18nKey() {
+        if (!shownInTooltip) {
+            return "";
+        }
         return this.I18nKeyMapping.apply(this.registerName);
     }
 
+    @Override
     public boolean canTooltipShow(Number n) {
-        return canTooltipShow.test(n);
+        return shownInTooltip && canTooltipShow.test(n);
     }
 
-    public boolean canTooltipShow(FinalAttrValue attrValue) {
-        return shownInTooltip && canTooltipShow.test(attrValue.getNumber());
-    }
-
+    @Override
     public boolean hasUnit() {
         return hasUnit && unit != null;
     }
@@ -258,10 +265,12 @@ public class Attribute {
         return this;
     }
 
+    @Override
     public boolean needMoreDetailsToShown() {
         return this.needMoreDetailsToShown;
     }
 
+    @Override
     public boolean isStripTrailingZero() {
         return this.isStripTrailingZero;
     }
@@ -325,6 +334,7 @@ public class Attribute {
      *
      * @return the priority of display
      */
+    @Override
     public int getDisplayPriority() {
         return displayPriority;
     }
@@ -338,28 +348,20 @@ public class Attribute {
         return this;
     }
 
-    public int getTooltipShownIntValue(Number input) {
-        return tooltipShownMapping.apply(input).intValue();
-    }
-
-    public float getTooltipShownFloatValue(Number input) {
-        return tooltipShownMapping.apply(input).floatValue();
-    }
-
+    @Nonnull
+    @Override
     public Number getTooltipShownValue(Number input) {
         return tooltipShownMapping.apply(input);
     }
 
-    public Number getTooltipShownValue(FinalAttrValue input) {
-        return tooltipShownMapping.apply(input.getNumber());
-    }
-
     @Nullable
+    @Override
     public String getUnit() {
         return unit;
     }
 
     @Nullable
+    @Override
     public String getFormat() {
         return format;
     }
@@ -370,11 +372,13 @@ public class Attribute {
         return this;
     }
 
+    @Override
     public boolean isBasic() {
         return isBasic;
     }
 
     @Nonnull
+    @Override
     public DataType getDataType() {
         return dataType;
     }
@@ -385,6 +389,7 @@ public class Attribute {
     }
 
     @Nonnull
+    @Override
     public ComputeType getComputeType() {
         return computeType;
     }
@@ -395,6 +400,7 @@ public class Attribute {
     }
 
     @Nonnull
+    @Override
     public Number getDefaultValue() {
         return defaultValue;
     }
@@ -406,67 +412,66 @@ public class Attribute {
     }
 
     @Nonnull
+    @Override
     public BasicAttrValue emptyBasicAttrValue() {
         return emptyBasicAttrValue;
     }
 
     @Nonnull
+    @Override
     public BasicAttrValue newBasicAttrValue(@Nonnull Number value) {
         return new BasicAttrValue(dataType, value);
     }
 
     @Nonnull
+    @Override
     public AttrModifier emptyAttrModifier() {
         return dataType == DataType.Int ? emptyAttrModifierInt : emptyAttrModifierFloat;
     }
 
     @Nonnull
+    @Override
     public AttrModifier newAttrModifier(@Nonnull Number delta, float deltaRate) {
         return new AttrModifier(dataType, delta, deltaRate);
     }
 
     @Nonnull
+    @Override
     public AttributeAmplifier newAttributeAmplifier(@Nonnull Number value) {
         return new AttributeAmplifier().setAttributeName(registerName).setType(dataType).setValue(value);
     }
 
     @Nonnull
+    @Override
     public AttrDelta emptyAttrDelta() {
         return dataType == DataType.Int ? emptyAttrDeltaInt : emptyAttrDeltaFloat;
     }
 
     @Nonnull
+    @Override
     public AttrDelta newAttrDelta(@Nonnull Number delta) {
         return new AttrDelta(dataType, delta);
     }
 
     @Nonnull
+    @Override
     public FinalAttrValue emptyFinalAttrValue() {
         return dataType == DataType.Int ? emptyFinalAttrValueInt : emptyFinalAttrValueFloat;
     }
 
     @Nonnull
+    @Override
     public FinalAttrValue newFinalAttrValue(@Nonnull Number value) {
         return new FinalAttrValue(dataType, fixMin(value));
     }
 
+    @Override
     public boolean isDefaultValue(@Nonnull Number value) {
         return value.equals(this.defaultValue);
     }
 
-    public boolean isDefaultValue(@Nonnull FinalAttrValue value) {
-        return isDefaultValue(value.getNumber());
-    }
-
-    public boolean isNotDefaultValue(@Nonnull Number value) {
-        return !isDefaultValue(value);
-    }
-
-    public boolean isNotDefaultValue(@Nonnull FinalAttrValue value) {
-        return isNotDefaultValue(value.getNumber());
-    }
-
     @Nonnull
+    @Override
     public FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta master) {
         switch (computeType) {
             case Full:

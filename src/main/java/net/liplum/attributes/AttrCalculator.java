@@ -3,7 +3,7 @@ package net.liplum.attributes;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.capabilities.MasteryCapability;
-import net.liplum.events.AttributeAccessedEvent;
+import net.liplum.events.AttributeAccessEvent;
 import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
@@ -35,11 +35,11 @@ public class AttrCalculator {
      * @param core              the weapon core which can provide the basic value of this attribute
      * @param modifier          (optional) the modifier of this weapon which can provide the modifier value of this attribute
      * @param player            (optional) the player which can provide the mastery capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
-     * @param postAccessedEvent Whether it posts the {@link AttributeAccessedEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
-     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessedEvent}.)
+     * @param postAccessedEvent Whether it posts the {@link AttributeAccessEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
+     * @return the final value(NOTE:It may be changed by the {@link AttributeAccessEvent}.)
      */
     @Nonnull
-    private static FinalAttrValue calcuAttribute(@Nonnull Attribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
+    private static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = core.getValue(attribute);
         //Mastery
@@ -63,9 +63,9 @@ public class AttrCalculator {
 
         FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masteryValue);
         if (postAccessedEvent) {
-            AttributeAccessedEvent attributeAccessedEvent = new AttributeAccessedEvent(attribute, finalAttrValue, core, modifier, player);
-            MinecraftForge.EVENT_BUS.post(attributeAccessedEvent);
-            finalAttrValue = attributeAccessedEvent.getFinalAttrValue();
+            AttributeAccessEvent attributeAccessEvent = new AttributeAccessEvent(attribute, finalAttrValue, core, modifier, player);
+            MinecraftForge.EVENT_BUS.post(attributeAccessEvent);
+            finalAttrValue = attributeAccessEvent.getFinalAttrValue();
         }
         return finalAttrValue;
     }
@@ -104,7 +104,7 @@ public class AttrCalculator {
     }
 
     /**
-     * @return Whether this attribute access will post the {@link AttributeAccessedEvent}
+     * @return Whether this attribute access will post the {@link AttributeAccessEvent}
      */
     public boolean isPostEvent() {
         return postEvent;
@@ -117,7 +117,7 @@ public class AttrCalculator {
     }
 
     @Nonnull
-    public FinalAttrValue calcu(@Nonnull Attribute attribute) {
+    public FinalAttrValue calcu(@Nonnull IAttribute attribute) {
         if (weaponCore == null) {
             throw new IllegalArgumentException("Weapon Core is Null");
         }

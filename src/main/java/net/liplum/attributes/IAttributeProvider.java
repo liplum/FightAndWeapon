@@ -12,5 +12,5 @@ public interface IAttributeProvider<T extends AttrValue> {
      * If this didn't contain any attribute value which can match the attribute type, it would return null.
      */
     @Nullable
-    T getValue(@Nonnull Attribute attribute);
+    T getValue(@Nonnull IAttribute attribute);
 }

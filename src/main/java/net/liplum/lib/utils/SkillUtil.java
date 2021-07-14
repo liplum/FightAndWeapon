@@ -13,6 +13,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -30,7 +31,7 @@ public final class SkillUtil {
             IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
             if (gemstone != null) {
                 //I told it can be converted so that it must can be converted!!!
-                IPassiveSkill<?>[] skillsFromGemstone = gemstone.getPassiveSkillsOf(core);
+                Collection<IPassiveSkill<?>> skillsFromGemstone = gemstone.getPassiveSkillsOf(core);
                 for (IPassiveSkill<?> skill : skillsFromGemstone) {
                     if (skill.getEventTypeArgs().has(eventType)) {
                         allSkills.add((IPassiveSkill<Event>) skill);
@@ -41,7 +42,7 @@ public final class SkillUtil {
             //Then, gets the passive skills from entity's mastery if the entity is a player
             if (entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) entity;
-                Set<IPassiveSkill<?>> skillsFromMastery = MasteryUtil.getPassiveSkills(player, weaponType);
+                Collection<IPassiveSkill<?>> skillsFromMastery = MasteryUtil.getPassiveSkills(player, weaponType);
                 for (IPassiveSkill<?> skill : skillsFromMastery) {
                     if (skill.getEventTypeArgs().has(eventType)) {
                         allSkills.add((IPassiveSkill<Event>) skill);

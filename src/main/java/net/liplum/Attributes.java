@@ -3,10 +3,11 @@ package net.liplum;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.ComputeType;
 import net.liplum.attributes.DataType;
+import net.liplum.attributes.IAttribute;
 
 public final class Attributes {
     public static final class Generic {
-        public static final Attribute Durability = new Attribute()
+        public static final IAttribute Durability = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Durability)
                 .setBasic()
                 .setDataType(DataType.Int)
@@ -14,7 +15,7 @@ public final class Attributes {
                 .setDefaultValue(0)
                 .setShownInTooltip(false)
                 .setMinimum(0);
-        public static final Attribute Strength = new Attribute()
+        public static final IAttribute Strength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Strength)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
                 .setBasic()
@@ -23,7 +24,7 @@ public final class Attributes {
                 .setComputeType(ComputeType.Full)
                 .setDisplayPriority(-100)
                 .setDefaultValue(0);
-        public static final Attribute AttackReach = new Attribute()
+        public static final IAttribute AttackReach = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AttackReach)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
                 .setBasic()
@@ -40,7 +41,7 @@ public final class Attributes {
          * Gets the basic attack speed and it can be changed by modifier.
          * Range : (0,no limit]. A smaller value stands for a slower speed.(Normal items are 4)
          */
-        public static final Attribute AttackSpeed = new Attribute()
+        public static final IAttribute AttackSpeed = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AttackSpeed)
                 .setBasic()
                 .setDataType(DataType.Float)
@@ -49,7 +50,7 @@ public final class Attributes {
                 .setShownInTooltip(false)
                 .setMinimum(0F);
 
-        public static final Attribute AbilityPower = new Attribute()
+        public static final IAttribute AbilityPower = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AbilityPower)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
                 .setBasic()
@@ -61,7 +62,7 @@ public final class Attributes {
         /**
          * Gets the upcoming invincible time of a enemy who was attacked by this weapon.(unit:tick)
          */
-        public static final Attribute EnemyBreakingTime = new Attribute()
+        public static final IAttribute EnemyBreakingTime = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.EnemyBreakingTime)
                 .setBasic()
                 .setDataType(DataType.Int)
@@ -71,7 +72,7 @@ public final class Attributes {
         /**
          * Gets the cool down time of weapon.(unit:tick)
          */
-        public static final Attribute CoolDown = new Attribute()
+        public static final IAttribute CoolDown = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.CoolDown)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
                 .setBasic()
@@ -86,7 +87,7 @@ public final class Attributes {
         /**
          * Gets the knock back. The basic is 1.0F.
          */
-        public static final Attribute KnockbackStrength = new Attribute()
+        public static final IAttribute KnockbackStrength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.KnockbackStrength)
                 .setBasic()
                 .setDataType(DataType.Float)
@@ -99,7 +100,7 @@ public final class Attributes {
         /**
          * The float value of this is the Strength of a sprint.
          */
-        public static final Attribute SprintStrength = new Attribute()
+        public static final IAttribute SprintStrength = new Attribute()
                 .setRegisterName(Names.Attribute.Lance.SprintStrength)
                 .setHowToGetI18nKey(I18ns.Attribute::Lance)
                 .setDataType(DataType.Float)
@@ -110,7 +111,7 @@ public final class Attributes {
     }
 
     public static final class BattleAxe {
-        public static final Attribute SweepRange = new Attribute()
+        public static final IAttribute SweepRange = new Attribute()
                 .setRegisterName(Names.Attribute.BattleAxe.SweepRange)
                 .setHowToGetI18nKey(I18ns.Attribute::BattleAxe)
                 .setDataType(DataType.Float)
@@ -124,7 +125,7 @@ public final class Attributes {
         /**
          * Gets the radius of the range
          */
-        public static final Attribute Radius = new Attribute()
+        public static final IAttribute Radius = new Attribute()
                 .setRegisterName(Names.Attribute.Harp.Radius)
                 .setHowToGetI18nKey(I18ns.Attribute::Harp)
                 .setDataType(DataType.Float)
@@ -136,7 +137,7 @@ public final class Attributes {
         /**
          * The default one equals 60 minutes
          */
-        public static final Attribute Frequency = new Attribute()
+        public static final IAttribute Frequency = new Attribute()
                 .setRegisterName(Names.Attribute.Harp.Frequency)
                 .setHowToGetI18nKey(I18ns.Attribute::Harp)
                 .setDataType(DataType.Int)
@@ -151,7 +152,7 @@ public final class Attributes {
         /**
          * The default one equals 60 minutes
          */
-        public static final Attribute MaxUseDuration = new Attribute()
+        public static final IAttribute MaxUseDuration = new Attribute()
                 .setRegisterName(Names.Attribute.Harp.MaxUseDuration)
                 .setHowToGetI18nKey(I18ns.Attribute::Harp)
                 .setDataType(DataType.Int)

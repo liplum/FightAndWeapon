@@ -27,7 +27,7 @@ import static net.liplum.Attributes.Generic.Strength;
 import static net.liplum.Attributes.Lance.SprintStrength;
 
 public final class EnderGemModifier {
-    public final static LanceModifier Normal_Lance = new LanceModifier() {
+    public final static LanceModifier Light_Lance = new LanceModifier() {
         @Override
         public LanceCore getCore() {
             return LanceCoreTypes.LightLance;

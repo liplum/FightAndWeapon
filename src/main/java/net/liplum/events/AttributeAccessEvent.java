@@ -2,17 +2,17 @@ package net.liplum.events;
 
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
-import net.liplum.attributes.Attribute;
 import net.liplum.attributes.FinalAttrValue;
+import net.liplum.attributes.IAttribute;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AttributeAccessedEvent extends Event {
+public class AttributeAccessEvent extends Event {
     @Nonnull
-    protected final Attribute attribute;
+    protected final IAttribute attribute;
     @Nonnull
     protected final WeaponCore weaponCore;
     @Nullable
@@ -22,7 +22,7 @@ public class AttributeAccessedEvent extends Event {
     @Nonnull
     protected FinalAttrValue finalAttrValue;
 
-    public AttributeAccessedEvent(@Nonnull Attribute attribute, @Nonnull FinalAttrValue finalAttrValue, @Nonnull WeaponCore weaponCore, @Nullable Modifier modifier, @Nullable EntityPlayer player) {
+    public AttributeAccessEvent(@Nonnull IAttribute attribute, @Nonnull FinalAttrValue finalAttrValue, @Nonnull WeaponCore weaponCore, @Nullable Modifier modifier, @Nullable EntityPlayer player) {
         this.attribute = attribute;
         this.finalAttrValue = finalAttrValue;
         this.weaponCore = weaponCore;
@@ -31,7 +31,7 @@ public class AttributeAccessedEvent extends Event {
     }
 
     @Nonnull
-    public Attribute getAttribute() {
+    public IAttribute getAttribute() {
         return attribute;
     }
 

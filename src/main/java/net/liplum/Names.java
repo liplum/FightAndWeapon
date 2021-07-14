@@ -164,6 +164,7 @@ public final class Names {
         public static final String FireResistance = "FireResistance";
         public static final String Levitation = "Levitation";
         public static final String NutrientAbsorption = "NutrientAbsorption";
+        public static final String XpMending = "XpMending";
     }
 
     public final static class Mastery {

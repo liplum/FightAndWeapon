@@ -8,6 +8,7 @@ import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.Attribute;
+import net.liplum.attributes.IAttribute;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
@@ -52,11 +53,11 @@ public class Mastery implements IMastery {
 
     @Nonnull
     @Override
-    public Map<Attribute, AttrDelta> getAttributeAmplifier(int level) {
+    public Map<IAttribute, AttrDelta> getAttributeAmplifier(int level) {
         Map<String, Number> source = routine.getAttributeAmplifiers(level);
-        Map<Attribute, AttrDelta> res = new HashMap<>();
+        Map<IAttribute, AttrDelta> res = new HashMap<>();
         for (Map.Entry<String, Number> entry : source.entrySet()) {
-            Attribute attribute = Attribute.getAttribute(entry.getKey());
+            IAttribute attribute = Attribute.getAttribute(entry.getKey());
             if (attribute != null) {
                 res.put(attribute, attribute.newAttrDelta(entry.getValue()));
             }

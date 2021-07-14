@@ -33,18 +33,18 @@ public class InlayTableContainer extends ContainerBase {
     private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
-    private final Slot gemstoneSlot =
-            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
+    private final Slot outputSlot =
+            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    Item item = stack.getItem();
-                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
+                    return false;
                 }
 
                 @Override
-                public void onSlotChanged() {
-                    super.onSlotChanged();
-                    onInputChanged();
+                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
+                    ItemStack newWeapon = super.onTake(thePlayer, stack);
+                    onTookOutput();
+                    return newWeapon;
                 }
             };
     private final Slot weaponSlot =
@@ -59,18 +59,18 @@ public class InlayTableContainer extends ContainerBase {
                     onInputChanged();
                 }
             };
-    private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
+    private final Slot gemstoneSlot =
+            new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
                 @Override
                 public boolean isItemValid(@Nonnull ItemStack stack) {
-                    return false;
+                    Item item = stack.getItem();
+                    return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
                 }
 
                 @Override
-                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
-                    ItemStack newWeapon = super.onTake(thePlayer, stack);
-                    onTookOutput();
-                    return newWeapon;
+                public void onSlotChanged() {
+                    super.onSlotChanged();
+                    onInputChanged();
                 }
             };
 

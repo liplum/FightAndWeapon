@@ -2,7 +2,7 @@ package net.liplum.api.fight;
 
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
-import net.liplum.attributes.Attribute;
+import net.liplum.attributes.IAttribute;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -16,7 +16,7 @@ public interface IMastery {
     WeaponType getWeaponType();
 
     @Nonnull
-    Map<Attribute, AttrDelta> getAttributeAmplifier(int level);
+    Map<IAttribute, AttrDelta> getAttributeAmplifier(int level);
 
     @Nonnull
     List<IPassiveSkill<?>> getPassiveSkills(int level);

@@ -5,13 +5,14 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.MasteryRegistry;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
-import net.liplum.attributes.Attribute;
+import net.liplum.attributes.IAttribute;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.masteries.LvExpPair;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
@@ -83,7 +84,7 @@ public final class MasteryUtil {
     }
 
     @Nonnull
-    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
+    public static Collection<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasterOf(weaponType);
         if (mastery != null) {
             return getPassiveSkills(player, mastery);
@@ -91,12 +92,12 @@ public final class MasteryUtil {
         return new HashSet<>();
     }
 
-    public static AttrDelta getAttributeValue(@Nonnull MasteryCapability masteryCapability, @Nonnull WeaponType weaponType, @Nonnull Attribute attribute) {
+    public static AttrDelta getAttributeValue(@Nonnull MasteryCapability masteryCapability, @Nonnull WeaponType weaponType, @Nonnull IAttribute attribute) {
         IMastery mastery = MasteryRegistry.getMasterOf(weaponType);
         if (mastery != null) {
             LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
             int lv = levelAndExp.getLevel();
-            Map<Attribute, AttrDelta> amplifiers = mastery.getAttributeAmplifier(lv);
+            Map<IAttribute, AttrDelta> amplifiers = mastery.getAttributeAmplifier(lv);
             AttrDelta res = amplifiers.get(attribute);
             if (res != null) {
                 return res;

@@ -5,6 +5,7 @@ import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
+import net.liplum.lib.utils.Utils;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 
@@ -314,6 +315,11 @@ public class MathUtil {
 
     public static Vec3d divide(Vec3d v3d, double division) {
         return new Vec3d(v3d.x / division, v3d.y / division, v3d.z / division);
+    }
+
+    public static int randomFloor(double value) {
+        int res = (int) Math.floor(value);
+        return res + Utils.getRandom().nextInt(1);
     }
 
     /**

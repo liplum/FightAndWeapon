@@ -4,7 +4,7 @@ import net.liplum.Attributes;
 import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.MagicToolCore;
 import net.liplum.api.weapon.WeaponType;
-import net.liplum.attributes.Attribute;
+import net.liplum.attributes.IAttribute;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -17,7 +17,7 @@ public abstract class HarpCore extends MagicToolCore {
     }
 
     @Override
-    protected void initAllAttributes(List<Attribute> attributes) {
+    protected void initAllAttributes(List<IAttribute> attributes) {
         super.initAllAttributes(attributes);
         attributes.add(Attributes.Harp.Frequency);
         attributes.add(Attributes.Harp.MaxUseDuration);

@@ -10,8 +10,11 @@ import net.minecraft.util.EnumHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Arrays;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 public class ItemTool {
     /**
@@ -35,13 +38,17 @@ public class ItemTool {
      * @param itemStacks
      * @return
      */
-    public static ItemStack getItemStack(Item item, ItemStack... itemStacks) {
+    public static ItemStack getItemStacks(Item item, ItemStack... itemStacks) {
         for (ItemStack itemStack : itemStacks) {
             if (item == itemStack.getItem()) {
                 return itemStack;
             }
         }
         return null;
+    }
+
+    public static List<ItemStack> getItemStacks(Predicate<ItemStack> filter, ItemStack... itemStacks) {
+        return Arrays.stream(itemStacks).filter(filter).collect(Collectors.toList());
     }
 
     @Nullable
@@ -64,7 +71,7 @@ public class ItemTool {
      * @return
      */
     @Nonnull
-    public static ItemStack getItemStack(EntityPlayer player, Predicate<ItemStack> filter) {
+    public static ItemStack getItemStacks(EntityPlayer player, Predicate<ItemStack> filter) {
         ItemStack mainHand = player.getHeldItem(EnumHand.MAIN_HAND);
         if (filter.test(mainHand)) {
             return mainHand;

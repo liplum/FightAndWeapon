@@ -10,7 +10,6 @@ import net.liplum.lib.OpenItem;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
-import net.minecraft.entity.ai.attributes.IAttribute;
 import net.minecraft.inventory.EntityEquipmentSlot;
 
 import javax.annotation.Nonnull;
@@ -30,9 +29,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
     @Nonnull
-    private final Map<Attribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
+    private final Map<IAttribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
     @Nonnull
-    private final List<Attribute> allAttributes = new LinkedList<>();
+    private final List<IAttribute> allAttributes = new LinkedList<>();
     @Nonnull
     protected IWeaponSkillPredicate weaponSkillPredicate;
     @Nullable
@@ -43,7 +42,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         initAllAttributes(allAttributes);
 
         WeaponCoreBuilder builder = new WeaponCoreBuilder();
-        for (Attribute attribute : allAttributes) {
+        for (IAttribute attribute : allAttributes) {
             builder.set(attribute, attribute.emptyBasicAttrValue());
         }
         build(builder);
@@ -57,12 +56,12 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      *
      * @param attributes all the attributes
      */
-    protected void initAllAttributes(List<Attribute> attributes) {
+    protected void initAllAttributes(List<IAttribute> attributes) {
         attributes.addAll(Attribute.getAllBasicAttributes());
     }
 
     @Nonnull
-    public List<Attribute> getAllAttributes() {
+    public List<IAttribute> getAllAttributes() {
         return allAttributes;
     }
 
@@ -75,7 +74,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      */
     @Nonnull
     @Override
-    public BasicAttrValue getValue(@Nonnull Attribute attribute) {
+    public BasicAttrValue getValue(@Nonnull IAttribute attribute) {
         BasicAttrValue basicAttrValue = AttributeValueMap.get(attribute);
         if (basicAttrValue == null) {
             throw new NotHasSuchAttributeException(attribute);
@@ -145,7 +144,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
     protected class WeaponCoreBuilder implements IBasicAttrValueBuilder {
         @Override
-        public WeaponCoreBuilder set(@Nonnull Attribute attribute, @Nonnull BasicAttrValue value) {
+        public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull BasicAttrValue value) {
             AttributeValueMap.put(attribute, value);
             return this;
         }
@@ -165,12 +164,12 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return this;
         }
 
-        public WeaponCoreBuilder addMainHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public WeaponCoreBuilder addMainHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
-        public WeaponCoreBuilder addOffHand(IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public WeaponCoreBuilder addOffHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }

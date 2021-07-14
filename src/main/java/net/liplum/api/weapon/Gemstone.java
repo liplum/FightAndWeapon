@@ -6,6 +6,7 @@ import net.liplum.api.registeies.GemstoneRegistry;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
+import java.util.stream.Stream;
 
 
 public class Gemstone implements IGemstone {
@@ -34,6 +35,48 @@ public class Gemstone implements IGemstone {
         return amplifierOfCores.hasAnyAmplifier(core);
     }
 
+    @Override
+    public boolean hasPassiveSkillOfCore(WeaponCore core, IPassiveSkill<?> passiveSkill) {
+        Stream<IPassiveSkill<?>> ofCore = amplifierOfCores.getPassiveSkillsOf(core).stream();
+        Stream<IPassiveSkill<?>> ofWeaponType = amplifierOfWeaponTypes.getPassiveSkillsOf(core.getWeaponType()).stream();
+        Stream<IPassiveSkill<?>> ofAllWeaponType = amplifierOfAllWeaponTypes.getPassiveSkills().stream();
+        Stream<IPassiveSkill<?>> OfAll = Stream.concat(Stream.concat(ofCore, ofWeaponType), ofAllWeaponType);
+        return OfAll.anyMatch(passiveSkill::equals);
+    }
+
+    @Override
+    public boolean hasAnyPassiveSkillOfCore(WeaponCore core) {
+        return amplifierOfAllWeaponTypes.getPassiveSkills().size() > 0 ||
+                amplifierOfWeaponTypes.getPassiveSkillsOf(core.getWeaponType()).size() > 0 ||
+                amplifierOfCores.getPassiveSkillsOf(core).size() > 0
+                ;
+    }
+
+    @Override
+    public boolean hasPassiveSkillOfWeaponType(WeaponType weaponType, IPassiveSkill<?> passiveSkill) {
+        Stream<IPassiveSkill<?>> ofWeaponType = amplifierOfWeaponTypes.getPassiveSkillsOf(weaponType).stream();
+        Stream<IPassiveSkill<?>> ofAllWeaponType = amplifierOfAllWeaponTypes.getPassiveSkills().stream();
+        Stream<IPassiveSkill<?>> OfAll = Stream.concat(ofWeaponType, ofAllWeaponType);
+        return OfAll.anyMatch(passiveSkill::equals);
+    }
+
+    @Override
+    public boolean hasAnyPassiveSkillOfWeaponType(WeaponType weaponType) {
+        return amplifierOfAllWeaponTypes.getPassiveSkills().size() > 0 ||
+                amplifierOfWeaponTypes.getPassiveSkillsOf(weaponType).size() > 0
+                ;
+    }
+
+    @Override
+    public boolean hasPassiveSkillOfAll(IPassiveSkill<?> passiveSkill) {
+        return amplifierOfAllWeaponTypes.getPassiveSkills().contains(passiveSkill);
+    }
+
+    @Override
+    public boolean hasAnyPassiveSkillOfAll() {
+        return amplifierOfAllWeaponTypes.getPassiveSkills().size() > 0;
+    }
+
     /**
      * @param core
      * @return the modifier or null if it didn't has a corresponding modifier of the core in this gemstone.
@@ -46,22 +89,15 @@ public class Gemstone implements IGemstone {
 
     @Nonnull
     @Override
-    public IPassiveSkill<?>[] getPassiveSkillsOf(WeaponCore core) {
+    public Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponCore core) {
         Collection<IPassiveSkill<?>> psFromAll = amplifierOfAllWeaponTypes.getPassiveSkills();
         Set<IPassiveSkill<?>> skills = new HashSet<>(psFromAll);
 
+        skills.addAll(amplifierOfWeaponTypes.getPassiveSkillsOf(core.getWeaponType()));
 
-        Collection<IPassiveSkill<?>> psFromWeaponTypes = amplifierOfWeaponTypes.getPassiveSkills(core.getWeaponType());
-        if (psFromWeaponTypes != null) {
-            skills.addAll(psFromWeaponTypes);
-        }
+        skills.addAll(amplifierOfCores.getPassiveSkillsOf(core));
 
-        Collection<IPassiveSkill<?>> psFromCores = amplifierOfCores.getPassiveSkillsOf(core);
-        if (psFromCores != null) {
-            skills.addAll(psFromCores);
-        }
-
-        return skills.toArray(new IPassiveSkill[0]);
+        return skills;
     }
 
     @Override
@@ -133,6 +169,7 @@ public class Gemstone implements IGemstone {
     private static class AmplifierOfCores {
         private final Map<WeaponCore, CoreAmplifier> amplifiers = new HashMap<>();
 
+        @Nullable
         public Modifier getModifierOf(WeaponCore core) {
             if (amplifiers.containsKey(core)) {
                 return amplifiers.get(core).getModifier();
@@ -147,12 +184,12 @@ public class Gemstone implements IGemstone {
             return false;
         }
 
-        @Nullable
+        @Nonnull
         public Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponCore core) {
             if (this.amplifiers.containsKey(core)) {
                 return this.amplifiers.get(core).getPassiveSkills();
             }
-            return null;
+            return Collections.emptyList();
         }
 
         public void addModifier(Modifier modifier) {
@@ -227,12 +264,12 @@ public class Gemstone implements IGemstone {
     private static class AmplifierOfWeaponTypes {
         private final Map<WeaponType, Set<IPassiveSkill<?>>> amplifiers = new HashMap<>();
 
-        @Nullable
-        public Collection<IPassiveSkill<?>> getPassiveSkills(WeaponType weaponType) {
+        @Nonnull
+        public Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponType weaponType) {
             if (amplifiers.containsKey(weaponType)) {
                 return amplifiers.get(weaponType);
             }
-            return null;
+            return Collections.emptyList();
         }
 
         public void addPassiveSkills(WeaponType weaponType, IPassiveSkill<?> passiveSkill) {

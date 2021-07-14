@@ -5,8 +5,8 @@ import net.liplum.I18ns;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.attributes.Attribute;
 import net.liplum.attributes.FinalAttrValue;
+import net.liplum.attributes.IAttribute;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.FawI18n;
@@ -32,6 +32,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -78,7 +79,7 @@ public abstract class WeaponBaseItem extends FawItem {
         WeaponCore core = getCore();
         IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
         Modifier modifier = null;
-        IPassiveSkill<?>[] passiveSkills = null;
+        Collection<IPassiveSkill<?>> passiveSkills = null;
         if (gemstone != null) {
             passiveSkills = gemstone.getPassiveSkillsOf(core);
             modifier = gemstone.getModifierOf(core);
@@ -153,12 +154,12 @@ public abstract class WeaponBaseItem extends FawItem {
     @SideOnly(Side.CLIENT)
     public void addAttributesTooltip(@Nonnull ItemStack stack, AttrCalculator calculator, TooltipOption option, @Nonnull List<String> attributesTooltip) {
         WeaponCore core = getCore();
-        List<Attribute> sortedAttr = core.getAllAttributes().stream()
-                .filter(Attribute::isShownInTooltip)
-                .sorted(Comparator.comparing(Attribute::getDisplayPriority))
+        List<IAttribute> sortedAttr = core.getAllAttributes().stream()
+                .filter(IAttribute::isShownInTooltip)
+                .sorted(Comparator.comparing(IAttribute::getDisplayPriority))
                 .collect(Collectors.toList());
 
-        for (Attribute attribute : sortedAttr) {
+        for (IAttribute attribute : sortedAttr) {
             if (attribute.needMoreDetailsToShown() && !option.isMoreDetailsShown()) {
                 continue;
             }
@@ -177,7 +178,7 @@ public abstract class WeaponBaseItem extends FawItem {
     }
 
     @SideOnly(Side.CLIENT)
-    public void addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nonnull IPassiveSkill<?>[] passiveSkills, @Nonnull List<String> passiveSkillsTooltip, TooltipOption option) {
+    public void addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nonnull Collection<IPassiveSkill<?>> passiveSkills, @Nonnull List<String> passiveSkillsTooltip, TooltipOption option) {
         for (IPassiveSkill<?> passiveSkill : passiveSkills) {
             if (passiveSkill.isShownInTooltip()) {
                 FawItemUtil.addPassiveSkillTooltip(passiveSkillsTooltip, passiveSkill);
