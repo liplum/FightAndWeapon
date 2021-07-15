@@ -3,6 +3,7 @@ package net.liplum.lib;
 import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,35 +14,38 @@ import javax.annotation.Nullable;
 
 public class FawDamage extends EntityDamageSource {
     @Nonnull
-    private final WeaponCore weaponCore;
+    private final WeaponBaseItem weapon;
     @Nullable
     private IGemstone gemstone;
     @Nullable
     private Modifier modifier;
 
-    private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull WeaponCore weaponCore) {
+    private final EntityLivingBase attacker;
+
+    private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull WeaponBaseItem weapon) {
         super(damageType, attacker);
-        this.weaponCore = weaponCore;
+        this.attacker = attacker;
+        this.weapon = weapon;
     }
 
     @Nonnull
-    public static FawDamage byPlayer(@Nonnull EntityPlayer playerAttacker, @Nonnull WeaponCore weaponCore) {
-        return new FawDamage(Vanilla.DamageType.Player, playerAttacker, weaponCore);
+    public static FawDamage byPlayer(@Nonnull EntityPlayer playerAttacker, @Nonnull WeaponBaseItem weapon) {
+        return new FawDamage(Vanilla.DamageType.Player, playerAttacker, weapon);
     }
 
     @Nonnull
-    public static FawDamage byMob(@Nonnull EntityLivingBase entityAttacker, @Nonnull WeaponCore weaponCore) {
-        return new FawDamage(Vanilla.DamageType.Mob, entityAttacker, weaponCore);
+    public static FawDamage byMob(@Nonnull EntityLivingBase entityAttacker, @Nonnull WeaponBaseItem weapon) {
+        return new FawDamage(Vanilla.DamageType.Mob, entityAttacker, weapon);
     }
 
     @Nonnull
     public EntityLivingBase getAttacker() {
-        return (EntityLivingBase) damageSourceEntity;
+        return attacker;
     }
 
     @Nonnull
-    public WeaponCore getWeaponCore() {
-        return weaponCore;
+    public WeaponBaseItem getWeapon() {
+        return weapon;
     }
 
     @Nonnull
@@ -59,7 +63,7 @@ public class FawDamage extends EntityDamageSource {
     @Nonnull
     public FawDamage setGemstone(@Nonnull IGemstone gemstone) {
         this.gemstone = gemstone;
-        this.modifier = gemstone.getModifierOf(weaponCore);
+        this.modifier = gemstone.getModifierOf(weapon.getCore());
         return this;
     }
 

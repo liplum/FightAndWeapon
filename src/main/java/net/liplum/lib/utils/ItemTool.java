@@ -6,12 +6,15 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.EnumHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -20,17 +23,60 @@ public class ItemTool {
     /**
      * Heats the weapon if player is in survival mode.
      *
-     * @param player       a player who has the hot weapon
-     * @param item         a item which the player holds and will be heated
-     * @param coolDownTime how much time need to cool down
+     * @param player        a player who has the hot weapon
+     * @param item          a item which the player holds and will be heated
+     * @param coolDownTicks how much time need to cool down
      * @return if player is in survival mode, it'll return ture and heat the weapon, otherwise, return false.
      */
-    public static boolean heatItemIfSurvival(EntityPlayer player, Item item, int coolDownTime) {
-        if (player.isCreative() || coolDownTime <= 0) {
+    public static boolean heatItemIfSurvival(EntityPlayer player, Item item, int coolDownTicks) {
+        if (player.isCreative() || coolDownTicks <= 0) {
             return false;
         }
-        player.getCooldownTracker().setCooldown(item, coolDownTime);
+        player.getCooldownTracker().setCooldown(item, coolDownTicks);
         return true;
+    }
+
+    public static boolean reduceItemCoolDown(EntityPlayer player, Item item, int decrementTicks) {
+        if (decrementTicks <= 0) {
+            return false;
+        }
+        CooldownTracker tracker = player.getCooldownTracker();
+        float restRate = tracker.getCooldown(item, 0.0F);
+        int fullCoolDown = getFullCoolDownTicks(player, item);
+        int restTicks = (int) (restRate * fullCoolDown);
+        if (restTicks > 0) {
+            int newCoolDown = restTicks - decrementTicks;
+            tracker.setCooldown(item, newCoolDown);
+            return true;
+        }
+        return false;
+    }
+
+    public static int getFullCoolDownTicks(EntityPlayer player, Item item) {
+        CooldownTracker cooldownTracker = player.getCooldownTracker();
+        Class<CooldownTracker> clz = CooldownTracker.class;
+        try {
+            Field cooldownsField = clz.getDeclaredField("cooldowns");
+            cooldownsField.setAccessible(true);
+            Map<?, ?> cooldownsMap = (Map<?, ?>) cooldownsField.get(cooldownTracker);
+            Object coolDownObject = cooldownsMap.get(item);
+            if (coolDownObject != null) {
+                Class<?> CoolDownClz = Class.forName("net.minecraft.util.CooldownTracker$Cooldown");
+
+                Field createTicksField = CoolDownClz.getDeclaredField("createTicks");
+                createTicksField.setAccessible(true);
+                int createTicks = createTicksField.getInt(coolDownObject);
+
+                Field expireTicksField = CoolDownClz.getDeclaredField("expireTicks");
+                expireTicksField.setAccessible(true);
+                int expireTicks = expireTicksField.getInt(coolDownObject);
+                return Math.abs(expireTicks - createTicks);
+            }
+
+        } catch (NoSuchFieldException | IllegalAccessException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 
     /**

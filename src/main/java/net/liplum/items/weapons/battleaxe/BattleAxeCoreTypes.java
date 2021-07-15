@@ -1,11 +1,15 @@
 package net.liplum.items.weapons.battleaxe;
 
+import net.liplum.api.fight.AggregatedPassiveSkill;
+import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
+import net.liplum.events.weapon.WeaponAttackEvent;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
@@ -107,6 +111,21 @@ public final class BattleAxeCoreTypes {
                     CoolDown, CoolDown.newBasicAttrValue(350)
             ).set(
                     AttackSpeed, AttackSpeed.newBasicAttrValue(1F)
+            ).addPassiveSkills(
+                    new AggregatedPassiveSkill("BerserkerAxePS")
+                            .add(WeaponAttackEvent.Attacked.class,
+                                    event -> {
+                                        WeaponAttackEvent.Attacked e = (WeaponAttackEvent.Attacked) event;
+                                        WeaponAttackEvent.Attacked.Args args = e.getArgs();
+                                        EntityLivingBase attacker = args.getAttacker();
+                                        if (attacker instanceof EntityPlayer) {
+                                            EntityPlayer player = (EntityPlayer) attacker;
+                                            if (args.isHitSuccessfully() && args.isFullAttack()) {
+                                                ItemTool.reduceItemCoolDown(player, args.getWeapon(), 20);
+                                            }
+                                        }
+                                        return PSkillResult.Complete;
+                                    })
             );
         }
     };

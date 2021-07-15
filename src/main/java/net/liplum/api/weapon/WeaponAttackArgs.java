@@ -1,5 +1,6 @@
 package net.liplum.api.weapon;
 
+import net.liplum.attributes.AttrCalculator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
@@ -12,11 +13,12 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     private World world;
     private EntityLivingBase attacker;
     private Entity target;
-    private WeaponCore weaponCore;
+    private WeaponBaseItem weapon;
     private IGemstone gemstone;
     private Modifier modifier;
     private ItemStack itemStack;
     private DamageArgs initialDamage;
+    private AttrCalculator calculator;
     private boolean isFullAttack;
 
     @Nonnull
@@ -53,13 +55,13 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     }
 
     @Nonnull
-    public WeaponCore getWeaponCore() {
-        return weaponCore;
+    public WeaponBaseItem getWeapon() {
+        return weapon;
     }
 
     @Nonnull
-    public This setWeaponCore(@Nullable WeaponCore weaponCore) {
-        this.weaponCore = weaponCore;
+    public This setWeapon(@Nullable WeaponBaseItem weapon) {
+        this.weapon = weapon;
         return (This) this;
     }
 
@@ -111,6 +113,15 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
 
     public This setFullAttack(boolean fullAttack) {
         isFullAttack = fullAttack;
+        return (This) this;
+    }
+
+    public AttrCalculator getCalculator() {
+        return calculator;
+    }
+
+    public This setCalculator(AttrCalculator calculator) {
+        this.calculator = calculator;
         return (This) this;
     }
 }

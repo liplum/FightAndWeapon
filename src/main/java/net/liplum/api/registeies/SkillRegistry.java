@@ -24,13 +24,14 @@ public final class SkillRegistry {
         for (Class<? extends Event> eventType : eventTypeArgs.getAllEventTypes()) {
             if (EventTypePassiveSkillMap.containsKey(eventType)) {
                 EventTypePassiveSkillMap.get(eventType).add(passiveSkill);
+            } else {
+                Set<IPassiveSkill<?>> skills = new HashSet<>();
+                skills.add(passiveSkill);
+                EventTypePassiveSkillMap.put(eventType, skills);
             }
-            Set<IPassiveSkill<?>> skills = new HashSet<>();
-            EventTypePassiveSkillMap.put(eventType, skills);
-
             //Register it to all passive skills
-            AllPassiveSkills.put(passiveSkill.getRegisterName(), passiveSkill);
         }
+        AllPassiveSkills.put(passiveSkill.getRegisterName(), passiveSkill);
         return passiveSkill;
     }
 

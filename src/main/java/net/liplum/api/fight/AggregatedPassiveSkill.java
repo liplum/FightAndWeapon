@@ -38,9 +38,9 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
         return allSkills.get(event.getClass()).apply(event);
     }
 
-    public AggregatedPassiveSkill add(Class<Event> clz, Function<Event, PSkillResult> skill) {
-        allSkills.put(clz, skill);
-        allEventTypes.add(clz);
+    public AggregatedPassiveSkill add(Class<? extends Event> clz, Function<Event, PSkillResult> skill) {
+        allSkills.put((Class<Event>) clz, skill);
+        allEventTypes.add((Class<Event>) clz);
         return this;
     }
 

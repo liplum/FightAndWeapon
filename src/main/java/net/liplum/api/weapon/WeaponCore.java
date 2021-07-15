@@ -51,6 +51,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
     }
 
+    @Nullable
+    public AggregatedPassiveSkill getWeaponPassiveSkills() {
+        return weaponPassiveSkills;
+    }
+
     /**
      * It will be called in constructor.
      *

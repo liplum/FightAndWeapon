@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.fight.AggregatedPassiveSkill;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.WeaponBaseItem;
@@ -19,7 +20,6 @@ import java.util.Set;
 
 public final class SkillUtil {
 
-
     private static void addPassiveSkills(@Nonnull Class<Event> eventType, @Nonnull Set<IPassiveSkill<Event>> allSkills, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity) {
         Item item = itemStack.getItem();
         if (item instanceof WeaponBaseItem) {
@@ -28,6 +28,10 @@ public final class SkillUtil {
             WeaponBaseItem weapon = (WeaponBaseItem) item;
             WeaponType weaponType = weapon.getWeaponType();
             WeaponCore core = weapon.getCore();
+            AggregatedPassiveSkill coreSkill = core.getWeaponPassiveSkills();
+            if (coreSkill != null && coreSkill.getEventTypeArgs().has(eventType)) {
+                allSkills.add(coreSkill);
+            }
             IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
             if (gemstone != null) {
                 //I told it can be converted so that it must can be converted!!!

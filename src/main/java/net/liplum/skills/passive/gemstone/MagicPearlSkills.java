@@ -4,10 +4,7 @@ import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
-import net.liplum.api.weapon.DamageArgs;
-import net.liplum.api.weapon.IGemstone;
-import net.liplum.api.weapon.Modifier;
-import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.*;
 import net.liplum.events.weapon.WeaponAttackEvent;
 import net.liplum.lib.FawDamage;
 import net.liplum.lib.utils.EntityUtil;
@@ -25,7 +22,7 @@ public final class MagicPearlSkills {
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
                     WeaponAttackEvent.Attacking.Args args = event.getArgs();
                     EntityLivingBase attacker = args.getAttacker();
-                    WeaponCore weaponCore = args.getWeaponCore();
+                    WeaponBaseItem weapon = args.getWeapon();
                     IGemstone gemstone = args.getGemstone();
                     Modifier modifier = args.getModifier();
                     List<DamageArgs> allDamages = args.getAllDamages();
@@ -34,10 +31,10 @@ public final class MagicPearlSkills {
                     Entity target = initialDamage.getTarget();
 
                     FawDamage normalDamage = EntityUtil.genFawDamage(attacker,
-                            weaponCore,
+                            weapon,
                             gemstone, modifier);
                     FawDamage magicDamage = EntityUtil.genFawDamage(attacker,
-                            weaponCore,
+                            weapon,
                             gemstone, modifier);
 
                     magicDamage.setMagicDamage().setDamageBypassesArmor();

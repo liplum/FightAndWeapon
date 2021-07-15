@@ -2,6 +2,7 @@ package net.liplum.lib.utils;
 
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.FawDamage;
 import net.minecraft.entity.Entity;
@@ -67,12 +68,12 @@ public class EntityUtil {
         return entity instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) entity) : DamageSource.causeMobDamage(entity);
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone) {
+    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponBaseItem weapon, @Nullable IGemstone gemstone) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
-            damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);
+            damage = FawDamage.byPlayer((EntityPlayer) attacker, weapon);
         } else {
-            damage = FawDamage.byMob(attacker, weaponCore);
+            damage = FawDamage.byMob(attacker, weapon);
         }
         if (gemstone != null) {
             damage.setGemstone(gemstone);
@@ -80,12 +81,12 @@ public class EntityUtil {
         return damage;
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponCore weaponCore, @Nullable IGemstone gemstone, @Nullable Modifier modifier) {
+    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponBaseItem weapon, @Nullable IGemstone gemstone, @Nullable Modifier modifier) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
-            damage = FawDamage.byPlayer((EntityPlayer) attacker, weaponCore);
+            damage = FawDamage.byPlayer((EntityPlayer) attacker, weapon);
         } else {
-            damage = FawDamage.byMob(attacker, weaponCore);
+            damage = FawDamage.byMob(attacker, weapon);
         }
         if (gemstone != null && modifier != null) {
             damage.setGemstone(gemstone, modifier);

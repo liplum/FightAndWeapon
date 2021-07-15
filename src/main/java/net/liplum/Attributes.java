@@ -78,7 +78,7 @@ public final class Attributes {
                 .setBasic()
                 .setDataType(DataType.Int)
                 .setFormat("%.1f")
-                .setComputeType(ComputeType.Only_Rate)
+                .setComputeType(ComputeType.Only_Base)
                 .setHasUnit(I18ns.Tooltip.Unit.Second)
                 .setNeedMoreDetailsToShown()
                 .setTooltipShownMapping(Vanilla::PerSecond)

@@ -139,7 +139,7 @@ public final class FawItemUtil {
             isFullAttack = cooldown >= 1F;
         }
 
-        FawDamage damageSource = EntityUtil.genFawDamage(attacker, core, gemstone, modifier);
+        FawDamage damageSource = EntityUtil.genFawDamage(attacker, weapon, gemstone, modifier);
 
         DamageArgs initialDamage = new DamageArgs(finalDamage, damageSource, target);
         WeaponAttackEvent.Attacking.Args attackingArgs = new WeaponAttackEvent.Attacking.Args();
@@ -148,9 +148,10 @@ public final class FawItemUtil {
                 .setTarget(target)
                 .setItemStack(itemStack)
                 .setModifier(modifier)
-                .setWeaponCore(core)
+                .setWeapon(weapon)
                 .setInitialDamage(initialDamage)
-                .setFullAttack(isFullAttack);
+                .setFullAttack(isFullAttack)
+                .setCalculator(calculator);
 
         WeaponAttackEvent.Attacking attackingEvent = new WeaponAttackEvent.Attacking(attackingArgs);
         MinecraftForge.EVENT_BUS.post(attackingEvent);
@@ -203,10 +204,11 @@ public final class FawItemUtil {
                 .setItemStack(itemStack)
                 .setModifier(modifier)
                 .setInitialDamage(initialDamage)
-                .setWeaponCore(core)
+                .setWeapon(weapon)
                 .setHitSuccessfully(isHitSuccessfully)
                 .setTotalDamage(totalDamage)
-                .setFullAttack(isFullAttack);
+                .setFullAttack(isFullAttack)
+                .setCalculator(calculator);
 
         WeaponAttackEvent.Attacked postAttackEvent = new WeaponAttackEvent.Attacked(postArgs);
         MinecraftForge.EVENT_BUS.post(postAttackEvent);
