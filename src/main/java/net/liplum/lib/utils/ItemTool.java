@@ -42,8 +42,23 @@ public class ItemTool {
         }
         CooldownTracker tracker = player.getCooldownTracker();
         float restRate = tracker.getCooldown(item, 0.0F);
-        int fullCoolDown = getFullCoolDownTicks(player, item);
-        int restTicks = (int) (restRate * fullCoolDown);
+        int fullCoolDownTicks = getFullCoolDownTicks(player, item);
+        int restTicks = (int) (restRate * fullCoolDownTicks);
+        if (restTicks > 0) {
+            int newCoolDown = restTicks - decrementTicks;
+            tracker.setCooldown(item, newCoolDown);
+            return true;
+        }
+        return false;
+    }
+
+    public static boolean reduceItemCoolDown(EntityPlayer player, Item item,int fullCoolDownTicks, int decrementTicks) {
+        if (decrementTicks <= 0) {
+            return false;
+        }
+        CooldownTracker tracker = player.getCooldownTracker();
+        float restRate = tracker.getCooldown(item, 0.0F);
+        int restTicks = (int) (restRate * fullCoolDownTicks);
         if (restTicks > 0) {
             int newCoolDown = restTicks - decrementTicks;
             tracker.setCooldown(item, newCoolDown);

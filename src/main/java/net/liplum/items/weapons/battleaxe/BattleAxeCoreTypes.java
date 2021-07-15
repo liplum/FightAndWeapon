@@ -121,7 +121,8 @@ public final class BattleAxeCoreTypes {
                                         if (attacker instanceof EntityPlayer) {
                                             EntityPlayer player = (EntityPlayer) attacker;
                                             if (args.isHitSuccessfully() && args.isFullAttack()) {
-                                                ItemTool.reduceItemCoolDown(player, args.getWeapon(), 20);
+                                                int coolDown = args.getCalculator().calcu(CoolDown).getInt();
+                                                ItemTool.reduceItemCoolDown(player, args.getWeapon(), coolDown, 20);
                                             }
                                         }
                                         return PSkillResult.Complete;
