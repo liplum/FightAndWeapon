@@ -8,6 +8,7 @@ import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.attributes.*;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
+import net.liplum.tooltips.TooltipPipe;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -38,6 +39,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private AggregatePassiveSkill weaponPassiveSkills;
 
     private ILeftClickEntityBehavior leftClickEntityBehavior;
+
+    @Nonnull
+    private TooltipPipe tooltipPipe = TooltipPipe.Empty;
 
     public WeaponCore() {
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
@@ -170,6 +174,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Nonnull
+    public TooltipPipe getTooltipPipe() {
+        return tooltipPipe;
+    }
+
+    @Nonnull
     public abstract WeaponType getWeaponType();
 
     protected class WeaponCoreBuilder implements IBasicAttrValueBuilder {
@@ -194,18 +203,23 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return this;
         }
 
-        public WeaponCoreBuilder addMainHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public WeaponCoreBuilder addMainHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
-        public WeaponCoreBuilder addOffHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public WeaponCoreBuilder addOffHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
         public WeaponCoreBuilder setLeftClickEntityBehavior(@Nonnull ILeftClickEntityBehavior behavior) {
             leftClickEntityBehavior = behavior;
+            return this;
+        }
+
+        public WeaponCoreBuilder setTooltipPipe(@Nonnull TooltipPipe pipe) {
+            tooltipPipe = pipe;
             return this;
         }
     }

@@ -76,6 +76,22 @@ public class BoolAttribute implements IAttribute {
         return isBasic;
     }
 
+    public static BasicAttrValue genAttrValue(boolean b) {
+        return new BasicAttrValue(DataType.Int, toInt(b));
+    }
+
+    public static AttrModifier genAttrModifier(boolean b) {
+        return new AttrModifier(DataType.Int, toInt(b), 0);
+    }
+
+    public static AttrDelta genAttrDelta(boolean b) {
+        return new AttrDelta(DataType.Int, toInt(b));
+    }
+
+    public static FinalAttrValue genFinalAttrValue(boolean b) {
+        return new FinalAttrValue(DataType.Int, toInt(b));
+    }
+
     @Nonnull
     @Override
     public String getRegisterName() {

@@ -2,6 +2,7 @@ package net.liplum.modifiers;
 
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.attributes.BoolAttribute;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceModifier;
@@ -35,7 +36,7 @@ public class FlameGemModifier {
         protected void build(ModifierBuilder builder) {
             super.build(builder);
             builder.set(
-                    DropsFireproof, DropsFireproof.newAttrModifier(1, 0)
+                    DropsFireproof, BoolAttribute.genAttrModifier(true)
             );
         }
     };
