@@ -47,4 +47,35 @@ public class TooltipContext {
             this.passiveSkills = null;
         }
     }
+
+    @Nullable
+    private TooltipPart lastPart = null;
+
+    private boolean hasPreviousMiddleware = false;
+
+    private boolean hasNextMiddleware = false;
+
+    @Nullable
+    public TooltipPart getLastPart() {
+        return lastPart;
+    }
+
+    public void setLastPart(TooltipPart lastPart) {
+        this.lastPart = lastPart;
+        if (lastPart != null) {
+            this.hasPreviousMiddleware = true;
+        }
+    }
+
+    public boolean hasPreviousMiddleware() {
+        return hasPreviousMiddleware;
+    }
+
+    public boolean hasNextMiddleware() {
+        return hasNextMiddleware;
+    }
+
+    public void setHasNextMiddleware(boolean hasNextMiddleware) {
+        this.hasNextMiddleware = hasNextMiddleware;
+    }
 }
