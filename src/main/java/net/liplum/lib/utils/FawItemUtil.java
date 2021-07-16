@@ -290,14 +290,7 @@ public final class FawItemUtil {
                             .setModifier(GemUtil.getModifierFrom(itemStack));
                     int coolDown = calculator.calcu(CoolDown).getInt();
                     if (coolDown != 0) {
-                        if (weaponAndMinimumCoolDown.containsKey(weapon)) {
-                            Integer formerCoolDown = weaponAndMinimumCoolDown.get(weapon);
-                            if (coolDown < formerCoolDown) {
-                                weaponAndMinimumCoolDown.put(weapon, coolDown);
-                            }
-                        } else {
-                            weaponAndMinimumCoolDown.put(weapon, coolDown);
-                        }
+                        weaponAndMinimumCoolDown.put(weapon, coolDown);
                     }
                 }
             }

@@ -3,7 +3,7 @@ package net.liplum.attributes;
 public enum ComputeType {
     Full(true, true),
     Only_Rate(true, false),
-    Only_Master(false, true),
+    Only_Mastery(false, true),
     Only_Gemstone(true, false),
     Only_Base(false, false);
 

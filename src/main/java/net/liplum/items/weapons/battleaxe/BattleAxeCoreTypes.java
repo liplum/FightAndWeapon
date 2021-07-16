@@ -1,6 +1,6 @@
 package net.liplum.items.weapons.battleaxe;
 
-import net.liplum.api.fight.AggregatedPassiveSkill;
+import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
@@ -112,17 +112,15 @@ public final class BattleAxeCoreTypes {
             ).set(
                     AttackSpeed, AttackSpeed.newBasicAttrValue(1F)
             ).addPassiveSkills(
-                    new AggregatedPassiveSkill("BerserkerAxePS")
+                    new AggregatePassiveSkill("BerserkerAxePS")
                             .add(WeaponAttackEvent.Attacked.class,
                                     event -> {
-                                        WeaponAttackEvent.Attacked e = (WeaponAttackEvent.Attacked) event;
-                                        WeaponAttackEvent.Attacked.Args args = e.getArgs();
+                                        WeaponAttackEvent.Attacked.Args args = event.getArgs();
                                         EntityLivingBase attacker = args.getAttacker();
                                         if (attacker instanceof EntityPlayer) {
                                             EntityPlayer player = (EntityPlayer) attacker;
                                             if (args.isHitSuccessfully() && args.isFullAttack()) {
-                                                int coolDown = args.getCalculator().calcu(CoolDown).getInt();
-                                                ItemTool.reduceItemCoolDown(player, args.getWeapon(), coolDown, 20);
+                                                ItemTool.reduceItemCoolDown(player, args.getWeapon(), 20);
                                             }
                                         }
                                         return PSkillResult.Complete;

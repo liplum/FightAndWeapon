@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class WeaponPartRegistry {
+public final class WeaponPartRegistry {
     private static final Map<String, WeaponPart> WeaponPartMap = new HashMap<>();
     private static ArrayList<String> NamesCache = new ArrayList<>();
     private static ArrayList<WeaponPart> WeaponPartsCache = new ArrayList<>();

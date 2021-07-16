@@ -79,6 +79,20 @@ public interface IGemstone {
 
     IGemstone addModifier(Modifier newModifier);
 
+    default IGemstone addModifiers(Collection<Modifier> newModifiers) {
+        for (Modifier modifier : newModifiers) {
+            this.addModifier(modifier);
+        }
+        return this;
+    }
+
+    default IGemstone addModifiers(Modifier... newModifiers) {
+        for (Modifier modifier : newModifiers) {
+            this.addModifier(modifier);
+        }
+        return this;
+    }
+
     IGemstone addPassiveSkillToCore(WeaponCore core, IPassiveSkill<?> newPassiveSkill);
 
     IGemstone addPassiveSkillToWeaponType(WeaponType weaponType, IPassiveSkill<?> newPassiveSkill);

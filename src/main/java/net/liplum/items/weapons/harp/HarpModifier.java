@@ -16,7 +16,7 @@ public abstract class HarpModifier extends MagicToolModifier {
     protected void initAllAttributes(List<IAttribute> attributes) {
         super.initAllAttributes(attributes);
         attributes.add(Attributes.Harp.Frequency);
-        attributes.add(Attributes.Harp.MaxUseDuration);
+        attributes.add(Attributes.Continuous.MaxUseDuration);
         attributes.add(Attributes.Harp.Radius);
     }
 

@@ -7,6 +7,7 @@ import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.attributes.IAttribute;
+import net.liplum.entities.FawWeaponItemEntity;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.FawI18n;
@@ -21,10 +22,12 @@ import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
+import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
@@ -38,7 +41,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.liplum.Attributes.Generic.*;
+import static net.liplum.Attributes.Generic.AttackSpeed;
+import static net.liplum.Attributes.Generic.Durability;
 
 public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
@@ -52,6 +56,10 @@ public abstract class WeaponBaseItem extends FawItem {
         this.weaponType = weaponCore.getWeaponType();
         AttrCalculator calculator = new AttrCalculator(weaponCore);
         setMaxDamage(calculator.calcu(Durability).getInt());
+        //Player can only hold ONE Weapon in an item stack.
+        setMaxStackSize(1);
+        //Player can't repair the weapon in common way(an anvil)
+        setNoRepair();
         WeaponRegistry.register(this);
     }
 
@@ -206,17 +214,11 @@ public abstract class WeaponBaseItem extends FawItem {
 
     @Override
     public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
-        Modifier modifier = GemUtil.getModifierFrom(stack);
-        AttrCalculator calculator = new AttrCalculator()
-                .setWeaponCore(getCore())
-                .setModifier(modifier)
-                .setPlayer(player);
-        FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
-        if (AttackReach.isDefaultValue(finalAttackReach)) {
-            return attackEntity(stack, player, entity);
-        } else {
-            return true;
-        }
+        return weaponCore.getLeftClickEntityBehavior().onLeftClickEntity(this, stack, player, entity);
+    }
+
+    public boolean needSpecialAttackReachJudgment() {
+        return true;
     }
 
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float attackDamage) {
@@ -232,6 +234,14 @@ public abstract class WeaponBaseItem extends FawItem {
      */
     public boolean isEffective(IBlockState state) {
         return false;
+    }
+
+    @Override
+    public boolean onBlockDestroyed(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EntityLivingBase entityLiving) {
+        if ((int) state.getBlockHardness(worldIn, pos) != 0) {
+            stack.damageItem(2, entityLiving);
+        }
+        return true;
     }
 
     @Nonnull
@@ -259,6 +269,25 @@ public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
     public WeaponType getWeaponType() {
         return weaponType;
+    }
+
+    @Override
+    public boolean hasCustomEntity(@Nonnull ItemStack stack) {
+        return true;
+    }
+
+    @Nonnull
+    @Override
+    public Entity createEntity(@Nonnull World world, Entity location, @Nonnull ItemStack itemstack) {
+        EntityItem entity = new FawWeaponItemEntity(world, location.posX, location.posY, location.posZ, itemstack);
+        if (location instanceof EntityItem) {
+            EntityItem item = (EntityItem) location;
+            entity.setPickupDelay(item.pickupDelay);
+        }
+        entity.motionX = location.motionX;
+        entity.motionY = location.motionY;
+        entity.motionZ = location.motionZ;
+        return entity;
     }
 
 }

@@ -61,6 +61,12 @@ public final class Names {
             public static final String MagicSwordItem = "magic_sword";
             public static final String GemstoneSwordItem = "gemstone_sword";
         }
+        public static final class RangedWeapon {
+            public static final String TypeName = "ranged_weapon";
+            public static final String SickleItem = "sickle";
+            public static final String ChainedHammerItem = "chained_hammer";
+            public static final String MeteorHammerItem = "meteor_hammer";
+        }
     }
 
     public static final class Attribute {
@@ -74,6 +80,8 @@ public final class Names {
             public static final String AbilityPower = "AbilityPower";
             public static final String EnemyBreakingTime = "EnemyBreakingTime";
             public static final String KnockbackStrength = "KnockbackStrength";
+            public static final String MaxUseDuration = "MaxUseDuration";
+            public static final String DropsFireproof = "DropsFireproof";
         }
 
         public static final class Lance {
@@ -87,7 +95,6 @@ public final class Names {
         public static final class Harp {
             public static final String Radius = "Radius";
             public static final String Frequency = "Frequency";
-            public static final String MaxUseDuration = "MaxUseDuration";
         }
     }
 

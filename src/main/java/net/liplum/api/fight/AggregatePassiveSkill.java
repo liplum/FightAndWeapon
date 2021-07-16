@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
+public class AggregatePassiveSkill implements IPassiveSkill<Event> {
     @Nonnull
     private final String registerName;
     @Nonnull
@@ -21,8 +21,9 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
     private final AggregatedEventTypeArgs eventTypeArgs = new AggregatedEventTypeArgs();
     private boolean isShownInTooltip = true;
     private boolean built = false;
+    private int triggerPriority = 0;
 
-    public AggregatedPassiveSkill(@Nonnull String registerName) {
+    public AggregatePassiveSkill(@Nonnull String registerName) {
         this.registerName = registerName;
     }
 
@@ -35,20 +36,34 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
     @Nonnull
     @Override
     public PSkillResult onTrigger(@Nonnull Event event) {
-        return allSkills.get(event.getClass()).apply(event);
+        Function<Event, PSkillResult> trigger = allSkills.get(event.getClass());
+        if (trigger == null) {
+            return PSkillResult.Fail;
+        } else {
+            return trigger.apply(event);
+        }
     }
 
-    public AggregatedPassiveSkill add(Class<? extends Event> clz, Function<Event, PSkillResult> skill) {
-        allSkills.put((Class<Event>) clz, skill);
+    public <T extends Event> AggregatePassiveSkill add(Class<T> clz, Function<T, PSkillResult> skill) {
+        allSkills.put((Class<Event>) clz, (Function<Event, PSkillResult>) skill);
         allEventTypes.add((Class<Event>) clz);
         return this;
     }
 
+    @Override
+    public int getTriggerPriority() {
+        return triggerPriority;
+    }
+
+    public AggregatePassiveSkill setTriggerPriority(int triggerPriority) {
+        this.triggerPriority = triggerPriority;
+        return this;
+    }
 
     /**
      * Register itself to {@link SkillRegistry} and you should call it only once.
      */
-    public AggregatedPassiveSkill build() {
+    public AggregatePassiveSkill build() {
         SkillRegistry.register(this);
         built = true;
         return this;
@@ -65,7 +80,7 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
         return isShownInTooltip;
     }
 
-    public boolean aggregate(AggregatedPassiveSkill other) {
+    public boolean aggregate(AggregatePassiveSkill other) {
         if (!built) {
             for (Map.Entry<Class<Event>, Function<Event, PSkillResult>> entry : other.allSkills.entrySet()) {
                 this.add(entry.getKey(), entry.getValue());
@@ -83,7 +98,7 @@ public class AggregatedPassiveSkill implements IPassiveSkill<Event> {
         return false;
     }
 
-    public AggregatedPassiveSkill setShownInTooltip() {
+    public AggregatePassiveSkill setShownInTooltip() {
         this.isShownInTooltip = true;
         return this;
     }

@@ -15,22 +15,33 @@ import java.util.function.Predicate;
 public class Attribute implements IAttribute {
     @Nonnull
     private static final Map<String, IAttribute> AttributesMap = new HashMap<>();
+
+    public static void register(IAttribute attribute) {
+        AttributesMap.put(attribute.getRegisterName(), attribute);
+    }
+
+    public static void remove(String attributeName) {
+        AttributesMap.remove(attributeName);
+    }
+
+    public static void setBasicAttribute(IAttribute attribute) {
+        BasicAttributes.add(attribute);
+    }
+
     @Nonnull
     private static final LinkedList<IAttribute> BasicAttributes = new LinkedList<>();
     @Nonnull
-    private static final AttrModifier emptyAttrModifierInt = new AttrModifier(DataType.Int, 0, 0);
+    private static final AttrModifier EmptyAttrModifierInt = new AttrModifier(DataType.Int, 0, 0);
     @Nonnull
-    private static final AttrModifier emptyAttrModifierFloat = new AttrModifier(DataType.Float, 0, 0);
+    private static final AttrModifier EmptyAttrModifierFloat = new AttrModifier(DataType.Float, 0, 0);
     @Nonnull
-    private static final AttrDelta emptyAttrDeltaInt = new AttrDelta(DataType.Int, 0);
+    private static final AttrDelta EmptyAttrDeltaInt = new AttrDelta(DataType.Int, 0);
     @Nonnull
-    private static final AttrDelta emptyAttrDeltaFloat = new AttrDelta(DataType.Float, 0);
+    private static final AttrDelta EmptyAttrDeltaFloat = new AttrDelta(DataType.Float, 0);
     @Nonnull
-    private static final FinalAttrValue emptyFinalAttrValueInt = new FinalAttrValue(DataType.Int, 0);
+    private static final FinalAttrValue EmptyFinalAttrValueInt = new FinalAttrValue(DataType.Int, 0);
     @Nonnull
-    private static final FinalAttrValue emptyFinalAttrValueFloat = new FinalAttrValue(DataType.Float, 0);
-
-    private static final Map<IAttribute, FinalAttrValue> EmptyFinalAttrValueCache = new HashMap<>();
+    private static final FinalAttrValue EmptyFinalAttrValueFloat = new FinalAttrValue(DataType.Float, 0);
 
     private boolean isBasic = false;
     @Nonnull
@@ -211,10 +222,10 @@ public class Attribute implements IAttribute {
     @Nonnull
     public Attribute setRegisterName(@Nonnull String registerName) {
         String former = this.registerName;
-        AttributesMap.remove(former);
+        Attribute.remove(former);
 
         this.registerName = registerName;
-        AttributesMap.put(registerName, this);
+        Attribute.register(this);
         return this;
     }
 
@@ -329,8 +340,9 @@ public class Attribute implements IAttribute {
     }
 
     /**
-     * Smaller number means front
-     * Larger number means later
+     * Smaller number means front<br/>
+     * Larger number means later<br/>
+     * O is default.
      *
      * @return the priority of display
      */
@@ -340,8 +352,9 @@ public class Attribute implements IAttribute {
     }
 
     /**
-     * Smaller number means front
-     * Larger number means later
+     * Smaller number means front<br/>
+     * Larger number means later<br/>
+     * O is default.
      */
     public Attribute setDisplayPriority(int displayPriority) {
         this.displayPriority = displayPriority;
@@ -426,7 +439,7 @@ public class Attribute implements IAttribute {
     @Nonnull
     @Override
     public AttrModifier emptyAttrModifier() {
-        return dataType == DataType.Int ? emptyAttrModifierInt : emptyAttrModifierFloat;
+        return dataType == DataType.Int ? EmptyAttrModifierInt : EmptyAttrModifierFloat;
     }
 
     @Nonnull
@@ -444,7 +457,7 @@ public class Attribute implements IAttribute {
     @Nonnull
     @Override
     public AttrDelta emptyAttrDelta() {
-        return dataType == DataType.Int ? emptyAttrDeltaInt : emptyAttrDeltaFloat;
+        return dataType == DataType.Int ? EmptyAttrDeltaInt : EmptyAttrDeltaFloat;
     }
 
     @Nonnull
@@ -456,7 +469,7 @@ public class Attribute implements IAttribute {
     @Nonnull
     @Override
     public FinalAttrValue emptyFinalAttrValue() {
-        return dataType == DataType.Int ? emptyFinalAttrValueInt : emptyFinalAttrValueFloat;
+        return dataType == DataType.Int ? EmptyFinalAttrValueInt : EmptyFinalAttrValueFloat;
     }
 
     @Nonnull
@@ -472,37 +485,38 @@ public class Attribute implements IAttribute {
 
     @Nonnull
     @Override
-    public FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta master) {
+    public FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery) {
         switch (computeType) {
             case Full:
-                if (master == null && modifier == null) {
+                if (mastery == null && modifier == null) {
                     return computeOnlyBase(base);
                 }
-                if (master == null) {
+                if (mastery == null) {
                     return computeOnlyGemstone(base, modifier);
                 }
                 if (modifier == null) {
-                    return computeOnlyMastery(base, master);
+                    return computeOnlyMastery(base, mastery);
                 }
-                return computeFull(base, modifier, master);
+                return computeFull(base, modifier, mastery);
             case Only_Rate:
                 if (modifier == null) {
                     return computeOnlyBase(base);
                 }
                 return computeOnlyRate(base, modifier);
-            case Only_Master:
-                if (master == null) {
+            case Only_Mastery:
+                if (mastery == null) {
                     return computeOnlyBase(base);
                 }
-                return computeOnlyMastery(base, master);
+                return computeOnlyMastery(base, mastery);
             case Only_Base:
                 return computeOnlyBase(base);
-            default://Only_Gemstone
+            case  Only_Gemstone:
                 if (modifier == null) {
                     return computeOnlyBase(base);
                 }
                 return computeOnlyGemstone(base, modifier);
         }
+        return emptyFinalAttrValue();
     }
 
     @Nonnull
@@ -577,7 +591,7 @@ public class Attribute implements IAttribute {
 
     public Attribute setBasic() {
         if (!isBasic) {
-            BasicAttributes.add(this);
+            Attribute.setBasicAttribute(this);
             isBasic = true;
         }
         return this;

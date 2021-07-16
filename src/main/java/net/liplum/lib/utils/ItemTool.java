@@ -11,10 +11,8 @@ import net.minecraft.util.EnumHand;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -45,23 +43,12 @@ public class ItemTool {
         int fullCoolDownTicks = getFullCoolDownTicks(player, item);
         int restTicks = (int) (restRate * fullCoolDownTicks);
         if (restTicks > 0) {
-            int newCoolDown = restTicks - decrementTicks;
-            tracker.setCooldown(item, newCoolDown);
-            return true;
-        }
-        return false;
-    }
-
-    public static boolean reduceItemCoolDown(EntityPlayer player, Item item,int fullCoolDownTicks, int decrementTicks) {
-        if (decrementTicks <= 0) {
-            return false;
-        }
-        CooldownTracker tracker = player.getCooldownTracker();
-        float restRate = tracker.getCooldown(item, 0.0F);
-        int restTicks = (int) (restRate * fullCoolDownTicks);
-        if (restTicks > 0) {
-            int newCoolDown = restTicks - decrementTicks;
-            tracker.setCooldown(item, newCoolDown);
+            int newCoolDown = MathUtil.fixMin(restTicks - decrementTicks, 0);
+            if (newCoolDown == 0) {
+                tracker.removeCooldown(item);
+            } else {
+                tracker.setCooldown(item, newCoolDown);
+            }
             return true;
         }
         return false;
@@ -69,6 +56,13 @@ public class ItemTool {
 
     public static int getFullCoolDownTicks(EntityPlayer player, Item item) {
         CooldownTracker cooldownTracker = player.getCooldownTracker();
+        //By AT
+        CooldownTracker.Cooldown cooldownObj = cooldownTracker.cooldowns.get(item);
+        if (cooldownObj != null) {
+            return Math.abs(cooldownObj.expireTicks - cooldownObj.createTicks);
+        }
+        return 0;
+        /* By Reflect
         Class<CooldownTracker> clz = CooldownTracker.class;
         try {
             Field cooldownsField = clz.getDeclaredField("cooldowns");
@@ -90,8 +84,7 @@ public class ItemTool {
 
         } catch (NoSuchFieldException | IllegalAccessException | ClassNotFoundException e) {
             e.printStackTrace();
-        }
-        return 0;
+        }*/
     }
 
     /**

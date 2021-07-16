@@ -39,17 +39,19 @@ public class ClientHandler {
             if (!player.isHandActive()) {
                 if (item instanceof WeaponBaseItem) {
                     WeaponBaseItem weapon = (WeaponBaseItem) item;
-                    AttrCalculator calculator = new AttrCalculator()
-                            .setWeaponCore(weapon.getCore())
-                            .setModifier(GemUtil.getModifierFrom(mainHand))
-                            .setPlayer(player);
-                    FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
-                    if (!AttackReach.isDefaultValue(finalAttackReach)) {
-                        RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(finalAttackReach.getFloat());
-                        if (rayTrace != null) {
-                            MessageManager.sendMessageToServer(
-                                    new AttackMsg(rayTrace.entityHit.getEntityId())
-                            );
+                    if (weapon.needSpecialAttackReachJudgment()) {
+                        AttrCalculator calculator = new AttrCalculator()
+                                .setWeaponCore(weapon.getCore())
+                                .setModifier(GemUtil.getModifierFrom(mainHand))
+                                .setPlayer(player);
+                        FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
+                        if (!AttackReach.isDefaultValue(finalAttackReach)) {
+                            RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(finalAttackReach.getFloat());
+                            if (rayTrace != null) {
+                                MessageManager.sendMessageToServer(
+                                        new AttackMsg(rayTrace.entityHit.getEntityId())
+                                );
+                            }
                         }
                     }
                 }

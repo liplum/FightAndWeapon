@@ -17,7 +17,15 @@ public interface IAttribute {
 
     boolean isShownInTooltip();
 
-    int getDisplayPriority();
+    /**
+     * Smaller number means front<br/>
+     * Larger number means later<br/>
+     * O is default.
+     * @return the priority of display
+     */
+    default int getDisplayPriority(){
+        return 0;
+    }
 
     default int getTooltipShownIntValue(Number input) {
         return getTooltipShownValue(input).intValue();
@@ -104,6 +112,6 @@ public interface IAttribute {
     }
 
     @Nonnull
-    FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta master);
+    FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery);
 
 }

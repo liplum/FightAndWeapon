@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    " Q ",
+    " Q ",
+    " S "
+  ],
+  "key": {
+    "Q": {
+      "item": "minecraft:quartz"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "faw:quartz_sword",
+    "nbt": "{ench:[{lvl:1s,id:0s}]}",
+    "count": 1
+  }
+}

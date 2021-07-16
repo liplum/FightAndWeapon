@@ -4,13 +4,14 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.liplum.Names;
 import net.liplum.Vanilla;
-import net.liplum.api.fight.AggregatedPassiveSkill;
+import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.attributes.*;
-import net.liplum.lib.OpenItem;
+import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -20,8 +21,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 
-import static net.liplum.Attributes.Generic.AttackSpeed;
-import static net.liplum.Attributes.Generic.Durability;
+import static net.liplum.Attributes.Generic.*;
 
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
@@ -33,9 +33,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     private final List<IAttribute> allAttributes = new LinkedList<>();
     @Nonnull
-    protected IWeaponSkillPredicate weaponSkillPredicate;
+    private IWeaponSkillPredicate weaponSkillPredicate;
     @Nullable
-    protected AggregatedPassiveSkill weaponPassiveSkills;
+    private AggregatePassiveSkill weaponPassiveSkills;
+
+    private ILeftClickEntityBehavior leftClickEntityBehavior;
 
     public WeaponCore() {
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
@@ -52,8 +54,12 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Nullable
-    public AggregatedPassiveSkill getWeaponPassiveSkills() {
+    public AggregatePassiveSkill getWeaponPassiveSkills() {
         return weaponPassiveSkills;
+    }
+
+    public ILeftClickEntityBehavior getLeftClickEntityBehavior() {
+        return leftClickEntityBehavior;
     }
 
     /**
@@ -122,13 +128,32 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
                     if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
                         double attackSpeedDelta = attackSpeed - Vanilla.DefaultAttackSpeed;
                         return ItemTool.genAttrModifier(
-                                OpenItem.getAttackSpeedModifierUUID(),
+                                Item.ATTACK_SPEED_MODIFIER,
                                 Vanilla.AttrModifierType.DeltaAddition,
                                 Names.WeaponAttributeModifier, attackSpeedDelta);
                     }
                     return null;
                 })
-                .set(Durability, Durability.newBasicAttrValue(100));
+                .set(Durability, Durability.newBasicAttrValue(100))
+                .setLeftClickEntityBehavior(
+                        ((weapon, stack, attacker, target) -> {
+                            if (weapon.needSpecialAttackReachJudgment()) {
+                                Modifier modifier = GemUtil.getModifierFrom(stack);
+                                AttrCalculator calculator = new AttrCalculator()
+                                        .setWeaponCore(this)
+                                        .setModifier(modifier)
+                                        .setPlayer(attacker);
+                                FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
+                                if (AttackReach.isDefaultValue(finalAttackReach)) {
+                                    return weapon.attackEntity(stack, attacker, target);
+                                } else {
+                                    return true;
+                                }
+                            } else {
+                                return weapon.attackEntity(stack, attacker, target);
+                            }
+                        })
+                );
     }
 
     /**
@@ -154,7 +179,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return this;
         }
 
-        public WeaponCoreBuilder addPassiveSkills(@Nonnull AggregatedPassiveSkill passiveSkills) {
+        public WeaponCoreBuilder addPassiveSkills(@Nonnull AggregatePassiveSkill passiveSkills) {
             WeaponCore thisCore = WeaponCore.this;
             if (thisCore.weaponPassiveSkills == null) {
                 thisCore.weaponPassiveSkills = passiveSkills;
@@ -176,6 +201,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
         public WeaponCoreBuilder addOffHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
+            return this;
+        }
+
+        public WeaponCoreBuilder setLeftClickEntityBehavior(@Nonnull ILeftClickEntityBehavior behavior) {
+            leftClickEntityBehavior = behavior;
             return this;
         }
     }

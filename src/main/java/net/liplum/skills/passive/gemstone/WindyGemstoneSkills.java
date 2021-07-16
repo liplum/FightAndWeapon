@@ -36,5 +36,5 @@ public final class WindyGemstoneSkills {
                     event.setCanceled(true);
                     return PSkillResult.CancelTrigger;
                 }
-            };
+            }.setTriggerPriority(Integer.MIN_VALUE);
 }

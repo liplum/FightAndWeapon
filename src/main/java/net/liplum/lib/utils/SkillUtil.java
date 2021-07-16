@@ -1,6 +1,6 @@
 package net.liplum.lib.utils;
 
-import net.liplum.api.fight.AggregatedPassiveSkill;
+import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.WeaponBaseItem;
@@ -15,8 +15,10 @@ import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
+import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public final class SkillUtil {
 
@@ -28,7 +30,7 @@ public final class SkillUtil {
             WeaponBaseItem weapon = (WeaponBaseItem) item;
             WeaponType weaponType = weapon.getWeaponType();
             WeaponCore core = weapon.getCore();
-            AggregatedPassiveSkill coreSkill = core.getWeaponPassiveSkills();
+            AggregatePassiveSkill coreSkill = core.getWeaponPassiveSkills();
             if (coreSkill != null && coreSkill.getEventTypeArgs().has(eventType)) {
                 allSkills.add(coreSkill);
             }
@@ -57,7 +59,7 @@ public final class SkillUtil {
     }
 
     @Nonnull
-    public static Set<IPassiveSkill<Event>> getPassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
+    public static Collection<IPassiveSkill<Event>> getPassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
         Set<IPassiveSkill<Event>> skills = new HashSet<>();
         ItemStack mainHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
         addPassiveSkills((Class<Event>) eventType, skills, mainHandHeld, entity);
@@ -65,6 +67,6 @@ public final class SkillUtil {
         ItemStack offHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
         addPassiveSkills((Class<Event>) eventType, skills, offHandHeld, entity);
 
-        return skills;
+        return skills.stream().sorted(Comparator.comparing(IPassiveSkill::getTriggerPriority)).collect(Collectors.toList());
     }
 }

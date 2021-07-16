@@ -14,6 +14,8 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
     private final EventTypeArgs eventTypeArgs;
     private boolean isShownInTooltip = true;
 
+    private int triggerPriority = 0;
+
     /**
      * Whenever you create the instance, it will register itself to {@link SkillRegistry} automatically.
      *
@@ -24,6 +26,16 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         this.registerName = registerName;
         this.eventTypeArgs = new EventTypeArgs((Class<Event>) eventTypeClz);
         SkillRegistry.register(this);
+    }
+
+    @Override
+    public int getTriggerPriority() {
+        return triggerPriority;
+    }
+
+    public PassiveSkill<EventType> setTriggerPriority(int triggerPriority) {
+        this.triggerPriority = triggerPriority;
+        return this;
     }
 
     @Nonnull

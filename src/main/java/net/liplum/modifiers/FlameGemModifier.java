@@ -11,8 +11,10 @@ import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import static net.liplum.Attributes.Generic.DropsFireproof;
+
 public class FlameGemModifier {
-    public final static LanceModifier Normal_Lance = new LanceModifier() {
+    public final static LanceModifier Light_Lance = new LanceModifier() {
         @Override
         public LanceCore getCore() {
             return LanceCoreTypes.LightLance;
@@ -27,6 +29,14 @@ public class FlameGemModifier {
             EntityLargeFireball fireball = new EntityLargeFireball(world, player, face.x, face.y, face.z);
             EntityUtil.spawnEntityIfServer(world, fireball);
             return true;
+        }
+
+        @Override
+        protected void build(ModifierBuilder builder) {
+            super.build(builder);
+            builder.set(
+                    DropsFireproof, DropsFireproof.newAttrModifier(1, 0)
+            );
         }
     };
 }

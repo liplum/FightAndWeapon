@@ -3,6 +3,7 @@ package net.liplum;
 import net.liplum.api.weapon.Gemstone;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.modifiers.EnderGemModifier;
+import net.liplum.modifiers.FlameGemModifier;
 import net.liplum.modifiers.RubyModifier;
 import net.liplum.skills.passive.gemstone.UndeterminedSkills;
 
@@ -30,6 +31,7 @@ public final class Gemstones {
             .addPassiveSkillToAll(GentlyLand);
 
     public final static IGemstone Flamegem_Gemstone = new Gemstone(Names.Gemstone.Flamegem)
+            .addModifier(FlameGemModifier.Light_Lance)
             .addPassiveSkillToAll(FireProof)
             .addPassiveSkillToAll(ScorchingTouch);
 

@@ -20,6 +20,8 @@ import net.liplum.items.weapons.harp.HarpCoreTypes;
 import net.liplum.items.weapons.harp.HarpItem;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceItem;
+import net.liplum.items.weapons.rangeweapon.RangedWeaponCoreTypes;
+import net.liplum.items.weapons.rangeweapon.SickleItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -83,6 +85,8 @@ public final class ItemRegistry {
 
     //Harp
     public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
+
+    public static final Item Sickle_Item = weapon(new SickleItem(RangedWeaponCoreTypes.Sickle), Names.Item.RangedWeapon.SickleItem);
 
     //Block
     public static final Item Forge_Block_Item = forge(new ItemBlock(BlockRegistry.Forge_Block), Names.Block.Forge);

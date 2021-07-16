@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CastRegistry {
+public final class CastRegistry {
     private static final Map<String, Cast> CastMap = new HashMap<>();
     private static final Map<Integer, Cast> IDMap = new HashMap<>();
 

@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.harp;
 
+import net.liplum.Attributes;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.lib.math.MathUtil;
@@ -49,7 +50,7 @@ public final class HarpCoreTypes {
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(200)
             ).set(
-                    MaxUseDuration, MaxUseDuration.newBasicAttrValue(400)
+                    Attributes.Continuous.MaxUseDuration, Attributes.Continuous.MaxUseDuration.newBasicAttrValue(400)
             );
         }
 

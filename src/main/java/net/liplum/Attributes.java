@@ -1,9 +1,6 @@
 package net.liplum;
 
-import net.liplum.attributes.Attribute;
-import net.liplum.attributes.ComputeType;
-import net.liplum.attributes.DataType;
-import net.liplum.attributes.IAttribute;
+import net.liplum.attributes.*;
 
 public final class Attributes {
     public static final class Generic {
@@ -94,6 +91,26 @@ public final class Attributes {
                 .setComputeType(ComputeType.Full)
                 .setShownInTooltip(false)
                 .setDefaultValue(1);
+
+        public static final IAttribute DropsFireproof = new BoolAttribute()
+                .setRegisterName(Names.Attribute.Generic.DropsFireproof)
+                .setBasic()
+                .setComputeType(ComputeType.Only_Gemstone)
+                .setOnlyGemstoneCompute((base, modifier) -> base || modifier)
+                .setDefaultValue(false);
+    }
+
+    public static final class Continuous {
+
+        /**
+         * The default one equals 60 minutes
+         */
+        public static final IAttribute MaxUseDuration = new Attribute()
+                .setRegisterName(Names.Attribute.Generic.MaxUseDuration)
+                .setDataType(DataType.Int)
+                .setComputeType(ComputeType.Only_Base)
+                .setShownInTooltip(false)
+                .setDefaultValue(72000);
     }
 
     public static final class Lance {
@@ -149,15 +166,5 @@ public final class Attributes {
                 .setDefaultValue(72000)
                 .setDisplayPriority(60)
                 .setMinimum(1);
-        /**
-         * The default one equals 60 minutes
-         */
-        public static final IAttribute MaxUseDuration = new Attribute()
-                .setRegisterName(Names.Attribute.Harp.MaxUseDuration)
-                .setHowToGetI18nKey(I18ns.Attribute::Harp)
-                .setDataType(DataType.Int)
-                .setComputeType(ComputeType.Only_Base)
-                .setShownInTooltip(false)
-                .setDefaultValue(72000);
     }
 }

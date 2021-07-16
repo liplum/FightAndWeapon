@@ -23,7 +23,7 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nonnull;
 
 import static net.liplum.Attributes.Harp.Frequency;
-import static net.liplum.Attributes.Harp.MaxUseDuration;
+import static net.liplum.Attributes.Continuous.MaxUseDuration;
 
 public class HarpItem extends WeaponBaseItem {
     private final HarpCore core;
