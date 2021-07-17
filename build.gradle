@@ -139,6 +139,7 @@ shadowJar {
         shadowJar {}
     }
     shadowJar.finalizedBy('reobfShadowJar')
+
 }
 //If you are using the IntelliJ IDEA development, please keep it.
 //If not -- such as wanting to make a *.jar file, just comment it, otherwise it'll copy your mod's codes into the *.jar file.

@@ -27,6 +27,7 @@ import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
@@ -321,8 +322,8 @@ public final class FawItemUtil {
         }
     }
 
-    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, int amount, EntityLivingBase entity) {
-        if (amount <= 0) {
+    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount, EntityLivingBase entity) {
+        if (amount == 0) {
             return;
         }
         WeaponDurabilityEvent.Damaged damagedEvent = new WeaponDurabilityEvent.Damaged(itemStack, weapon, entity, amount);
@@ -333,8 +334,8 @@ public final class FawItemUtil {
         }
     }
 
-    public static void healWeapon(WeaponBaseItem weapon, ItemStack itemStack, int amount, EntityLivingBase entity) {
-        if (amount <= 0) {
+    public static void healWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount, EntityLivingBase entity) {
+        if (amount == 0) {
             return;
         }
         WeaponDurabilityEvent.Healed healedEvent = new WeaponDurabilityEvent.Healed(itemStack, weapon, entity, amount);

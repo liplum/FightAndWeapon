@@ -3,6 +3,7 @@ package net.liplum.api.weapon;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.liplum.Names;
+import net.liplum.TooltipMiddlewares;
 import net.liplum.Vanilla;
 import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.attributes.*;
@@ -157,7 +158,12 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
                                 return weapon.attackEntity(stack, attacker, target);
                             }
                         })
-                );
+                )
+                .setTooltipPipe(new TooltipPipe()
+                        .addMiddleware(TooltipMiddlewares.AutoAddSpaceLine)
+                        .addMiddleware(TooltipMiddlewares.ShowGemstone)
+                        .addMiddleware(TooltipMiddlewares.ShowAttributes)
+                        .addMiddleware(TooltipMiddlewares.ShowPassiveSkills));
     }
 
     /**

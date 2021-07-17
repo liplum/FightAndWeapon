@@ -14,6 +14,9 @@ import net.liplum.lib.utils.FawI18n;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.Utils;
+import net.liplum.tooltips.IWeaponTooltipBuilder;
+import net.liplum.tooltips.TooltipContext;
+import net.liplum.tooltips.WeaponTooltipBuilder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -37,11 +40,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Comparator;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static net.liplum.Attributes.Generic.AttackSpeed;
 import static net.liplum.Attributes.Generic.Durability;
 
 public abstract class WeaponBaseItem extends FawItem {
@@ -87,17 +88,20 @@ public abstract class WeaponBaseItem extends FawItem {
         WeaponCore core = getCore();
         IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
         Modifier modifier = null;
-        Collection<IPassiveSkill<?>> passiveSkills = null;
+        //      Collection<IPassiveSkill<?>> passiveSkills = null;
         if (gemstone != null) {
-            passiveSkills = gemstone.getPassiveSkillsOf(core);
+//            passiveSkills = gemstone.getPassiveSkillsOf(core);
             modifier = gemstone.getModifierOf(core);
         }
         AttrCalculator calculator = new AttrCalculator()
                 .setWeaponCore(core)
                 .setModifier(modifier)
                 .setPlayer(player);
+        TooltipContext context = new TooltipContext(stack, this, calculator, tooltipOption);
+        IWeaponTooltipBuilder builder = new WeaponTooltipBuilder(context);
+        tooltip.addAll(builder.build().getTooltip());
 
-        LinkedList<String> weaponTypeTooltip = new LinkedList<>();
+        /*LinkedList<String> weaponTypeTooltip = new LinkedList<>();
         LinkedList<String> gemstoneTooltip = new LinkedList<>();
         LinkedList<String> attributesTooltip = new LinkedList<>();
         LinkedList<String> passiveSkillsTooltip = new LinkedList<>();
@@ -139,7 +143,7 @@ public abstract class WeaponBaseItem extends FawItem {
 
         if (tooltipOption.isVanillaAdvanced() && !vanillaAttackSpeedTipShown) {
             tooltip.add("");
-        }
+        }*/
     }
 
     @SideOnly(Side.CLIENT)

@@ -14,5 +14,9 @@ public abstract class Event<S> {
         return subscribers.remove(subscriber);
     }
 
+    public void clear() {
+        subscribers.clear();
+    }
+
     public abstract void trigger();
 }

@@ -9,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.EnumHand;
 
+import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
@@ -155,10 +156,7 @@ public class ItemTool {
         return itemStack.getMaxDamage() - itemStack.getItemDamage();
     }
 
-    public static void decreaseItemDurability(ItemStack itemStack, int amount) {
-        if (amount < 0) {
-            return;
-        }
+    public static void decreaseItemDurability(ItemStack itemStack, @Nonnegative int amount) {
         //Damage
         int finalDamage = MathUtil.fixMax(amount, getCurrentDurability(itemStack));
         if (finalDamage != 0) {
@@ -166,10 +164,7 @@ public class ItemTool {
         }
     }
 
-    public static void increaseItemDurability(ItemStack itemStack, int amount) {
-        if (amount < 0) {
-            return;
-        }
+    public static void increaseItemDurability(ItemStack itemStack, @Nonnegative int amount) {
         //Heal
         int finalHeal = MathUtil.fixMax(amount, itemStack.getItemDamage());
         if (finalHeal != 0) {
