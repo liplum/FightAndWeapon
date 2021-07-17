@@ -2,6 +2,7 @@ package net.liplum.eventhandlers;
 
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.attributes.AttrCalculator;
+import net.liplum.attributes.BoolAttribute;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.RenderUtil;
@@ -20,6 +21,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import static net.liplum.Attributes.Generic.AttackReach;
+import static net.liplum.Attributes.Generic.SpecialAttackReachJudgment;
 
 @SideOnly(Side.CLIENT)
 public class ClientHandler {
@@ -39,10 +41,9 @@ public class ClientHandler {
             if (!player.isHandActive()) {
                 if (item instanceof WeaponBaseItem) {
                     WeaponBaseItem weapon = (WeaponBaseItem) item;
-                    if (weapon.needSpecialAttackReachJudgment()) {
-                        AttrCalculator calculator = new AttrCalculator()
-                                .setWeaponCore(weapon.getCore())
-                                .setModifier(GemUtil.getModifierFrom(mainHand))
+                    AttrCalculator calculator = new AttrCalculator(weapon.getCore());
+                    if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
+                        calculator.setModifier(GemUtil.getModifierFrom(mainHand))
                                 .setPlayer(player);
                         FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
                         if (!AttackReach.isDefaultValue(finalAttackReach)) {

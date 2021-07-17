@@ -24,47 +24,6 @@ public class TooltipPipe {
             @Nonnull
             @Override
             public List<String> getTooltip() {
-                /*int middlewareCount = allMiddlewares.size();
-                ArrayList<TooltipEntry> allEntries = new ArrayList<>(middlewareCount);
-                ArrayList<ITooltipMiddleware> middlewareSequence = new ArrayList<>(middlewareCount);
-                ListIterator<ITooltipMiddleware> it = allMiddlewares.listIterator();
-                while (it.hasNext()) {
-                    ITooltipMiddleware current = it.next();
-                    context.setHasNextMiddleware(it.hasNext());
-                    TooltipPart result = current.through(context);
-                    context.setLastPart(result);
-                    allEntries.add(new TooltipEntry(current, result));
-                    middlewareSequence.add(current);
-                }
-
-                context.setLastPart(null);
-                for (int i = 0; i < middlewareCount; i++) {
-                    ITooltipMiddleware current = middlewareSequence.get(i);
-                    for (int j = 0; j < middlewareCount; j++) {
-                        List<TooltipEntry> restEntries = allEntries.subList(j, middlewareCount);
-                        TooltipEntry entry = allEntries.get(j);
-                        context.setHasNextMiddleware(j != middlewareCount - 1);
-                        ITooltipMiddleware middleware = entry.middleware;
-                        TooltipPart result = entry.result;
-                        TooltipPart preTooltip = new TooltipPart();
-                        current.onFollowingMiddlewareThroughIn(
-                                new TooltipEntry(middleware, preTooltip),
-                                restEntries,
-                                context);
-                        List<String> preTooltips = preTooltip.getTooltips();
-                        if (preTooltips != null) {
-                            for (String str : preTooltips) {
-                                result.addHead(str);
-                            }
-                        }
-                        current.onFollowingMiddlewareThroughOut(entry,
-                                restEntries,
-                                context);
-                        context.setLastPart(result);
-                    }
-                }*/
-
-                //New
                 Delegate<MiddlewareThroughInArgs> onThroughIn = new Delegate<>();
                 Delegate<MiddlewareThroughOutArgs> onThroughOut = new Delegate<>();
                 LinkedList<TooltipPart> finalTooltipParts = new LinkedList<>();

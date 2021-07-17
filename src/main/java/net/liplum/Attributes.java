@@ -98,6 +98,12 @@ public final class Attributes {
                 .setComputeType(ComputeType.Only_Gemstone)
                 .setOnlyGemstoneCompute((base, modifier) -> base || modifier)
                 .setDefaultValue(false);
+
+         public static final IAttribute SpecialAttackReachJudgment = new BoolAttribute()
+                .setRegisterName(Names.Attribute.Generic.SpecialAttackReachJudgment)
+                .setBasic()
+                .setComputeType(ComputeType.Only_Base)
+                .setDefaultValue(true);
     }
 
     public static final class Continuous {

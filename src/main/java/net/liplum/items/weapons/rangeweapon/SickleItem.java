@@ -8,7 +8,7 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 
 public class SickleItem extends WeaponBaseItem {
-    private RangedWeaponCore core;
+    private final RangedWeaponCore core;
 
     public SickleItem(@Nonnull RangedWeaponCore weaponCore) {
         super(weaponCore);
@@ -18,10 +18,5 @@ public class SickleItem extends WeaponBaseItem {
     @Override
     public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
         return true;
-    }
-
-    @Override
-    public boolean needSpecialAttackReachJudgment() {
-        return false;
     }
 }

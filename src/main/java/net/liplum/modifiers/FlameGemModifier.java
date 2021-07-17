@@ -36,7 +36,7 @@ public class FlameGemModifier {
         protected void build(ModifierBuilder builder) {
             super.build(builder);
             builder.set(
-                    DropsFireproof, BoolAttribute.genAttrModifier(true)
+                    DropsFireproof, BoolAttribute.TrueAttrModifier
             );
         }
     };

@@ -1,16 +1,11 @@
 package net.liplum.api.weapon;
 
 import com.google.common.collect.Multimap;
-import net.liplum.I18ns;
-import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.attributes.FinalAttrValue;
-import net.liplum.attributes.IAttribute;
 import net.liplum.entities.FawWeaponItemEntity;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.math.MathUtil;
-import net.liplum.lib.utils.FawI18n;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.Utils;
@@ -20,7 +15,6 @@ import net.liplum.tooltips.WeaponTooltipBuilder;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
-import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -31,17 +25,13 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.Collection;
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import static net.liplum.Attributes.Generic.Durability;
 
@@ -85,117 +75,18 @@ public abstract class WeaponBaseItem extends FawItem {
         boolean shiftPressed = Utils.isShiftDown();
         boolean altPressed = Utils.isAltDown();
         TooltipOption tooltipOption = new TooltipOption(shiftPressed, altPressed, vanillaAdvanced);
-        WeaponCore core = getCore();
         IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
         Modifier modifier = null;
-        //      Collection<IPassiveSkill<?>> passiveSkills = null;
         if (gemstone != null) {
-//            passiveSkills = gemstone.getPassiveSkillsOf(core);
-            modifier = gemstone.getModifierOf(core);
+            modifier = gemstone.getModifierOf(weaponCore);
         }
         AttrCalculator calculator = new AttrCalculator()
-                .setWeaponCore(core)
+                .setWeaponCore(weaponCore)
                 .setModifier(modifier)
                 .setPlayer(player);
         TooltipContext context = new TooltipContext(stack, this, calculator, tooltipOption);
         IWeaponTooltipBuilder builder = new WeaponTooltipBuilder(context);
         tooltip.addAll(builder.build().getTooltip());
-
-        /*LinkedList<String> weaponTypeTooltip = new LinkedList<>();
-        LinkedList<String> gemstoneTooltip = new LinkedList<>();
-        LinkedList<String> attributesTooltip = new LinkedList<>();
-        LinkedList<String> passiveSkillsTooltip = new LinkedList<>();
-
-        addWeaponTypeTooltip(stack, gemstone, weaponTypeTooltip, tooltipOption);
-        addGemstoneTooltip(stack, gemstone, gemstoneTooltip, tooltipOption);
-        addAttributesTooltip(stack, calculator, tooltipOption, attributesTooltip);
-        if (passiveSkills != null) {
-            addPassiveSkillsTooltip(stack, passiveSkills, passiveSkillsTooltip, tooltipOption);
-        }
-
-        boolean weaponTypeShown = weaponTypeTooltip.size() > 0;
-        boolean gemstoneShown = gemstoneTooltip.size() > 0;
-        boolean attributesShown = attributesTooltip.size() > 0;
-        boolean passiveSkillsShown = passiveSkillsTooltip.size() > 0;
-        boolean vanillaAttackSpeedTipShown = !AttackSpeed.isDefaultValue(calculator.calcu(AttackSpeed));
-
-        if (weaponTypeShown) {
-            tooltip.addAll(weaponTypeTooltip);
-        }
-
-        if (gemstoneShown) {
-            tooltip.addAll(gemstoneTooltip);
-            if (attributesShown || passiveSkillsShown) {
-                tooltip.add("");
-            }
-        }
-
-        if (attributesShown) {
-            tooltip.addAll(attributesTooltip);
-            if (passiveSkillsShown) {
-                tooltip.add("");
-            }
-        }
-
-        if (passiveSkillsShown) {
-            tooltip.addAll(passiveSkillsTooltip);
-        }
-
-        if (tooltipOption.isVanillaAdvanced() && !vanillaAttackSpeedTipShown) {
-            tooltip.add("");
-        }*/
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void addWeaponTypeTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> weaponTypeTooltip, TooltipOption option) {
-        weaponTypeTooltip.add(I18n.format(FawI18n.getNameI18nKey(getWeaponType())));
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void addGemstoneTooltip(@Nonnull ItemStack stack, @Nullable IGemstone gemstone, @Nonnull List<String> gemstoneTooltip, TooltipOption option) {
-        if (gemstone != null) {
-            gemstoneTooltip.add(
-                    I18n.format(I18ns.Tooltip.Inlaid) + " " +
-                            TextFormatting.RED +
-                            I18n.format(FawI18n.getNameI18nKey(gemstone)));
-        } else {
-            gemstoneTooltip.add(I18n.format(I18ns.Tooltip.NoGemstone));
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void addAttributesTooltip(@Nonnull ItemStack stack, AttrCalculator calculator, TooltipOption option, @Nonnull List<String> attributesTooltip) {
-        WeaponCore core = getCore();
-        List<IAttribute> sortedAttr = core.getAllAttributes().stream()
-                .filter(IAttribute::isShownInTooltip)
-                .sorted(Comparator.comparing(IAttribute::getDisplayPriority))
-                .collect(Collectors.toList());
-
-        for (IAttribute attribute : sortedAttr) {
-            if (attribute.needMoreDetailsToShown() && !option.isMoreDetailsShown()) {
-                continue;
-            }
-            FinalAttrValue finalValue = calculator.calcu(attribute);
-            if (attribute.canTooltipShow(finalValue)) {
-                FawItemUtil.addAttributeTooltip(
-                        attributesTooltip, attribute.getI18nKey(),
-                        attribute.getTooltipShownValue(finalValue),
-                        attribute.getFormat(),
-                        attribute.isStripTrailingZero(),
-                        ((attribute.hasUnit() && option.isUnitShown()) ?
-                                attribute.getUnit() : null)
-                );
-            }
-        }
-    }
-
-    @SideOnly(Side.CLIENT)
-    public void addPassiveSkillsTooltip(@Nonnull ItemStack stack, @Nonnull Collection<IPassiveSkill<?>> passiveSkills, @Nonnull List<String> passiveSkillsTooltip, TooltipOption option) {
-        for (IPassiveSkill<?> passiveSkill : passiveSkills) {
-            if (passiveSkill.isShownInTooltip()) {
-                FawItemUtil.addPassiveSkillTooltip(passiveSkillsTooltip, passiveSkill);
-            }
-        }
     }
 
     /**
@@ -219,10 +110,6 @@ public abstract class WeaponBaseItem extends FawItem {
     @Override
     public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
         return weaponCore.getLeftClickEntityBehavior().onLeftClickEntity(this, stack, player, entity);
-    }
-
-    public boolean needSpecialAttackReachJudgment() {
-        return true;
     }
 
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float attackDamage) {

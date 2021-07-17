@@ -6,9 +6,9 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BoolAttribute implements IAttribute {
-    private static final int FalseInt = toInt(false);
+    public static final int FalseInt = toInt(false);
     public static final FinalAttrValue EmptyFinalAttrValue = new FinalAttrValue(DataType.Int, FalseInt);
-    private static final int TrueInt = toInt(true);
+    public static final int TrueInt = toInt(true);
     private static final AttrModifier EmptyAttrModifier = new AttrModifier(DataType.Int, FalseInt, 0);
     private static final AttrDelta EmptyAttrDelta = new AttrDelta(DataType.Int, FalseInt);
     private String registerName;
@@ -22,7 +22,17 @@ public class BoolAttribute implements IAttribute {
     private IOnlyGemstoneCompute onlyGemstoneCompute;
     private IOnlyMasteryCompute onlyMasteryCompute;
 
-    public static BasicAttrValue genAttrValue(boolean b) {
+    public static final BasicAttrValue TrueBasicAttrValue = genBasicAttrValue(true);
+    public static final AttrDelta TrueAttrDelta = genAttrDelta(true);
+    public static final AttrModifier TrueAttrModifier = genAttrModifier(true);
+    public static final FinalAttrValue TrueFinalAttrValue = genFinalAttrValue(true);
+
+    public static final BasicAttrValue FalseBasicAttrValue = genBasicAttrValue(false);
+    public static final AttrModifier FalseAttrModifier = genAttrModifier(false);
+    public static final AttrDelta FalseAttrDelta = genAttrDelta(false);
+     public static final FinalAttrValue FalseFinalAttrValue = genFinalAttrValue(false);
+
+    public static BasicAttrValue genBasicAttrValue(boolean b) {
         return new BasicAttrValue(DataType.Int, toInt(b));
     }
 

@@ -40,7 +40,7 @@ public class TooltipContext {
         this.weaponCore = weapon.getCore();
         this.gemstone = GemUtil.getGemstoneFrom(itemStack);
         if (this.gemstone != null) {
-            this.modifier = gemstone.getModifierOf(weaponCore);
+            this.modifier = calculator.getModifier();
             this.passiveSkills = gemstone.getPassiveSkillsOf(weaponCore);
         } else {
             this.modifier = null;

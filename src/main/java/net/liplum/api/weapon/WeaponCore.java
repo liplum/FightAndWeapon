@@ -142,11 +142,10 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
                 .set(Durability, Durability.newBasicAttrValue(100))
                 .setLeftClickEntityBehavior(
                         ((weapon, stack, attacker, target) -> {
-                            if (weapon.needSpecialAttackReachJudgment()) {
+                            AttrCalculator calculator = new AttrCalculator(this);
+                            if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
                                 Modifier modifier = GemUtil.getModifierFrom(stack);
-                                AttrCalculator calculator = new AttrCalculator()
-                                        .setWeaponCore(this)
-                                        .setModifier(modifier)
+                                calculator.setModifier(modifier)
                                         .setPlayer(attacker);
                                 FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
                                 if (AttackReach.isDefaultValue(finalAttackReach)) {

@@ -83,6 +83,7 @@ public final class Names {
             public static final String KnockbackStrength = "KnockbackStrength";
             public static final String MaxUseDuration = "MaxUseDuration";
             public static final String DropsFireproof = "DropsFireproof";
+            public static final String SpecialAttackReachJudgment = "SpecialAttackReachJudgment";
         }
 
         public static final class Lance {
