@@ -4,6 +4,7 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.attributes.IAttribute;
+import net.liplum.lib.Delegate;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.utils.FawI18n;
 import net.liplum.lib.utils.FawItemUtil;
@@ -13,7 +14,6 @@ import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -24,45 +24,57 @@ import static net.liplum.Attributes.Generic.AttackSpeed;
 
 @SideOnly(Side.CLIENT)
 public final class TooltipMiddlewares {
-    public static final ITooltipMiddleware AutoAddSpaceLine = new ITooltipMiddleware() {
-        @Nonnull
+    public static final IMiddleware AutoAddSpaceLine = new IMiddlewareQualifier() {
         @Override
-        public TooltipPart through(@Nonnull TooltipContext context) {
-            return TooltipPart.Empty;
-        }
-
-        @Override
-        public void onFollowingMiddlewareThroughOut(@Nonnull TooltipEntry tooltipEntry, @Nonnull List<TooltipEntry> rest, @Nonnull TooltipContext context) {
-            TooltipPart itsResult = tooltipEntry.result;
-            if (context.hasNextMiddleware()) {
-                if (TooltipUtil.followingHasTooltip(rest)) {
-                    itsResult.add("");
-                }
-            } else {
-                if (!TooltipUtil.followingHasTooltip(rest)) {
-                    boolean vanillaAttackSpeedTipShown = !AttackSpeed.isDefaultValue(context.calculator.calcu(AttackSpeed));
-                    if (context.tooltipOption.isVanillaAdvanced() && vanillaAttackSpeedTipShown) {
-                        itsResult.add("");
+        public void onSubscribe(Delegate<MiddlewareThroughInArgs> onMiddlewareThroughIn, Delegate<MiddlewareThroughOutArgs> onMiddlewareThroughOut) {
+            onMiddlewareThroughOut.add(
+                    args -> {
+                        IPipeContext pipe = args.pipeContext;
+                        TooltipPart middlewareResult = args.middlewareResult;
+                        if (pipe.isFirstMiddleware()) {
+                            return;
+                        } else {
+                            if (middlewareResult.hasAnyTooltip()) {
+                                middlewareResult.addHead("");
+                            }
+                            if (pipe.isLastMiddleware()) {
+                                TooltipContext tooltipContext = pipe.getContext();
+                                boolean vanillaAttackSpeedTipShown = !AttackSpeed.isDefaultValue(tooltipContext.calculator.calcu(AttackSpeed));
+                                if (tooltipContext.tooltipOption.isVanillaAdvanced() && !vanillaAttackSpeedTipShown) {
+                                    middlewareResult.add("");
+                                }
+                            }
+                        }
                     }
-                }
-            }
+            );
         }
     };
-    public static final ITooltipMiddleware ShowWeaponType = context ->
-            new TooltipPart().add(I18n.format(FawI18n.getNameI18nKey(context.weapon.getWeaponType())));
 
-    public static final ITooltipMiddleware ShowGemstone = context -> {
-        IGemstone gemstone = context.gemstone;
+    public static final IThroughable ShowWeaponType = pipe ->
+            new TooltipPart(
+                    I18n.format(FawI18n.getNameI18nKey(pipe.getContext().weapon.getWeaponType()))
+            );
+
+    public static final IThroughable ShowGemstone = pipe -> {
+        IGemstone gemstone = pipe.getContext().gemstone;
         if (gemstone != null) {
-            return new TooltipPart().add(I18n.format(I18ns.Tooltip.Inlaid) + " " +
-                    TextFormatting.RED +
-                    I18n.format(FawI18n.getNameI18nKey(gemstone)));
+            return new TooltipPart(
+                    I18n.format(I18ns.Tooltip.Inlaid) + " " +
+                            TextFormatting.RED +
+                            I18n.format(FawI18n.getNameI18nKey(gemstone))
+            );
         } else {
-            return new TooltipPart().add(I18n.format(I18ns.Tooltip.NoGemstone));
+            return new TooltipPart(
+                    I18n.format(I18ns.Tooltip.NoGemstone)
+            );
         }
     };
 
-    public static final ITooltipMiddleware ShowAttributes = context -> {
+    public static final IThroughable ShownWeaponTypeAndGemstone =
+            new AggregateThroughable(ShowWeaponType, ShowGemstone);
+
+    public static final IThroughable ShowAttributes = pipe -> {
+        TooltipContext context = pipe.getContext();
         TooltipOption option = context.tooltipOption;
         LinkedList<String> tooltips = new LinkedList<>();
         List<IAttribute> sortedAttr = context.weaponCore.getAllAttributes().stream()
@@ -89,8 +101,8 @@ public final class TooltipMiddlewares {
         return new TooltipPart(tooltips);
     };
 
-    public static final ITooltipMiddleware ShowPassiveSkills = context -> {
-        Collection<IPassiveSkill<?>> passiveSkills = context.passiveSkills;
+    public static final IThroughable ShowPassiveSkills = pipe -> {
+        Collection<IPassiveSkill<?>> passiveSkills = pipe.getContext().passiveSkills;
         LinkedList<String> tooltips = new LinkedList<>();
         if (passiveSkills != null) {
             for (IPassiveSkill<?> passiveSkill : passiveSkills) {

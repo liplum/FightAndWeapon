@@ -326,6 +326,12 @@ public final class FawItemUtil {
         if (amount == 0) {
             return;
         }
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            if (player.isCreative()) {
+                return;
+            }
+        }
         WeaponDurabilityEvent.Damaged damagedEvent = new WeaponDurabilityEvent.Damaged(itemStack, weapon, entity, amount);
         MinecraftForge.EVENT_BUS.post(damagedEvent);
         int finalAmount = damagedEvent.getAmount();

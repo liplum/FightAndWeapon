@@ -3,7 +3,6 @@ package net.liplum.api.weapon;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.liplum.Names;
-import net.liplum.TooltipMiddlewares;
 import net.liplum.Vanilla;
 import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.attributes.*;
@@ -24,6 +23,7 @@ import java.util.Map;
 import java.util.function.Function;
 
 import static net.liplum.Attributes.Generic.*;
+import static net.liplum.TooltipMiddlewares.*;
 
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
@@ -160,10 +160,10 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
                         })
                 )
                 .setTooltipPipe(new TooltipPipe()
-                        .addMiddleware(TooltipMiddlewares.AutoAddSpaceLine)
-                        .addMiddleware(TooltipMiddlewares.ShowGemstone)
-                        .addMiddleware(TooltipMiddlewares.ShowAttributes)
-                        .addMiddleware(TooltipMiddlewares.ShowPassiveSkills));
+                        .addMiddleware(AutoAddSpaceLine)
+                        .addMiddleware(ShownWeaponTypeAndGemstone)
+                        .addMiddleware(ShowAttributes)
+                        .addMiddleware(ShowPassiveSkills));
     }
 
     /**

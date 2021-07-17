@@ -4,7 +4,7 @@ import javax.annotation.Nonnull;
 
 public class MiddlewareThroughOutArgs {
     @Nonnull
-    public final ITooltipMiddleware middleware;
+    public final IMiddleware middleware;
 
     @Nonnull
     public final TooltipPart middlewareResult;
@@ -12,9 +12,13 @@ public class MiddlewareThroughOutArgs {
     @Nonnull
     public final TooltipPart thisResult;
 
-    public MiddlewareThroughOutArgs(@Nonnull ITooltipMiddleware middleware, @Nonnull TooltipPart middlewareResult, @Nonnull TooltipPart thisResult) {
+    @Nonnull
+    public final IPipeContext pipeContext;
+
+    public MiddlewareThroughOutArgs(@Nonnull IMiddleware middleware, @Nonnull TooltipPart middlewareResult, @Nonnull TooltipPart thisResult, @Nonnull IPipeContext pipeContext) {
         this.middleware = middleware;
         this.middlewareResult = middlewareResult;
         this.thisResult = thisResult;
+        this.pipeContext = pipeContext;
     }
 }
