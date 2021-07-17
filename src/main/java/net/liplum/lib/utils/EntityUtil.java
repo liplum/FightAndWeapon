@@ -3,7 +3,6 @@ package net.liplum.lib.utils;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponCore;
 import net.liplum.lib.FawDamage;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

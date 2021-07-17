@@ -5,20 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class TooltipPart {
-    public static TooltipPart singleSpaceLine() {
-        return new TooltipPart("");
-    }
-
-    public static TooltipPart empty() {
-        return new TooltipPart();
-    }
-
     @Nonnull
     private final LinkedList<String> tooltips = new LinkedList<>();
-
-    public boolean hasAnyTooltip() {
-        return tooltips.size() > 0;
-    }
 
     public TooltipPart(@Nonnull List<String> tooltips) {
         this.tooltips.addAll(tooltips);
@@ -29,6 +17,18 @@ public class TooltipPart {
     }
 
     public TooltipPart() {
+    }
+
+    public static TooltipPart singleSpaceLine() {
+        return new TooltipPart("");
+    }
+
+    public static TooltipPart empty() {
+        return new TooltipPart();
+    }
+
+    public boolean hasAnyTooltip() {
+        return tooltips.size() > 0;
     }
 
     @Nonnull

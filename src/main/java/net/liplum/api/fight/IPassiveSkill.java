@@ -23,7 +23,7 @@ public interface IPassiveSkill<EventType extends Event> {
      * Larger number means later<br/>
      * O is default.
      */
-    default int getTriggerPriority(){
+    default int getTriggerPriority() {
         return 0;
     }
 }

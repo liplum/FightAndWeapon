@@ -6,32 +6,56 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class BoolAttribute implements IAttribute {
+    private static final int FalseInt = toInt(false);
+    public static final FinalAttrValue EmptyFinalAttrValue = new FinalAttrValue(DataType.Int, FalseInt);
+    private static final int TrueInt = toInt(true);
+    private static final AttrModifier EmptyAttrModifier = new AttrModifier(DataType.Int, FalseInt, 0);
+    private static final AttrDelta EmptyAttrDelta = new AttrDelta(DataType.Int, FalseInt);
     private String registerName;
     private boolean isBasic = false;
     private ComputeType computeType;
-    private static final int FalseInt = toInt(false);
-    private static final int TrueInt = toInt(true);
     private int defaultValueInt = FalseInt;
     private boolean defaultValueBool = false;
     @Nonnull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(FalseInt);
-
-    private static final AttrModifier EmptyAttrModifier = new AttrModifier(DataType.Int, FalseInt, 0);
-    private static final AttrDelta EmptyAttrDelta = new AttrDelta(DataType.Int, FalseInt);
-    public static final FinalAttrValue EmptyFinalAttrValue = new FinalAttrValue(DataType.Int, FalseInt);
-
     private IFullCompute fullCompute;
     private IOnlyGemstoneCompute onlyGemstoneCompute;
     private IOnlyMasteryCompute onlyMasteryCompute;
 
-    @Nonnull
-    public BoolAttribute setRegisterName(@Nonnull String registerName) {
-        String former = this.registerName;
-        Attribute.remove(former);
+    public static BasicAttrValue genAttrValue(boolean b) {
+        return new BasicAttrValue(DataType.Int, toInt(b));
+    }
 
-        this.registerName = registerName;
-        Attribute.register(this);
-        return this;
+    public static AttrModifier genAttrModifier(boolean b) {
+        return new AttrModifier(DataType.Int, toInt(b), 0);
+    }
+
+    public static AttrDelta genAttrDelta(boolean b) {
+        return new AttrDelta(DataType.Int, toInt(b));
+    }
+
+    public static FinalAttrValue genFinalAttrValue(boolean b) {
+        return new FinalAttrValue(DataType.Int, toInt(b));
+    }
+
+    public static boolean toBool(@Nonnull Number value) {
+        return value.intValue() != 0;
+    }
+
+    public static boolean toBool(@Nonnull FinalAttrValue value) {
+        return value.getInt() != 0;
+    }
+
+    public static int toInt(boolean bool) {
+        return bool ? 1 : 0;
+    }
+
+    public static int toBoolInt(@Nonnull Number value) {
+        return value.intValue() != 0 ? 1 : 0;
+    }
+
+    private static FinalAttrValue newFinalAttrValue(boolean value) {
+        return new FinalAttrValue(DataType.Int, toInt(value));
     }
 
     @Nonnull
@@ -59,43 +83,31 @@ public class BoolAttribute implements IAttribute {
         return this;
     }
 
-    public interface IFullCompute {
-        boolean compute(boolean base, boolean modifier, boolean mastery);
-    }
-
-    public interface IOnlyGemstoneCompute {
-        boolean compute(boolean base, boolean modifier);
-    }
-
-    public interface IOnlyMasteryCompute {
-        boolean compute(boolean base, boolean mastery);
-    }
-
     @Override
     public boolean isBasic() {
         return isBasic;
-    }
-
-    public static BasicAttrValue genAttrValue(boolean b) {
-        return new BasicAttrValue(DataType.Int, toInt(b));
-    }
-
-    public static AttrModifier genAttrModifier(boolean b) {
-        return new AttrModifier(DataType.Int, toInt(b), 0);
-    }
-
-    public static AttrDelta genAttrDelta(boolean b) {
-        return new AttrDelta(DataType.Int, toInt(b));
-    }
-
-    public static FinalAttrValue genFinalAttrValue(boolean b) {
-        return new FinalAttrValue(DataType.Int, toInt(b));
     }
 
     @Nonnull
     @Override
     public String getRegisterName() {
         return registerName;
+    }
+
+    @Nonnull
+    public BoolAttribute setRegisterName(@Nonnull String registerName) {
+        String former = this.registerName;
+        Attribute.remove(former);
+
+        this.registerName = registerName;
+        Attribute.register(this);
+        return this;
+    }
+
+    @Nonnull
+    @Override
+    public ComputeType getComputeType() {
+        return computeType;
     }
 
     @Nonnull
@@ -119,8 +131,8 @@ public class BoolAttribute implements IAttribute {
 
     @Nonnull
     @Override
-    public ComputeType getComputeType() {
-        return computeType;
+    public Number getDefaultValue() {
+        return 0;
     }
 
     @Nonnull
@@ -130,29 +142,6 @@ public class BoolAttribute implements IAttribute {
         this.emptyBasicAttrValue = newBasicAttrValue(this.defaultValueInt);
         return this;
     }
-
-    @Nonnull
-    @Override
-    public Number getDefaultValue() {
-        return 0;
-    }
-
-    public static boolean toBool(@Nonnull Number value) {
-        return value.intValue() != 0;
-    }
-
-    public static boolean toBool(@Nonnull FinalAttrValue value) {
-        return value.getInt() != 0;
-    }
-
-    public static int toInt(boolean bool) {
-        return bool ? 1 : 0;
-    }
-
-    public static int toBoolInt(@Nonnull Number value) {
-        return value.intValue() != 0 ? 1 : 0;
-    }
-
 
     @Nonnull
     @Override
@@ -258,12 +247,6 @@ public class BoolAttribute implements IAttribute {
         return emptyFinalAttrValue();
     }
 
-    private static FinalAttrValue newFinalAttrValue(boolean value) {
-        return new FinalAttrValue(DataType.Int, toInt(value));
-    }
-
-    ///------------------------------------------------------------------------------
-
     @Override
     public boolean needMoreDetailsToShown() {
         return false;
@@ -278,6 +261,8 @@ public class BoolAttribute implements IAttribute {
     public boolean hasUnit() {
         return false;
     }
+
+    ///------------------------------------------------------------------------------
 
     @Override
     public boolean isShownInTooltip() {
@@ -317,5 +302,17 @@ public class BoolAttribute implements IAttribute {
     @Override
     public DataType getDataType() {
         return DataType.Int;
+    }
+
+    public interface IFullCompute {
+        boolean compute(boolean base, boolean modifier, boolean mastery);
+    }
+
+    public interface IOnlyGemstoneCompute {
+        boolean compute(boolean base, boolean modifier);
+    }
+
+    public interface IOnlyMasteryCompute {
+        boolean compute(boolean base, boolean mastery);
     }
 }

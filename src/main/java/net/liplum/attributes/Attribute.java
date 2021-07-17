@@ -15,19 +15,6 @@ import java.util.function.Predicate;
 public class Attribute implements IAttribute {
     @Nonnull
     private static final Map<String, IAttribute> AttributesMap = new HashMap<>();
-
-    public static void register(IAttribute attribute) {
-        AttributesMap.put(attribute.getRegisterName(), attribute);
-    }
-
-    public static void remove(String attributeName) {
-        AttributesMap.remove(attributeName);
-    }
-
-    public static void setBasicAttribute(IAttribute attribute) {
-        BasicAttributes.add(attribute);
-    }
-
     @Nonnull
     private static final LinkedList<IAttribute> BasicAttributes = new LinkedList<>();
     @Nonnull
@@ -42,7 +29,6 @@ public class Attribute implements IAttribute {
     private static final FinalAttrValue EmptyFinalAttrValueInt = new FinalAttrValue(DataType.Int, 0);
     @Nonnull
     private static final FinalAttrValue EmptyFinalAttrValueFloat = new FinalAttrValue(DataType.Float, 0);
-
     private boolean isBasic = false;
     @Nonnull
     private DataType dataType = DataType.Int;
@@ -74,9 +60,20 @@ public class Attribute implements IAttribute {
     };
     @Nonnull
     private Function<String, String> I18nKeyMapping = str -> str;
-
     @Nonnull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(defaultValue);
+
+    public static void register(IAttribute attribute) {
+        AttributesMap.put(attribute.getRegisterName(), attribute);
+    }
+
+    public static void remove(String attributeName) {
+        AttributesMap.remove(attributeName);
+    }
+
+    public static void setBasicAttribute(IAttribute attribute) {
+        BasicAttributes.add(attribute);
+    }
 
     @Nullable
     public static IAttribute getAttribute(@Nonnull String registerName) {
@@ -510,7 +507,7 @@ public class Attribute implements IAttribute {
                 return computeOnlyMastery(base, mastery);
             case Only_Base:
                 return computeOnlyBase(base);
-            case  Only_Gemstone:
+            case Only_Gemstone:
                 if (modifier == null) {
                     return computeOnlyBase(base);
                 }

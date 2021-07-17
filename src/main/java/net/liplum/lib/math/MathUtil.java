@@ -177,20 +177,6 @@ public class MathUtil {
         return new Vector2D(v3d.x, v3d.z);
     }
 
-    public static boolean isInsideOld(Vector2D look, Point player, Point target, double width, double length) {
-        Vector2D look_ = look.normalized();
-        Point deltaP = target.minus(player);
-        double deltaX = deltaP.x, deltaY = deltaP.y;
-        float a = (float) iY.angle(look_);
-        DoubleMatrix1D A = new DenseDoubleMatrix1D(new double[]{target.x, target.y, 1});
-        DoubleMatrix1D Result = Algebra.DEFAULT.mult(
-                genRotateMatrix(deltaX, deltaY, a)
-                , A);
-        double halfw = width / 2, x = player.x, y = player.y;
-        return MathUtil.belongToCC(x - halfw, x + halfw, Result.get(0)) &&
-                MathUtil.belongToCC(y, y + length, Result.get(1));
-    }
-
     /**
      * @param xy
      * @param rotationMatrix

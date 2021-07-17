@@ -89,21 +89,25 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
 
     protected class ModifierBuilder implements IAttrModifierBuilder {
         @Override
+        @Nonnull
         public ModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull AttrModifier modifier) {
             AttributeModifierMap.put(attribute, modifier);
             return this;
         }
 
+        @Nonnull
         public ModifierBuilder addMainHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
+        @Nonnull
         public ModifierBuilder addOffHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
+        @Nonnull
         public ModifierBuilder setNotApplyCoreAttrModifier() {
             applyCoreAttrModifier = false;
             return this;

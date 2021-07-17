@@ -21,9 +21,10 @@ public interface IAttribute {
      * Smaller number means front<br/>
      * Larger number means later<br/>
      * O is default.
+     *
      * @return the priority of display
      */
-    default int getDisplayPriority(){
+    default int getDisplayPriority() {
         return 0;
     }
 

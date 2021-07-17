@@ -22,7 +22,6 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import java.util.Collection;
-import java.util.Collection;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public class PassiveSkillHandler {

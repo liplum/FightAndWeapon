@@ -21,7 +21,8 @@ import java.util.List;
 
 import static net.liplum.Attributes.Generic.AbilityPower;
 import static net.liplum.Attributes.Generic.CoolDown;
-import static net.liplum.Attributes.Harp.*;
+import static net.liplum.Attributes.Harp.Frequency;
+import static net.liplum.Attributes.Harp.Radius;
 
 public final class HarpCoreTypes {
     public static final HarpCore Empty = new HarpCore() {

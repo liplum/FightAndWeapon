@@ -4,7 +4,6 @@ import net.liplum.Vanilla;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponCore;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.EntityDamageSource;
@@ -15,12 +14,11 @@ import javax.annotation.Nullable;
 public class FawDamage extends EntityDamageSource {
     @Nonnull
     private final WeaponBaseItem weapon;
+    private final EntityLivingBase attacker;
     @Nullable
     private IGemstone gemstone;
     @Nullable
     private Modifier modifier;
-
-    private final EntityLivingBase attacker;
 
     private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull WeaponBaseItem weapon) {
         super(damageType, attacker);

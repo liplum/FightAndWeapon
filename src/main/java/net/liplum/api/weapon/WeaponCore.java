@@ -189,11 +189,13 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
     protected class WeaponCoreBuilder implements IBasicAttrValueBuilder {
         @Override
+        @Nonnull
         public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull BasicAttrValue value) {
             AttributeValueMap.put(attribute, value);
             return this;
         }
 
+        @Nonnull
         public WeaponCoreBuilder addPassiveSkills(@Nonnull AggregatePassiveSkill passiveSkills) {
             WeaponCore thisCore = WeaponCore.this;
             if (thisCore.weaponPassiveSkills == null) {
@@ -204,26 +206,31 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return this;
         }
 
+        @Nonnull
         public WeaponCoreBuilder setWeaponSkillPredicate(@Nonnull IWeaponSkillPredicate newWeaponSkillPredicate) {
             weaponSkillPredicate = newWeaponSkillPredicate;
             return this;
         }
 
+        @Nonnull
         public WeaponCoreBuilder addMainHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
+        @Nonnull
         public WeaponCoreBuilder addOffHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
+        @Nonnull
         public WeaponCoreBuilder setLeftClickEntityBehavior(@Nonnull ILeftClickEntityBehavior behavior) {
             leftClickEntityBehavior = behavior;
             return this;
         }
 
+        @Nonnull
         public WeaponCoreBuilder setTooltipPipe(@Nonnull TooltipPipe pipe) {
             tooltipPipe = pipe;
             return this;
