@@ -38,11 +38,31 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private IWeaponSkillPredicate weaponSkillPredicate;
     @Nullable
     private AggregatePassiveSkill weaponPassiveSkills;
-
-    private ILeftClickEntityBehavior leftClickEntityBehavior;
-
+    @Nonnull
+    private ILeftClickEntityBehavior leftClickEntityBehavior = (weapon, stack, attacker, target) -> {
+        AttrCalculator calculator = new AttrCalculator(this);
+        if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
+            Modifier modifier = GemUtil.getModifierFrom(stack);
+            calculator.setModifier(modifier)
+                    .setPlayer(attacker);
+            FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
+            if (AttackReach.isDefaultValue(finalAttackReach)) {
+                return weapon.attackEntity(stack, attacker, target);
+            } else {
+                return true;
+            }
+        } else {
+            return weapon.attackEntity(stack, attacker, target);
+        }
+    };
     @Nonnull
     private TooltipPipe tooltipPipe = TooltipPipe.Empty;
+    @Nonnull
+    private static final TooltipPipe DefaultPipe = new TooltipPipe()
+            .addMiddleware(AutoAddSpaceLine)
+            .addMiddleware(ShownWeaponTypeAndGemstone)
+            .addMiddleware(ShowAttributes)
+            .addMiddleware(ShowPassiveSkills);
 
     public WeaponCore() {
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
@@ -54,7 +74,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
         build(builder);
         if (weaponPassiveSkills != null) {
-            weaponPassiveSkills.build();
+            weaponPassiveSkills.setBanedWhenBroken(false).setTriggerPriority(Integer.MIN_VALUE).build();
         }
     }
 
@@ -63,6 +83,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         return weaponPassiveSkills;
     }
 
+    @Nonnull
     public ILeftClickEntityBehavior getLeftClickEntityBehavior() {
         return leftClickEntityBehavior;
     }
@@ -120,6 +141,19 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
     }
 
+    @Nonnull
+    public static final Function<WeaponAttrModifierContext, AttributeModifier> AttackReachModifier = context -> {
+        float attackSpeed = context.calculator.calcu(AttackSpeed).getFloat();
+        if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
+            double attackSpeedDelta = attackSpeed - Vanilla.DefaultAttackSpeed;
+            return ItemTool.genAttrModifier(
+                    Item.ATTACK_SPEED_MODIFIER,
+                    Vanilla.AttrModifierType.DeltaAddition,
+                    Names.WeaponAttributeModifier, attackSpeedDelta);
+        }
+        return null;
+    };
+
     /**
      * It will be called in constructor.
      *
@@ -127,42 +161,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      */
     protected void build(WeaponCoreBuilder builder) {
         builder.addMainHand(
-                SharedMonsterAttributes.ATTACK_SPEED,
-                context -> {
-                    float attackSpeed = context.calculator.calcu(AttackSpeed).getFloat();
-                    if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
-                        double attackSpeedDelta = attackSpeed - Vanilla.DefaultAttackSpeed;
-                        return ItemTool.genAttrModifier(
-                                Item.ATTACK_SPEED_MODIFIER,
-                                Vanilla.AttrModifierType.DeltaAddition,
-                                Names.WeaponAttributeModifier, attackSpeedDelta);
-                    }
-                    return null;
-                })
+                SharedMonsterAttributes.ATTACK_SPEED, AttackReachModifier)
                 .set(Durability, Durability.newBasicAttrValue(100))
-                .setLeftClickEntityBehavior(
-                        ((weapon, stack, attacker, target) -> {
-                            AttrCalculator calculator = new AttrCalculator(this);
-                            if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
-                                Modifier modifier = GemUtil.getModifierFrom(stack);
-                                calculator.setModifier(modifier)
-                                        .setPlayer(attacker);
-                                FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
-                                if (AttackReach.isDefaultValue(finalAttackReach)) {
-                                    return weapon.attackEntity(stack, attacker, target);
-                                } else {
-                                    return true;
-                                }
-                            } else {
-                                return weapon.attackEntity(stack, attacker, target);
-                            }
-                        })
-                )
-                .setTooltipPipe(new TooltipPipe()
-                        .addMiddleware(AutoAddSpaceLine)
-                        .addMiddleware(ShownWeaponTypeAndGemstone)
-                        .addMiddleware(ShowAttributes)
-                        .addMiddleware(ShowPassiveSkills));
+                .setTooltipPipe(DefaultPipe);
     }
 
     /**

@@ -61,6 +61,9 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
         return isBannedWhenBroken;
     }
 
+    /**
+     * The default is true.
+     */
     public AggregatePassiveSkill setBanedWhenBroken(boolean banedWhenBroken) {
         this.isBannedWhenBroken = banedWhenBroken;
         return this;

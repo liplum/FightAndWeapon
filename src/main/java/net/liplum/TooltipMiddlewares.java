@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 
 import static net.liplum.Attributes.Generic.AttackSpeed;
 
-@SideOnly(Side.CLIENT)
 public final class TooltipMiddlewares {
     public static final IMiddleware AutoAddSpaceLine = new IMiddlewareQualifier() {
         @Override
