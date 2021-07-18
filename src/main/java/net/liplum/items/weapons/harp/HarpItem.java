@@ -51,7 +51,7 @@ public class HarpItem extends WeaponBaseItem {
                         .setWeapon(this)
                         .setModifier(modifier)
                         .setCalculator(
-                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn)
+                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn).setItemStack(held)
                         );
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
@@ -98,7 +98,7 @@ public class HarpItem extends WeaponBaseItem {
                     .setHand(hand)
                     .setWeapon(this)
                     .setCalculator(
-                            new AttrCalculator(core).setModifier(modifier).setPlayer(p)
+                            new AttrCalculator(core).setModifier(modifier).setPlayer(p).setItemStack(stack)
                     );
             if (modifier != null) {
                 HarpModifier mod = (HarpModifier) modifier;

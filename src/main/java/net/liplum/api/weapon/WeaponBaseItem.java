@@ -83,7 +83,9 @@ public abstract class WeaponBaseItem extends FawItem {
         AttrCalculator calculator = new AttrCalculator()
                 .setWeaponCore(weaponCore)
                 .setModifier(modifier)
-                .setPlayer(player);
+                .setPlayer(player)
+                .setItemStack(stack)
+                .setUseSpecialValueWhenWeaponBroken(false);
         TooltipContext context = new TooltipContext(stack, this, calculator, tooltipOption);
         IWeaponTooltipBuilder builder = new WeaponTooltipBuilder(context);
         tooltip.addAll(builder.build().getTooltip());
@@ -142,7 +144,8 @@ public abstract class WeaponBaseItem extends FawItem {
         Modifier modifier = GemUtil.getModifierFrom(stack);
         WeaponAttrModifierContext context = new WeaponAttrModifierContext(stack, new AttrCalculator()
                 .setWeaponCore(getCore())
-                .setModifier(modifier), slot, map);
+                .setModifier(modifier)
+                .setItemStack(stack), slot, map);
         FawItemUtil.applyAttrModifier(weaponCore, modifier, context);
         return map;
     }

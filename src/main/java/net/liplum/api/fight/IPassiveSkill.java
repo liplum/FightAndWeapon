@@ -26,4 +26,6 @@ public interface IPassiveSkill<EventType extends Event> {
     default int getTriggerPriority() {
         return 0;
     }
+
+    boolean isBanedWhenBroken();
 }

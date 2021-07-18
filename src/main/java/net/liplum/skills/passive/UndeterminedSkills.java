@@ -1,4 +1,4 @@
-package net.liplum.skills.passive.gemstone;
+package net.liplum.skills.passive;
 
 import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
@@ -52,5 +52,5 @@ public class UndeterminedSkills {
                     }
                     return false;
                 }
-            };
+            }.setBanedWhenBroken(false);
 }

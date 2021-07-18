@@ -46,7 +46,7 @@ public class LanceItem extends WeaponBaseItem {
                         .setWeapon(this)
                         .setModifier(modifier)
                         .setCalculator(
-                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn)
+                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn).setItemStack(held)
                         );
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);

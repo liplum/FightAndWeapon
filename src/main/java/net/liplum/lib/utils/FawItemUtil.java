@@ -125,7 +125,8 @@ public final class FawItemUtil {
         AttrCalculator calculator = new AttrCalculator()
                 .setWeaponCore(core)
                 .setPlayer(attackerPlayer)
-                .setModifier(modifier);
+                .setModifier(modifier)
+                .setItemStack(itemStack);
 
         FinalAttrValue finalStrength = calculator.calcu(Strength);
 
@@ -350,5 +351,9 @@ public final class FawItemUtil {
         if (finalAmount > 0) {
             ItemTool.increaseItemDurability(itemStack, finalAmount);
         }
+    }
+
+    public static boolean isBroken(@Nonnull ItemStack itemStack){
+        return itemStack.getItemDamage() == itemStack.getMaxDamage();
     }
 }

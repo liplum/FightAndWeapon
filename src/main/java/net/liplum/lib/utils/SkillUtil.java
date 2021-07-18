@@ -56,10 +56,13 @@ public final class SkillUtil {
                 }
             }
         }
+        if (FawItemUtil.isBroken(itemStack)) {
+            allSkills.removeIf(IPassiveSkill::isBanedWhenBroken);
+        }
     }
 
     @Nonnull
-    public static Collection<IPassiveSkill<Event>> getPassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
+    public static Collection<IPassiveSkill<Event>> getAvailablePassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
         Set<IPassiveSkill<Event>> skills = new HashSet<>();
         ItemStack mainHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
         addPassiveSkills((Class<Event>) eventType, skills, mainHandHeld, entity);

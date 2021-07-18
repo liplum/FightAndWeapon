@@ -16,6 +16,8 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
 
     private int triggerPriority = 0;
 
+    private boolean isBannedWhenBroken = true;
+
     /**
      * Whenever you create the instance, it will register itself to {@link SkillRegistry} automatically.
      *
@@ -35,6 +37,16 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
 
     public PassiveSkill<EventType> setTriggerPriority(int triggerPriority) {
         this.triggerPriority = triggerPriority;
+        return this;
+    }
+
+    @Override
+    public boolean isBanedWhenBroken() {
+        return isBannedWhenBroken;
+    }
+
+    public PassiveSkill<EventType> setBanedWhenBroken(boolean banedWhenBroken) {
+        this.isBannedWhenBroken = banedWhenBroken;
         return this;
     }
 

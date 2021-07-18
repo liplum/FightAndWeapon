@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.function.Supplier;
 
 public class Attribute implements IAttribute {
     @Nonnull
@@ -49,6 +50,7 @@ public class Attribute implements IAttribute {
     @Nullable
     private Number minimum;
     private boolean isStripTrailingZero = true;
+    private boolean useSpecialValueWhenWeaponBroken = false;
     @Nonnull
     private Function<Number, Number> tooltipShownMapping = n -> n;
     @Nonnull
@@ -415,6 +417,7 @@ public class Attribute implements IAttribute {
         return defaultValue;
     }
 
+    @Nonnull
     public Attribute setDefaultValue(@Nonnull Number defaultValue) {
         this.defaultValue = defaultValue;
         this.emptyBasicAttrValue = newBasicAttrValue(defaultValue);
@@ -514,6 +517,45 @@ public class Attribute implements IAttribute {
                 return computeOnlyGemstone(base, modifier);
         }
         return emptyFinalAttrValue();
+    }
+
+    @Nonnull
+    private Supplier<Number> valueWhenWeaponBrokenGetter = () -> defaultValue;
+
+    /*
+     * The default is returning the default value of this attribute.
+     */
+    public Attribute setSpecialValueWhenWeaponBroken(@Nonnull Number valueWhenWeaponBroken) {
+        this.valueWhenWeaponBrokenGetter = () -> valueWhenWeaponBroken;
+        return this;
+    }
+
+    /**
+     * The default is returning the default value of this attribute.
+     *
+     * @return the final value when weapon was broken
+     */
+    @Nonnull
+    @Override
+    public FinalAttrValue getValueWhenWeaponBroken() {
+        return newFinalAttrValue(valueWhenWeaponBrokenGetter.get());
+    }
+
+    /**
+     * The default is false.
+     */
+    @Override
+    public boolean useSpecialValueWhenWeaponBroken() {
+        return useSpecialValueWhenWeaponBroken;
+    }
+
+    /**
+     * The default is false.
+     */
+    @Nonnull
+    public Attribute setUseSpecialValueWhenWeaponBroken() {
+        this.useSpecialValueWhenWeaponBroken = true;
+        return this;
     }
 
     @Nonnull

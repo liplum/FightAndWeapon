@@ -58,7 +58,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                         .setModifier(modifier)
                         .setWeapon(this)
                         .setCalculator(
-                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn)
+                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn).setItemStack(held)
                         );
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);

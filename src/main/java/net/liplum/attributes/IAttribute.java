@@ -115,4 +115,7 @@ public interface IAttribute {
     @Nonnull
     FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery);
 
+    FinalAttrValue getValueWhenWeaponBroken();
+
+    boolean useSpecialValueWhenWeaponBroken();
 }

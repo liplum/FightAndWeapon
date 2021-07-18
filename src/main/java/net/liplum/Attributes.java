@@ -20,7 +20,8 @@ public final class Attributes {
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
                 .setDisplayPriority(-100)
-                .setDefaultValue(0);
+                .setDefaultValue(0)
+                .setUseSpecialValueWhenWeaponBroken();
         public static final IAttribute AttackReach = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AttackReach)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
@@ -55,7 +56,8 @@ public final class Attributes {
                 .setFormat("%.1f")
                 .setComputeType(ComputeType.Full)
                 .setDisplayPriority(-50)
-                .setDefaultValue(0);
+                .setDefaultValue(0)
+                .setUseSpecialValueWhenWeaponBroken();
         /**
          * Gets the upcoming invincible time of a enemy who was attacked by this weapon.(unit:tick)
          */

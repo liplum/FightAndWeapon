@@ -5,7 +5,7 @@ import net.liplum.api.weapon.IGemstone;
 import net.liplum.modifiers.EnderGemModifier;
 import net.liplum.modifiers.FlameGemModifier;
 import net.liplum.modifiers.RubyModifier;
-import net.liplum.skills.passive.gemstone.UndeterminedSkills;
+import net.liplum.skills.passive.UndeterminedSkills;
 
 import static net.liplum.skills.passive.gemstone.FlamegemSkills.FireProof;
 import static net.liplum.skills.passive.gemstone.FlamegemSkills.ScorchingTouch;

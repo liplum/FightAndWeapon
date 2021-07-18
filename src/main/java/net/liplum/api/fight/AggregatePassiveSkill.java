@@ -22,6 +22,7 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
     private boolean isShownInTooltip = true;
     private boolean built = false;
     private int triggerPriority = 0;
+    private boolean isBannedWhenBroken = true;
 
     public AggregatePassiveSkill(@Nonnull String registerName) {
         this.registerName = registerName;
@@ -53,6 +54,16 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
     @Override
     public int getTriggerPriority() {
         return triggerPriority;
+    }
+
+    @Override
+    public boolean isBanedWhenBroken() {
+        return isBannedWhenBroken;
+    }
+
+    public AggregatePassiveSkill setBanedWhenBroken(boolean banedWhenBroken) {
+        this.isBannedWhenBroken = banedWhenBroken;
+        return this;
     }
 
     public AggregatePassiveSkill setTriggerPriority(int triggerPriority) {

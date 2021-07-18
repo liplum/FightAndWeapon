@@ -7,6 +7,7 @@ import net.liplum.events.AttributeAccessEvent;
 import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
@@ -18,7 +19,12 @@ public class AttrCalculator {
     private Modifier modifier;
     @Nullable
     private EntityPlayer player;
+    @Nullable
+    private ItemStack itemStack;
+
     private boolean postEvent = true;
+
+    private boolean useSpecialValueWhenWeaponBroken = true;
 
     public AttrCalculator() {
     }
@@ -35,11 +41,12 @@ public class AttrCalculator {
      * @param core              the weapon core which can provide the basic value of this attribute
      * @param modifier          (optional) the modifier of this weapon which can provide the modifier value of this attribute
      * @param player            (optional) the player which can provide the mastery capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
+     * @param itemStack
      * @param postAccessedEvent Whether it posts the {@link AttributeAccessEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessEvent}.)
      */
     @Nonnull
-    private static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, boolean postAccessedEvent) {
+    private static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, @Nullable ItemStack itemStack, boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = core.getValue(attribute);
         //Mastery
@@ -63,7 +70,7 @@ public class AttrCalculator {
 
         FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masteryValue);
         if (postAccessedEvent) {
-            AttributeAccessEvent attributeAccessEvent = new AttributeAccessEvent(attribute, finalAttrValue, core, modifier, player);
+            AttributeAccessEvent attributeAccessEvent = new AttributeAccessEvent(attribute, finalAttrValue, core, modifier, player, itemStack, showSpecialValueWhenWeaponBroken);
             MinecraftForge.EVENT_BUS.post(attributeAccessEvent);
             finalAttrValue = attributeAccessEvent.getFinalAttrValue();
         }
@@ -103,6 +110,25 @@ public class AttrCalculator {
         return this;
     }
 
+    @Nullable
+    public ItemStack getItemStack() {
+        return itemStack;
+    }
+
+    public AttrCalculator setItemStack(@Nullable ItemStack itemStack) {
+        this.itemStack = itemStack;
+        return this;
+    }
+
+    public boolean isUseSpecialValueWhenWeaponBroken() {
+        return useSpecialValueWhenWeaponBroken;
+    }
+
+    public AttrCalculator setUseSpecialValueWhenWeaponBroken(boolean useSpecialValueWhenWeaponBroken) {
+        this.useSpecialValueWhenWeaponBroken = useSpecialValueWhenWeaponBroken;
+        return this;
+    }
+
     /**
      * @return Whether this attribute access will post the {@link AttributeAccessEvent}
      */
@@ -121,6 +147,6 @@ public class AttrCalculator {
         if (weaponCore == null) {
             throw new IllegalArgumentException("Weapon Core is Null");
         }
-        return calcuAttribute(attribute, weaponCore, modifier, player, postEvent);
+        return calcuAttribute(attribute, weaponCore, modifier, player, itemStack, useSpecialValueWhenWeaponBroken, postEvent);
     }
 }

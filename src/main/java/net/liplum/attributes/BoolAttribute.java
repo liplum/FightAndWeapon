@@ -4,6 +4,7 @@ import net.liplum.masteries.AttributeAmplifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.function.Supplier;
 
 public class BoolAttribute implements IAttribute {
     public static final int FalseInt = toInt(false);
@@ -30,7 +31,7 @@ public class BoolAttribute implements IAttribute {
     public static final BasicAttrValue FalseBasicAttrValue = genBasicAttrValue(false);
     public static final AttrModifier FalseAttrModifier = genAttrModifier(false);
     public static final AttrDelta FalseAttrDelta = genAttrDelta(false);
-     public static final FinalAttrValue FalseFinalAttrValue = genFinalAttrValue(false);
+    public static final FinalAttrValue FalseFinalAttrValue = genFinalAttrValue(false);
 
     public static BasicAttrValue genBasicAttrValue(boolean b) {
         return new BasicAttrValue(DataType.Int, toInt(b));
@@ -270,6 +271,47 @@ public class BoolAttribute implements IAttribute {
     @Override
     public boolean hasUnit() {
         return false;
+    }
+
+    private boolean useSpecialValueWhenWeaponBroken = false;
+
+    @Nonnull
+    private Supplier<Number> valueWhenWeaponBrokenGetter = () -> defaultValueInt;
+
+    /*
+     * The default is returning the default value of this attribute.
+     */
+    public BoolAttribute setSpecialValueWhenWeaponBroken(boolean boolWhenWeaponBroken) {
+        this.valueWhenWeaponBrokenGetter = () -> toInt(boolWhenWeaponBroken);
+        return this;
+    }
+
+    /**
+     * The default is returning the default value of this attribute.
+     *
+     * @return the final value when weapon was broken
+     */
+    @Nonnull
+    @Override
+    public FinalAttrValue getValueWhenWeaponBroken() {
+        return newFinalAttrValue(valueWhenWeaponBrokenGetter.get());
+    }
+
+    /**
+     * The default is false.
+     */
+    @Override
+    public boolean useSpecialValueWhenWeaponBroken() {
+        return useSpecialValueWhenWeaponBroken;
+    }
+
+    /**
+     * The default is false.
+     */
+    @Nonnull
+    public BoolAttribute setUseSpecialValueWhenWeaponBroken() {
+        this.useSpecialValueWhenWeaponBroken = true;
+        return this;
     }
 
     ///------------------------------------------------------------------------------
