@@ -27,6 +27,7 @@ weaponType.sword=Sword
 
 #Tooltips
 tooltip.faw.weapon.inlaid=Inlaid
+tooltip.faw.weapon.broken=Broken
 tooltip.faw.weapon.noGemstone=No Gemstone
 tooltip.faw.weapon.noSuchWeaponPart=No Such Weapon Part
 

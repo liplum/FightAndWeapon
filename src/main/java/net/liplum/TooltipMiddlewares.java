@@ -1,7 +1,6 @@
 package net.liplum;
 
 import net.liplum.api.fight.IPassiveSkill;
-import net.liplum.api.weapon.IGemstone;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.attributes.IAttribute;
 import net.liplum.lib.Delegate;
@@ -52,23 +51,20 @@ public final class TooltipMiddlewares {
 
     public static final IThroughable ShowWeaponType = pipe ->
             new TooltipPart(
-                    I18n.format(FawI18n.getNameI18nKey(pipe.getContext().weapon.getWeaponType()))
+                    (FawItemUtil.isBroken(pipe.getContext().itemStack) ?
+                            TextFormatting.ITALIC + I18n.format(I18ns.Tooltip.Broken) + " " + TextFormatting.RESET
+                            : "")
+                            +
+                            I18n.format(FawI18n.getNameI18nKey(pipe.getContext().weapon.getWeaponType()))
             );
 
-    public static final IThroughable ShowGemstone = pipe -> {
-        IGemstone gemstone = pipe.getContext().gemstone;
-        if (gemstone != null) {
-            return new TooltipPart(
+    public static final IThroughable ShowGemstone = pipe ->
+            new TooltipPart(pipe.getContext().gemstone != null ?
                     I18n.format(I18ns.Tooltip.Inlaid) + " " +
                             TextFormatting.RED +
-                            I18n.format(FawI18n.getNameI18nKey(gemstone))
-            );
-        } else {
-            return new TooltipPart(
+                            I18n.format(FawI18n.getNameI18nKey(pipe.getContext().gemstone)) :
                     I18n.format(I18ns.Tooltip.NoGemstone)
             );
-        }
-    };
 
     public static final IThroughable ShownWeaponTypeAndGemstone =
             new AggregateThroughable(ShowWeaponType, ShowGemstone);

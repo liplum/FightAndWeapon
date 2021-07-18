@@ -97,6 +97,7 @@ public final class I18ns {
         public static final String Inlaid = weapon("inlaid");
         public static final String NoGemstone = weapon("noGemstone");
         public static final String NoSuchWeaponPart = weapon("noSuchWeaponPart");
+        public static final String Broken = weapon("broken");
 
         private static String weapon(String name) {
             return prefixTooltip(Names.Special.Weapon, name);
