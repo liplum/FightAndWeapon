@@ -10,8 +10,6 @@ import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.tooltips.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.Collection;
 import java.util.Comparator;

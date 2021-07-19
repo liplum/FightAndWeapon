@@ -102,13 +102,19 @@ IAttribute testAtrribute = new Attribute()
         // the default is true 
         .setShownInTooltip(false)
         // It will be applied in tooltip showing
+        // The default is null which means there will use original value
         .setFormat("%.1f")
         // There are some different algorithms to get the final value
         .setComputeType(ComputeType.Full)
         // The sequence in tooltip showing
+        // Smaller number means front
+        // Larger number means later
         .setDisplayPriority(-100)
         // The default value when initialized automatically until you set it manually
         .setDefaultValue(0)
+        // The minimum value attribute can return (>=0)
+        // It also changes the default value to equal it if is more than it.
+        .setMinimum(0);
         // Whether use a special value when the weapon is broken
         // The default is false
         .setUseSpecialValueWhenWeaponBroken();
