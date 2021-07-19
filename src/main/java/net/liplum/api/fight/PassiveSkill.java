@@ -18,17 +18,28 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
 
     private boolean isBannedWhenBroken = true;
 
+    private final boolean hasCoolDown;
+
+    private final int coolDownTicks;
+
     /**
      * Whenever you create the instance, it will register itself to {@link SkillRegistry} automatically.
      *
      * @param registerName the name to register itself
      * @param eventTypeClz the class of the event which you want to subscribe
      */
-    public PassiveSkill(@Nonnull String registerName, Class<EventType> eventTypeClz) {
+    public PassiveSkill(@Nonnull String registerName, Class<EventType> eventTypeClz, int coolDownTicks) {
         this.registerName = registerName;
         this.eventTypeArgs = new EventTypeArgs((Class<Event>) eventTypeClz);
         SkillRegistry.register(this);
+        this.hasCoolDown = coolDownTicks > 0;
+        this.coolDownTicks = hasCoolDown ? coolDownTicks : 0;
     }
+
+    public PassiveSkill(@Nonnull String registerName, Class<EventType> eventTypeClz) {
+        this(registerName, eventTypeClz, 0);
+    }
+
 
     @Override
     public int getTriggerPriority() {
@@ -70,6 +81,16 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
     public PassiveSkill<EventType> setShownInTooltip() {
         this.isShownInTooltip = true;
         return this;
+    }
+
+    @Override
+    public boolean hasCoolDown() {
+        return hasCoolDown;
+    }
+
+    @Override
+    public int getCoolDownTicks() {
+        return coolDownTicks;
     }
 
     public static class EventTypeArgs implements IEventTypeArgs {

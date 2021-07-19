@@ -1,6 +1,8 @@
 package net.liplum.eventhandlers;
 
 import net.liplum.MetaData;
+import net.liplum.api.fight.IPSkillCoolingTimer;
+import net.liplum.api.fight.PSkillCoolingTimer;
 import net.liplum.events.PlayerCollisionEvent;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -26,6 +28,13 @@ public class PlayerTickHandler {
                     MinecraftForge.EVENT_BUS.post(new PlayerCollisionEvent(p, collided.toArray(new Entity[0])));
                 }
             }
+        }
+    }
+
+    public static void onTimerTick(TickEvent.PlayerTickEvent event) {
+        if (event.phase == TickEvent.Phase.START) {
+            IPSkillCoolingTimer timer = PSkillCoolingTimer.create(event.player);
+            timer.tick();
         }
     }
 }

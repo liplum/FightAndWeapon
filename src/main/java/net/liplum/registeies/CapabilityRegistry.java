@@ -1,10 +1,7 @@
 package net.liplum.registeies;
 
 import net.liplum.Names;
-import net.liplum.capabilities.CastStudyCapability;
-import net.liplum.capabilities.CastStudyProvider;
-import net.liplum.capabilities.MasteryProvider;
-import net.liplum.capabilities.MasteryCapability;
+import net.liplum.capabilities.*;
 import net.liplum.lib.CapabilityStorage;
 import net.liplum.lib.FawLocation;
 import net.minecraft.nbt.NBTTagCompound;
@@ -24,18 +21,24 @@ public final class CapabilityRegistry {
     private static final LinkedList<CapabilityEntry> EntityCapabilities = new LinkedList<>();
     @CapabilityInject(MasteryCapability.class)
     public static Capability<MasteryCapability> Mastery_Capability;
+
     @CapabilityInject(CastStudyCapability.class)
     public static Capability<CastStudyCapability> CastStudy_Capability;
+
+    @CapabilityInject(TimerCapability.class)
+    public static Capability<TimerCapability> Timer_Capability;
 
     static {
         PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.Mastery), MasteryProvider.class));
         PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.CastStudy), CastStudyProvider.class));
+        PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.Timer), TimerProvider.class));
     }
 
 
     public static void init() {
         register(MasteryCapability.class, new CapabilityStorage<>());
         register(CastStudyCapability.class, new CapabilityStorage<>());
+        register(TimerCapability.class, new CapabilityStorage<>());
     }
 
     public static List<CapabilityEntry> getPlayerCapabilities() {

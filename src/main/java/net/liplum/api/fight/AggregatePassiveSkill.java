@@ -61,6 +61,16 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
         return isBannedWhenBroken;
     }
 
+    @Override
+    public boolean hasCoolDown() {
+        return false;
+    }
+
+    @Override
+    public int getCoolDownTicks() {
+        return 0;
+    }
+
     /**
      * The default is true.
      */

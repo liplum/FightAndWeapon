@@ -1,6 +1,8 @@
 package net.liplum.capabilities;
 
+import net.liplum.api.fight.IPSkillCoolingTimer;
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.registeies.SkillRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
 
@@ -8,19 +10,30 @@ import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
-public class TimerCapability implements INBTSerializable<NBTTagCompound> {
+public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkillCoolingTimer {
     @Nonnull
-    private final Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();
+    private Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();
 
-    public void onTick() {
-        coolingPassiveSkills.values().forEach(CoolDown::onTick);
+    public void tick() {
+        coolingPassiveSkills.values().forEach(CoolDown::tick);
         coolingPassiveSkills.values().removeIf(CoolDown::isFinished);
     }
 
+    @Override
     public void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
         coolingPassiveSkills.put(passiveSkill, new CoolDown(coolDownTicks));
     }
 
+    @Nonnull
+    public Map<IPassiveSkill<?>, CoolDown> getCoolingPassiveSkills() {
+        return coolingPassiveSkills;
+    }
+
+    public void setCoolingPassiveSkills(@Nonnull Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills) {
+        this.coolingPassiveSkills = coolingPassiveSkills;
+    }
+
+    @Override
     public boolean isInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill) {
         CoolDown coolDown = coolingPassiveSkills.get(passiveSkill);
         if (coolDown != null) {
@@ -31,12 +44,19 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound> {
 
     @Override
     public NBTTagCompound serializeNBT() {
-        return null;
+        NBTTagCompound nbt = new NBTTagCompound();
+        for (Map.Entry<IPassiveSkill<?>, CoolDown> entry : coolingPassiveSkills.entrySet()) {
+            nbt.setInteger(entry.getKey().getRegisterName(), entry.getValue().restTicks);
+        }
+        return nbt;
     }
 
     @Override
     public void deserializeNBT(NBTTagCompound nbt) {
-
+        for (String key : nbt.getKeySet()) {
+            IPassiveSkill<?> name = SkillRegistry.getPassiveSkillsFromName(key);
+            coolingPassiveSkills.put(name, new CoolDown(nbt.getInteger(key)));
+        }
     }
 
     public static class CoolDown {
@@ -46,7 +66,7 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound> {
             this.restTicks = restTicks;
         }
 
-        public void onTick() {
+        public void tick() {
             restTicks--;
         }
 
@@ -56,6 +76,10 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound> {
 
         public boolean isInCoolingDown() {
             return !isFinished();
+        }
+
+        public int getRestTicks() {
+            return restTicks;
         }
     }
 

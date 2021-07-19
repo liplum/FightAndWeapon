@@ -107,6 +107,7 @@ public final class Names {
     public final static class Capability {
         public static final String Mastery = "mastery";
         public static final String CastStudy = "cast_study";
+        public static final String Timer = "timer";
     }
 
     public final static class ItemGroup {

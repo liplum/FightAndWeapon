@@ -20,6 +20,7 @@ public class MessageManager {
         //Client to Server
         channel.registerMessage(AttackMsg.Handler.class, AttackMsg.class, ID++, Side.SERVER);
         channel.registerMessage(FawWeaponLeftClickMsg.Handler.class, FawWeaponLeftClickMsg.class, ID++, Side.SERVER);
+        channel.registerMessage(CoolingMsg.Handler.class, CoolingMsg.class, ID++, Side.CLIENT);
     }
 
     public static void sendMessageToDim(IMessage msg, int dim) {

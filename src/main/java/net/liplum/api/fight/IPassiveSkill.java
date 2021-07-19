@@ -28,4 +28,8 @@ public interface IPassiveSkill<EventType extends Event> {
     }
 
     boolean isBanedWhenBroken();
+
+    boolean hasCoolDown();
+
+    int getCoolDownTicks();
 }
