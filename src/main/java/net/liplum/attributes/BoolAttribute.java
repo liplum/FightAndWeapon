@@ -4,7 +4,7 @@ import net.liplum.masteries.AttributeAmplifier;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 public class BoolAttribute implements IAttribute {
     public static final int FalseInt = toInt(false);
@@ -283,7 +283,7 @@ public class BoolAttribute implements IAttribute {
     private boolean useSpecialValueWhenWeaponBroken = false;
 
     @Nonnull
-    private Supplier<Number> valueWhenWeaponBrokenGetter = () -> defaultValueInt;
+    private Function<Boolean, Boolean> valueWhenWeaponBrokenGetter = (former) -> defaultValueBool;
 
     /*
      * The default is returning the default value of this attribute.
@@ -291,20 +291,21 @@ public class BoolAttribute implements IAttribute {
     @Nonnull
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public BoolAttribute setSpecialValueWhenWeaponBroken(boolean boolWhenWeaponBroken) {
-        this.valueWhenWeaponBrokenGetter = () -> toInt(boolWhenWeaponBroken);
+        this.valueWhenWeaponBrokenGetter = (former) -> boolWhenWeaponBroken;
         return this;
     }
 
     /**
      * The default is returning the default value of this attribute.
      *
+     * @param former
      * @return the final value when weapon was broken
      */
     @Nonnull
     @Override
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
-    public FinalAttrValue getValueWhenWeaponBroken() {
-        return newFinalAttrValue(valueWhenWeaponBrokenGetter.get());
+    public FinalAttrValue getValueWhenWeaponBroken(Number former) {
+        return newFinalAttrValue(valueWhenWeaponBrokenGetter.apply(toBool(former)));
     }
 
     /**

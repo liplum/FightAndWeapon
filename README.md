@@ -84,14 +84,14 @@ newGem.addModifier(newModifier);
 // Oh, fortunately, when you new a Gemstone Object, it will register itself automatically.
 ```
 
-## How to create a new Attribute.
+## How to create a new Attribute and Access it.
 
 ```Java
 // The Attribute -- Normal One
 IAttribute testAtrribute = new Attribute()
         // Set the unique Register Name
         .setRegisterName(Names.Attribute.Generic.Strength)
-        // How to get the I18n key
+        // How to get the I18n key which is used in tooltip showing
         .setHowToGetI18nKey(I18ns.Attribute::Generic)
         // Basic Attribute will be initialized in all Weapon Core automatically
         .setBasic()
@@ -104,7 +104,7 @@ IAttribute testAtrribute = new Attribute()
         // It will be applied in tooltip showing
         // The default is null which means there will use original value
         .setFormat("%.1f")
-        // There are some different algorithms to get the final value
+        // There are some different algorithms to calculate the final value
         .setComputeType(ComputeType.Full)
         // The sequence in tooltip showing
         // Smaller number means front
@@ -115,9 +115,51 @@ IAttribute testAtrribute = new Attribute()
         // The minimum value attribute can return (>=0)
         // It also changes the default value to equal it if is more than it.
         .setMinimum(0);
+        // If necessary, it can be mapped to another value
+        // The default is return the same value
+        .setTooltipShownMapping(n -> n.floatValue() / 20)//It's equivalent to Vanilla::PerSecond
+        // Whether player have to pressed the shift key continuously to show this attribute in tooltip
+        .setNeedMoreDetailsToShown()
         // Whether use a special value when the weapon is broken
         // The default is false
-        .setUseSpecialValueWhenWeaponBroken();
+        .setUseSpecialValueWhenWeaponBroken()
+        // The value when a broken weapon want to access this Attribute
+        // The default is return the default value
+        .setSpecialValueWhenWeaponBroken(n -> 0);
+        
+// Now you can new a AttrCalculator object
+AttrCalculator calculator = new AttrCalculator()
+    // The Weapon Core object -- It mustn't be null otherwise it throws IllegalArgumentException 
+    .setWeaponCore(newLanceCore)
+    // The Modifier -- Can be null which means this weapon hasn't been inlaid yet
+    .setModifier(newGem.getModifierOf(newLanceCore))
+    // The Player Entity -- Can be null which means the Attribute Access doesn't come from a player
+    // and maybe it comes from a zombie or it is even a drop.    
+    .setPlayer(player)
+    // The weapon ItemStack -- Can be null because sometimes you cannot get any detail about the ItemStack's NBT
+    // or you don't need to know that.
+    // NOTE:If null, the Attribute Access cannot be changed to a special value due to no Weapon's Durability Info    
+    .setItemStack(itemStack)
+    // Both it and Attribute's one can decide whether tooltip shows the special value with a broken weapon in the same time
+    // The default is true
+    .setUseSpecialValueWhenWeaponBroken(true)
+    // If you set call it, Attribute Access cannot be modified in this time
+    // The default is true.
+    .setNotPostEvent();
+
+//How to use the calculator
+FinalAttrValue finalValue = calculator.calcu(testAtrribute);
+float res = finalValue.getFloat()
+
+// The Boolean Attribute
+// As default, it cannot be shown in tooltip
+IAttribute DropsFireproof = new BoolAttribute()
+    .setRegisterName(Names.Attribute.Generic.DropsFireproof)
+    .setBasic()
+    // There are only FOUR options excluding Only_Rate 
+    .setComputeType(ComputeType.Only_Gemstone)
+    .setOnlyGemstoneCompute((base, modifier) -> base || modifier)
+    .setDefaultValue(false);
 ```
 
 ## How to create a new Passive Skill and register it.

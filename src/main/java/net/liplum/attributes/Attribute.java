@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
-import java.util.function.Supplier;
 
 public class Attribute implements IAttribute {
     @Nonnull
@@ -524,14 +523,14 @@ public class Attribute implements IAttribute {
     }
 
     @Nonnull
-    private Supplier<Number> valueWhenWeaponBrokenGetter = () -> defaultValue;
+    private Function<Number,Number> valueWhenWeaponBrokenGetter = (former) -> defaultValue;
 
     /*
      * The default is returning the default value of this attribute.
      */
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public Attribute setSpecialValueWhenWeaponBroken(@Nonnull Number valueWhenWeaponBroken) {
-        this.valueWhenWeaponBrokenGetter = () -> valueWhenWeaponBroken;
+        this.valueWhenWeaponBrokenGetter = (former) -> valueWhenWeaponBroken;
         return this;
     }
 
@@ -539,12 +538,13 @@ public class Attribute implements IAttribute {
      * The default is returning the default value of this attribute.
      *
      * @return the final value when weapon was broken
+     * @param former
      */
     @Nonnull
     @Override
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
-    public FinalAttrValue getValueWhenWeaponBroken() {
-        return newFinalAttrValue(valueWhenWeaponBrokenGetter.get());
+    public FinalAttrValue getValueWhenWeaponBroken(Number former) {
+        return newFinalAttrValue(valueWhenWeaponBrokenGetter.apply(former));
     }
 
     /**

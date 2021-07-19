@@ -3,7 +3,7 @@ package net.liplum.registeies;
 import net.liplum.Names;
 import net.liplum.capabilities.CastStudyCapability;
 import net.liplum.capabilities.CastStudyProvider;
-import net.liplum.capabilities.MasterProvider;
+import net.liplum.capabilities.MasteryProvider;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.lib.CapabilityStorage;
 import net.liplum.lib.FawLocation;
@@ -28,7 +28,7 @@ public final class CapabilityRegistry {
     public static Capability<CastStudyCapability> CastStudy_Capability;
 
     static {
-        PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.Mastery), MasterProvider.class));
+        PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.Mastery), MasteryProvider.class));
         PlayerCapabilities.add(new CapabilityEntry(new FawLocation(Names.Capability.CastStudy), CastStudyProvider.class));
     }
 

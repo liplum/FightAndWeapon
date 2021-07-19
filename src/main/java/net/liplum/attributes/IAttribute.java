@@ -130,7 +130,12 @@ public interface IAttribute {
 
     @Nonnull
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
-    FinalAttrValue getValueWhenWeaponBroken();
+    FinalAttrValue getValueWhenWeaponBroken(Number former);
+    @Nonnull
+    @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
+    default FinalAttrValue getValueWhenWeaponBroken(FinalAttrValue former){
+        return getValueWhenWeaponBroken(former.getNumber());
+    }
 
     boolean useSpecialValueWhenWeaponBroken();
 }

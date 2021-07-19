@@ -33,7 +33,7 @@ public class FawWeaponHandler {
         ItemStack itemStack = event.getItemStack();
         IAttribute attribute = event.getAttribute();
         if (itemStack != null && FawItemUtil.isBroken(itemStack) && attribute.useSpecialValueWhenWeaponBroken() && event.isUseSpecialValueWhenWeaponBroken()) {
-            event.setFinalAttrValue(attribute.getValueWhenWeaponBroken());
+            event.setFinalAttrValue(attribute.getValueWhenWeaponBroken(event.getFinalAttrValue()));
         }
     }
 }
