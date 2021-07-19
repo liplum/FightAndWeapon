@@ -21,8 +21,9 @@ public final class TurquoiseSkills {
                             if (source.getDamageType().equals(DamageSource.FALL.getDamageType())) {
                                 float dmg = event.getAmount();
                                 event.setAmount(dmg - dmg * 0.3F);
+                                return PSkillResult.Complete;
                             }
-                            return PSkillResult.Complete;
+                            return PSkillResult.Fail;
                         }
                     });
 }

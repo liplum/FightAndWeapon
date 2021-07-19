@@ -20,8 +20,9 @@ public final class ForestgemSkills {
                         EntityLivingBase attacker = args.getAttacker();
                         float dmg = args.getInitialDamage().getDamage();
                         attacker.heal(dmg * 0.3F);
+                        return PSkillResult.Complete;
                     }
-                    return PSkillResult.Complete;
+                    return PSkillResult.Fail;
                 }
             };
 }

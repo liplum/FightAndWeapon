@@ -19,8 +19,9 @@ public final class RubySkills {
                     if (source.isFireDamage()) {
                         float dmg = event.getAmount();
                         event.setAmount(dmg / 2);
+                        return PSkillResult.Complete;
                     }
-                    return PSkillResult.Complete;
+                    return PSkillResult.Fail;
                 }
             };
 

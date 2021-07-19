@@ -83,22 +83,6 @@ public class Attribute implements IAttribute {
     }
 
     @Nonnull
-    public static <T extends IBasicAttrValueBuilder> T genAllBasicAttrValue(@Nonnull T builder) {
-        for (IAttribute attribute : BasicAttributes) {
-            builder.set(attribute, attribute.emptyBasicAttrValue());
-        }
-        return builder;
-    }
-
-    @Nonnull
-    public static <T extends IAttrModifierBuilder> T genAllBasicAttrModifiers(@Nonnull T builder) {
-        for (IAttribute attribute : BasicAttributes) {
-            builder.set(attribute, attribute.emptyAttrModifier());
-        }
-        return builder;
-    }
-
-    @Nonnull
     public static List<IAttribute> getAllBasicAttributes() {
         return BasicAttributes;
     }
@@ -234,18 +218,21 @@ public class Attribute implements IAttribute {
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setShownInTooltip(boolean shownInTooltip) {
         this.shownInTooltip = shownInTooltip;
         return this;
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setIsStripTrailingZero(boolean isStripTrailingZero) {
         this.isStripTrailingZero = isStripTrailingZero;
         return this;
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setHowToGetI18nKey(Function<String, String> I18nKeyMapping) {
         this.I18nKeyMapping = I18nKeyMapping;
         return this;
@@ -253,6 +240,7 @@ public class Attribute implements IAttribute {
 
     @Nonnull
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public String getI18nKey() {
         if (!shownInTooltip) {
             return "";
@@ -261,31 +249,37 @@ public class Attribute implements IAttribute {
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean canTooltipShow(Number n) {
-        return shownInTooltip && canTooltipShow.test(n);
+        return canTooltipShow.test(n);
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean hasUnit() {
         return hasUnit && unit != null;
     }
 
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setNeedMoreDetailsToShown() {
         this.needMoreDetailsToShown = true;
         return this;
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean needMoreDetailsToShown() {
         return this.needMoreDetailsToShown;
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean isStripTrailingZero() {
         return this.isStripTrailingZero;
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setHasUnit(@Nonnull String unit) {
         this.hasUnit = true;
         this.unit = unit;
@@ -293,12 +287,14 @@ public class Attribute implements IAttribute {
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setTooltipShownMapping(@Nonnull Function<Number, Number> mapping) {
         this.tooltipShownMapping = mapping;
         return this;
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setHowCanTooltipShow(@Nonnull Predicate<Number> predicate, boolean needAndPrevious) {
         if (needAndPrevious) {
             this.canTooltipShow = this.canTooltipShow.and(predicate);
@@ -309,11 +305,13 @@ public class Attribute implements IAttribute {
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setHowCanTooltipShow(@Nonnull Predicate<Number> predicate) {
         return setHowCanTooltipShow(predicate, true);
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setNeedIsNotDefaultValueCanTooltipShow() {
         return setHowCanTooltipShow(this::isNotDefaultValue, true);
     }
@@ -346,6 +344,7 @@ public class Attribute implements IAttribute {
      * @return the priority of display
      */
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public int getDisplayPriority() {
         return displayPriority;
     }
@@ -355,6 +354,7 @@ public class Attribute implements IAttribute {
      * Larger number means later<br/>
      * O is default.
      */
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setDisplayPriority(int displayPriority) {
         this.displayPriority = displayPriority;
         return this;
@@ -362,23 +362,27 @@ public class Attribute implements IAttribute {
 
     @Nonnull
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public Number getTooltipShownValue(Number input) {
         return tooltipShownMapping.apply(input);
     }
 
     @Nullable
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public String getUnit() {
         return unit;
     }
 
     @Nullable
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public String getFormat() {
         return format;
     }
 
     @Nonnull
+    @Require(func = "isShownInTooltip", is = "true")
     public Attribute setFormat(@Nonnull String format) {
         this.format = format;
         return this;
@@ -525,6 +529,7 @@ public class Attribute implements IAttribute {
     /*
      * The default is returning the default value of this attribute.
      */
+    @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public Attribute setSpecialValueWhenWeaponBroken(@Nonnull Number valueWhenWeaponBroken) {
         this.valueWhenWeaponBrokenGetter = () -> valueWhenWeaponBroken;
         return this;
@@ -537,6 +542,7 @@ public class Attribute implements IAttribute {
      */
     @Nonnull
     @Override
+    @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public FinalAttrValue getValueWhenWeaponBroken() {
         return newFinalAttrValue(valueWhenWeaponBrokenGetter.get());
     }
@@ -628,6 +634,7 @@ public class Attribute implements IAttribute {
         }
     }
 
+    @Nonnull
     public Attribute setBasic() {
         if (!isBasic) {
             Attribute.setBasicAttribute(this);

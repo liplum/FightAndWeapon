@@ -22,8 +22,9 @@ public final class FlamegemSkills {
                     if (event.phase == TickEvent.Phase.START) {
                         EntityPlayer player = event.player;
                         player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 5, 0, false, false));
+                        return PSkillResult.Complete;
                     }
-                    return PSkillResult.Complete;
+                    return PSkillResult.Fail;
                 }
             };
 

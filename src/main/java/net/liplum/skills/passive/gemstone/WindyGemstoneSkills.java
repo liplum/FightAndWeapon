@@ -22,8 +22,9 @@ public final class WindyGemstoneSkills {
                     if (args.isHitSuccessfully() && args.isFullAttack()) {
                         EntityUtil.ifLivingThenDO(args.getTarget(), e ->
                                 e.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 8, 0, false, false)));
+                        return PSkillResult.Complete;
                     }
-                    return PSkillResult.Complete;
+                    return PSkillResult.Fail;
                 }
             };
 

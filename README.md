@@ -10,131 +10,135 @@ Designer : Frost_Ansel
 
 ```Java
 // Create a new class or just use a anonymous class.
-// Make it extend a CONCRETE IWeaponCore class which you want.
-ILanceCore newLanceCore = new ILanceCore() {
+// Make it extend a CONCRETE WeaponCore class which you want.
+LanceCore newLanceCore = new LanceCore() {
     @Override
-    public int getCoolDown() {
-        // It means 120 ticks which is equivalent to 6 seconds in reality. 
-        return 20*6;
-    }
-    
-    @Override
-    public boolean releaseSkill(LanceArgs args) {
-        // Do something to show the player what this weapon can do.
+    public boolean releaseSkill(WeaponSkillArgs args) {
+        // Code something to show the player what this weapon can do with the Weapon Skill.
+        // If the skill was canceled for some reasons, please return false.
         return true;
     }
-    
-    // Set the base Attribute. It will decide one or some certain final effect(s).
+
     @Override
-    public float getSprintLength() {
-        return 5;
+    // Now configure this Weapon Core
+    protected void build(WeaponCoreBuilder builder) {
+        // Make sure you call its super class's one.
+        super.build(builder);
+        // Set the all Attribute you want.
+        // It will decide one or some certain final effect(s).
+        builder.set(
+        // You can find all the attributes in the net.liplum.Attributes. 
+            SprintStrength, SprintStrength.newBasicAttrValue(2F)
+        ).set(
+            CoolDown, SprintStrength.newBasicAttrValue(6 * 20)
+        ).set(
+            Strength, SprintStrength.newBasicAttrValue(5F)
+        ).set(
+            AttackReach, AttackReach.newBasicAttrValue(8F)
+        );
     }
 };
 
-// Then new a weapon object, which expands the WeaponBaseItem<CoreType extends IWeaponCore>,
-// by its constructor.
-Item newLance = new LanceItem(LanceCoreTypes.newLanceCore)
+// Finally, register a item into Minecraft Forge with the Weapon Core as a parameter.
+Item newLance = new LanceItem(newLanceCore)
 
-// Finally, register this item into Minecraft Forge.
-@SubscribeEvent
-public static void onItemRegistry(RegistryEvent.Register<Item> event){
-    IForgeRegistry<Item> items = event.getRegistry();
-    items.register(newLance);
-}
 // Now you can see the new weapon in the game.
 ```
 
-## How to create a new Gemstone.
+## How to create a new Gemstone and its Modifier.
 
 ```Java
 // New a gemstone object. Please only use lower case letters and underline.
+// net.liplum.api.Gemstone
 IGemstone newGem = new Gemstone("new_gem");
 
-// And add one or some modifiers to the gemstone.
+public final static LanceModifier newModifier = new LanceModifier() {
+    @Override
+    public LanceCore getCore() {
+        return newLanceCore;
+    }
+
+    @Override
+    protected void build(Modifier.ModifierBuilder builder) {
+        // Make sure you call its super class's one.
+        super.build(builder);
+        builder.set(
+        // Set the all Attribute Modifier you want.
+            SprintStrength, SprintStrength.newAttrModifier(2, 0)
+        );
+    }
+
+    @Override
+    public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
+        // Code something to show the player How this gemstone changes the Weapon Skill.
+        // The default behavior is calling the Weapon Core on (aka there is no change.)
+        // If the skill was canceled for some reasons, please return false.
+        return true;
+    }
+};
+
+// And add one or some modifier(s) to the gemstone.
 newGem.addModifier(newModifier);
 
 // Finally, register it. But you can still add more modifiers or other things after registering.
-GemstoneRegistry.Instance().register(newGem);
+// Oh, fortunately, when you new a Gemstone Object, it will register itself automatically.
 ```
 
-## How to create a new Modifier.
+## How to create a new Attribute.
 
 ```Java
-// Create a new class or just use a anonymous class.
-// Make it extend a Modifier class which you want.
-LanceModifier newModifier = new LanceModifier(){
-    // Claim this modifier is specific for which weapon core.
-    @Override
-    public CoreType getCoreType(){
-        return WeaponCoreTypes.LanceCore;
-    }
-    
-    @Override
-    public float getStrengthDelta() {
-        // It means that if there are a weapon with it , the weapon's Strength Attribute will increase 5.
-        return 5;
-    }
-    
-    // If you didn't overwrite it, it would release the skill in the original weapon core's version.
-    @Override
-    public boolean releaseSkill(ILanceCore core, LanceArgs args){
-        // Do somethings.
-        // Or you can even call the original weapon core's releaseSkill(LanceArgs)
-        // and add more(such as more particles).
-        return true;//It stand for success of this releasing.
-    }
-
-}
-
-// Please see the previous tutorial -- "How to create a new Gemstone".
-// Now add the new modifier to a gemstone and register the gemstone.
-newGem.addModifier(yyyModifier);
+// The Attribute -- Normal One
+IAttribute testAtrribute = new Attribute()
+        // Set the unique Register Name
+        .setRegisterName(Names.Attribute.Generic.Strength)
+        // How to get the I18n key
+        .setHowToGetI18nKey(I18ns.Attribute::Generic)
+        // Basic Attribute will be initialized in all Weapon Core automatically
+        .setBasic()
+        // There are only two choices--Int or Float
+        .setDataType(DataType.Float)
+        // Whether this attribute is shown in tooltip
+        // while the player open inventory and their mouse is hovering on the ItemStack
+        // the default is true 
+        .setShownInTooltip(false)
+        // It will be applied in tooltip showing
+        .setFormat("%.1f")
+        // There are some different algorithms to get the final value
+        .setComputeType(ComputeType.Full)
+        // The sequence in tooltip showing
+        .setDisplayPriority(-100)
+        // The default value when initialized automatically until you set it manually
+        .setDefaultValue(0)
+        // Whether use a special value when the weapon is broken
+        // The default is false
+        .setUseSpecialValueWhenWeaponBroken();
 ```
 
 ## How to create a new Passive Skill and register it.
 
 ```Java
-// You can see this passive skill in Class MagicPearlSkills
-
-IPassiveSkill<WeaponPreAttackEvent> Magicize =
-        SkillRegistry.registerPassiveSkill(
-        // Create a new class or just use a anonymous class.
-        // Make it extend a Modifier class which you want.
-        // The generic parameter stands for which event you need to subscribe
-        new IPassiveSkill<WeaponPreAttackEvent>() {
-            
+IPassiveSkill<WeaponAttackEvent.Attacking> Magicize =
+        // The first parameter is its unique Register Name
+        // The second one is the event it has to subscribe
+        new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.Magicize, WeaponAttackEvent.Attacking.class) {
+    @Nonnull
     @Override
-    public Class<WeaponPreAttackEvent> getEventType() {
-        // You have to return the Class Object of the event
-        return WeaponPreAttackEvent.class;
-    }
-
-    @Override
-    public PSkillResult onTrigger(WeaponPreAttackEvent event){
-        // Just do something.
-        DamageSource damageSource = event.getDamageSource();
-        damageSource.setMagicDamage();
-        
-        // If the passive skills triggers successful or did no effect then return PSkillResult.Complete.
-        // If it triggered failed then returned PSkillResult.Fail.
-        // NOTE:If you want to cancel the rest of passive skills then return PSkillResult.CancelTrigger.
+    public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
+        // Code something to show the player what the passive skill can do.
+        // If the Passive Skill triggers successfully, please return Complete.
+        // If it triggered failed, please return Fail.
+        // If it need cancel the event--such as canceling the EntityFallEvent, please return Cancel Trigger
+        // to end the rest of other Passive Skills ahead of time.
         return PSkillResult.Complete;
     }
-    
-    @Override
-    public String getRegisterName() {
-        // Name it and ensure it unique.
-        // If you want to change it, please change it synchronously in anywhere
-        return "Magicize";
-    }
-});
+};
 
 // How to register it to a Gemstone
 // addPassiveSkillToAll(IPassiveSkill) will make all weapons held by a player can trigger the skills.
 newGem.addPassiveSkillToAll(Magicize);
 
-// addPassiveSkillToWeaponType(Class,IPassiveSkill) will make all weapons only in the same weapon type you gave can trigger the skills.
-newGem.addPassiveSkillToWeaponType(LanceItem.class,Magicize);
+// addPassiveSkillToWeaponType(WeaponType,IPassiveSkill) will make all weapons only in the same weapon type you gave can trigger the skills.
+newGem.addPassiveSkillToWeaponType(CertainWeaponType,Magicize);
 
 //addPassiveSkillToCore(IWeaponCore,IPassiveSkill) will make only this weapon core can trigger the skills.
 newGem.addPassiveSkillToCore(newLanceCore,Magicize);

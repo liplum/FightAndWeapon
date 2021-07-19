@@ -65,6 +65,7 @@ public class BoolAttribute implements IAttribute {
         return value.intValue() != 0 ? 1 : 0;
     }
 
+    @Nonnull
     private static FinalAttrValue newFinalAttrValue(boolean value) {
         return new FinalAttrValue(DataType.Int, toInt(value));
     }
@@ -77,18 +78,21 @@ public class BoolAttribute implements IAttribute {
     }
 
     @Nonnull
+    @Require(func = "getComputeType", is = "ComputeType.Full")
     public BoolAttribute setFullCompute(@Nonnull IFullCompute fullCompute) {
         this.fullCompute = fullCompute;
         return this;
     }
 
     @Nonnull
+    @Require(func = "getComputeType", is = "ComputeType.Only_Gemstone")
     public BoolAttribute setOnlyGemstoneCompute(@Nonnull IOnlyGemstoneCompute onlyGemstoneCompute) {
         this.onlyGemstoneCompute = onlyGemstoneCompute;
         return this;
     }
 
     @Nonnull
+    @Require(func = "getComputeType", is = "ComputeType.Only_Mastery")
     public BoolAttribute setOnlyMasteryCompute(@Nonnull IOnlyMasteryCompute onlyMasteryCompute) {
         this.onlyMasteryCompute = onlyMasteryCompute;
         return this;
@@ -259,16 +263,19 @@ public class BoolAttribute implements IAttribute {
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean needMoreDetailsToShown() {
         return false;
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean isStripTrailingZero() {
         return false;
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean hasUnit() {
         return false;
     }
@@ -281,6 +288,8 @@ public class BoolAttribute implements IAttribute {
     /*
      * The default is returning the default value of this attribute.
      */
+    @Nonnull
+    @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public BoolAttribute setSpecialValueWhenWeaponBroken(boolean boolWhenWeaponBroken) {
         this.valueWhenWeaponBrokenGetter = () -> toInt(boolWhenWeaponBroken);
         return this;
@@ -293,6 +302,7 @@ public class BoolAttribute implements IAttribute {
      */
     @Nonnull
     @Override
+    @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public FinalAttrValue getValueWhenWeaponBroken() {
         return newFinalAttrValue(valueWhenWeaponBrokenGetter.get());
     }
@@ -323,18 +333,21 @@ public class BoolAttribute implements IAttribute {
 
     @Nonnull
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public Number getTooltipShownValue(Number input) {
         return 0;
     }
 
     @Nullable
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public String getUnit() {
         return null;
     }
 
     @Nullable
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public String getFormat() {
         return null;
     }
@@ -346,6 +359,7 @@ public class BoolAttribute implements IAttribute {
     }
 
     @Override
+    @Require(func = "isShownInTooltip", is = "true")
     public boolean canTooltipShow(Number n) {
         return false;
     }
