@@ -79,7 +79,7 @@ public final class SkillUtil {
     }
 
     public static void onTrigger(@Nonnull EntityLivingBase entity, @Nonnull IPassiveSkill<?> passiveSkill, @Nonnull PSkillResult result) {
-        if (result == PSkillResult.Complete) {
+        if (result.succeed) {
             onCompete(entity, passiveSkill);
         }
     }

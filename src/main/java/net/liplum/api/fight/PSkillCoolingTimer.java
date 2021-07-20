@@ -81,5 +81,4 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
         }
         return Empty;
     }
-
 }

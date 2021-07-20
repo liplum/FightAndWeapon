@@ -33,10 +33,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(TickEvent.PlayerTickEvent.class, player);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(player, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -47,10 +47,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(LivingHurtEvent.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -61,10 +61,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(LivingDamageEvent.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -75,10 +75,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(LivingDeathEvent.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -89,10 +89,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(LivingHealEvent.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -103,10 +103,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(LivingFallEvent.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -127,10 +127,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(LanceSprintEvent.class, player);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(player, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -141,10 +141,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(eventType, attacker);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(attacker, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(attacker, skill, res);
         }
     }
 
@@ -155,10 +155,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(FawWeaponLeftClickEvent.class, player);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(player, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -169,10 +169,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(WeaponDurabilityEvent.Damaged.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -183,10 +183,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(WeaponDurabilityEvent.Healed.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -197,10 +197,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(PlayerCollisionEvent.class, player);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(player, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -211,10 +211,10 @@ public class PassiveSkillHandler {
                 SkillUtil.getAvailablePassiveSkills(PlayerPickupXpEvent.class, player);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
+            SkillUtil.onTrigger(player, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
-            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -226,10 +226,10 @@ public class PassiveSkillHandler {
                     SkillUtil.getAvailablePassiveSkills(AttributeAccessEvent.class, player);
             for (IPassiveSkill<Event> skill : skills) {
                 PSkillResult res = skill.onTrigger(e);
+                SkillUtil.onTrigger(player, skill, res);
                 if (res == PSkillResult.CancelTrigger) {
                     break;
                 }
-                SkillUtil.onTrigger(player, skill, res);
             }
         }
     }
