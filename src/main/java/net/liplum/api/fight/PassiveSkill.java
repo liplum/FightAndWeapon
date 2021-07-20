@@ -1,6 +1,7 @@
 package net.liplum.api.fight;
 
 import net.liplum.api.registeies.SkillRegistry;
+import net.liplum.attributes.Require;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
@@ -46,6 +47,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         return triggerPriority;
     }
 
+    @Nonnull
     public PassiveSkill<EventType> setTriggerPriority(int triggerPriority) {
         this.triggerPriority = triggerPriority;
         return this;
@@ -56,6 +58,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         return isBannedWhenBroken;
     }
 
+    @Nonnull
     public PassiveSkill<EventType> setBanedWhenBroken(boolean banedWhenBroken) {
         this.isBannedWhenBroken = banedWhenBroken;
         return this;
@@ -78,6 +81,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         return isShownInTooltip;
     }
 
+    @Nonnull
     public PassiveSkill<EventType> setShownInTooltip() {
         this.isShownInTooltip = true;
         return this;
@@ -89,6 +93,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
     }
 
     @Override
+    @Require(func = "hasCoolDown", is = "true")
     public int getCoolDownTicks() {
         return coolDownTicks;
     }

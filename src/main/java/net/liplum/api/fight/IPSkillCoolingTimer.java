@@ -8,4 +8,8 @@ public interface IPSkillCoolingTimer {
     boolean isInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill);
 
     void tick();
+
+    default boolean isNotInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill){
+        return !isInCoolingDown(passiveSkill);
+    }
 }

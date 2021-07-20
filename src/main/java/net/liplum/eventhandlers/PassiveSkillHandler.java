@@ -36,6 +36,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -49,6 +50,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -62,6 +64,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -75,6 +78,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -88,6 +92,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -101,6 +106,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -124,6 +130,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -137,6 +144,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(attacker, skill, res);
         }
     }
 
@@ -150,6 +158,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -163,6 +172,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -176,6 +186,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(entity, skill, res);
         }
     }
 
@@ -189,6 +200,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -202,6 +214,7 @@ public class PassiveSkillHandler {
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
+            SkillUtil.onTrigger(player, skill, res);
         }
     }
 
@@ -216,6 +229,7 @@ public class PassiveSkillHandler {
                 if (res == PSkillResult.CancelTrigger) {
                     break;
                 }
+                SkillUtil.onTrigger(player, skill, res);
             }
         }
     }

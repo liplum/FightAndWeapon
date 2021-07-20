@@ -1,5 +1,6 @@
 package net.liplum.api.fight;
 
+import net.liplum.attributes.Require;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
@@ -31,5 +32,6 @@ public interface IPassiveSkill<EventType extends Event> {
 
     boolean hasCoolDown();
 
+    @Require(func = "hasCoolDown", is = "true")
     int getCoolDownTicks();
 }

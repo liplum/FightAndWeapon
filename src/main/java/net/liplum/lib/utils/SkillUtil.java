@@ -1,7 +1,6 @@
 package net.liplum.lib.utils;
 
-import net.liplum.api.fight.AggregatePassiveSkill;
-import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.fight.*;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
@@ -69,7 +68,27 @@ public final class SkillUtil {
 
         ItemStack offHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
         addPassiveSkills((Class<Event>) eventType, skills, offHandHeld, entity);
+        IPSkillCoolingTimer timer = PSkillCoolingTimer.create(entity);
+        return skills.stream()
+                .filter(timer::isNotInCoolingDown)
+                .sorted(Comparator.comparing(IPassiveSkill::getTriggerPriority))
+                .collect(Collectors.toList());
+    }
 
-        return skills.stream().sorted(Comparator.comparing(IPassiveSkill::getTriggerPriority)).collect(Collectors.toList());
+    public static void onTrigger(@Nonnull EntityLivingBase entity, @Nonnull IPassiveSkill<?> passiveSkill, @Nonnull PSkillResult result) {
+        if (result == PSkillResult.Complete) {
+            onCompete(entity, passiveSkill);
+        }
+    }
+
+    private static void onCompete(@Nonnull EntityLivingBase entity, @Nonnull IPassiveSkill<?> passiveSkill) {
+        heatSkill(entity, passiveSkill);
+    }
+
+    private static void heatSkill(@Nonnull EntityLivingBase entity, IPassiveSkill<?> passiveSkill) {
+        IPSkillCoolingTimer timer = PSkillCoolingTimer.create(entity);
+        if (passiveSkill.hasCoolDown()) {
+            timer.addNewCoolDown(passiveSkill, passiveSkill.getCoolDownTicks());
+        }
     }
 }

@@ -1,6 +1,7 @@
 package net.liplum.api.fight;
 
 import net.liplum.api.registeies.SkillRegistry;
+import net.liplum.attributes.Require;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
@@ -23,6 +24,8 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
     private boolean built = false;
     private int triggerPriority = 0;
     private boolean isBannedWhenBroken = true;
+    private int coolDownTicks = 0;
+    private boolean hasCoolDown = false;
 
     public AggregatePassiveSkill(@Nonnull String registerName) {
         this.registerName = registerName;
@@ -63,12 +66,19 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
 
     @Override
     public boolean hasCoolDown() {
-        return false;
+        return hasCoolDown;
     }
 
     @Override
+    @Require(func = "hasCoolDown", is = "true")
     public int getCoolDownTicks() {
-        return 0;
+        return coolDownTicks;
+    }
+
+    @Nonnull
+    public AggregatePassiveSkill setCoolDownTicks(int coolDownTicks){
+        this.coolDownTicks=coolDownTicks;
+        return this;
     }
 
     /**

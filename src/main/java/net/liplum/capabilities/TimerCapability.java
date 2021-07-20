@@ -14,14 +14,30 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkil
     @Nonnull
     private Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();
 
+    private boolean dirty = false;
+
     public void tick() {
         coolingPassiveSkills.values().forEach(CoolDown::tick);
-        coolingPassiveSkills.values().removeIf(CoolDown::isFinished);
+        boolean removed = coolingPassiveSkills.values().removeIf(CoolDown::isFinished);
+        if (removed) {
+            markDirty();
+        }
+    }
+
+    private void markDirty() {
+        dirty = true;
+    }
+
+    public boolean needSync() {
+        boolean needSync = dirty;
+        dirty = false;
+        return needSync;
     }
 
     @Override
     public void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
         coolingPassiveSkills.put(passiveSkill, new CoolDown(coolDownTicks));
+        markDirty();
     }
 
     @Nonnull

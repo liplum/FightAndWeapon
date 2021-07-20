@@ -30,7 +30,7 @@ public class PlayerTickHandler {
             }
         }
     }
-
+    @SubscribeEvent
     public static void onTimerTick(TickEvent.PlayerTickEvent event) {
         if (event.phase == TickEvent.Phase.START) {
             IPSkillCoolingTimer timer = PSkillCoolingTimer.create(event.player);

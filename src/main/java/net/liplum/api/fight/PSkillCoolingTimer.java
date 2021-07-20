@@ -1,9 +1,12 @@
 package net.liplum.api.fight;
 
 import net.liplum.capabilities.TimerCapability;
+import net.liplum.networks.CoolingMsg;
+import net.liplum.networks.MessageManager;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 
 import javax.annotation.Nonnull;
 
@@ -43,6 +46,13 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
     @Override
     public void tick() {
         timerDelegate.tick();
+        if (player.isServerWorld()) {
+            if (timerDelegate.needSync()) {
+                MessageManager.sendMessageToPlayer(
+                        new CoolingMsg(timerDelegate.getCoolingPassiveSkills()), (EntityPlayerMP) player
+                );
+            }
+        }
     }
 
     private PSkillCoolingTimer(@Nonnull EntityPlayer player, @Nonnull TimerCapability timerCapability) {

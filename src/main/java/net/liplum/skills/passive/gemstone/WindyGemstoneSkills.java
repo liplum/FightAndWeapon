@@ -19,7 +19,7 @@ public final class WindyGemstoneSkills {
                 @Override
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
                     WeaponAttackEvent.Attacked.Args args = event.getArgs();
-                    if (args.isHitSuccessfully() && args.isFullAttack()) {
+                    if (args.getAttacker().isServerWorld() && args.isHitSuccessfully() && args.isFullAttack()) {
                         EntityUtil.ifLivingThenDO(args.getTarget(), e ->
                                 e.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 8, 0, false, false)));
                         return PSkillResult.Complete;
@@ -29,7 +29,7 @@ public final class WindyGemstoneSkills {
             };
 
     public final static IPassiveSkill<LivingFallEvent> Feather =
-            new PassiveSkill<LivingFallEvent>(Names.PassiveSkill.Feather, LivingFallEvent.class) {
+            new PassiveSkill<LivingFallEvent>(Names.PassiveSkill.Feather, LivingFallEvent.class,100) {
 
                 @Nonnull
                 @Override
