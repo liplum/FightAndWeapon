@@ -10,6 +10,7 @@ import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
+import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsTool;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
@@ -58,11 +59,14 @@ public final class EnderGemModifier {
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
             Vector2D look = MathUtil.toV2D(player.getLookVec());
+            int damagedCount = 0;
             for (EntityLivingBase e : allInRange) {
                 if (EntityUtil.canAttack(player, e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 2, sprintLength)) {
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
+                    damagedCount++;
                 }
             }
+            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), damagedCount, player);
             Vec3d originPos = player.getPositionVector();
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(sprintLength);

@@ -17,14 +17,17 @@ import static net.liplum.Attributes.Generic.DropsFireproof;
 public class FawWeaponItemEntity extends IndestructibleItemEntity {
     public FawWeaponItemEntity(World worldIn, double x, double y, double z) {
         super(worldIn, x, y, z);
+        this.isImmuneToFire = true;
     }
 
     public FawWeaponItemEntity(World worldIn, double x, double y, double z, ItemStack stack) {
         super(worldIn, x, y, z, stack);
+        this.isImmuneToFire = true;
     }
 
     public FawWeaponItemEntity(World worldIn) {
         super(worldIn);
+        this.isImmuneToFire = true;
     }
 
     @Override

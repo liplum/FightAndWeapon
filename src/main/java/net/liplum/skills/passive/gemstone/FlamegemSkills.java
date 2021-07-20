@@ -26,10 +26,10 @@ public final class FlamegemSkills {
                     }
                     return PSkillResult.Fail;
                 }
-            };
+            }.setBanedWhenBroken(false);
 
     public final static IPassiveSkill<WeaponAttackEvent.Attacking> ScorchingTouch =
-            new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.ScorchingTouch, WeaponAttackEvent.Attacking.class) {
+            new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.ScorchingTouch, WeaponAttackEvent.Attacking.class,100) {
                 @Nonnull
                 @Override
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {

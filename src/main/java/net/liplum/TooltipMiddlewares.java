@@ -48,7 +48,7 @@ public final class TooltipMiddlewares {
 
     public static final IThroughable ShowWeaponType = pipe ->
             new TooltipPart(
-                    (FawItemUtil.isBroken(pipe.getContext().itemStack) ?
+                    (FawItemUtil.isWeaponBroken(pipe.getContext().itemStack) ?
                             TextFormatting.ITALIC + I18n.format(I18ns.Tooltip.Broken) + " " + TextFormatting.RESET
                             : "")
                             +

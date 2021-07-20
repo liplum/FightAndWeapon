@@ -46,7 +46,7 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
     @Override
     public void tick() {
         timerDelegate.tick();
-        if (player.isServerWorld()) {
+        if (player.isServerWorld() && player instanceof EntityPlayerMP) {
             if (timerDelegate.needSync()) {
                 MessageManager.sendMessageToPlayer(
                         new CoolingMsg(timerDelegate.getCoolingPassiveSkills()), (EntityPlayerMP) player

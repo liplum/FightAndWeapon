@@ -18,6 +18,7 @@ import java.util.Comparator;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class SkillUtil {
 
@@ -55,21 +56,23 @@ public final class SkillUtil {
                 }
             }
         }
-        if (FawItemUtil.isBroken(itemStack)) {
+        if (FawItemUtil.isWeaponBroken(itemStack)) {
             allSkills.removeIf(IPassiveSkill::isBanedWhenBroken);
         }
     }
 
     @Nonnull
     public static Collection<IPassiveSkill<Event>> getAvailablePassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
-        Set<IPassiveSkill<Event>> skills = new HashSet<>();
+        Set<IPassiveSkill<Event>> mainHandSkills = new HashSet<>();
         ItemStack mainHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
-        addPassiveSkills((Class<Event>) eventType, skills, mainHandHeld, entity);
+        addPassiveSkills((Class<Event>) eventType, mainHandSkills, mainHandHeld, entity);
 
+        Set<IPassiveSkill<Event>> offHandSkills = new HashSet<>();
         ItemStack offHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.OFFHAND);
-        addPassiveSkills((Class<Event>) eventType, skills, offHandHeld, entity);
+        addPassiveSkills((Class<Event>) eventType, offHandSkills, offHandHeld, entity);
         IPSkillCoolingTimer timer = PSkillCoolingTimer.create(entity);
-        return skills.stream()
+
+        return Stream.concat(mainHandSkills.stream(), offHandSkills.stream())
                 .filter(timer::isNotInCoolingDown)
                 .sorted(Comparator.comparing(IPassiveSkill::getTriggerPriority))
                 .collect(Collectors.toList());
