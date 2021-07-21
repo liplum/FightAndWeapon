@@ -1,6 +1,7 @@
 package net.liplum.items.weapons.harp;
 
 import net.liplum.Attributes;
+import net.liplum.Names;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.lib.math.MathUtil;
@@ -35,6 +36,12 @@ public final class HarpCoreTypes {
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
         }
+
+        @Override
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
+            builder.setHasWeaponSkill(false);
+        }
     };
 
     public static final HarpCore Normal = new HarpCore() {
@@ -42,7 +49,9 @@ public final class HarpCoreTypes {
         @Override
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.setRegisterName(
+                    Names.Item.Harp.HarpItem
+            ).set(
                     AbilityPower, AbilityPower.newBasicAttrValue(5F)
             ).set(
                     Frequency, Frequency.newBasicAttrValue(40)

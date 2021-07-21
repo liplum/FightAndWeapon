@@ -8,6 +8,7 @@ import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.attributes.*;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
+import net.liplum.tooltips.AggregateThroughable;
 import net.liplum.tooltips.TooltipPipe;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
@@ -38,6 +39,10 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private IWeaponSkillPredicate weaponSkillPredicate;
     @Nullable
     private AggregatePassiveSkill weaponPassiveSkills;
+
+    private boolean hasWeaponSkill = true;
+    @Nonnull
+    private String registerName = "default";
     @Nonnull
     private ILeftClickEntityBehavior leftClickEntityBehavior = (weapon, stack, attacker, target) -> {
         AttrCalculator calculator = new AttrCalculator(this);
@@ -60,7 +65,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     private static final TooltipPipe DefaultPipe = new TooltipPipe()
             .addMiddleware(AutoAddSpaceLine)
-            .addMiddleware(ShownWeaponTypeAndGemstone)
+            .addMiddleware(new AggregateThroughable(ShowWeaponType, ShowGemstone, ShowWeaponSkillTip))
             .addMiddleware(ShowAttributes)
             .addMiddleware(ShowPassiveSkills);
 
@@ -100,6 +105,10 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     public List<IAttribute> getAllAttributes() {
         return allAttributes;
+    }
+
+    public boolean hasWeaponSkill() {
+        return hasWeaponSkill;
     }
 
     /**
@@ -185,6 +194,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Nonnull
+    public String getRegisterName() {
+        return registerName;
+    }
+
+    @Nonnull
     public abstract WeaponType getWeaponType();
 
     protected class WeaponCoreBuilder implements IBasicAttrValueBuilder {
@@ -233,6 +247,18 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         @Nonnull
         public WeaponCoreBuilder setTooltipPipe(@Nonnull TooltipPipe pipe) {
             tooltipPipe = pipe;
+            return this;
+        }
+
+        @Nonnull
+        public WeaponCoreBuilder setHasWeaponSkill(boolean has) {
+            hasWeaponSkill = has;
+            return this;
+        }
+
+        @Nonnull
+        public WeaponCoreBuilder setRegisterName(@Nonnull String name) {
+            registerName = name;
             return this;
         }
     }

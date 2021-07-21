@@ -1,6 +1,8 @@
 package net.liplum;
 
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.weapon.IGemstone;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.attributes.IAttribute;
 import net.liplum.lib.Delegate;
@@ -11,6 +13,7 @@ import net.liplum.tooltips.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
 
+import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -20,6 +23,7 @@ import java.util.stream.Collectors;
 import static net.liplum.Attributes.Generic.AttackSpeed;
 
 public final class TooltipMiddlewares {
+    @Nonnull
     public static final IMiddleware AutoAddSpaceLine = new IMiddlewareQualifier() {
         @Override
         public void onSubscribe(Delegate<MiddlewareThroughInArgs> onMiddlewareThroughIn, Delegate<MiddlewareThroughOutArgs> onMiddlewareThroughOut) {
@@ -46,6 +50,7 @@ public final class TooltipMiddlewares {
         }
     };
 
+    @Nonnull
     public static final IThroughable ShowWeaponType = pipe ->
             new TooltipPart(
                     (FawItemUtil.isWeaponBroken(pipe.getContext().itemStack) ?
@@ -55,6 +60,7 @@ public final class TooltipMiddlewares {
                             I18n.format(FawI18n.getNameI18nKey(pipe.getContext().weapon.getWeaponType()))
             );
 
+    @Nonnull
     public static final IThroughable ShowGemstone = pipe ->
             new TooltipPart(pipe.getContext().gemstone != null ?
                     I18n.format(I18ns.Tooltip.Inlaid) + " " +
@@ -63,9 +69,26 @@ public final class TooltipMiddlewares {
                     I18n.format(I18ns.Tooltip.NoGemstone)
             );
 
-    public static final IThroughable ShownWeaponTypeAndGemstone =
-            new AggregateThroughable(ShowWeaponType, ShowGemstone);
+    @Nonnull
+    public static final IThroughable ShowWeaponSkillTip = pipe -> {
+        TooltipPart res = new TooltipPart();
+        TooltipContext context = pipe.getContext();
+        if (context.tooltipOption.isWeaponSkillTipShown()) {
+            WeaponCore core = context.weaponCore;
+            IGemstone gemstone = context.gemstone;
+            res.add(
+                    I18n.format(FawI18n.getWeaponSkillTipI18nKey(core))
+            );
+            if (gemstone != null) {
+                res.add(
+                        I18n.format(FawI18n.getGemstoneSkillTipI18nKey(core,gemstone))
+                );
+            }
+        }
+        return res;
+    };
 
+    @Nonnull
     public static final IThroughable ShowAttributes = pipe -> {
         TooltipContext context = pipe.getContext();
         TooltipOption option = context.tooltipOption;
@@ -94,6 +117,7 @@ public final class TooltipMiddlewares {
         return new TooltipPart(tooltips);
     };
 
+    @Nonnull
     public static final IThroughable ShowPassiveSkills = pipe -> {
         Collection<IPassiveSkill<?>> passiveSkills = pipe.getContext().passiveSkills;
         LinkedList<String> tooltips = new LinkedList<>();

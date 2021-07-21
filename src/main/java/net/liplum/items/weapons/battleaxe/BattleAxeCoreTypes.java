@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.battleaxe;
 
+import net.liplum.Names;
 import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.weapon.WeaponSkillArgs;
@@ -32,6 +33,12 @@ public final class BattleAxeCoreTypes {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
+        }
+
+        @Override
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
+            builder.setHasWeaponSkill(false);
         }
 
     };
@@ -83,7 +90,9 @@ public final class BattleAxeCoreTypes {
         @Override
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.setRegisterName(
+                    Names.Item.BattleAxe.BattleAxeItem
+            ).set(
                     SweepRange, SweepRange.newBasicAttrValue(3F)
             ).set(
                     Strength, Strength.newBasicAttrValue(7F)
@@ -105,7 +114,9 @@ public final class BattleAxeCoreTypes {
         @Override
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.setRegisterName(
+                    Names.Item.BattleAxe.BerserkerAxeItem
+            ).set(
                     Strength, Strength.newBasicAttrValue(7F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(350)

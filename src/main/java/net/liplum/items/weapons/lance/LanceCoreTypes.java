@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.Names;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.coroutine.Coroutine;
@@ -39,6 +40,12 @@ public final class LanceCoreTypes {
             return false;
         }
 
+        @Override
+        protected void build(WeaponCoreBuilder builder) {
+            super.build(builder);
+            builder.setHasWeaponSkill(false);
+        }
+
     };
 
     public static final LanceCore TrainingLance = new LanceCore() {
@@ -50,9 +57,11 @@ public final class LanceCoreTypes {
         @Override
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.setRegisterName(
+                    Names.Item.Lance.TrainingLanceItem
+            ).set(
                     Strength, Strength.newBasicAttrValue(5)
-            );
+            ).setHasWeaponSkill(false);
         }
     };
 
@@ -100,7 +109,9 @@ public final class LanceCoreTypes {
         @Override
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.setRegisterName(
+                    Names.Item.Lance.LightLanceItem
+            ).set(
                     //  It means you can dash 4 units.
                     SprintStrength, SprintStrength.newBasicAttrValue(2F)
             ).set(
@@ -144,7 +155,9 @@ public final class LanceCoreTypes {
         @Override
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.setRegisterName(
+                    Names.Item.Lance.KnightLanceItem
+            ).set(
                     SprintStrength, SprintStrength.newBasicAttrValue(4F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
@@ -210,7 +223,9 @@ public final class LanceCoreTypes {
         @Override
         protected void build(WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.setRegisterName(
+                    Names.Item.Lance.ArenaLanceItem
+            ).set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
             ).set(
                     Strength, Strength.newBasicAttrValue(6F)

@@ -73,8 +73,9 @@ public abstract class WeaponBaseItem extends FawItem {
         }
         boolean vanillaAdvanced = flagIn.isAdvanced();
         boolean shiftPressed = Utils.isShiftDown();
+        boolean ctrlPressed = Utils.isCtrlDown();
         boolean altPressed = Utils.isAltDown();
-        TooltipOption tooltipOption = new TooltipOption(shiftPressed, altPressed, vanillaAdvanced);
+        TooltipOption tooltipOption = new TooltipOption(shiftPressed, altPressed, ctrlPressed, vanillaAdvanced);
         IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
         Modifier modifier = null;
         if (gemstone != null) {

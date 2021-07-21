@@ -107,6 +107,16 @@ public final class I18ns {
             return prefixTooltip(Names.Special.Unit, name);
         }
 
+        public static String skill(String weaponType, String weaponName) {
+            return prefixTooltip(Names.Special.WeaponSkill,
+                    weaponType + "." + weaponName);
+        }
+
+        public static String skill(String weaponType, String weaponName, String gemstone) {
+            return prefixTooltip(Names.Special.WeaponSkill,
+                    weaponType + "." + weaponName + "." + gemstone);
+        }
+
         public static final class Unit {
             public static final String Second = unit("Second");
             public static final String TriggerPerSecond = unit("TriggerPerSecond");

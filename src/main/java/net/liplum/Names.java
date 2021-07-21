@@ -23,6 +23,7 @@ public final class Names {
         public static final String Parts = "parts";
         public static final String Unit = "unit";
         public static final String WeaponType = "weaponType";
+        public static final String WeaponSkill = "skill";
     }
 
     public static final class Item {

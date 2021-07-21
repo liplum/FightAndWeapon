@@ -36,6 +36,13 @@ tooltip.faw.unit.Second=s
 tooltip.faw.unit.TriggerPerSecond=s/t
 tooltip.faw.unit.Unit=unit
 
+#Tooltips--Weapon Skill
+tooltip.faw.skill.lance.light_lance=Sprint Forward
+tooltip.faw.skill.lance.knight_lance=Jab Forward
+
+#Tooltips--Weapon Skill modified by Gemstone
+tooltip.faw.skill.lance.light_lance.endergem=Teleport to Destination Instead
+
 #Attributes
 attributes.faw.generic.Strength=Strength
 attributes.faw.generic.CoolDown=Cool Down

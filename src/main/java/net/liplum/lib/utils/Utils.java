@@ -87,56 +87,63 @@ public class Utils {
         return summand.doubleValue() + addend.doubleValue();
     }
 
-    public static boolean notNull(Boolean value) {
+    public static String notNull(@Nullable String str){
+        if(str==null){
+            return "";
+        }
+        return str;
+    }
+
+    public static boolean notNull(@Nullable Boolean value) {
         if (value == null) {
             return false;
         }
         return value;
     }
 
-    public static int notNull(Integer value) {
+    public static int notNull(@Nullable Integer value) {
         if (value == null) {
             return 0;
         }
         return value;
     }
 
-    public static float notNull(Float value) {
+    public static float notNull(@Nullable Float value) {
         if (value == null) {
             return 0;
         }
         return value;
     }
 
-    public static double notNull(Double value) {
+    public static double notNull(@Nullable Double value) {
         if (value == null) {
             return 0;
         }
         return value;
     }
 
-    public static char notNull(Character value) {
+    public static char notNull(@Nullable Character value) {
         if (value == null) {
             return '\0';
         }
         return value;
     }
 
-    public static long notNull(Long value) {
+    public static long notNull(@Nullable Long value) {
         if (value == null) {
             return 0;
         }
         return value;
     }
 
-    public static short notNull(Short value) {
+    public static short notNull(@Nullable Short value) {
         if (value == null) {
             return 0;
         }
         return value;
     }
 
-    public static byte notNull(Byte value) {
+    public static byte notNull(@Nullable Byte value) {
         if (value == null) {
             return 0;
         }
