@@ -7,7 +7,7 @@ import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.events.weapon.WeaponAttackEvent;
 import net.liplum.lib.math.MathUtil;
-import net.liplum.lib.math.Point;
+import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.ItemTool;
@@ -62,14 +62,14 @@ public final class BattleAxeCoreTypes {
             //Gets player's look vector and turn it to v2d.
             Vec3d pLook = player.getLookVec();
             Vector2D pLook2D = new Vector2D(pLook.x, pLook.z);
-            Point pp = new Point(player.posX, player.posZ);
+            Point2D pp = new Point2D(player.posX, player.posZ);
             int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
                 if (e != player &&//Without player self
                         (!e.isOnSameTeam(player) &&//The side entity is not on the same team with attacker
                                 e.getDistanceSq(player) < sweepRange * sweepRange)) {
-                    Point sp = new Point(e.posX, e.posZ);
-                    Point spNew = sp.minus(pp);
+                    Point2D sp = new Point2D(e.posX, e.posZ);
+                    Point2D spNew = sp.minus(pp);
                     Vector2D sv = spNew.toV2D();
                     if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
                         e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);

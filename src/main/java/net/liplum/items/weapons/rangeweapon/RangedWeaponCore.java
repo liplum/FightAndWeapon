@@ -10,7 +10,7 @@ import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.BoolAttribute;
 import net.liplum.events.weapon.FawWeaponLeftClickEvent;
 import net.liplum.lib.math.MathUtil;
-import net.liplum.lib.math.Point;
+import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,13 +56,13 @@ public abstract class RangedWeaponCore extends WeaponCore {
                     //Gets player's look vector and turn it to v2d.
                     Vec3d pLook = attacker.getLookVec();
                     Vector2D pLook2D = new Vector2D(pLook.x, pLook.z);
-                    Point pp = new Point(attacker.posX, attacker.posZ);
+                    Point2D pp = new Point2D(attacker.posX, attacker.posZ);
                     for (EntityLivingBase e : allInRange) {
                         if (e != attacker &&//Without player self
                                 (!e.isOnSameTeam(attacker) &&//The side entity is not on the same team with attacker
                                         e.getDistanceSq(attacker) < attackReach * attackReach)) {
-                            Point sp = new Point(e.posX, e.posZ);
-                            Point spNew = sp.minus(pp);
+                            Point2D sp = new Point2D(e.posX, e.posZ);
+                            Point2D spNew = sp.minus(pp);
                             Vector2D sv = spNew.toV2D();
                             if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
                                 e.attackEntityFrom(DamageSource.causePlayerDamage(attacker), strength);

@@ -1,6 +1,6 @@
 package net.liplum.lib.utils;
 
-import net.liplum.lib.math.Point;
+import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -47,7 +47,7 @@ public class PhysicsTool {
         e.setPosition(x, y, z);
     }
 
-    public static Point get2DPosition(Entity e) {
-        return new Point(e.posX, e.posZ);
+    public static Point2D get2DPosition(Entity e) {
+        return new Point2D(e.posX, e.posZ);
     }
 }

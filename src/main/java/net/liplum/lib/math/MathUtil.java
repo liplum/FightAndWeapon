@@ -1,10 +1,5 @@
 package net.liplum.lib.math;
 
-import cern.colt.matrix.DoubleMatrix1D;
-import cern.colt.matrix.DoubleMatrix2D;
-import cern.colt.matrix.impl.DenseDoubleMatrix1D;
-import cern.colt.matrix.impl.DenseDoubleMatrix2D;
-import cern.colt.matrix.linalg.Algebra;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -12,8 +7,6 @@ import net.minecraft.util.math.Vec3d;
 
 public class MathUtil {
     public static final double HalfPI = Math.PI / 2;
-    public static final Vector2D iY = new Vector2D(0, 1);
-    public static final Vector2D iX = new Vector2D(1, 0);
     private static final double PI_Divide_180 = Math.PI / 180;
 
     public static double toRadian(double degrees) {
@@ -42,197 +35,63 @@ public class MathUtil {
     }
 
     public static boolean belongToOO(double left, double right, double value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         double min = Math.min(left, right), max = Math.max(left, right);
-        if (value > min && value < max) {
-            return true;
-        }
-        return false;
+        return value > min && value < max;
     }
 
     public static boolean belongToOC(double left, double right, double value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         double min = Math.min(left, right), max = Math.max(left, right);
-        if (value > min && value <= max) {
-            return true;
-        }
-        return false;
+        return value > min && value <= max;
     }
 
     public static boolean belongToCO(double left, double right, double value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         double min = Math.min(left, right), max = Math.max(left, right);
-        if (value >= min && value < max) {
-            return true;
-        }
-        return false;
+        return value >= min && value < max;
     }
 
     public static boolean belongToCC(double left, double right, double value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         double min = Math.min(left, right), max = Math.max(left, right);
-        if (value >= min && value <= max) {
-            return true;
-        }
-        return false;
+        return value >= min && value <= max;
     }
 
     public static boolean belongToOO(float left, float right, float value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value > min && value < max) {
-            return true;
-        }
-        return false;
+        return value > min && value < max;
     }
 
     public static boolean belongToOC(float left, float right, float value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value > min && value <= max) {
-            return true;
-        }
-        return false;
+        return value > min && value <= max;
     }
 
     public static boolean belongToCO(float left, float right, float value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value >= min && value < max) {
-            return true;
-        }
-        return false;
+        return value >= min && value < max;
     }
 
     public static boolean belongToCC(float left, float right, float value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value >= min && value <= max) {
-            return true;
-        }
-        return false;
+        return value >= min && value <= max;
     }
 
     public static boolean belongToOO(int left, int right, int value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value > min && value < max) {
-            return true;
-        }
-        return false;
+        return value > min && value < max;
     }
 
     public static boolean belongToOC(int left, int right, int value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value > min && value <= max) {
-            return true;
-        }
-        return false;
+        return value > min && value <= max;
     }
 
     public static boolean belongToCO(int left, int right, int value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value >= min && value < max) {
-            return true;
-        }
-        return false;
+        return value >= min && value < max;
     }
 
     public static boolean belongToCC(int left, int right, int value) {
-        if ((value == left) && (value == right)) {
-            return true;
-        }
         float min = Math.min(left, right), max = Math.max(left, right);
-        if (value >= min && value <= max) {
-            return true;
-        }
-        return false;
-    }
-
-    public static Vector2D toV2D(Vec3d v3d) {
-        return new Vector2D(v3d.x, v3d.z);
-    }
-
-    /**
-     * @param xy
-     * @param rotationMatrix
-     * @return
-     */
-    public static DoubleMatrix1D rotate(DoubleMatrix1D xy, DoubleMatrix2D rotationMatrix) {
-        return Algebra.DEFAULT.mult(rotationMatrix, xy);
-    }
-
-    public static boolean isInside(Vector2D look, Point player, Point target, double width, double length) {
-        if (look.isZero()) {
-            return false;
-        }
-        Vector2D l = look.normalized();
-        Point Ep = target.minus(player);
-        DoubleMatrix1D A = new DenseDoubleMatrix1D(new double[]{Ep.x, Ep.y});
-        float o = (float) iX.angle(l);
-        float a;
-        Position2D lp = l.getPosition();
-        if (lp == Position2D.Quadrant_One || lp == Position2D.Quadrant_Two || lp == Position2D.Positive_Y_Axis) {
-            a = supplementary(o);
-        } else {
-            a = o;
-        }
-        DoubleMatrix1D Result = rotate(A, genRotateMatrix(a));
-        double halfw = width / 2;
-        return MathUtil.belongToCC(0, length, Result.get(0)) &&
-                MathUtil.belongToCC(-halfw, halfw, Result.get(1));
-    }
-
-    /**
-     * Gets rotate matrix based on (deltaX,deltaY).
-     *
-     * @param deltaX
-     * @param deltaY
-     * @param angleA
-     * @return 3*3 matrix
-     */
-    private static DoubleMatrix2D genRotateMatrix(double deltaX, double deltaY, float angleA) {
-        double sina = MathHelper.sin(angleA), cosa = MathHelper.cos(angleA);
-        DoubleMatrix2D T1 = Algebra.DEFAULT.mult(
-                new DenseDoubleMatrix2D(new double[][]{{1, 0, deltaX}, {0, 1, deltaY}, {0, 0, 1}}),
-                new DenseDoubleMatrix2D(new double[][]{{cosa, -sina, 0}, {sina, cosa, 0}, {0, 0, 1}}));
-        return Algebra.DEFAULT.mult(T1,
-                new DenseDoubleMatrix2D(new double[][]{{1, 0, -deltaX}, {0, 1, -deltaY}, {0, 0, 1}}));
-    }
-
-    /**
-     * Gets rotate matrix based on (0,0).
-     *
-     * @param angleA
-     * @return 2*2 matrix
-     */
-    private static DoubleMatrix2D genRotateMatrix(float angleA) {
-        double sina = MathHelper.sin(angleA), cosa = MathHelper.cos(angleA);
-        return new DenseDoubleMatrix2D(new double[][]{{cosa, -sina}, {sina, cosa}});
+        return value >= min && value <= max;
     }
 
     public static int fixMax(int value, int max) {
@@ -283,24 +142,8 @@ public class MathUtil {
         return Math.max(value, min);
     }
 
-    public static Vec3d from2D(Vector2D v2d) {
-        return new Vec3d(v2d.x, v2d.y, 0);
-    }
-
-    public static Point to2DPoint(Vec3d v3d) {
-        return new Point(v3d.x, v3d.z);
-    }
-
-    public static Vec3d minus(Vec3d a, Vec3d b) {
-        return a.addVector(-b.x, -b.y, -b.z);
-    }
-
-    public static Vec3d reserve(Vec3d v3d) {
-        return new Vec3d(-v3d.x, -v3d.y, -v3d.z);
-    }
-
-    public static Vec3d divide(Vec3d v3d, double division) {
-        return new Vec3d(v3d.x / division, v3d.y / division, v3d.z / division);
+    public static Point2D to2DPoint(Vec3d v3d) {
+        return new Point2D(v3d.x, v3d.z);
     }
 
     public static int randomFloor(double value) {

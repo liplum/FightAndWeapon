@@ -7,7 +7,7 @@ import net.liplum.attributes.AttrCalculator;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceCoreTypes;
 import net.liplum.items.weapons.lance.LanceModifier;
-import net.liplum.lib.math.MathUtil;
+import net.liplum.lib.math.P2D;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
@@ -58,10 +58,10 @@ public final class EnderGemModifier {
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
-            Vector2D look = MathUtil.toV2D(player.getLookVec());
+            Vector2D look = P2D.toV2D(player.getLookVec());
             int damagedCount = 0;
             for (EntityLivingBase e : allInRange) {
-                if (EntityUtil.canAttack(player, e) && MathUtil.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 2, sprintLength)) {
+                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 2, sprintLength)) {
                     e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                     damagedCount++;
                 }

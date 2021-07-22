@@ -150,7 +150,7 @@ public final class Vector2D {
         return new Vec3d(0, 0, x * other.y - other.x * y);
     }
 
-    public Point toPoint() {
-        return new Point(x, y);
+    public Point2D toPoint() {
+        return new Point2D(x, y);
     }
 }
