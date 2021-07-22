@@ -6,12 +6,6 @@ import net.minecraft.util.math.Vec3d;
 
 
 public class MathUtil {
-    public static final double HalfPI = Math.PI / 2;
-    private static final double PI_Divide_180 = Math.PI / 180;
-
-    public static double toRadian(double degrees) {
-        return degrees % 360 * PI_Divide_180;
-    }
 
     public static boolean isAngleLessThan(Vector2D v1, Vector2D v2, double radian) {
         double cosA = v1.cosAngle(v2);
@@ -151,19 +145,4 @@ public class MathUtil {
         return res + Utils.getRandom().nextInt(1);
     }
 
-    /**
-     * @param angle
-     * @return (Unit : Radius)
-     */
-    public static double supplementary(double angle) {
-        return 2 * Math.PI - angle;
-    }
-
-    /**
-     * @param angle
-     * @return (Unit : Radius)
-     */
-    public static float supplementary(float angle) {
-        return 2 * (float) (Math.PI) - angle;
-    }
 }

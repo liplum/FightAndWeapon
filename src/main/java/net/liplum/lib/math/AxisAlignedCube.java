@@ -9,7 +9,7 @@ public class AxisAlignedCube {
     public final double maxY;
     public final double maxZ;
 
-    public AxisAlignedCube(double x1, double y1, double z1, double x2, double y2, double z2) {
+    public AxisAlignedCube(double x1, double x2, double y1, double y2, double z1, double z2) {
         this.minX = Math.min(x1, x2);
         this.minY = Math.min(y1, y2);
         this.minZ = Math.min(z1, z2);

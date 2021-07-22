@@ -9,19 +9,22 @@ import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.BoolAttribute;
 import net.liplum.events.weapon.FawWeaponLeftClickEvent;
-import net.liplum.lib.math.MathUtil;
-import net.liplum.lib.math.Point2D;
-import net.liplum.lib.math.Vector2D;
+import net.liplum.lib.math.Angle;
+import net.liplum.lib.math.AxisAlignedCube;
+import net.liplum.lib.math.P3D;
+import net.liplum.lib.math.Point3D;
+import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.Vec3d;
 
 import javax.annotation.Nonnull;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static net.liplum.Attributes.Generic.*;
 
@@ -39,43 +42,52 @@ public abstract class RangedWeaponCore extends WeaponCore {
                 Strength, Strength.newBasicAttrValue(5)
         ).set(
                 SpecialAttackReachJudgment, BoolAttribute.FalseBasicAttrValue
-        ).addPassiveSkills(new AggregatePassiveSkill("RangedWeaponPS").add(FawWeaponLeftClickEvent.class,
-                event -> {
-                    ItemStack itemStack = event.getItemStack();
-                    EntityPlayer attacker = event.getPlayer();
-                    Modifier modifier = GemUtil.getModifierFrom(itemStack);
-                    AttrCalculator calculator = new AttrCalculator()
-                            .setWeaponCore(this)
-                            .setModifier(modifier)
-                            .setPlayer(attacker);
-                    float attackReach = calculator.calcu(AttackReach).getFloat();
-                    float strength = calculator.calcu(Strength).getFloat();
-                    AxisAlignedBB playerBox = attacker.getEntityBoundingBox();
-                    List<EntityLivingBase> allInRange = attacker.world
-                            .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(attackReach, 0.25D, attackReach));
-                    //Gets player's look vector and turn it to v2d.
-                    Vec3d pLook = attacker.getLookVec();
-                    Vector2D pLook2D = new Vector2D(pLook.x, pLook.z);
-                    Point2D pp = new Point2D(attacker.posX, attacker.posZ);
-                    for (EntityLivingBase e : allInRange) {
-                        if (e != attacker &&//Without player self
-                                (!e.isOnSameTeam(attacker) &&//The side entity is not on the same team with attacker
-                                        e.getDistanceSq(attacker) < attackReach * attackReach)) {
-                            Point2D sp = new Point2D(e.posX, e.posZ);
-                            Point2D spNew = sp.minus(pp);
-                            Vector2D sv = spNew.toV2D();
-                            if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
-                                e.attackEntityFrom(DamageSource.causePlayerDamage(attacker), strength);
-                            }
-                        }
-                    }
-                    return PSkillResult.Complete;
-                }
-                )
-        ).setLeftClickEntityBehavior((weaponItem, stack, attacker, target) -> true);
-    }
+        ).addPassiveSkills(
+                new AggregatePassiveSkill("RangedWeaponPS").add(FawWeaponLeftClickEvent.class,
+                        event -> {
+                            ItemStack itemStack = event.getItemStack();
+                            EntityPlayer attacker = event.getPlayer();
+                            Modifier modifier = GemUtil.getModifierFrom(itemStack);
+                            AttrCalculator calculator = new AttrCalculator()
+                                    .setWeaponCore(this)
+                                    .setModifier(modifier)
+                                    .setPlayer(attacker);
+                            float attackReach = calculator.calcu(AttackReach).getFloat();
+                            float strength = calculator.calcu(Strength).getFloat();
+                            AxisAlignedBB playerBox = attacker.getEntityBoundingBox();
+                            List<EntityLivingBase> allInRange = attacker.world
+                                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(attackReach, attackReach, attackReach));
+                            //Gets player's look vector and turn it to v2d.
+                            Point3D p = new Point3D(attacker.posX, attacker.posY, attacker.posZ);
+                            AxisAlignedCube range = new AxisAlignedCube(0, attackReach, 0, 2, -1.5, 1.5);
+                            float pitch = (float) Angle.toRadian(Angle.toNormalDegreeAngle(attacker.rotationPitch));
+                            float yaw = (float) Angle.toRadian(Angle.toNormalDegreeAngle(attacker.rotationYaw));
+                            List<EntityLivingBase> allInCube = allInRange.stream()
+                                    .filter(e ->
+                                            EntityUtil.canAttack(attacker, e) &&
+                                                    P3D.isInside(p, new Point3D(e.posX, e.posY, e.posZ)
+                                                            , pitch, yaw,
+                                                            range)).collect(Collectors.toList());
+                            Optional<EntityLivingBase> nearTarget = allInCube.stream()
+                                    .min(Comparator.comparing(
+                                            e -> e.getDistanceSq(attacker) < attackReach * attackReach));
 
-    public boolean rangedAttack() {
-        return false;
+                            if (nearTarget.isPresent()) {
+                                EntityLivingBase target = nearTarget.get();
+                                float distance = target.getDistance(attacker);
+                                AxisAlignedCube nextToTargetCube = new AxisAlignedCube(distance, distance + 1, 0, 2, -1.5, 1.5);
+                                List<EntityLivingBase> allInAttackRange = allInCube.stream().filter(e ->
+                                        P3D.isInside(p, new Point3D(e.posX, e.posY, e.posZ),
+                                                pitch, yaw, nextToTargetCube)
+                                ).collect(Collectors.toList());
+                                for (EntityLivingBase e : allInAttackRange) {
+                                    e.attackEntityFrom(EntityUtil.genDamageSource(attacker), strength);
+                                }
+                            }
+                            return PSkillResult.Complete;
+                        })
+        ).setLeftClickEntityBehavior(
+                (weaponItem, stack, attacker, target) -> true
+        );
     }
 }

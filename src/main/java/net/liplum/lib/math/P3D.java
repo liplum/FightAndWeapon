@@ -1,5 +1,6 @@
 package net.liplum.lib.math;
 
+import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
@@ -9,11 +10,30 @@ import net.minecraft.util.math.Vec3d;
 
 public class P3D {
 
-    public static boolean isInside(Point3D subject, Point3D object, float pitch, float yaw, float roll, AxisAlignedCube cube) {
-        DoubleMatrix2D R = genRotateMatrix(pitch, yaw, roll);
+    public static boolean isInside(Point3D subject, Point3D object, float pitch, float yaw, AxisAlignedCube cube) {
         Point3D p = object.minus(subject);
-        new DenseDoubleMatrix1D(new double[]{p.x, p.y, p.z, 1});
-        return false;
+        pitch = (float) Angle.getRotationOrItsSupplementary(pitch, 0);
+        yaw = (float) Angle.getRotationOrItsSupplementary(yaw, 0);
+        DoubleMatrix1D A = rotate((float) p.x, (float) p.y, (float) p.z, -pitch, -yaw);
+        Point3D res = new Point3D(A.get(0), A.get(1), A.get(2));
+        return cube.isInside(res);
+    }
+
+    /**
+     * Rotate the point with pitch and yaw but not roll
+     */
+    public static DoubleMatrix1D rotate(float px, float py, float pz, float pitch, float yaw, float roll) {
+        DenseDoubleMatrix1D A = new DenseDoubleMatrix1D(new double[]{px, py, pz, 1});
+        return Algebra.DEFAULT.mult(genRotateMatrix(pitch, yaw, roll), A);
+    }
+
+    /**
+     * Rotate the point with pitch, yaw and roll
+     */
+    public static DoubleMatrix1D rotate(float px, float py, float pz, float pitch, float yaw) {
+        DenseDoubleMatrix1D A = new DenseDoubleMatrix1D(new double[]{px, py, pz, 1});
+        DoubleMatrix2D R = Algebra.DEFAULT.mult(genPitchRotateMatrix(pitch), genYawRotateMatrix(yaw));
+        return Algebra.DEFAULT.mult(R, A);
     }
 
     public static Vec3d from2D(Vector2D v2d) {
@@ -41,9 +61,10 @@ public class P3D {
     private static DoubleMatrix2D genPitchRotateMatrix(float pitch) {
         double sina = MathHelper.sin(pitch), cosa = MathHelper.cos(pitch);
         return new DenseDoubleMatrix2D(new double[][]{
-                {1, 0, 0},
-                {0, cosa, -sina},
-                {0, sina, cosa}
+                {1, 0, 0, 0},
+                {0, cosa, sina, 0},
+                {0, -sina, cosa, 0},
+                {0, 0, 0, 1}
         });
     }
 
@@ -56,9 +77,10 @@ public class P3D {
     private static DoubleMatrix2D genYawRotateMatrix(float yaw) {
         double sina = MathHelper.sin(yaw), cosa = MathHelper.cos(yaw);
         return new DenseDoubleMatrix2D(new double[][]{
-                {cosa, -sina, 0},
-                {sina, cosa, 0},
-                {0, 0, 1}
+                {cosa, sina, 0, 0},
+                {-sina, cosa, 0, 0},
+                {0, 0, 1, 0},
+                {0, 0, 0, 1}
         });
     }
 
@@ -71,9 +93,10 @@ public class P3D {
     private static DoubleMatrix2D genRollRotateMatrix(float roll) {
         double sina = MathHelper.sin(roll), cosa = MathHelper.cos(roll);
         return new DenseDoubleMatrix2D(new double[][]{
-                {cosa, 0, sina},
-                {0, 1, 0},
-                {sina, 0, cosa}
+                {cosa, 0, sina, 0},
+                {0, 1, 0, 0},
+                {-sina, 0, cosa, 0},
+                {0, 0, 0, 1}
         });
     }
 

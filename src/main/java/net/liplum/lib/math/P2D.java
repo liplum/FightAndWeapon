@@ -40,7 +40,7 @@ public class P2D {
         float a;
         Position2D lp = l.getPosition();
         if (lp == Position2D.Quadrant_One || lp == Position2D.Quadrant_Two || lp == Position2D.Positive_Y_Axis) {
-            a = MathUtil.supplementary(o);
+            a = Angle.supplementary(o);
         } else {
             a = o;
         }
@@ -91,5 +91,9 @@ public class P2D {
                 {cosa, -sina},
                 {sina, cosa}
         });
+    }
+
+    public static Point3D toPoint(@Nonnull Vec3d v3d) {
+        return new Point3D(v3d.x, v3d.y, v3d.z);
     }
 }

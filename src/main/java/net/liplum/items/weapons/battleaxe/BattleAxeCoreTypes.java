@@ -6,6 +6,7 @@ import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.events.weapon.WeaponAttackEvent;
+import net.liplum.lib.math.Angle;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
@@ -54,8 +55,8 @@ public final class BattleAxeCoreTypes {
             float strength = calculator.calcu(Strength).getFloat();
             float sweepRange = calculator.calcu(SweepRange).getFloat();
 
-            float knockBackAngleToX = MathHelper.sin((float) MathUtil.toRadian(player.rotationYaw));
-            float knockBackAngleToY = -MathHelper.cos((float) MathUtil.toRadian(player.rotationYaw));
+            float knockBackAngleToX = MathHelper.sin((float) Angle.toRadian(player.rotationYaw));
+            float knockBackAngleToY = -MathHelper.cos((float) Angle.toRadian(player.rotationYaw));
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sweepRange, 0.25D, sweepRange));
