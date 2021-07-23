@@ -106,19 +106,14 @@ public final class Attributes {
                 .setBasic()
                 .setComputeType(ComputeType.Only_Base)
                 .setDefaultValue(true);
-    }
 
-    public static final class Continuous {
-
-        /**
-         * The default one equals 60 minutes
-         */
         public static final IAttribute MaxUseDuration = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.MaxUseDuration)
+                .setBasic()
                 .setDataType(DataType.Int)
                 .setComputeType(ComputeType.Only_Base)
                 .setShownInTooltip(false)
-                .setDefaultValue(72000);
+                .setDefaultValue(0);
     }
 
     public static final class Lance {

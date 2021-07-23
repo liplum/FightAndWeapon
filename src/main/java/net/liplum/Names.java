@@ -63,6 +63,11 @@ public final class Names {
             public static final String GemstoneSwordItem = "gemstone_sword";
         }
 
+        public static final class Bow {
+            public static final String TypeName = "bow";
+            public static final String SimpleBow = "simple_bow";
+        }
+
         public static final class RangedWeapon {
             public static final String TypeName = "ranged_weapon";
             public static final String SickleItem = "sickle";

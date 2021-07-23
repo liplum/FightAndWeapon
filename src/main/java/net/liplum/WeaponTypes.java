@@ -14,4 +14,10 @@ public final class WeaponTypes {
 
     public static final WeaponType RangedWeapon = new WeaponType(Names.Item.RangedWeapon.TypeName)
             .setWeaponSkillPredicate(((world, player, weapon) -> player.isSneaking()));
+
+    public static final WeaponType Bow = new WeaponType(Names.Item.Bow.TypeName)
+            .setWeaponSkillPredicate(((world, player, weapon) -> player.isSneaking()));
+
+    public static final WeaponType Sword = new WeaponType(Names.Item.Sword.TypeName)
+            .setWeaponSkillPredicate(((world, player, weapon) -> true));
 }

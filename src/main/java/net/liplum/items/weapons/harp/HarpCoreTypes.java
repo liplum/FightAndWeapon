@@ -18,10 +18,10 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
-import static net.liplum.Attributes.Generic.AbilityPower;
-import static net.liplum.Attributes.Generic.CoolDown;
+import static net.liplum.Attributes.Generic.*;
 import static net.liplum.Attributes.Harp.Frequency;
 import static net.liplum.Attributes.Harp.Radius;
 
@@ -38,7 +38,7 @@ public final class HarpCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setHasWeaponSkill(false);
         }
@@ -47,7 +47,7 @@ public final class HarpCoreTypes {
     public static final HarpCore Normal = new HarpCore() {
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setRegisterName(
                     Names.Item.Harp.HarpItem
@@ -60,7 +60,7 @@ public final class HarpCoreTypes {
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(200)
             ).set(
-                    Attributes.Continuous.MaxUseDuration, Attributes.Continuous.MaxUseDuration.newBasicAttrValue(400)
+                    MaxUseDuration, Attributes.Generic.MaxUseDuration.newBasicAttrValue(400)
             );
         }
 

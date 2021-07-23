@@ -23,6 +23,7 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.BattleAxe.SweepRange;
@@ -37,7 +38,7 @@ public final class BattleAxeCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setHasWeaponSkill(false);
         }
@@ -89,7 +90,7 @@ public final class BattleAxeCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setRegisterName(
                     Names.Item.BattleAxe.BattleAxeItem
@@ -113,7 +114,7 @@ public final class BattleAxeCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setRegisterName(
                     Names.Item.BattleAxe.BerserkerAxeItem

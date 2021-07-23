@@ -17,6 +17,7 @@ import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.AxisAlignedBB;
 
@@ -36,12 +37,14 @@ public abstract class RangedWeaponCore extends WeaponCore {
     }
 
     @Override
-    protected void build(WeaponCoreBuilder builder) {
+    protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
                 Strength, Strength.newBasicAttrValue(5)
         ).set(
                 SpecialAttackReachJudgment, BoolAttribute.FalseBasicAttrValue
+        ).setRightClickUseAction(
+                EnumAction.BLOCK
         ).addPassiveSkills(
                 new AggregatePassiveSkill("RangedWeaponPS").add(FawWeaponLeftClickEvent.class,
                         event -> {

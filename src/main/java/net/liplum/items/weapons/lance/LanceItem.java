@@ -62,11 +62,4 @@ public class LanceItem extends WeaponBaseItem {
         }
         return ActionResult.newResult(result, held);
     }
-
-
-    @Nonnull
-    @Override
-    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
-        return EnumAction.BLOCK;
-    }
 }

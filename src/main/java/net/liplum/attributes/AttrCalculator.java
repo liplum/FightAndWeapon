@@ -13,7 +13,7 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class AttrCalculator {
+public class AttrCalculator implements IAttrCalculator{
     private WeaponCore weaponCore;
     @Nullable
     private Modifier modifier;
@@ -46,7 +46,7 @@ public class AttrCalculator {
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessEvent}.)
      */
     @Nonnull
-    private static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, @Nullable ItemStack itemStack, boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
+    public static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, @Nullable ItemStack itemStack, boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = core.getValue(attribute);
         //Mastery
@@ -78,6 +78,7 @@ public class AttrCalculator {
     }
 
     @Nonnull
+    @Override
     public WeaponCore getWeaponCore() {
         return weaponCore;
     }
@@ -89,6 +90,7 @@ public class AttrCalculator {
     }
 
     @Nullable
+    @Override
     public Modifier getModifier() {
         return modifier;
     }
@@ -100,6 +102,7 @@ public class AttrCalculator {
     }
 
     @Nullable
+    @Override
     public EntityPlayer getPlayer() {
         return player;
     }
@@ -111,6 +114,7 @@ public class AttrCalculator {
     }
 
     @Nullable
+    @Override
     public ItemStack getItemStack() {
         return itemStack;
     }
@@ -120,6 +124,7 @@ public class AttrCalculator {
         return this;
     }
 
+    @Override
     public boolean isUseSpecialValueWhenWeaponBroken() {
         return useSpecialValueWhenWeaponBroken;
     }
@@ -132,6 +137,7 @@ public class AttrCalculator {
     /**
      * @return Whether this attribute access will post the {@link AttributeAccessEvent}
      */
+    @Override
     public boolean isPostEvent() {
         return postEvent;
     }
@@ -143,6 +149,7 @@ public class AttrCalculator {
     }
 
     @Nonnull
+    @Override
     public FinalAttrValue calcu(@Nonnull IAttribute attribute) {
         if (weaponCore == null) {
             throw new IllegalArgumentException("Weapon Core is Null");

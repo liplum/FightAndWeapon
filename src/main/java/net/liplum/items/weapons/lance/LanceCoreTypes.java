@@ -26,6 +26,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
+import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -42,7 +43,7 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setHasWeaponSkill(false);
         }
@@ -56,7 +57,7 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setRegisterName(
                     Names.Item.Lance.TrainingLanceItem
@@ -108,7 +109,7 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setRegisterName(
                     Names.Item.Lance.LightLanceItem
@@ -154,7 +155,7 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setRegisterName(
                     Names.Item.Lance.KnightLanceItem
@@ -222,7 +223,7 @@ public final class LanceCoreTypes {
 
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.setRegisterName(
                     Names.Item.Lance.ArenaLanceItem
@@ -253,7 +254,7 @@ public final class LanceCoreTypes {
         }
 
         @Override
-        protected void build(WeaponCoreBuilder builder) {
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     SprintStrength, SprintStrength.newBasicAttrValue(10F)

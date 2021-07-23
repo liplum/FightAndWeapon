@@ -5,6 +5,7 @@ import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.IAttribute;
+import net.minecraft.item.EnumAction;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -20,10 +21,12 @@ public abstract class LanceCore extends WeaponCore {
     }
 
     @Override
-    protected void build(WeaponCoreBuilder builder) {
+    protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
                 AttackSpeed, AttackSpeed.newBasicAttrValue(2F)
+        ).setRightClickUseAction(
+                EnumAction.BLOCK
         );
     }
 

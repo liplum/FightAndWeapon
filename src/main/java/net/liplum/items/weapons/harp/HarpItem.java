@@ -11,7 +11,6 @@ import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
@@ -22,7 +21,7 @@ import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
 
-import static net.liplum.Attributes.Continuous.MaxUseDuration;
+import static net.liplum.Attributes.Generic.MaxUseDuration;
 import static net.liplum.Attributes.Harp.Frequency;
 
 public class HarpItem extends WeaponBaseItem {
@@ -122,16 +121,5 @@ public class HarpItem extends WeaponBaseItem {
             FawItemUtil.heatWeaponType(p, getWeaponType());
             p.resetActiveHand();
         }
-    }
-
-    @Nonnull
-    @Override
-    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
-        return EnumAction.BOW;
-    }
-
-    @Override
-    public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
-        return new AttrCalculator(core).calcu(MaxUseDuration).getInt();
     }
 }

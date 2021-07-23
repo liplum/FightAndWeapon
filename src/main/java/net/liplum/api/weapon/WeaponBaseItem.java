@@ -3,6 +3,7 @@ package net.liplum.api.weapon;
 import com.google.common.collect.Multimap;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
+import net.liplum.attributes.FixedAttrCalculator;
 import net.liplum.entities.FawWeaponItemEntity;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.math.MathUtil;
@@ -22,6 +23,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -34,12 +36,15 @@ import javax.annotation.Nullable;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.Durability;
+import static net.liplum.Attributes.Generic.MaxUseDuration;
 
 public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
     private final WeaponCore weaponCore;
     @Nonnull
     private final WeaponType weaponType;
+    @Nonnull
+    protected final FixedAttrCalculator onlyCoreCalculator;
 
     public WeaponBaseItem(@Nonnull WeaponCore weaponCore) {
         super();
@@ -51,6 +56,7 @@ public abstract class WeaponBaseItem extends FawItem {
         setMaxStackSize(1);
         //Player can't repair the weapon in common way(an anvil)
         setNoRepair();
+        onlyCoreCalculator = new FixedAttrCalculator(weaponCore, true, true);
         WeaponRegistry.register(this);
     }
 
@@ -90,6 +96,11 @@ public abstract class WeaponBaseItem extends FawItem {
         TooltipContext context = new TooltipContext(stack, this, calculator, tooltipOption);
         IWeaponTooltipBuilder builder = new WeaponTooltipBuilder(context);
         tooltip.addAll(builder.build().getTooltip());
+    }
+
+    @Override
+    public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
+        return onlyCoreCalculator.calcu(MaxUseDuration).getInt();
     }
 
     /**
@@ -164,6 +175,12 @@ public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
     public WeaponType getWeaponType() {
         return weaponType;
+    }
+
+    @Nonnull
+    @Override
+    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
+        return weaponCore.getRightClickUseAction();
     }
 
     @Override

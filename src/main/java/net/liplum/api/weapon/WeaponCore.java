@@ -13,6 +13,7 @@ import net.liplum.tooltips.TooltipPipe;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 
 import javax.annotation.Nonnull;
@@ -43,6 +44,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private boolean hasWeaponSkill = true;
     @Nonnull
     private String registerName = "default";
+    @Nonnull
+    private EnumAction rightClickUseAction = EnumAction.NONE;
     @Nonnull
     private ILeftClickEntityBehavior leftClickEntityBehavior = (weapon, stack, attacker, target) -> {
         AttrCalculator calculator = new AttrCalculator(this);
@@ -111,6 +114,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         return hasWeaponSkill;
     }
 
+    @Nonnull
+    public EnumAction getRightClickUseAction() {
+        return rightClickUseAction;
+    }
+
     /**
      * Get the corresponding value via the attribute
      *
@@ -164,11 +172,14 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     };
 
     /**
-     * It will be called in constructor.
+     * It will be called in constructor at {@link WeaponCore}.<br/>
+     * NOTE:If you override it then must call {@code super.build(builder);} to construct parent's one.<br/>
+     * And in its subclass, the filed initialization will start after this method call so that
+     * you must be careful. Don't access any filed in subclass in this method because it must be null.
      *
      * @param builder the weapon core builder
      */
-    protected void build(WeaponCoreBuilder builder) {
+    protected void build(@Nonnull WeaponCoreBuilder builder) {
         builder.addMainHand(
                 SharedMonsterAttributes.ATTACK_SPEED, AttackReachModifier)
                 .set(Durability, Durability.newBasicAttrValue(100))
@@ -241,6 +252,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         @Nonnull
         public WeaponCoreBuilder setLeftClickEntityBehavior(@Nonnull ILeftClickEntityBehavior behavior) {
             leftClickEntityBehavior = behavior;
+            return this;
+        }
+
+        public WeaponCoreBuilder setRightClickUseAction(EnumAction action){
+            rightClickUseAction = action;
             return this;
         }
 

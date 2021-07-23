@@ -14,7 +14,7 @@ public class P3D {
         Point3D p = object.minus(subject);
         pitch = (float) Angle.getRotationOrItsSupplementary(pitch, 0);
         yaw = (float) Angle.getRotationOrItsSupplementary(yaw, 0);
-        DoubleMatrix1D A = rotate((float) p.x, (float) p.y, (float) p.z, -pitch, -yaw);
+        DoubleMatrix1D A = rotate((float) p.x, (float) p.y, (float) p.z, pitch, yaw);
         Point3D res = new Point3D(A.get(0), A.get(1), A.get(2));
         return cube.isInside(res);
     }
@@ -62,8 +62,8 @@ public class P3D {
         double sina = MathHelper.sin(pitch), cosa = MathHelper.cos(pitch);
         return new DenseDoubleMatrix2D(new double[][]{
                 {1, 0, 0, 0},
-                {0, cosa, sina, 0},
-                {0, -sina, cosa, 0},
+                {0, cosa, -sina, 0},
+                {0, sina, cosa, 0},
                 {0, 0, 0, 1}
         });
     }
