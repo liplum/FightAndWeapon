@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Random;
 import java.util.function.Consumer;
 import java.util.function.ToIntFunction;
+import java.util.stream.Stream;
 
 public class Utils {
     private static Random RANDOM = new Random();
@@ -87,8 +88,8 @@ public class Utils {
         return summand.doubleValue() + addend.doubleValue();
     }
 
-    public static String notNull(@Nullable String str){
-        if(str==null){
+    public static String notNull(@Nullable String str) {
+        if (str == null) {
             return "";
         }
         return str;
@@ -155,5 +156,37 @@ public class Utils {
             return intAdd(summand, addend);
         }
         return floatAdd(summand, addend);
+    }
+
+    @SafeVarargs
+    @Nonnull
+    public static <T> Stream<T> mergeStream(@Nonnull Stream<T>... streams) {
+        if (streams.length == 0) {
+            throw new IllegalArgumentException();
+        }
+        if (streams.length == 1) {
+            return streams[0];
+        }
+        Stream<T> res = streams[0];
+        for (int i = 1; i < streams.length; i++) {
+            res = Stream.concat(res, streams[i]);
+        }
+        return res;
+    }
+
+    @SafeVarargs
+    @Nonnull
+    public static <T> Stream<T> mergeStream(@Nonnull Collection<T>... collections) {
+        if (collections.length == 0) {
+            throw new IllegalArgumentException();
+        }
+        if (collections.length == 1) {
+            return collections[0].stream();
+        }
+        Stream<T> res = collections[0].stream();
+        for (int i = 1; i < collections.length; i++) {
+            res = Stream.concat(res, collections[i].stream());
+        }
+        return res;
     }
 }

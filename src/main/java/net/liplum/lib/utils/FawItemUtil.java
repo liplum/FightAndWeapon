@@ -1,6 +1,5 @@
 package net.liplum.lib.utils;
 
-import net.liplum.Vanilla;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.AttrCalculator;
@@ -15,12 +14,12 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -30,10 +29,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 import static net.liplum.Attributes.Generic.*;
 
@@ -257,50 +254,33 @@ public final class FawItemUtil {
                 I18n.format(FawI18n.getNameI18nKey(passiveSkill)));
     }
 
-    public static Iterable<ItemStack> getAllPossibleFawWeaponSlotsFormPlayerInventory(EntityPlayer player) {
-        return () -> new Iterator<ItemStack>() {
-            private final InventoryPlayer inventory = player.inventory;
-            private int currentIndex = 0;
-
-            @Override
-            public boolean hasNext() {
-                return currentIndex < Vanilla.PlayerAllInventorySlotCount;
-            }
-
-            @Override
-            public ItemStack next() {
-                ItemStack itemStack = inventory.getStackInSlot(currentIndex);
-                currentIndex++;
-                if (currentIndex == Vanilla.PlayerMainInventorySlotCount) {
-                    currentIndex += Vanilla.PlayerArmorInventorySlotCount;
-                }
-                return itemStack;
-            }
-        };
+    public static Iterable<ItemStack> getAllFawWeaponSlotsFormPlayerInventory(EntityPlayer player) {
+        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.offHandInventory).filter(FawItemUtil::isFawWeapon).iterator();
     }
 
     public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType) {
-        Map<WeaponBaseItem, Integer> weaponAndMinimumCoolDown = new HashMap<>();
+        if (player.isCreative()) {
+            return false;
+        }
+        List<Tuple<WeaponBaseItem, Integer>> coolDowns = new LinkedList<>();
         AttrCalculator calculator = new AttrCalculator()
                 .setPlayer(player);
-        for (ItemStack itemStack : getAllPossibleFawWeaponSlotsFormPlayerInventory(player)) {
+        for (ItemStack itemStack : getAllFawWeaponSlotsFormPlayerInventory(player)) {
             Item item = itemStack.getItem();
-            if (item instanceof WeaponBaseItem) {
-                WeaponBaseItem weapon = (WeaponBaseItem) item;
-                if (weapon.getWeaponType() == weaponType) {
-                    calculator.setWeaponCore(weapon.getCore())
-                            .setModifier(GemUtil.getModifierFrom(itemStack));
-                    int coolDown = calculator.calcu(CoolDown).getInt();
-                    if (coolDown != 0) {
-                        weaponAndMinimumCoolDown.put(weapon, coolDown);
-                    }
+            WeaponBaseItem weapon = (WeaponBaseItem) item;
+            if (weapon.getWeaponType() == weaponType) {
+                calculator.setWeaponCore(weapon.getCore())
+                        .setModifier(GemUtil.getModifierFrom(itemStack));
+                int coolDown = calculator.calcu(CoolDown).getInt();
+                if (coolDown != 0) {
+                    coolDowns.add(new Tuple<>(weapon, coolDown));
                 }
             }
         }
         boolean hasOneSucceed = false;
-        if (weaponAndMinimumCoolDown.size() > 0) {
-            for (Map.Entry<WeaponBaseItem, Integer> entry : weaponAndMinimumCoolDown.entrySet()) {
-                hasOneSucceed |= ItemTool.heatItemIfSurvival(player, entry.getKey(), entry.getValue());
+        if (coolDowns.size() > 0) {
+            for (Tuple<WeaponBaseItem, Integer> entry : coolDowns) {
+                hasOneSucceed |= ItemTool.heatItem(player, entry.getFirst(), entry.getSecond());
             }
         }
         return hasOneSucceed;
@@ -357,7 +337,7 @@ public final class FawItemUtil {
         return (itemStack.getItem() instanceof WeaponBaseItem) && itemStack.getItemDamage() == itemStack.getMaxDamage();
     }
 
-    public static boolean hasAmmo(EntityPlayer player){
+    public static boolean hasAmmo(EntityPlayer player) {
         return false;
     }
 }

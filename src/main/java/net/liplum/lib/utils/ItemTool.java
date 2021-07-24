@@ -34,6 +34,21 @@ public class ItemTool {
         player.getCooldownTracker().setCooldown(item, coolDownTicks);
         return true;
     }
+    /**
+     * Heats the weapon if player is in whatever mode.
+     *
+     * @param player        a player who has the hot weapon
+     * @param item          a item which the player holds and will be heated
+     * @param coolDownTicks how much time need to cool down
+     * @return if coolDownTicks is more than 0, it'll return ture and heat the weapon, otherwise, return false.
+     */
+    public static boolean heatItem(EntityPlayer player, Item item, int coolDownTicks) {
+        if (coolDownTicks <= 0) {
+            return false;
+        }
+        player.getCooldownTracker().setCooldown(item, coolDownTicks);
+        return true;
+    }
 
     public static boolean reduceItemCoolDown(EntityPlayer player, Item item, int decrementTicks) {
         if (decrementTicks <= 0) {
