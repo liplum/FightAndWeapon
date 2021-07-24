@@ -1,6 +1,7 @@
 package net.liplum.networks;
 
 import io.netty.buffer.ByteBuf;
+import net.liplum.api.fight.CoolDown;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.capabilities.TimerCapability;
@@ -26,7 +27,7 @@ public class CoolingMsg implements IMessage {
     public CoolingMsg() {
     }
 
-    public CoolingMsg(Map<IPassiveSkill<?>, TimerCapability.CoolDown> data) {
+    public CoolingMsg(Map<IPassiveSkill<?>, CoolDown> data) {
         this.data = data.entrySet().stream()
                 .map(entry -> new Tuple<>(
                         entry.getKey().getRegisterName(), entry.getValue().getRestTicks()
@@ -62,11 +63,11 @@ public class CoolingMsg implements IMessage {
                 EntityPlayerSP player = mc.player;
                 TimerCapability timer = player.getCapability(CapabilityRegistry.Timer_Capability, null);
                 if (timer != null) {
-                    Map<IPassiveSkill<?>, TimerCapability.CoolDown> map = new HashMap<>();
+                    Map<IPassiveSkill<?>, CoolDown> map = new HashMap<>();
                     for (Tuple<String, Integer> entry : message.data) {
                         IPassiveSkill<?> skill = SkillRegistry.getPassiveSkillsFromName(entry.getFirst());
                         if (skill != null) {
-                            map.put(skill, new TimerCapability.CoolDown(entry.getSecond()));
+                            map.put(skill, new CoolDown(entry.getSecond()));
                         }
                     }
                     timer.setCoolingPassiveSkills(map);

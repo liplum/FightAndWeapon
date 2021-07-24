@@ -1,4 +1,4 @@
-package net.liplum.skills.passive.master;
+package net.liplum.skills.master;
 
 import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;

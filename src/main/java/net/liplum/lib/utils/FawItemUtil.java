@@ -356,4 +356,8 @@ public final class FawItemUtil {
     public static boolean isWeaponBroken(@Nonnull ItemStack itemStack) {
         return (itemStack.getItem() instanceof WeaponBaseItem) && itemStack.getItemDamage() == itemStack.getMaxDamage();
     }
+
+    public static boolean hasAmmo(EntityPlayer player){
+        return false;
+    }
 }

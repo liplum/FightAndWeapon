@@ -20,7 +20,4 @@ public interface IMastery {
 
     @Nonnull
     List<IPassiveSkill<?>> getPassiveSkills(int level);
-
-    @Nonnull
-    List<IActiveSkill> getActiveSkills(int level);
 }

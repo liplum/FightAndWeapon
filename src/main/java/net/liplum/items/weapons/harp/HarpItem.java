@@ -80,6 +80,7 @@ public class HarpItem extends WeaponBaseItem {
         AttrCalculator calculator = new AttrCalculator()
                 .setWeaponCore(core)
                 .setModifier(modifier)
+                .setItemStack(stack)
                 .setPlayer(p);
         FinalAttrValue finalFrequency = calculator.calcu(Frequency);
         FinalAttrValue finalMaxUseDuration = calculator.calcu(MaxUseDuration);
@@ -96,6 +97,7 @@ public class HarpItem extends WeaponBaseItem {
                     .setItemStack(stack)
                     .setHand(hand)
                     .setWeapon(this)
+                    .setModifier(modifier)
                     .setCalculator(
                             new AttrCalculator(core).setModifier(modifier).setPlayer(p).setItemStack(stack)
                     );

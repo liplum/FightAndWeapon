@@ -61,13 +61,4 @@ public class Routine {
         }
         return res;
     }
-
-    @Nonnull
-    public List<String> getActiveSkills(int count) {
-        List<String> res = new LinkedList<>();
-        for (Node node : allNodes.subList(0, count)) {
-            res.addAll(node.getActiveSkills());
-        }
-        return res;
-    }
 }

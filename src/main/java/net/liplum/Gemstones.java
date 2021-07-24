@@ -5,17 +5,17 @@ import net.liplum.api.weapon.IGemstone;
 import net.liplum.modifiers.EnderGemModifier;
 import net.liplum.modifiers.FlameGemModifier;
 import net.liplum.modifiers.RubyModifier;
-import net.liplum.skills.passive.UndeterminedSkills;
+import net.liplum.skills.UndeterminedSkills;
 
-import static net.liplum.skills.passive.gemstone.FlamegemSkills.FireProof;
-import static net.liplum.skills.passive.gemstone.FlamegemSkills.ScorchingTouch;
-import static net.liplum.skills.passive.gemstone.ForestgemSkills.NutrientAbsorption;
-import static net.liplum.skills.passive.gemstone.MagicPearlSkills.Magicize;
-import static net.liplum.skills.passive.gemstone.RoseQuartzSkills.MagicAttach;
-import static net.liplum.skills.passive.gemstone.RubySkills.FireResistance;
-import static net.liplum.skills.passive.gemstone.TurquoiseSkills.GentlyLand;
-import static net.liplum.skills.passive.gemstone.WindyGemstoneSkills.Feather;
-import static net.liplum.skills.passive.gemstone.WindyGemstoneSkills.Levitation;
+import static net.liplum.skills.gemstone.FlamegemSkills.FireProof;
+import static net.liplum.skills.gemstone.FlamegemSkills.ScorchingTouch;
+import static net.liplum.skills.gemstone.ForestgemSkills.NutrientAbsorption;
+import static net.liplum.skills.gemstone.MagicPearlSkills.Magicize;
+import static net.liplum.skills.gemstone.RoseQuartzSkills.MagicAttach;
+import static net.liplum.skills.gemstone.RubySkills.FireResistance;
+import static net.liplum.skills.gemstone.TurquoiseSkills.GentlyLand;
+import static net.liplum.skills.gemstone.WindyGemstoneSkills.Feather;
+import static net.liplum.skills.gemstone.WindyGemstoneSkills.Levitation;
 
 public final class Gemstones {
     public final static IGemstone Ruby_Gemstone = new Gemstone(Names.Gemstone.Ruby)

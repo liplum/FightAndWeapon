@@ -9,6 +9,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
 
 public class PSkillCoolingTimer implements IPSkillCoolingTimer {
     @Nonnull
@@ -31,6 +33,12 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
         public void tick() {
 
         }
+
+        @Nullable
+        @Override
+        public Map<IPassiveSkill<?>, CoolDown> getCoolingPassiveSkills() {
+            return null;
+        }
     };
 
     @Override
@@ -46,12 +54,22 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
     @Override
     public void tick() {
         timerDelegate.tick();
+        if (timerDelegate.needSync()) {
+            this.sync();
+        }
+    }
+
+    @Nonnull
+    @Override
+    public Map<IPassiveSkill<?>, CoolDown> getCoolingPassiveSkills() {
+        return timerDelegate.getCoolingPassiveSkills();
+    }
+
+    private void sync() {
         if (player.isServerWorld() && player instanceof EntityPlayerMP) {
-            if (timerDelegate.needSync()) {
-                MessageManager.sendMessageToPlayer(
-                        new CoolingMsg(timerDelegate.getCoolingPassiveSkills()), (EntityPlayerMP) player
-                );
-            }
+            MessageManager.sendMessageToPlayer(
+                    new CoolingMsg(timerDelegate.getCoolingPassiveSkills()), (EntityPlayerMP) player
+            );
         }
     }
 

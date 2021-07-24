@@ -14,10 +14,11 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class QuartzSwordItem extends ItemSword {
-    private static UUID uuid = UUID.randomUUID();
+    private static final UUID uuid = UUID.randomUUID();
 
 /*    @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, PlayerEntity playerIn, Hand handIn) {
@@ -32,16 +33,18 @@ public class QuartzSwordItem extends ItemSword {
         super(ToolMaterial.IRON);
     }
 
+    @Nonnull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
         playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.Ruby));
         playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.Endergem));
         playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.Flamegem));
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 
+    @Nonnull
     @Override
-    public Multimap<String, AttributeModifier> getItemAttributeModifiers(EntityEquipmentSlot equipmentSlot) {
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers(@Nonnull EntityEquipmentSlot equipmentSlot) {
         Multimap<String, AttributeModifier> map = super.getItemAttributeModifiers(equipmentSlot);
         if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
             map.put(EntityPlayer.REACH_DISTANCE.getName(), new AttributeModifier(uuid, "Weapon modifier", 10, 0));

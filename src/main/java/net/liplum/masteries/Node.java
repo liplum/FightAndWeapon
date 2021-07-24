@@ -10,8 +10,6 @@ public class Node {
     private List<AttributeAmplifier> attributeAmplifiers = new LinkedList<>();
     @Nonnull
     private List<String> passiveSkills = new LinkedList<>();
-    @Nonnull
-    private List<String> activeSkills = new LinkedList<>();
 
     @Nonnull
     public List<AttributeAmplifier> getAttributeAmplifiers() {
@@ -33,11 +31,6 @@ public class Node {
         return this;
     }
 
-    public Node addActiveSkills(String... activeSkills) {
-        this.activeSkills.addAll(Arrays.asList(activeSkills));
-        return this;
-    }
-
     @Nonnull
     public List<String> getPassiveSkills() {
         return passiveSkills;
@@ -47,15 +40,4 @@ public class Node {
         this.passiveSkills = passiveSkills;
         return this;
     }
-
-    @Nonnull
-    public List<String> getActiveSkills() {
-        return activeSkills;
-    }
-
-    public Node setActiveSkills(@Nonnull List<String> activeSkills) {
-        this.activeSkills = activeSkills;
-        return this;
-    }
-
 }

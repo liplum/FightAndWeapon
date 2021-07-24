@@ -1,15 +1,27 @@
 package net.liplum.capabilities;
 
+import net.liplum.MetaData;
+import net.liplum.api.fight.CoolDown;
 import net.liplum.api.fight.IPSkillCoolingTimer;
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.fight.PSkillCoolingTimer;
 import net.liplum.api.registeies.SkillRegistry;
+import net.liplum.networks.CoolingMsg;
+import net.liplum.networks.MessageManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+@Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkillCoolingTimer {
     @Nonnull
     private Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();
@@ -62,7 +74,7 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkil
     public NBTTagCompound serializeNBT() {
         NBTTagCompound nbt = new NBTTagCompound();
         for (Map.Entry<IPassiveSkill<?>, CoolDown> entry : coolingPassiveSkills.entrySet()) {
-            nbt.setInteger(entry.getKey().getRegisterName(), entry.getValue().restTicks);
+            nbt.setInteger(entry.getKey().getRegisterName(), entry.getValue().getRestTicks());
         }
         return nbt;
     }
@@ -75,27 +87,20 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkil
         }
     }
 
-    public static class CoolDown {
-        private int restTicks;
-
-        public CoolDown(int restTicks) {
-            this.restTicks = restTicks;
-        }
-
-        public void tick() {
-            restTicks--;
-        }
-
-        public boolean isFinished() {
-            return restTicks <= 0;
-        }
-
-        public boolean isInCoolingDown() {
-            return !isFinished();
-        }
-
-        public int getRestTicks() {
-            return restTicks;
+    @SubscribeEvent
+    public static void onPlayerJoin(EntityJoinWorldEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            if (player.isServerWorld() && player instanceof EntityPlayerMP) {
+                IPSkillCoolingTimer timer = PSkillCoolingTimer.create(player);
+                Map<IPassiveSkill<?>, CoolDown> all = timer.getCoolingPassiveSkills();
+                if (all != null) {
+                    MessageManager.sendMessageToPlayer(
+                            new CoolingMsg(all), (EntityPlayerMP) player
+                    );
+                }
+            }
         }
     }
 

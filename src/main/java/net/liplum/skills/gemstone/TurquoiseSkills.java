@@ -1,4 +1,4 @@
-package net.liplum.skills.passive.gemstone;
+package net.liplum.skills.gemstone;
 
 import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;

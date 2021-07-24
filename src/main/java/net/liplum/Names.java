@@ -180,7 +180,8 @@ public final class Names {
         public static final String FireResistance = "FireResistance";
         public static final String Levitation = "Levitation";
         public static final String NutrientAbsorption = "NutrientAbsorption";
-        public static final String XpMending = "XpMending";
+        public static final String ExpMending = "ExpMending";
+        public static final String FrostWalker = "FrostWalker";
     }
 
     public final static class Mastery {

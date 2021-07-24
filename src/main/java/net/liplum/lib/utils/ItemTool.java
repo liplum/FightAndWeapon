@@ -63,29 +63,6 @@ public class ItemTool {
             return Math.abs(cooldownObj.expireTicks - cooldownObj.createTicks);
         }
         return 0;
-        /* By Reflect
-        Class<CooldownTracker> clz = CooldownTracker.class;
-        try {
-            Field cooldownsField = clz.getDeclaredField("cooldowns");
-            cooldownsField.setAccessible(true);
-            Map<?, ?> cooldownsMap = (Map<?, ?>) cooldownsField.get(cooldownTracker);
-            Object coolDownObject = cooldownsMap.get(item);
-            if (coolDownObject != null) {
-                Class<?> CoolDownClz = Class.forName("net.minecraft.util.CooldownTracker$Cooldown");
-
-                Field createTicksField = CoolDownClz.getDeclaredField("createTicks");
-                createTicksField.setAccessible(true);
-                int createTicks = createTicksField.getInt(coolDownObject);
-
-                Field expireTicksField = CoolDownClz.getDeclaredField("expireTicks");
-                expireTicksField.setAccessible(true);
-                int expireTicks = expireTicksField.getInt(coolDownObject);
-                return Math.abs(expireTicks - createTicks);
-            }
-
-        } catch (NoSuchFieldException | IllegalAccessException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }*/
     }
 
     /**

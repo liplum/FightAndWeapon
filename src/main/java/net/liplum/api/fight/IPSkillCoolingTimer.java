@@ -1,6 +1,8 @@
 package net.liplum.api.fight;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
+import java.util.Map;
 
 public interface IPSkillCoolingTimer {
     void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks);
@@ -12,4 +14,7 @@ public interface IPSkillCoolingTimer {
     default boolean isNotInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill){
         return !isInCoolingDown(passiveSkill);
     }
+
+    @Nullable
+    Map<IPassiveSkill<?>, CoolDown> getCoolingPassiveSkills() ;
 }

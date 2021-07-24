@@ -1,6 +1,5 @@
 package net.liplum.masteries;
 
-import net.liplum.api.fight.IActiveSkill;
 import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.MasteryRegistry;
@@ -71,19 +70,6 @@ public class Mastery implements IMastery {
         LinkedList<IPassiveSkill<?>> res = new LinkedList<>();
         for (String name : routine.getPassiveSkills(level)) {
             IPassiveSkill<?> skill = SkillRegistry.getPassiveSkillsFromName(name);
-            if (skill != null) {
-                res.add(skill);
-            }
-        }
-        return res;
-    }
-
-    @Nonnull
-    @Override
-    public List<IActiveSkill> getActiveSkills(int level) {
-        LinkedList<IActiveSkill> res = new LinkedList<>();
-        for (String name : routine.getActiveSkills(level)) {
-            IActiveSkill skill = SkillRegistry.getActiveSkillsFromName(name);
             if (skill != null) {
                 res.add(skill);
             }
