@@ -102,6 +102,10 @@ public final class Names {
             public static final String SweepRange = "SweepRange";
         }
 
+        public static final class Sword {
+            public static final String Sweep = "Sweep";
+        }
+
         public static final class Harp {
             public static final String Radius = "Radius";
             public static final String Frequency = "Frequency";
@@ -184,6 +188,7 @@ public final class Names {
         public static final String NutrientAbsorption = "NutrientAbsorption";
         public static final String ExpMending = "ExpMending";
         public static final String FrostWalker = "FrostWalker";
+        public static final String Sweeping = "Sweeping";
     }
 
     public final static class Mastery {

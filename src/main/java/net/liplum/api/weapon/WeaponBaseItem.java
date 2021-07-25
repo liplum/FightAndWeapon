@@ -130,9 +130,9 @@ public abstract class WeaponBaseItem extends FawItem {
     }
 
     @LongSupport
-    public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float attackDamage) {
+    public void reduceDurabilityOnHit(ItemStack stack, EntityLivingBase attacker, float attackDamage) {
         float weaponDamage = MathUtil.fixMin(1f, attackDamage / 10f);
-        FawItemUtil.damageWeapon(this, stack, (int) weaponDamage, player);
+        FawItemUtil.damageWeapon(this, stack, (int) weaponDamage, attacker);
     }
 
     /**

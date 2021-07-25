@@ -10,6 +10,8 @@ import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatBase;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -57,6 +59,7 @@ public class LanceItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
+                    FawItemUtil.onWeaponUse(playerIn,this);
                 }
             }
         }

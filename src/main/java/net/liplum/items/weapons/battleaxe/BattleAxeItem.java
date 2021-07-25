@@ -75,6 +75,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
+                    FawItemUtil.onWeaponUse(playerIn,this);
                 }
             }
         }

@@ -1,17 +1,19 @@
-package net.liplum.items.weapons.rangeweapon;
+package net.liplum.items.weapons.sword;
 
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 
 import javax.annotation.Nonnull;
 
-public class SickleItem extends WeaponBaseItem {
+public class SwordItem extends WeaponBaseItem {
     @Nonnull
-    private final RangedWeaponCore core;
+    private final SwordCore core;
 
-    public SickleItem(@Nonnull RangedWeaponCore weaponCore) {
+    public SwordItem(@Nonnull SwordCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
     }

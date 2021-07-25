@@ -18,6 +18,8 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.stats.StatBase;
+import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
@@ -255,12 +257,13 @@ public final class FawItemUtil {
                 I18n.format(FawI18n.getNameI18nKey(passiveSkill)));
     }
 
-    public static Iterable<ItemStack> getAllFawWeaponSlotsFormPlayerInventory(EntityPlayer player) {
-        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.offHandInventory).filter(FawItemUtil::isFawWeapon).iterator();
+    @Nonnull
+    public static Iterable<ItemStack> getAllFawWeaponSlotsFormPlayerInventory(@Nonnull EntityPlayer player) {
+        return ItemTool.getMainAndOffHandSlots(player, FawItemUtil::isFawWeapon);
     }
 
     @LongSupport
-    public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType) {
+    public static boolean heatWeaponType(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
         if (player.isCreative()) {
             return false;
         }
@@ -299,7 +302,7 @@ public final class FawItemUtil {
         }
     }
 
-    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount, EntityLivingBase entity) {
+    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount,@Nonnull EntityLivingBase entity) {
         if (amount == 0) {
             return;
         }
@@ -335,5 +338,12 @@ public final class FawItemUtil {
 
     public static boolean hasAmmo(EntityPlayer player) {
         return false;
+    }
+
+    public static void onWeaponUse(@Nonnull EntityPlayer player, Item item){
+        StatBase state = StatList.getObjectUseStats(item);
+        if (state != null) {
+            player.addStat(state);
+        }
     }
 }

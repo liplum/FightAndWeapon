@@ -82,8 +82,8 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
     }
 
     @Nonnull
-    public PassiveSkill<EventType> setShownInTooltip() {
-        this.isShownInTooltip = true;
+    public PassiveSkill<EventType> setShownInTooltip(boolean isShownInTooltip) {
+        this.isShownInTooltip = isShownInTooltip;
         return this;
     }
 

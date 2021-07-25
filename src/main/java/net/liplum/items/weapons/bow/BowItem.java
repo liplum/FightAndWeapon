@@ -13,6 +13,7 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nonnull;
 
@@ -36,15 +37,21 @@ public class BowItem extends WeaponBaseItem {
         if (FawItemUtil.isWeaponBroken(held)) {
             return ActionResult.newResult(EnumActionResult.FAIL, held);
         }
-        if (FawItemUtil.hasAmmo(playerIn)) {
+        if (playerIn.isCreative() || FawItemUtil.hasAmmo(playerIn)) {
             playerIn.setActiveHand(handIn);
         }
         return ActionResult.newResult(EnumActionResult.SUCCESS, held);
     }
 
     @Override
-    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityLivingBase entityLiving, int timeLeft) {
-        super.onPlayerStoppedUsing(stack, worldIn, entityLiving, timeLeft);
+    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityLivingBase entityLiving, int useTime) {
+        EntityPlayer player = (EntityPlayer) entityLiving;
+        useTime = ForgeEventFactory.onArrowLoose(stack, worldIn, player, useTime, true);
+        if (useTime < 5) {
+            return;
+        }
+        FawItemUtil.onWeaponUse(player,this);
+        super.onPlayerStoppedUsing(stack, worldIn, entityLiving, useTime);
     }
 
     @Override

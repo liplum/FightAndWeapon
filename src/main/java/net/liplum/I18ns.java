@@ -172,5 +172,10 @@ public final class I18ns {
         public static String BattleAxe(String attributeName) {
             return prefixAttr(Names.Item.BattleAxe.TypeName, attributeName);
         }
+
+        @LongSupport
+        public static String Sword(String attributeName) {
+            return prefixAttr(Names.Item.Sword.TypeName, attributeName);
+        }
     }
 }

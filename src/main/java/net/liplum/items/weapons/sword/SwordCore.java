@@ -8,6 +8,8 @@ import net.minecraft.item.EnumAction;
 
 import javax.annotation.Nonnull;
 
+import static net.liplum.Attributes.Sword.Sweep;
+
 public class SwordCore extends WeaponCore {
     @Override
     public boolean releaseSkill(WeaponSkillArgs args) {
@@ -25,6 +27,8 @@ public class SwordCore extends WeaponCore {
         super.build(builder);
         builder.setRightClickUseAction(
                 EnumAction.BLOCK
+        ).set(
+                Sweep, Sweep.newBasicAttrValue(0F)
         );
     }
 }

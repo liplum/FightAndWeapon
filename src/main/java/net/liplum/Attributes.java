@@ -174,4 +174,21 @@ public final class Attributes {
                 .setDisplayPriority(60)
                 .setMinimum(1);
     }
+
+    @LongSupport
+    public static final class Sword {
+        public static final IAttribute Sweep = new Attribute()
+                .setRegisterName(Names.Attribute.Sword.Sweep)
+                .setHowToGetI18nKey(I18ns.Attribute::Sword)
+                .setDataType(DataType.Float)
+                .setFormat("%.1f")
+                .setComputeType(ComputeType.Full)
+                .setDisplayPriority(50)
+                .setDefaultValue(0F);
+    }
+
+    @LongSupport
+    public static final class Bow {
+        
+    }
 }

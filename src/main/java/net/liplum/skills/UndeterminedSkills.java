@@ -60,7 +60,7 @@ public class UndeterminedSkills {
             }.setBanedWhenBroken(false);
 
     public static final IPassiveSkill<TickEvent.PlayerTickEvent> FrostWalker =
-            new PassiveSkill<TickEvent.PlayerTickEvent>(Names.PassiveSkill.ScorchingTouch, TickEvent.PlayerTickEvent.class) {
+            new PassiveSkill<TickEvent.PlayerTickEvent>(Names.PassiveSkill.FrostWalker, TickEvent.PlayerTickEvent.class) {
                 @Nonnull
                 @Override
                 public PSkillResult onTrigger(@Nonnull TickEvent.PlayerTickEvent event) {
