@@ -1,8 +1,10 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagString;
 
+@LongSupport
 public final class Tags {
     public static final int Type_String = (new NBTTagString()).getId();
     public static final int Type_NbtCompound = (new NBTTagCompound()).getId();

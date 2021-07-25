@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.liplum.Names;
 import net.liplum.Vanilla;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.attributes.*;
 import net.liplum.lib.utils.GemUtil;
@@ -72,6 +73,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             .addMiddleware(ShowAttributes)
             .addMiddleware(ShowPassiveSkills);
 
+    @LongSupport
     public WeaponCore() {
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
         initAllAttributes(allAttributes);
@@ -92,6 +94,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Nonnull
+    @LongSupport
     public ILeftClickEntityBehavior getLeftClickEntityBehavior() {
         return leftClickEntityBehavior;
     }
@@ -106,15 +109,18 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Nonnull
+    @LongSupport
     public List<IAttribute> getAllAttributes() {
         return allAttributes;
     }
 
+    @LongSupport
     public boolean hasWeaponSkill() {
         return hasWeaponSkill;
     }
 
     @Nonnull
+    @LongSupport
     public EnumAction getRightClickUseAction() {
         return rightClickUseAction;
     }
@@ -136,6 +142,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         return basicAttrValue;
     }
 
+    @LongSupport
     public void applyAttrModifier(@Nonnull WeaponAttrModifierContext context) {
         EntityEquipmentSlot slot = context.slot;
         Multimap<String, AttributeModifier> map = context.attrModifierMap;
@@ -179,6 +186,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      *
      * @param builder the weapon core builder
      */
+    @LongSupport
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         builder.addMainHand(
                 SharedMonsterAttributes.ATTACK_SPEED, AttackReachModifier)
@@ -192,9 +200,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      * @param args the parameter the skill releasing may use
      * @return whether the skill released successfully
      */
+    @LongSupport
     public abstract boolean releaseSkill(WeaponSkillArgs args);
 
     @Nonnull
+    @LongSupport
     public IWeaponSkillPredicate getWeaponSkillPredicate() {
         return weaponSkillPredicate;
     }
@@ -205,22 +215,27 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Nonnull
+    @LongSupport
     public String getRegisterName() {
         return registerName;
     }
 
     @Nonnull
+    @LongSupport
     public abstract WeaponType getWeaponType();
 
+    @LongSupport
     protected class WeaponCoreBuilder implements IBasicAttrValueBuilder {
         @Override
         @Nonnull
+        @LongSupport
         public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull BasicAttrValue value) {
             AttributeValueMap.put(attribute, value);
             return this;
         }
 
         @Nonnull
+        @LongSupport
         public WeaponCoreBuilder addPassiveSkills(@Nonnull AggregatePassiveSkill passiveSkills) {
             WeaponCore thisCore = WeaponCore.this;
             if (thisCore.weaponPassiveSkills == null) {
@@ -255,6 +270,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return this;
         }
 
+        @Nonnull
         public WeaponCoreBuilder setRightClickUseAction(EnumAction action){
             rightClickUseAction = action;
             return this;
@@ -273,6 +289,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
 
         @Nonnull
+        @LongSupport
         public WeaponCoreBuilder setRegisterName(@Nonnull String name) {
             registerName = name;
             return this;

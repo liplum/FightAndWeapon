@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
@@ -15,6 +16,7 @@ import net.minecraft.nbt.NBTTagList;
 
 import javax.annotation.Nullable;
 
+@LongSupport
 public final class GemUtil {
 
     /**
@@ -22,6 +24,7 @@ public final class GemUtil {
      * @return
      */
     @Nullable
+    @LongSupport
     public static Modifier getModifierFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem)) {
@@ -35,6 +38,7 @@ public final class GemUtil {
         return gemstone.getModifierOf(weapon.getCore());
     }
 
+    @LongSupport
     public static boolean hasGemstone(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem)) {
@@ -69,6 +73,7 @@ public final class GemUtil {
      * @return the first gemstone contained in the weapon. If this item is not a weapon then return false.
      */
     @Nullable
+    @LongSupport
     public static IGemstone getGemstoneFrom(ItemStack itemStack) {
         Item item = itemStack.getItem();
         if (!(item instanceof WeaponBaseItem)) {
@@ -88,10 +93,12 @@ public final class GemUtil {
         return null;
     }
 
+    @LongSupport
     public static InlayResult inlayGemstone(ItemStack itemStack, IGemstone gemstone) {
         return inlayGemstone(itemStack, gemstone.getRegisterName());
     }
 
+    @LongSupport
     public static InlayResult inlayGemstone(ItemStack itemStack, String gemstoneName) {
         if (!GemstoneRegistry.hasGemstone(gemstoneName)) {
             return InlayResult.NoSuchGemstone;
@@ -121,12 +128,14 @@ public final class GemUtil {
         return RemoveResult.Succeed;
     }
 
+    @LongSupport
     public enum InlayResult {
         Succeed,
         NotFawWeapon,
         NoSuchGemstone
     }
 
+    @LongSupport
     public enum RemoveResult {
         Succeed,
         NotFawWeapon,

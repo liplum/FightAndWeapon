@@ -1,6 +1,7 @@
 package net.liplum.skills.gemstone;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
@@ -12,6 +13,7 @@ import net.minecraftforge.event.entity.living.LivingFallEvent;
 
 import javax.annotation.Nonnull;
 
+@Developing
 public final class WindyGemstoneSkills {
     public final static IPassiveSkill<WeaponAttackEvent.Attacked> Levitation =
             new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.Levitation, WeaponAttackEvent.Attacked.class) {

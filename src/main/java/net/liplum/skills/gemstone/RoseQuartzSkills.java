@@ -1,6 +1,7 @@
 package net.liplum.skills.gemstone;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
@@ -13,6 +14,7 @@ import net.minecraft.util.DamageSource;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@Developing
 public final class RoseQuartzSkills {
     public static final IPassiveSkill<WeaponAttackEvent.Attacking> MagicAttach =
             new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.MagicAttach, WeaponAttackEvent.Attacking.class) {

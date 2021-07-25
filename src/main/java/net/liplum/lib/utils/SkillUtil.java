@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.*;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.WeaponBaseItem;
@@ -62,6 +63,7 @@ public final class SkillUtil {
     }
 
     @Nonnull
+    @LongSupport
     public static Collection<IPassiveSkill<Event>> getAvailablePassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
         Set<IPassiveSkill<Event>> mainHandSkills = new HashSet<>();
         ItemStack mainHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
@@ -78,6 +80,7 @@ public final class SkillUtil {
                 .collect(Collectors.toList());
     }
 
+    @LongSupport
     public static void onTrigger(@Nonnull EntityLivingBase entity, @Nonnull IPassiveSkill<?> passiveSkill, @Nonnull PSkillResult result) {
         if (result.succeed) {
             onCompete(entity, passiveSkill);

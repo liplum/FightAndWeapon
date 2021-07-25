@@ -1,6 +1,7 @@
 package net.liplum.skills.gemstone;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
@@ -13,6 +14,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import javax.annotation.Nonnull;
 
+@Developing
 public final class FlamegemSkills {
     public final static IPassiveSkill<TickEvent.PlayerTickEvent> FireProof =
             new PassiveSkill<TickEvent.PlayerTickEvent>(Names.PassiveSkill.Fireproof, TickEvent.PlayerTickEvent.class) {

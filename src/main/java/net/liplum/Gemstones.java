@@ -1,5 +1,6 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.Gemstone;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.modifiers.EnderGemModifier;
@@ -17,6 +18,7 @@ import static net.liplum.skills.gemstone.TurquoiseSkills.GentlyLand;
 import static net.liplum.skills.gemstone.WindyGemstoneSkills.Feather;
 import static net.liplum.skills.gemstone.WindyGemstoneSkills.Levitation;
 
+@LongSupport
 public final class Gemstones {
     public final static IGemstone Ruby_Gemstone = new Gemstone(Names.Gemstone.Ruby)
             .addModifier(RubyModifier.Light_Lance)

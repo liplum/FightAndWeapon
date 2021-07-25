@@ -1,5 +1,6 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.proxies.ProxyBase;
 import net.liplum.registeies.CapabilityRegistry;
@@ -15,6 +16,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 @Mod(modid = MetaData.MOD_ID, name = MetaData.MOD_NAME, version = MetaData.MOD_VERSION)
+@LongSupport
 public class FawMod {
 
     public static final Logger Logger = LogManager.getLogger();

@@ -1,5 +1,8 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.LongSupport;
+
+@LongSupport
 public class BasicAttrValue extends AttrValue {
     private final Number value;
 

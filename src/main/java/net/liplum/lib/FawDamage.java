@@ -1,6 +1,7 @@
 package net.liplum.lib;
 
 import net.liplum.Vanilla;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
@@ -11,6 +12,7 @@ import net.minecraft.util.EntityDamageSource;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@Developing
 public class FawDamage extends EntityDamageSource {
     @Nonnull
     private final WeaponBaseItem weapon;

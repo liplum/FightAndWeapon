@@ -1,5 +1,6 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.minecraft.entity.player.EntityPlayer;
@@ -8,6 +9,7 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@LongSupport
 public class FixedAttrCalculator implements IAttrCalculator {
     @Nonnull
     private final WeaponCore weaponCore;
@@ -22,6 +24,7 @@ public class FixedAttrCalculator implements IAttrCalculator {
 
     private final boolean useSpecialValueWhenWeaponBroken;
 
+    @LongSupport
     public FixedAttrCalculator(@Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, @Nullable ItemStack itemStack, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this.weaponCore = core;
         this.modifier = modifier;
@@ -31,14 +34,17 @@ public class FixedAttrCalculator implements IAttrCalculator {
         this.useSpecialValueWhenWeaponBroken = useSpecialValueWhenWeaponBroken;
     }
 
+    @LongSupport
     public FixedAttrCalculator(@Nonnull WeaponCore core, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this(core, null, null, null, postEvent, useSpecialValueWhenWeaponBroken);
     }
 
+    @LongSupport
     public FixedAttrCalculator(@Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable ItemStack itemStack, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this(core, modifier, null, itemStack, postEvent, useSpecialValueWhenWeaponBroken);
     }
 
+    @LongSupport
     public FixedAttrCalculator(@Nonnull WeaponCore core, @Nullable EntityPlayer player, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this(core, null, player, null, postEvent, useSpecialValueWhenWeaponBroken);
     }

@@ -1,9 +1,11 @@
 package net.liplum.api.weapon;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.registeies.WeaponTypeRegistry;
 
 import javax.annotation.Nonnull;
 
+@LongSupport
 public class WeaponType {
     @Nonnull
     private final String registerName;
@@ -22,15 +24,18 @@ public class WeaponType {
     }
 
     @Nonnull
+    @LongSupport
     public String getRegisterName() {
         return registerName;
     }
 
     @Nonnull
+    @LongSupport
     public IWeaponSkillPredicate getWeaponSkillPredicate() {
         return weaponSkillPredicate;
     }
 
+    @LongSupport
     public WeaponType setWeaponSkillPredicate(@Nonnull IWeaponSkillPredicate weaponSkillPredicate) {
         this.weaponSkillPredicate = weaponSkillPredicate;
         return this;

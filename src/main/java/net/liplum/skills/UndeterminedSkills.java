@@ -1,6 +1,7 @@
 package net.liplum.skills;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
@@ -22,6 +23,7 @@ import net.minecraftforge.fml.common.gameevent.TickEvent;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@Developing
 public class UndeterminedSkills {
     public final static IPassiveSkill<PlayerPickupXpEvent> XpMending =
             new PassiveSkill<PlayerPickupXpEvent>(Names.PassiveSkill.ExpMending, PlayerPickupXpEvent.class) {

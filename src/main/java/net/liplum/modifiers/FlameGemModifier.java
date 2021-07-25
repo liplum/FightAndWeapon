@@ -1,5 +1,6 @@
 package net.liplum.modifiers;
 
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.BoolAttribute;
@@ -14,7 +15,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import static net.liplum.Attributes.Generic.DropsFireproof;
-
+@Developing
 public class FlameGemModifier {
     public final static LanceModifier Light_Lance = new LanceModifier() {
         @Override

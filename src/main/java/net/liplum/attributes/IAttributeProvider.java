@@ -1,8 +1,11 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.LongSupport;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@LongSupport
 public interface IAttributeProvider<T extends AttrValue> {
     /**
      * Get the corresponding value via the attribute
@@ -12,5 +15,6 @@ public interface IAttributeProvider<T extends AttrValue> {
      * If this didn't contain any attribute value which can match the attribute type, it would return null.
      */
     @Nullable
+    @LongSupport
     T getValue(@Nonnull IAttribute attribute);
 }

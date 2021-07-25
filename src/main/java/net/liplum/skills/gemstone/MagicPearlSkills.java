@@ -1,6 +1,7 @@
 package net.liplum.skills.gemstone;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
@@ -17,6 +18,7 @@ import net.minecraft.entity.EntityLivingBase;
 import javax.annotation.Nonnull;
 import java.util.List;
 
+@Developing
 public final class MagicPearlSkills {
     public static final IPassiveSkill<WeaponAttackEvent.Attacking> Magicize =
             new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.Magicize, WeaponAttackEvent.Attacking.class) {

@@ -1,7 +1,9 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
 import net.minecraftforge.registries.IForgeRegistryEntry;
 
+@LongSupport
 public final class Names {
     public static final String WeaponAttributeModifier = "Weapon Modifier";
 

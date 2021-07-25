@@ -1,8 +1,10 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.lib.FawLocation;
 import net.minecraft.util.ResourceLocation;
 
+@LongSupport
 public final class Resources {
     public static final String PNG_Extension = ".png";
     public static final String JSON_Extension = ".json";

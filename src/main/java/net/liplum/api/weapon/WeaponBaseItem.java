@@ -1,6 +1,7 @@
 package net.liplum.api.weapon;
 
 import com.google.common.collect.Multimap;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FixedAttrCalculator;
@@ -38,6 +39,7 @@ import java.util.List;
 import static net.liplum.Attributes.Generic.Durability;
 import static net.liplum.Attributes.Generic.MaxUseDuration;
 
+@LongSupport
 public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
     private final WeaponCore weaponCore;
@@ -46,6 +48,7 @@ public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
     protected final FixedAttrCalculator onlyCoreCalculator;
 
+    @LongSupport
     public WeaponBaseItem(@Nonnull WeaponCore weaponCore) {
         super();
         this.weaponCore = weaponCore;
@@ -126,6 +129,7 @@ public abstract class WeaponBaseItem extends FawItem {
         return weaponCore.getLeftClickEntityBehavior().onLeftClickEntity(this, stack, player, entity);
     }
 
+    @LongSupport
     public void reduceDurabilityOnHit(ItemStack stack, EntityPlayer player, float attackDamage) {
         float weaponDamage = MathUtil.fixMin(1f, attackDamage / 10f);
         FawItemUtil.damageWeapon(this, stack, (int) weaponDamage, player);
@@ -168,11 +172,13 @@ public abstract class WeaponBaseItem extends FawItem {
      * @return A core of this weapon.
      */
     @Nonnull
+    @LongSupport
     public WeaponCore getCore() {
         return weaponCore;
     }
 
     @Nonnull
+    @LongSupport
     public WeaponType getWeaponType() {
         return weaponType;
     }

@@ -1,5 +1,7 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.LongSupport;
+import net.liplum.api.annotations.Require;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.masteries.AttributeAmplifier;
 
@@ -12,6 +14,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.function.Predicate;
 
+@LongSupport
 public class Attribute implements IAttribute {
     @Nonnull
     private static final Map<String, IAttribute> AttributesMap = new HashMap<>();
@@ -64,24 +67,29 @@ public class Attribute implements IAttribute {
     @Nonnull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(defaultValue);
 
+    @LongSupport
     public static void register(IAttribute attribute) {
         AttributesMap.put(attribute.getRegisterName(), attribute);
     }
 
+    @LongSupport
     public static void remove(String attributeName) {
         AttributesMap.remove(attributeName);
     }
 
+    @LongSupport
     public static void setBasicAttribute(IAttribute attribute) {
         BasicAttributes.add(attribute);
     }
 
     @Nullable
+    @LongSupport
     public static IAttribute getAttribute(@Nonnull String registerName) {
         return AttributesMap.get(registerName);
     }
 
     @Nonnull
+    @LongSupport
     public static List<IAttribute> getAllBasicAttributes() {
         return BasicAttributes;
     }

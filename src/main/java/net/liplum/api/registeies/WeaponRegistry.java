@@ -1,5 +1,6 @@
 package net.liplum.api.registeies;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponType;
 
@@ -13,6 +14,7 @@ public final class WeaponRegistry {
     private static final Map<WeaponType, Set<WeaponBaseItem>> AllWeapons = new HashMap<>();
 
     @Nonnull
+    @LongSupport
     public static WeaponBaseItem register(@Nonnull WeaponBaseItem weapon) {
         WeaponType weaponType = weapon.getWeaponType();
         if (AllWeapons.containsKey(weaponType)) {
@@ -26,6 +28,7 @@ public final class WeaponRegistry {
     }
 
     @Nonnull
+    @LongSupport
     public static Set<WeaponBaseItem> getWeaponsOf(@Nonnull WeaponType type) {
         Set<WeaponBaseItem> weapons = AllWeapons.get(type);
         if (weapons == null) {

@@ -1,6 +1,7 @@
 package net.liplum.skills.gemstone;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
@@ -10,6 +11,7 @@ import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 import javax.annotation.Nonnull;
 
+@Developing
 public final class TurquoiseSkills {
     public final static IPassiveSkill<LivingHurtEvent> GentlyLand =
             SkillRegistry.register(

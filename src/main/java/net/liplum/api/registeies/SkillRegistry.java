@@ -1,5 +1,6 @@
 package net.liplum.api.registeies;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.IEventTypeArgs;
 import net.liplum.api.fight.IPassiveSkill;
 import net.minecraftforge.fml.common.eventhandler.Event;
@@ -11,11 +12,13 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+@LongSupport
 public final class SkillRegistry {
     private static final Map<Class<?>, Set<IPassiveSkill<?>>> EventTypePassiveSkillMap = new HashMap<>();
     private static final Map<String, IPassiveSkill<?>> AllPassiveSkills = new HashMap<>();
 
     @Nonnull
+    @LongSupport
     public static <T extends IPassiveSkill<? extends Event>> T register(@Nonnull T passiveSkill) {
         //Register it to passiveSkillsMap
         IEventTypeArgs eventTypeArgs = passiveSkill.getEventTypeArgs();
@@ -39,6 +42,7 @@ public final class SkillRegistry {
      * @return
      */
     @Nullable
+    @LongSupport
     public static IPassiveSkill<?> getPassiveSkillsFromName(@Nonnull String registerName) {
         if (AllPassiveSkills.containsKey(registerName)) {
             return AllPassiveSkills.get(registerName);

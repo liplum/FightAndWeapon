@@ -1,23 +1,27 @@
 package net.liplum.lib;
 
+import net.liplum.api.annotations.LongSupport;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
+@LongSupport
 public class ItemGroup extends CreativeTabs {
-    private ItemStack icon;
+    @Nonnull
+    private ItemStack icon = ItemStack.EMPTY;
 
-    public ItemGroup(String registerName) {
+    @LongSupport
+    public ItemGroup(@Nonnull String registerName) {
         super(registerName);
-        this.icon = ItemStack.EMPTY;
     }
 
-    public boolean setIcon(ItemStack newIcon) {
-        if (newIcon == null || newIcon.isEmpty()) {
+    @LongSupport
+    public boolean setIcon(@Nonnull ItemStack newIcon) {
+        if (newIcon.isEmpty()) {
             return false;
         }
-        icon = newIcon;
+        this.icon = newIcon;
         return true;
     }
 

@@ -1,6 +1,7 @@
 package net.liplum.lib.utils;
 
 import net.liplum.Vanilla;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.lib.math.MathUtil;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
@@ -18,7 +19,8 @@ import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-public class ItemTool {
+@LongSupport
+public final class ItemTool {
     /**
      * Heats the weapon if player is in survival mode.
      *
@@ -34,6 +36,7 @@ public class ItemTool {
         player.getCooldownTracker().setCooldown(item, coolDownTicks);
         return true;
     }
+
     /**
      * Heats the weapon if player is in whatever mode.
      *

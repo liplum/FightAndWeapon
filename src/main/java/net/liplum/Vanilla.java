@@ -1,5 +1,8 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
+
+@LongSupport
 public final class Vanilla {
     public static final int TPS = 20;
     public static final int PlayerMainInventorySlotCount = 36;

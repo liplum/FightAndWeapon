@@ -1,7 +1,9 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponType;
 
+@LongSupport
 public final class WeaponTypes {
     public static final WeaponType Lance = new WeaponType(Names.Item.Lance.TypeName)
             .setWeaponSkillPredicate((world, player, weapon) -> player.onGround && player.isSneaking());

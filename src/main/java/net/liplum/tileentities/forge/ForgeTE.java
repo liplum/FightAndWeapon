@@ -1,11 +1,13 @@
 package net.liplum.tileentities.forge;
 
+import net.liplum.api.annotations.Developing;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.ItemStackHandler;
 
 import javax.annotation.Nonnull;
 
+@Developing
 public class ForgeTE extends TileEntity {
     private static final String AdditionTagName = "Addition";
     private static final String MaterialTagName = "Material";

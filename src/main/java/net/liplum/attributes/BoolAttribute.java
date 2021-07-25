@@ -1,5 +1,6 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.Require;
 import net.liplum.masteries.AttributeAmplifier;
 
 import javax.annotation.Nonnull;

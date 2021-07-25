@@ -2,6 +2,7 @@ package net.liplum.commands;
 
 import net.liplum.I18ns;
 import net.liplum.Names;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.command.CommandBase;
@@ -19,6 +20,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 
+@LongSupport
 public class InlayCommand extends CommandBase {
 
     @Nonnull

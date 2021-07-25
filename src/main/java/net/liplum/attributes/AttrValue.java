@@ -1,5 +1,8 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.LongSupport;
+
+@LongSupport
 public abstract class AttrValue {
     protected final DataType dataType;
 

@@ -1,8 +1,11 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.attributes.*;
 
+@LongSupport
 public final class Attributes {
+    @LongSupport
     public static final class Generic {
         public static final IAttribute Durability = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Durability)
@@ -141,6 +144,7 @@ public final class Attributes {
                 .setDefaultValue(0F);
     }
 
+    @LongSupport
     public static final class Harp {
         /**
          * Gets the radius of the range

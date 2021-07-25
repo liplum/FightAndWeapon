@@ -1,5 +1,8 @@
 package net.liplum;
 
+import net.liplum.api.annotations.LongSupport;
+
+@LongSupport
 public final class MetaData {
     public static final String MOD_ID = "faw";
     public static final String MOD_NAME = "Fight And Weapon";

@@ -1,6 +1,7 @@
 package net.liplum.capabilities;
 
 import net.liplum.MetaData;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.CoolDown;
 import net.liplum.api.fight.IPSkillCoolingTimer;
 import net.liplum.api.fight.IPassiveSkill;
@@ -22,6 +23,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
+@LongSupport
 public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkillCoolingTimer {
     @Nonnull
     private Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();

@@ -1,5 +1,6 @@
 package net.liplum.modifiers;
 
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
@@ -27,6 +28,7 @@ import java.util.List;
 import static net.liplum.Attributes.Generic.Strength;
 import static net.liplum.Attributes.Lance.SprintStrength;
 
+@Developing
 public final class EnderGemModifier {
     public final static LanceModifier Light_Lance = new LanceModifier() {
         @Override

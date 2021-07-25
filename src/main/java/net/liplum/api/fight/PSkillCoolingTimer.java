@@ -1,5 +1,6 @@
 package net.liplum.api.fight;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.capabilities.TimerCapability;
 import net.liplum.networks.CoolingMsg;
 import net.liplum.networks.MessageManager;
@@ -79,6 +80,7 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
     }
 
     @Nonnull
+    @LongSupport
     public static IPSkillCoolingTimer create(@Nonnull EntityPlayer player) {
         TimerCapability timer = player.getCapability(CapabilityRegistry.Timer_Capability, null);
         if (timer == null) {
@@ -88,6 +90,7 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
     }
 
     @Nonnull
+    @LongSupport
     public static IPSkillCoolingTimer create(@Nonnull EntityLivingBase livingEntity) {
         if (livingEntity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) livingEntity;

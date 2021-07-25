@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.AttrCalculator;
@@ -19,7 +20,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
-import net.minecraft.util.Tuple;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -29,7 +29,6 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.LinkedList;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.*;
@@ -82,6 +81,7 @@ public final class FawItemUtil {
      * @param target    the target
      * @return whether this attack is successful
      */
+    @LongSupport
     public static boolean attackEntity(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weapon, EntityLivingBase attacker, Entity target) {
         //Nobody did and nobody was hit.
         if (attacker == null || target == null ||
@@ -234,6 +234,7 @@ public final class FawItemUtil {
     }
 
     @SideOnly(Side.CLIENT)
+    @LongSupport
     public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,
                                            @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
         String valueContent = format != null ? String.format(format, value) : value.toString();
@@ -258,11 +259,12 @@ public final class FawItemUtil {
         return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.offHandInventory).filter(FawItemUtil::isFawWeapon).iterator();
     }
 
+    @LongSupport
     public static boolean heatWeaponType(EntityPlayer player, WeaponType weaponType) {
         if (player.isCreative()) {
             return false;
         }
-        List<Tuple<WeaponBaseItem, Integer>> coolDowns = new LinkedList<>();
+        boolean hasOneSucceed = false;
         AttrCalculator calculator = new AttrCalculator()
                 .setPlayer(player);
         for (ItemStack itemStack : getAllFawWeaponSlotsFormPlayerInventory(player)) {
@@ -273,14 +275,8 @@ public final class FawItemUtil {
                         .setModifier(GemUtil.getModifierFrom(itemStack));
                 int coolDown = calculator.calcu(CoolDown).getInt();
                 if (coolDown != 0) {
-                    coolDowns.add(new Tuple<>(weapon, coolDown));
+                    hasOneSucceed |= ItemTool.heatItem(player, weapon, coolDown);
                 }
-            }
-        }
-        boolean hasOneSucceed = false;
-        if (coolDowns.size() > 0) {
-            for (Tuple<WeaponBaseItem, Integer> entry : coolDowns) {
-                hasOneSucceed |= ItemTool.heatItem(player, entry.getFirst(), entry.getSecond());
             }
         }
         return hasOneSucceed;

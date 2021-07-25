@@ -1,5 +1,8 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.LongSupport;
+
+@LongSupport
 public class AttrModifier extends AttrDelta {
     private final float deltaRate;
 

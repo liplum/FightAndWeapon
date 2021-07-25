@@ -1,7 +1,7 @@
 package net.liplum.api.fight;
 
 import net.liplum.api.registeies.SkillRegistry;
-import net.liplum.attributes.Require;
+import net.liplum.api.annotations.Require;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;

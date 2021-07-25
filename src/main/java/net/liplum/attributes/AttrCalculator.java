@@ -1,5 +1,6 @@
 package net.liplum.attributes;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.capabilities.MasteryCapability;
@@ -13,6 +14,7 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@LongSupport
 public class AttrCalculator implements IAttrCalculator{
     private WeaponCore weaponCore;
     @Nullable
