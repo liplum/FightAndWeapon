@@ -4,8 +4,11 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import net.liplum.Names;
 import net.liplum.Vanilla;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.AggregatePassiveSkill;
+import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.attributes.*;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemTool;
@@ -28,6 +31,7 @@ import java.util.function.Function;
 import static net.liplum.Attributes.Generic.*;
 import static net.liplum.TooltipMiddlewares.*;
 
+@LongSupport
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
@@ -47,6 +51,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private String registerName = "default";
     @Nonnull
     private EnumAction rightClickUseAction = EnumAction.NONE;
+    @Nonnull
+    private final Map<Integer, IPassiveSkill<?>> lockedPassiveSkills = new HashMap<>();
     @Nonnull
     private ILeftClickEntityBehavior leftClickEntityBehavior = (weapon, stack, attacker, target) -> {
         AttrCalculator calculator = new AttrCalculator(this);
@@ -123,6 +129,19 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @LongSupport
     public EnumAction getRightClickUseAction() {
         return rightClickUseAction;
+    }
+
+    @Nonnull
+    @Developing
+    public List<IPassiveSkill<?>> unlockPassiveSkills(@Nonnull UnlockedPSkillList list) {
+        List<IPassiveSkill<?>> skills = new LinkedList<>();
+        for (int slot : list.getSlots()) {
+            IPassiveSkill<?> skill = lockedPassiveSkills.get(slot);
+            if (skill != null) {
+                skills.add(skill);
+            }
+        }
+        return skills;
     }
 
     /**
@@ -271,7 +290,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
 
         @Nonnull
-        public WeaponCoreBuilder setRightClickUseAction(EnumAction action){
+        public WeaponCoreBuilder setRightClickUseAction(EnumAction action) {
             rightClickUseAction = action;
             return this;
         }
@@ -292,6 +311,13 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         @LongSupport
         public WeaponCoreBuilder setRegisterName(@Nonnull String name) {
             registerName = name;
+            return this;
+        }
+
+        @Nonnull
+        @Developing
+        public WeaponCoreBuilder setLockedPassiveSkill(int number, IPassiveSkill<?> passiveSkill) {
+            lockedPassiveSkills.put(number, passiveSkill);
             return this;
         }
     }

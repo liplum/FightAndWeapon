@@ -2,7 +2,9 @@ package net.liplum.lib.utils;
 
 import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.api.registeies.MasteryRegistry;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.IAttribute;
@@ -12,10 +14,7 @@ import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public final class MasteryUtil {
     private static final int MaxLevel = 99;
@@ -73,21 +72,37 @@ public final class MasteryUtil {
         return masteryCapability.getLevelAndExp(masterName);
     }
 
-    public static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMastery master) {
+    @Nonnull
+    private static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMastery master, @Nonnull WeaponCore weaponCore) {
         MasteryCapability masteryCapability = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
+        HashSet<IPassiveSkill<?>> res = new HashSet<>();
         if (masteryCapability != null) {
             LvExpPair lvAndExp = getMaster(masteryCapability, master.getRegisterName());
             int lv = lvAndExp.getLevel();
-            return new HashSet<>(master.getPassiveSkills(lv));
+            addPassiveSkillsFromMasteryGiven(res, lv, master);
+            addPassiveSkillsFromUnlock(res, lv, master, weaponCore);
         }
-        return new HashSet<>();
+        return res;
+    }
+
+    private static void addPassiveSkillsFromMasteryGiven(@Nonnull HashSet<IPassiveSkill<?>> result, int level, @Nonnull IMastery master) {
+        List<IPassiveSkill<?>> fromGiven = master.getPassiveSkills(level);
+        result.addAll(fromGiven);
+        UnlockedPSkillList unlock = master.getUnlockedPassiveSkills(level);
+    }
+
+    private static void addPassiveSkillsFromUnlock(@Nonnull HashSet<IPassiveSkill<?>> result, int level, @Nonnull IMastery master, @Nonnull WeaponCore weaponCore) {
+        UnlockedPSkillList unlock = master.getUnlockedPassiveSkills(level);
+        List<IPassiveSkill<?>> fromUnlock = weaponCore.unlockPassiveSkills(unlock);
+        result.addAll(fromUnlock);
     }
 
     @Nonnull
-    public static Collection<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
+    public static Collection<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponCore weaponCore) {
+        WeaponType weaponType = weaponCore.getWeaponType();
         IMastery mastery = MasteryRegistry.getMasterOf(weaponType);
         if (mastery != null) {
-            return getPassiveSkills(player, mastery);
+            return getPassiveSkills(player, mastery, weaponCore);
         }
         return new HashSet<>();
     }

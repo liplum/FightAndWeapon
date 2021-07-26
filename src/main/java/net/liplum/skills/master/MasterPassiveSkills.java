@@ -11,6 +11,7 @@ import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.events.weapon.WeaponAttackEvent;
+import net.liplum.lib.math.Angle;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.registeies.PotionRegistry;
@@ -69,7 +70,9 @@ public final class MasterPassiveSkills {
                                     world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(1.0D, 0.25D, 1.0D))) {
                                 if (EntityUtil.canAttack(attacker, entitylivingbase) &&
                                         attacker.getDistanceSq(entitylivingbase) < 9.0D) {
-                                    entitylivingbase.knockBack(attacker, 0.4F, MathHelper.sin(attacker.rotationYaw * 0.017453292F), -MathHelper.cos(attacker.rotationYaw * 0.017453292F));
+                                    entitylivingbase.knockBack(attacker, 0.4F,
+                                            MathHelper.sin(Angle.toRadian(attacker.rotationYaw)),
+                                            -MathHelper.cos(Angle.toRadian(attacker.rotationYaw)));
                                     entitylivingbase.attackEntityFrom(EntityUtil.genDamageSource(attacker), dmg);
                                     atLeastSweepOne = true;
                                 }

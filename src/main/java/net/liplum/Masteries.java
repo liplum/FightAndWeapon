@@ -2,19 +2,37 @@ package net.liplum;
 
 import net.liplum.masteries.Mastery;
 import net.liplum.masteries.Node;
-import net.liplum.masteries.NodeBuilder;
+import net.liplum.masteries.RoutineBuilder;
 
+import static net.liplum.Attributes.Generic.AbilityPower;
 import static net.liplum.Attributes.Generic.Strength;
 
 public final class Masteries {
     public static final Mastery Lance = new Mastery(WeaponTypes.Lance)
-            .setRoutine(new NodeBuilder()
-                    .genNode(() -> new Node().addAttributeAmplifiers(Strength.newAttributeAmplifier(1)))
-                    .nextLv()
-                    .genNode(() -> new Node().addAttributeAmplifiers())
+            .setRoutine(new RoutineBuilder()
+                    .node(new Node().addAttributeAmplifiers(Strength.newAttributeAmplifier(1))).nextLv()
+                    .node(new Node().addAttributeAmplifiers())
                     .toRoutine());
 
     public static final Mastery Harp = new Mastery(WeaponTypes.Harp);
 
     public static final Mastery BattleAxe = new Mastery(WeaponTypes.BattleAxe);
+
+    public static final Mastery MagickWand = new Mastery(WeaponTypes.MagickWand)
+            .setRoutine(new RoutineBuilder()
+                    .node(Node.Empty).nextLv()
+                    .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(1))).nextLv()
+                    .repeat(2)
+                    .node(new Node().setLockedPassiveSkill(1)).nextLv()
+                    .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(1))).nextLv()
+                    .repeat(1)
+                    .node(new Node().setLockedPassiveSkill(2)).nextLv()
+                    .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(1))).nextLv()
+                    .node(new Node().setLockedPassiveSkill(3))
+                    .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(2))).nextLv()
+                    .repeat(1)
+                    .node(new Node().addPassiveSkills("ManaBarrier")).nextLv()
+                    .node(new Node().setLockedPassiveSkill(4))
+                    .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(4))).nextLv()
+                    .toRoutine());
 }

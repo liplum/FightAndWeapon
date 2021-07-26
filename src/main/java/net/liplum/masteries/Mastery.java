@@ -2,6 +2,7 @@ package net.liplum.masteries;
 
 import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.api.registeies.MasteryRegistry;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.api.weapon.WeaponType;
@@ -75,5 +76,11 @@ public class Mastery implements IMastery {
             }
         }
         return res;
+    }
+
+    @Nonnull
+    @Override
+    public UnlockedPSkillList getUnlockedPassiveSkills(int level) {
+        return new UnlockedPSkillList(routine.getLockedPassiveSkills(level));
     }
 }

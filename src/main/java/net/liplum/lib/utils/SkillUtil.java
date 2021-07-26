@@ -29,7 +29,6 @@ public final class SkillUtil {
 
             //First, gets the passive skills from weapon's gemstone
             WeaponBaseItem weapon = (WeaponBaseItem) item;
-            WeaponType weaponType = weapon.getWeaponType();
             WeaponCore core = weapon.getCore();
             AggregatePassiveSkill coreSkill = core.getWeaponPassiveSkills();
             if (coreSkill != null && coreSkill.getEventTypeArgs().has(eventType)) {
@@ -49,7 +48,7 @@ public final class SkillUtil {
             //Then, gets the passive skills from entity's mastery if the entity is a player
             if (entity instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) entity;
-                Collection<IPassiveSkill<?>> skillsFromMastery = MasteryUtil.getPassiveSkills(player, weaponType);
+                Collection<IPassiveSkill<?>> skillsFromMastery = MasteryUtil.getPassiveSkills(player, core);
                 for (IPassiveSkill<?> skill : skillsFromMastery) {
                     if (skill.getEventTypeArgs().has(eventType)) {
                         allSkills.add((IPassiveSkill<Event>) skill);

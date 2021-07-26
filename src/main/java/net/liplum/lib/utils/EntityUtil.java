@@ -1,9 +1,11 @@
 package net.liplum.lib.utils;
 
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.FawDamage;
+import net.liplum.lib.math.Angle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -46,6 +48,12 @@ public class EntityUtil {
         return false;
     }
 
+    public static void knockBack(@Nonnull EntityLivingBase subject,@Nonnull EntityLivingBase object,float strength) {
+        object.knockBack(subject, strength,
+                MathHelper.sin(Angle.toRadian(subject.rotationYaw)),
+                -MathHelper.cos(Angle.toRadian(subject.rotationYaw)));
+    }
+
     public static void spawnSweepParticles(@Nonnull EntityLivingBase entity) {
         //Copied from Vanilla
         World world = entity.world;
@@ -78,11 +86,13 @@ public class EntityUtil {
         return true;
     }
 
+    @Nonnull
     public static DamageSource genDamageSource(EntityLivingBase entity) {
         return entity instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) entity) : DamageSource.causeMobDamage(entity);
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponBaseItem weapon, @Nullable IGemstone gemstone) {
+    @Nonnull
+    public static FawDamage genFawDamage(@Nonnull EntityLivingBase attacker, @Nonnull WeaponBaseItem weapon, @Nullable IGemstone gemstone) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
             damage = FawDamage.byPlayer((EntityPlayer) attacker, weapon);
@@ -95,7 +105,8 @@ public class EntityUtil {
         return damage;
     }
 
-    public static FawDamage genFawDamage(EntityLivingBase attacker, WeaponBaseItem weapon, @Nullable IGemstone gemstone, @Nullable Modifier modifier) {
+    @Nonnull
+    public static FawDamage genFawDamage(@Nonnull EntityLivingBase attacker, @Nonnull WeaponBaseItem weapon, @Nullable IGemstone gemstone, @Nullable Modifier modifier) {
         FawDamage damage;
         if (attacker instanceof EntityPlayer) {
             damage = FawDamage.byPlayer((EntityPlayer) attacker, weapon);
@@ -108,7 +119,14 @@ public class EntityUtil {
         return damage;
     }
 
-    public static void setRooting(EntityLivingBase livingEntity, double originX, double originY, double originZ) {
-        PhysicsTool.setPosition(livingEntity, originX, originY, originZ);
+    @Developing
+    public static void setRooting(@Nonnull EntityLivingBase entity, double originX, double originY, double originZ) {
+        PhysicsTool.setPosition(entity, originX, originY, originZ);
+    }
+
+    @Developing
+    public static void setRooting(@Nonnull EntityLivingBase entity) {
+        entity.motionX = 0;
+        entity.motionZ = 0;
     }
 }

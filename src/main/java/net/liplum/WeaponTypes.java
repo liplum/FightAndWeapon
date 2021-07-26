@@ -22,4 +22,7 @@ public final class WeaponTypes {
 
     public static final WeaponType Sword = new WeaponType(Names.Item.Sword.TypeName)
             .setWeaponSkillPredicate(((world, player, weapon) -> true));
+
+    public static final WeaponType MagickWand = new WeaponType(Names.Item.MagickWand.TypeName)
+            .setWeaponSkillPredicate(((world, player, weapon) -> true));
 }

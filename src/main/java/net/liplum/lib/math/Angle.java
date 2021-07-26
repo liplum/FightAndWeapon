@@ -5,9 +5,14 @@ public class Angle {
     public static final double HalfPI = Math.PI / 2;
     public static final double PI = Math.PI;
     private static final double PI_Divide_180 = PI / 180;
+    private static final float PI_Divide_180_Float = (float) (PI / 180);
 
     public static double toRadian(double degrees) {
         return degrees % 360 * PI_Divide_180;
+    }
+
+    public static float toRadian(float degrees) {
+        return degrees % 360 * PI_Divide_180_Float;
     }
 
     /**

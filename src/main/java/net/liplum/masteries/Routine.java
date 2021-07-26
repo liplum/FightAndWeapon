@@ -54,10 +54,22 @@ public class Routine {
     }
 
     @Nonnull
-    public List<String> getPassiveSkills(int count) {
+    public List<String> getPassiveSkills(int level) {
         List<String> res = new LinkedList<>();
-        for (Node node : allNodes.subList(0, count)) {
+        for (Node node : allNodes.subList(0, level)) {
             res.addAll(node.getPassiveSkills());
+        }
+        return res;
+    }
+
+    @Nonnull
+    public List<Integer> getLockedPassiveSkills(int level) {
+        List<Integer> res = new LinkedList<>();
+        for (Node node : allNodes.subList(0, level)) {
+            Integer skill = node.getLockedPassiveSkill();
+            if (skill != null) {
+                res.add(skill);
+            }
         }
         return res;
     }

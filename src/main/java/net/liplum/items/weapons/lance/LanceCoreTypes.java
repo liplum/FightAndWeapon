@@ -189,7 +189,8 @@ public final class LanceCoreTypes {
                     @Override
                     protected void runTask() {
                         if (duration > 0) {
-                            EntityUtil.setRooting(player, x, y, z);
+                            //EntityUtil.setRooting(player, x, y, z);
+                            EntityUtil.setRooting(player);
                             duration--;
                             yieldReturn(new WaitForNextTick());
                         } else {

@@ -10,6 +10,7 @@ import net.liplum.lib.math.Angle;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
+import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.ItemTool;
 import net.minecraft.entity.EntityLivingBase;
@@ -56,8 +57,6 @@ public final class BattleAxeCoreTypes {
             float strength = calculator.calcu(Strength).getFloat();
             float sweepRange = calculator.calcu(SweepRange).getFloat();
 
-            float knockBackAngleToX = MathHelper.sin((float) Angle.toRadian(player.rotationYaw));
-            float knockBackAngleToY = -MathHelper.cos((float) Angle.toRadian(player.rotationYaw));
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
                     .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sweepRange, 0.25D, sweepRange));
@@ -75,7 +74,7 @@ public final class BattleAxeCoreTypes {
                     Vector2D sv = spNew.toV2D();
                     if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
                         e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
-                        e.knockBack(player, 0.5f, knockBackAngleToX, knockBackAngleToY);
+                        EntityUtil.knockBack(player,e,0.5F);
                         damagedEntityCount++;
                     }
                 }

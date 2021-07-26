@@ -70,6 +70,10 @@ public final class Names {
             public static final String SimpleBow = "simple_bow";
         }
 
+        public static final class MagickWand {
+            public static final String TypeName = "magick_wand";
+        }
+
         public static final class RangedWeapon {
             public static final String TypeName = "ranged_weapon";
             public static final String SickleItem = "sickle";

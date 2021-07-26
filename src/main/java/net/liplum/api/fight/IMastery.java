@@ -20,4 +20,7 @@ public interface IMastery {
 
     @Nonnull
     List<IPassiveSkill<?>> getPassiveSkills(int level);
+
+    @Nonnull
+    UnlockedPSkillList getUnlockedPassiveSkills(int level);
 }
