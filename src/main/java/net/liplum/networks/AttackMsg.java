@@ -55,9 +55,9 @@ public class AttackMsg implements IMessage {
                     if (FawItemUtil.isFawWeapon(itemStack) && !player.isHandActive()) {
                         WeaponBaseItem weapon = (WeaponBaseItem) item;
                         AttrCalculator calculator = new AttrCalculator()
-                                .setWeaponCore(weapon.getCore())
-                                .setModifier(GemUtil.getModifierFrom(itemStack))
-                                .setPlayer(player);
+                                .weaponCore(weapon.getCore())
+                                .modifier(GemUtil.getModifierFrom(itemStack))
+                                .player(player);
                         FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
                         float reach = finalAttackReach.getFloat();
                         if (player.getDistanceSq(target) < reach * reach) {

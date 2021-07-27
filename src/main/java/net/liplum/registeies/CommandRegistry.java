@@ -1,6 +1,7 @@
 package net.liplum.registeies;
 
 import net.liplum.commands.InlayCommand;
+import net.liplum.commands.MasteryExpCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
@@ -15,6 +16,7 @@ public class CommandRegistry {
     //I even don't know why we can't directly use a object instead of a Class.
     static {
         Commands.add(InlayCommand.class);
+        Commands.add(MasteryExpCommand.class);
     }
 
     public static void load(FMLServerStartingEvent event) {

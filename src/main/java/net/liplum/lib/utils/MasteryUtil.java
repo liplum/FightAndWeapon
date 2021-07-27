@@ -67,6 +67,10 @@ public final class MasteryUtil {
         return exp >= required;
     }
 
+    public static void addExp(@Nonnull EntityPlayer player,@Nonnull WeaponType weaponType,int amount){
+        //TODO:Add mastery exp
+    }
+
     @Nonnull
     public static LvExpPair getMaster(@Nonnull MasteryCapability masteryCapability, @Nonnull String masterName) {
         return masteryCapability.getLevelAndExp(masterName);

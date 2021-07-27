@@ -25,13 +25,13 @@ public class FlameGemModifier {
 
         @Override
         public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
-            World world = args.getWorld();
-            EntityPlayer player = args.getPlayer();
+            World world = args.world();
+            EntityPlayer player = args.entity();
 
             Vec3d face = player.getLookVec();
             EntityLargeFireball fireball = new EntityLargeFireball(world, player, face.x, face.y + 1, face.z);
             EntityUtil.spawnEntityIfServer(world, fireball);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 10, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 10, player);
             return true;
         }
 

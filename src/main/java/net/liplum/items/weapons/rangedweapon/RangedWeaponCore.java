@@ -1,4 +1,4 @@
-package net.liplum.items.weapons.rangeweapon;
+package net.liplum.items.weapons.rangedweapon;
 
 import net.liplum.WeaponTypes;
 import net.liplum.api.fight.AggregatePassiveSkill;
@@ -43,18 +43,18 @@ public abstract class RangedWeaponCore extends WeaponCore {
                 Strength, Strength.newBasicAttrValue(5)
         ).set(
                 SpecialAttackReachJudgment, BoolAttribute.FalseBasicAttrValue
-        ).setRightClickUseAction(
+        ).set(
                 EnumAction.BLOCK
-        ).addPassiveSkills(
+        ).add(
                 new AggregatePassiveSkill("RangedWeaponPS").add(FawWeaponLeftClickEvent.class,
                         event -> {
                             ItemStack itemStack = event.getItemStack();
                             EntityPlayer attacker = event.getPlayer();
                             Modifier modifier = GemUtil.getModifierFrom(itemStack);
                             AttrCalculator calculator = new AttrCalculator()
-                                    .setWeaponCore(this)
-                                    .setModifier(modifier)
-                                    .setPlayer(attacker);
+                                    .weaponCore(this)
+                                    .modifier(modifier)
+                                    .player(attacker);
                             float attackReach = calculator.calcu(AttackReach).getFloat();
                             float strength = calculator.calcu(Strength).getFloat();
                             AxisAlignedBB playerBox = attacker.getEntityBoundingBox();
@@ -89,7 +89,7 @@ public abstract class RangedWeaponCore extends WeaponCore {
                             }
                             return PSkillResult.Complete;
                         })
-        ).setLeftClickEntityBehavior(
+        ).set(
                 (weaponItem, stack, attacker, target) -> true
         );
     }

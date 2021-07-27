@@ -10,7 +10,6 @@ import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -45,20 +44,20 @@ public class BattleAxeItem extends WeaponBaseItem {
             );
             if (!cancelRelease) {
                 AttrCalculator calculator = new AttrCalculator()
-                        .setWeaponCore(core)
-                        .setModifier(modifier);
+                        .weaponCore(core)
+                        .modifier(modifier);
                 FinalAttrValue finalCoolDown = calculator.calcu(CoolDown);
                 int coolDown = finalCoolDown.getInt();
 
                 WeaponSkillArgs args = new WeaponSkillArgs()
-                        .setWorld(worldIn)
-                        .setPlayer(playerIn)
-                        .setItemStack(held)
+                        .world(worldIn)
+                        .entity(playerIn)
+                        .itemStack(held)
                         .setHand(handIn)
-                        .setModifier(modifier)
+                        .modifier(modifier)
                         .setWeapon(this)
                         .setCalculator(
-                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn).setItemStack(held)
+                                new AttrCalculator(core).modifier(modifier).entity(playerIn).itemStack(held)
                         );
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);

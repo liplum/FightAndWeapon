@@ -46,13 +46,13 @@ public final class EnderGemModifier {
 
         @Override
         public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
-            World world = args.getWorld();
-            EntityPlayer player = args.getPlayer();
-            Modifier modifier = args.getModifier();
+            World world = args.world();
+            EntityPlayer player = args.entity();
+            Modifier modifier = args.modifier();
             AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(core)
-                    .setModifier(modifier)
-                    .setPlayer(player);
+                    .weaponCore(core)
+                    .modifier(modifier)
+                    .entity(player);
 
             float strength = calculator.calcu(Strength).getFloat();
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
@@ -68,7 +68,7 @@ public final class EnderGemModifier {
                     damagedCount++;
                 }
             }
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), damagedCount, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), damagedCount, player);
             Vec3d originPos = player.getPositionVector();
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(sprintLength);

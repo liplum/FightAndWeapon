@@ -1,12 +1,17 @@
 package net.liplum.attributes;
 
 import net.liplum.api.annotations.LongSupport;
+import net.liplum.api.fight.FawArgsGetter;
+import net.liplum.api.fight.FawArgsSetter;
 import net.liplum.api.weapon.Modifier;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.WeaponType;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.events.AttributeAccessEvent;
 import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.registeies.CapabilityRegistry;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
@@ -15,12 +20,12 @@ import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @LongSupport
-public class AttrCalculator implements IAttrCalculator{
-    private WeaponCore weaponCore;
+public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSetter<AttrCalculator> {
+    private WeaponBaseItem weapon;
     @Nullable
     private Modifier modifier;
     @Nullable
-    private EntityPlayer player;
+    private EntityLivingBase entity;
     @Nullable
     private ItemStack itemStack;
 
@@ -28,11 +33,13 @@ public class AttrCalculator implements IAttrCalculator{
 
     private boolean useSpecialValueWhenWeaponBroken = true;
 
+    @LongSupport
     public AttrCalculator() {
     }
 
-    public AttrCalculator(WeaponCore core) {
-        this.weaponCore = core;
+    @LongSupport
+    public AttrCalculator(WeaponBaseItem weapon) {
+        this.weapon = weapon;
     }
 
     /**
@@ -40,7 +47,7 @@ public class AttrCalculator implements IAttrCalculator{
      * NOTE: All Attributes' access must be via this.
      *
      * @param attribute         the attribute which you want to calculate in this weapon
-     * @param core              the weapon core which can provide the basic value of this attribute
+     * @param weapon              the weapon core which can provide the basic value of this attribute
      * @param modifier          (optional) the modifier of this weapon which can provide the modifier value of this attribute
      * @param player            (optional) the player which can provide the mastery capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
      * @param itemStack
@@ -48,9 +55,9 @@ public class AttrCalculator implements IAttrCalculator{
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessEvent}.)
      */
     @Nonnull
-    public static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponCore core, @Nullable Modifier modifier, @Nullable EntityPlayer player, @Nullable ItemStack itemStack, boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
+    public static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nullable EntityPlayer player, @Nullable ItemStack itemStack, boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
-        BasicAttrValue baseAttrValue = core.getValue(attribute);
+        BasicAttrValue baseAttrValue = weapon.getCore().getValue(attribute);
         //Mastery
         MasteryCapability mastery = null;
         AttrDelta masteryValue = null;
@@ -59,7 +66,7 @@ public class AttrCalculator implements IAttrCalculator{
                 mastery = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
             }
             if (mastery != null) {
-                masteryValue = MasteryUtil.getAttributeValue(mastery, core.getWeaponType(), attribute);
+                masteryValue = MasteryUtil.getAttributeValue(mastery, weapon.getWeaponType(), attribute);
             }
         }
         //Modifier
@@ -72,7 +79,7 @@ public class AttrCalculator implements IAttrCalculator{
 
         FinalAttrValue finalAttrValue = attribute.compute(baseAttrValue, attrModifier, masteryValue);
         if (postAccessedEvent) {
-            AttributeAccessEvent attributeAccessEvent = new AttributeAccessEvent(attribute, finalAttrValue, core, modifier, player, itemStack, showSpecialValueWhenWeaponBroken);
+            AttributeAccessEvent attributeAccessEvent = new AttributeAccessEvent(attribute, finalAttrValue, weapon, modifier, player, itemStack, showSpecialValueWhenWeaponBroken);
             MinecraftForge.EVENT_BUS.post(attributeAccessEvent);
             finalAttrValue = attributeAccessEvent.getFinalAttrValue();
         }
@@ -81,47 +88,52 @@ public class AttrCalculator implements IAttrCalculator{
 
     @Nonnull
     @Override
-    public WeaponCore getWeaponCore() {
-        return weaponCore;
-    }
-
-    @Nonnull
-    public AttrCalculator setWeaponCore(@Nonnull WeaponCore weaponCore) {
-        this.weaponCore = weaponCore;
-        return this;
+    public WeaponBaseItem weapon() {
+        return weapon;
     }
 
     @Nullable
     @Override
-    public Modifier getModifier() {
+    public Modifier modifier() {
         return modifier;
     }
 
     @Nonnull
-    public AttrCalculator setModifier(@Nullable Modifier modifier) {
+    @Override
+    public AttrCalculator weapon(@Nonnull WeaponBaseItem weapon) {
+        this.weapon = weapon;
+        return this;
+    }
+
+    @Nonnull
+    @Override
+    public AttrCalculator modifier(@Nullable Modifier modifier) {
         this.modifier = modifier;
         return this;
     }
 
     @Nullable
     @Override
-    public EntityPlayer getPlayer() {
-        return player;
+    public EntityLivingBase entity() {
+        return entity;
     }
 
     @Nonnull
-    public AttrCalculator setPlayer(@Nullable EntityPlayer player) {
-        this.player = player;
+    @Override
+    public AttrCalculator entity(@Nullable EntityLivingBase entity) {
+        this.entity = entity;
         return this;
     }
 
     @Nullable
     @Override
-    public ItemStack getItemStack() {
+    public ItemStack itemStack() {
         return itemStack;
     }
 
-    public AttrCalculator setItemStack(@Nullable ItemStack itemStack) {
+    @Override
+    @Nonnull
+    public AttrCalculator itemStack(@Nullable ItemStack itemStack) {
         this.itemStack = itemStack;
         return this;
     }
@@ -131,6 +143,7 @@ public class AttrCalculator implements IAttrCalculator{
         return useSpecialValueWhenWeaponBroken;
     }
 
+    @Nonnull
     public AttrCalculator setUseSpecialValueWhenWeaponBroken(boolean useSpecialValueWhenWeaponBroken) {
         this.useSpecialValueWhenWeaponBroken = useSpecialValueWhenWeaponBroken;
         return this;
@@ -153,9 +166,9 @@ public class AttrCalculator implements IAttrCalculator{
     @Nonnull
     @Override
     public FinalAttrValue calcu(@Nonnull IAttribute attribute) {
-        if (weaponCore == null) {
+        if (weapon == null) {
             throw new IllegalArgumentException("Weapon Core is Null");
         }
-        return calcuAttribute(attribute, weaponCore, modifier, player, itemStack, useSpecialValueWhenWeaponBroken, postEvent);
+        return calcuAttribute(attribute, weapon, modifier, this.player(), itemStack, useSpecialValueWhenWeaponBroken, postEvent);
     }
 }

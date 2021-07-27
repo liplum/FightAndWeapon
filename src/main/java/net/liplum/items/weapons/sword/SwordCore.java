@@ -25,7 +25,7 @@ public class SwordCore extends WeaponCore {
     @Override
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);
-        builder.setRightClickUseAction(
+        builder.set(
                 EnumAction.BLOCK
         ).set(
                 Sweep, Sweep.newBasicAttrValue(0F)

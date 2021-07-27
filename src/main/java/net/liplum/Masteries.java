@@ -28,11 +28,11 @@ public final class Masteries {
                     .repeat(1)
                     .node(new Node().setLockedPassiveSkill(2)).nextLv()
                     .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(1))).nextLv()
-                    .node(new Node().setLockedPassiveSkill(3))
+                    .node(new Node().setLockedPassiveSkill(3)).nextLv()
                     .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(2))).nextLv()
                     .repeat(1)
                     .node(new Node().addPassiveSkills("ManaBarrier")).nextLv()
-                    .node(new Node().setLockedPassiveSkill(4))
+                    .node(new Node().setLockedPassiveSkill(4)).nextLv()
                     .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(4))).nextLv()
                     .toRoutine());
 }

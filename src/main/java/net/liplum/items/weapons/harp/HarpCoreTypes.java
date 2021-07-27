@@ -40,7 +40,7 @@ public final class HarpCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setHasWeaponSkill(false);
+            builder.set(false);
         }
     };
 
@@ -49,7 +49,7 @@ public final class HarpCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.Harp.HarpItem
             ).set(
                     AbilityPower, AbilityPower.newBasicAttrValue(5F)
@@ -66,8 +66,8 @@ public final class HarpCoreTypes {
 
         @Override
         public boolean continueSkill(ContinuousHarpArgs args) {
-            World world = args.getWorld();
-            EntityPlayer player = args.getPlayer();
+            World world = args.world();
+            EntityPlayer player = args.entity();
             AttrCalculator calculator = args.getCalculator();
 
             double radius = calculator.calcu(Radius).getFloat();
@@ -98,7 +98,7 @@ public final class HarpCoreTypes {
             }
 
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) effectedEntityCount / 3);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), weaponDamage, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), weaponDamage, player);
 
             double px = player.posX, py = player.posY, pz = player.posZ;
 
@@ -117,8 +117,8 @@ public final class HarpCoreTypes {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            World world = args.getWorld();
-            EntityPlayer player = args.getPlayer();
+            World world = args.world();
+            EntityPlayer player = args.entity();
             AttrCalculator calculator = args.getCalculator();
 
             double radius = calculator.calcu(Radius).getFloat();
@@ -130,7 +130,7 @@ public final class HarpCoreTypes {
             for (EntityLivingBase target : allInRange) {
                 target.addPotionEffect(new PotionEffect(MobEffects.HASTE, 60, 0));
             }
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 3, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 3, player);
             return true;
         }
     };

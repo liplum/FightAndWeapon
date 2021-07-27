@@ -8,10 +8,7 @@ import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatBase;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -41,14 +38,14 @@ public class LanceItem extends WeaponBaseItem {
             );
             if (!cancelRelease) {
                 WeaponSkillArgs args = new WeaponSkillArgs()
-                        .setWorld(worldIn)
-                        .setPlayer(playerIn)
-                        .setItemStack(held)
+                        .world(worldIn)
+                        .entity(playerIn)
+                        .itemStack(held)
                         .setHand(handIn)
                         .setWeapon(this)
-                        .setModifier(modifier)
+                        .modifier(modifier)
                         .setCalculator(
-                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn).setItemStack(held)
+                                new AttrCalculator(core).modifier(modifier).entity(playerIn).itemStack(held)
                         );
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);

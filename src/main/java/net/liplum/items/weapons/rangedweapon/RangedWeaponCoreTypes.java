@@ -1,4 +1,4 @@
-package net.liplum.items.weapons.rangeweapon;
+package net.liplum.items.weapons.rangedweapon;
 
 import net.liplum.Names;
 import net.liplum.api.weapon.WeaponSkillArgs;
@@ -16,7 +16,7 @@ public class RangedWeaponCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.RangedWeapon.SickleItem
             );
         }
@@ -31,9 +31,9 @@ public class RangedWeaponCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRightClickUseAction(
+            builder.set(
                     EnumAction.BOW
-            ).setRegisterName(
+            ).set(
                     Names.Item.RangedWeapon.ChainedHammerItem
             );
         }
@@ -48,9 +48,9 @@ public class RangedWeaponCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRightClickUseAction(
+            builder.set(
                     EnumAction.BOW
-            ).setRegisterName(
+            ).set(
                     Names.Item.RangedWeapon.MeteorHammerItem
             );
         }

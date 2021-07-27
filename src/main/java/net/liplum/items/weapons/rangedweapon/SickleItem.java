@@ -1,4 +1,4 @@
-package net.liplum.items.weapons.rangeweapon;
+package net.liplum.items.weapons.rangedweapon;
 
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.Entity;

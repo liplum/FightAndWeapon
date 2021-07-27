@@ -53,13 +53,12 @@ public abstract class WeaponBaseItem extends FawItem {
         super();
         this.weaponCore = weaponCore;
         this.weaponType = weaponCore.getWeaponType();
-        AttrCalculator calculator = new AttrCalculator(weaponCore);
-        setMaxDamage(calculator.calcu(Durability).getInt());
         //Player can only hold ONE Weapon in an item stack.
         setMaxStackSize(1);
         //Player can't repair the weapon in common way(an anvil)
         setNoRepair();
-        onlyCoreCalculator = new FixedAttrCalculator(weaponCore, true, true);
+        onlyCoreCalculator = new FixedAttrCalculator(this, true, true);
+        setMaxDamage(onlyCoreCalculator.calcu(Durability).getInt());
         WeaponRegistry.register(this);
     }
 
@@ -91,10 +90,10 @@ public abstract class WeaponBaseItem extends FawItem {
             modifier = gemstone.getModifierOf(weaponCore);
         }
         AttrCalculator calculator = new AttrCalculator()
-                .setWeaponCore(weaponCore)
-                .setModifier(modifier)
-                .setPlayer(player)
-                .setItemStack(stack)
+                .weapon(this)
+                .modifier(modifier)
+                .entity(player)
+                .itemStack(stack)
                 .setUseSpecialValueWhenWeaponBroken(false);
         TooltipContext context = new TooltipContext(stack, this, calculator, tooltipOption);
         IWeaponTooltipBuilder builder = new WeaponTooltipBuilder(context);
@@ -159,9 +158,9 @@ public abstract class WeaponBaseItem extends FawItem {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
         Modifier modifier = GemUtil.getModifierFrom(stack);
         WeaponAttrModifierContext context = new WeaponAttrModifierContext(stack, new AttrCalculator()
-                .setWeaponCore(getCore())
-                .setModifier(modifier)
-                .setItemStack(stack), slot, map);
+                .weapon(this)
+                .modifier(modifier)
+                .itemStack(stack), slot, map);
         FawItemUtil.applyAttrModifier(weaponCore, modifier, context);
         return map;
     }

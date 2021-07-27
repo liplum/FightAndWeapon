@@ -148,6 +148,7 @@ public final class Names {
 
     public final static class Command {
         public static final String Inlay = "inlay";
+        public static final String MasteryExp = "masteryexp";
 
         public final static class InlaySub {
             public static final String Remove = "remove";
@@ -193,6 +194,7 @@ public final class Names {
         public static final String ExpMending = "ExpMending";
         public static final String FrostWalker = "FrostWalker";
         public static final String Sweeping = "Sweeping";
+        public static final String Ap2Strength = "Ap2Strength";
     }
 
     public final static class Mastery {

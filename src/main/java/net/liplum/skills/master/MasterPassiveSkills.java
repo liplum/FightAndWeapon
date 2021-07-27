@@ -43,7 +43,7 @@ public final class MasterPassiveSkills {
                 @Override
                 public PSkillResult onTrigger(@Nonnull LanceSprintEvent event) {
                     WeaponSkillArgs args = event.getArgs();
-                    EntityPlayer player = args.getPlayer();
+                    EntityPlayer player = args.entity();
                     player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
                     return PSkillResult.Complete;
                 }

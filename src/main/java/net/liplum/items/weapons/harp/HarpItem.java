@@ -13,8 +13,6 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatBase;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
@@ -45,14 +43,14 @@ public class HarpItem extends WeaponBaseItem {
             );
             if (!cancelRelease) {
                 WeaponSkillArgs args = new WeaponSkillArgs()
-                        .setWorld(worldIn)
-                        .setPlayer(playerIn)
-                        .setItemStack(held)
+                        .world(worldIn)
+                        .entity(playerIn)
+                        .itemStack(held)
                         .setHand(handIn)
                         .setWeapon(this)
-                        .setModifier(modifier)
+                        .modifier(modifier)
                         .setCalculator(
-                                new AttrCalculator(core).setModifier(modifier).setPlayer(playerIn).setItemStack(held)
+                                new AttrCalculator(core).modifier(modifier).entity(playerIn).itemStack(held)
                         );
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
@@ -81,10 +79,10 @@ public class HarpItem extends WeaponBaseItem {
         }
         World world = player.world;
         AttrCalculator calculator = new AttrCalculator()
-                .setWeaponCore(core)
-                .setModifier(modifier)
-                .setItemStack(stack)
-                .setPlayer(p);
+                .weaponCore(core)
+                .modifier(modifier)
+                .itemStack(stack)
+                .entity(p);
         FinalAttrValue finalFrequency = calculator.calcu(Frequency);
         FinalAttrValue finalMaxUseDuration = calculator.calcu(MaxUseDuration);
         int frequency = finalFrequency.getInt();
@@ -95,14 +93,14 @@ public class HarpItem extends WeaponBaseItem {
         if (currentDuration % frequency == 0) {
             ContinuousHarpArgs args = new ContinuousHarpArgs()
                     .setReleasedCount(releasedCount);
-            args.setWorld(world)
-                    .setPlayer(p)
-                    .setItemStack(stack)
+            args.world(world)
+                    .entity(p)
+                    .itemStack(stack)
                     .setHand(hand)
                     .setWeapon(this)
-                    .setModifier(modifier)
+                    .modifier(modifier)
                     .setCalculator(
-                            new AttrCalculator(core).setModifier(modifier).setPlayer(p).setItemStack(stack)
+                            new AttrCalculator(core).modifier(modifier).entity(p).itemStack(stack)
                     );
             if (modifier != null) {
                 HarpModifier mod = (HarpModifier) modifier;

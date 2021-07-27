@@ -18,7 +18,7 @@ public abstract class HarpCore extends MagicToolCore {
     @Override
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);
-        builder.setRightClickUseAction(
+        builder.set(
                 EnumAction.BOW
         );
     }

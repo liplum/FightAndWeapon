@@ -13,8 +13,13 @@ enchantment.faw.music=Music
 #Commands
 commands.inlay.usage=/inlay <Gemstone Name> OR /inlay remove
 commands.inlay.failure.notFawWeapon=%s doesn't hold any weapon from Fight And Weapon mod in hand.
-commands.inlay.failure.noGemstone=Couldn't remove the gemstone from %s as their weapon has no gemstone
-commands.inlay.failure.noSuchGemstone=Couldn't inlay the gemstone called %s as it doesn't exist in the mod
+commands.inlay.failure.noGemstone=Couldn't remove the gemstone from %s as their weapon has no gemstone.
+commands.inlay.failure.noSuchGemstone=Couldn't inlay the gemstone called %s as it doesn't exist in the mod.
+
+commands.masteryexp.usage=/masteryexp <Weapon Type Name> <exp amount>
+commands.masteryexp.failure.noSuchWeaponType=Couldn't find the weapon type called %s, please ensure it's right.
+commands.masteryexp.failure.negativeNumber=Please enter a number more than 0.
+commands.masteryexp.failure.NaN=%s is not a number, please enter a true number.
 
 #Potions
 potion.effect.faw.unstoppable=Unstoppable

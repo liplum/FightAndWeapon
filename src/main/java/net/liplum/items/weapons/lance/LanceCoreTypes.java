@@ -45,7 +45,7 @@ public final class LanceCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setHasWeaponSkill(false);
+            builder.set(false);
         }
 
     };
@@ -59,11 +59,11 @@ public final class LanceCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.Lance.TrainingLanceItem
             ).set(
                     Strength, Strength.newBasicAttrValue(5)
-            ).setHasWeaponSkill(false);
+            ).set(false);
         }
     };
 
@@ -74,8 +74,8 @@ public final class LanceCoreTypes {
             if (canceled) {
                 return false;
             }
-            World world = args.getWorld();
-            EntityPlayer player = args.getPlayer();
+            World world = args.world();
+            EntityPlayer player = args.entity();
             AttrCalculator calculator = args.getCalculator();
 
             float strength = calculator.calcu(Strength).getFloat();
@@ -98,7 +98,7 @@ public final class LanceCoreTypes {
                             if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
                                 e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
                                 damaged.add(e);
-                                FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 1, player);
+                                FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 1, player);
                             }
                         }
                         yieldReturn(new WaitForNextTick());
@@ -111,7 +111,7 @@ public final class LanceCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.Lance.LightLanceItem
             ).set(
                     //  It means you can dash 4 units.
@@ -130,8 +130,8 @@ public final class LanceCoreTypes {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            World world = args.getWorld();
-            EntityPlayer player = args.getPlayer();
+            World world = args.world();
+            EntityPlayer player = args.entity();
             AttrCalculator calculator = args.getCalculator();
 
             float strength = calculator.calcu(Strength).getFloat();
@@ -149,7 +149,7 @@ public final class LanceCoreTypes {
                 }
             }
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) damagedEntityCount / 3);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), weaponDamage, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), weaponDamage, player);
 
             return true;
         }
@@ -157,7 +157,7 @@ public final class LanceCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.Lance.KnightLanceItem
             ).set(
                     SprintStrength, SprintStrength.newBasicAttrValue(4F)
@@ -172,8 +172,8 @@ public final class LanceCoreTypes {
     public static final LanceCore ArenaLance = new LanceCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            EntityPlayer player = args.getPlayer();
-            World world = args.getWorld();
+            EntityPlayer player = args.entity();
+            World world = args.world();
             double x = player.posX,
                     y = player.posY,
                     z = player.posZ;
@@ -214,7 +214,7 @@ public final class LanceCoreTypes {
                                 }).toArray()[0];
                             }
                             target.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.5F * strength);
-                            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 2, player);
+                            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 2, player);
                         }
                     }
                 }));
@@ -226,7 +226,7 @@ public final class LanceCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.Lance.ArenaLanceItem
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
@@ -239,7 +239,7 @@ public final class LanceCoreTypes {
     public static final LanceCore TestLance = new LanceCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            EntityPlayer player = args.getPlayer();
+            EntityPlayer player = args.entity();
 
             AttrCalculator calculator = args.getCalculator();
 
@@ -250,7 +250,7 @@ public final class LanceCoreTypes {
             Vec3d sprintForce = playerFace.scale(sprintLength);
             Vec3d nowPos = new Vec3d(sprintForce.x + originPos.x, originPos.y, sprintForce.z + originPos.z);
             PhysicsTool.setPosition(player, nowPos.x, nowPos.y + 0.5, nowPos.z);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 5, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 5, player);
             return true;
         }
 

@@ -6,7 +6,6 @@ import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.events.weapon.WeaponAttackEvent;
-import net.liplum.lib.math.Angle;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
@@ -20,7 +19,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
@@ -41,7 +39,7 @@ public final class BattleAxeCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setHasWeaponSkill(false);
+            builder.set(false);
         }
 
     };
@@ -50,8 +48,8 @@ public final class BattleAxeCoreTypes {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            World world = args.getWorld();
-            EntityPlayer player = args.getPlayer();
+            World world = args.world();
+            EntityPlayer player = args.entity();
             AttrCalculator calculator = args.getCalculator();
 
             float strength = calculator.calcu(Strength).getFloat();
@@ -80,7 +78,7 @@ public final class BattleAxeCoreTypes {
                 }
             }
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) damagedEntityCount / 3);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), weaponDamage, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), weaponDamage, player);
 
             //Some effects of attack
             player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.0f);
@@ -91,7 +89,7 @@ public final class BattleAxeCoreTypes {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.BattleAxe.BattleAxeItem
             ).set(
                     SweepRange, SweepRange.newBasicAttrValue(3F)
@@ -106,16 +104,16 @@ public final class BattleAxeCoreTypes {
     public static final BattleAxeCore BerserkerAxe = new BattleAxeCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            EntityPlayer player = args.getPlayer();
+            EntityPlayer player = args.entity();
             player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 8 * 20, 1));
-            FawItemUtil.damageWeapon(args.getWeapon(), args.getItemStack(), 3, player);
+            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 3, player);
             return true;
         }
 
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.setRegisterName(
+            builder.set(
                     Names.Item.BattleAxe.BerserkerAxeItem
             ).set(
                     Strength, Strength.newBasicAttrValue(7F)
@@ -123,7 +121,7 @@ public final class BattleAxeCoreTypes {
                     CoolDown, CoolDown.newBasicAttrValue(350)
             ).set(
                     AttackSpeed, AttackSpeed.newBasicAttrValue(1F)
-            ).addPassiveSkills(
+            ).add(
                     new AggregatePassiveSkill("BerserkerAxePS")
                             .add(WeaponAttackEvent.Attacked.class,
                                     event -> {

@@ -38,7 +38,7 @@ public class FawWeaponItemEntity extends IndestructibleItemEntity {
         if (item instanceof WeaponBaseItem) {
             WeaponBaseItem weapon = (WeaponBaseItem) item;
             if (source.isFireDamage()) {
-                AttrCalculator calculator = new AttrCalculator(weapon.getCore()).setModifier(GemUtil.getModifierFrom(itemStack));
+                AttrCalculator calculator = new AttrCalculator(weapon.getCore()).modifier(GemUtil.getModifierFrom(itemStack));
                 if (!BoolAttribute.toBool(calculator.calcu(DropsFireproof))) {
                     //FIXME:When it floats on fluid lava, it loses durability very fast because of the duplication of In Fire damage.
                     ItemTool.decreaseItemDurability(itemStack, 1);

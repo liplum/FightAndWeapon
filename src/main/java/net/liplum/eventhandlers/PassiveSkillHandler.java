@@ -122,12 +122,12 @@ public class PassiveSkillHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onLanceSprint(LanceSprintEvent e) {
-        EntityPlayer player = e.getArgs().getPlayer();
+        EntityLivingBase entity = e.getArgs().entity();
         Collection<IPassiveSkill<Event>> skills =
-                SkillUtil.getAvailablePassiveSkills(LanceSprintEvent.class, player);
+                SkillUtil.getAvailablePassiveSkills(LanceSprintEvent.class, entity);
         for (IPassiveSkill<Event> skill : skills) {
             PSkillResult res = skill.onTrigger(e);
-            SkillUtil.onTrigger(player, skill, res);
+            SkillUtil.onTrigger(entity, skill, res);
             if (res == PSkillResult.CancelTrigger) {
                 break;
             }
@@ -220,13 +220,13 @@ public class PassiveSkillHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onAttributeAccess(AttributeAccessEvent e) {
-        EntityPlayer player = e.getPlayer();
-        if (player != null) {
+        EntityLivingBase entity = e.entity();
+        if (entity != null) {
             Collection<IPassiveSkill<Event>> skills =
-                    SkillUtil.getAvailablePassiveSkills(AttributeAccessEvent.class, player);
+                    SkillUtil.getAvailablePassiveSkills(AttributeAccessEvent.class, entity);
             for (IPassiveSkill<Event> skill : skills) {
                 PSkillResult res = skill.onTrigger(e);
-                SkillUtil.onTrigger(player, skill, res);
+                SkillUtil.onTrigger(entity, skill, res);
                 if (res == PSkillResult.CancelTrigger) {
                     break;
                 }

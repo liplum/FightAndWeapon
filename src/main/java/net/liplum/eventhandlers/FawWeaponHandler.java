@@ -19,7 +19,7 @@ public class FawWeaponHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onBrokenWeaponAccessAttribute(AttributeAccessEvent event) {
-        ItemStack itemStack = event.getItemStack();
+        ItemStack itemStack = event.itemStack();
         IAttribute attribute = event.getAttribute();
         if (itemStack != null && FawItemUtil.isWeaponBroken(itemStack) && attribute.useSpecialValueWhenWeaponBroken() && event.isUseSpecialValueWhenWeaponBroken()) {
             event.setFinalAttrValue(attribute.getValueWhenWeaponBroken(event.getFinalAttrValue()));

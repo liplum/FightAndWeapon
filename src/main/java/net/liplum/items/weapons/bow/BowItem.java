@@ -64,17 +64,17 @@ public class BowItem extends WeaponBaseItem {
             }
             Modifier modifier = GemUtil.getModifierFrom(stack);
             AttrCalculator calculator = new AttrCalculator()
-                    .setWeaponCore(core)
-                    .setModifier(modifier)
-                    .setPlayer(p);
+                    .weaponCore(core)
+                    .modifier(modifier)
+                    .entity(p);
             PullingBowArgs args = new PullingBowArgs();
             args.setPullingTick(count)
-                    .setPlayer(p)
+                    .entity(p)
                     .setHand(hand)
-                    .setWorld(p.world)
+                    .world(p.world)
                     .setWeapon(this)
-                    .setItemStack(stack)
-                    .setModifier(modifier)
+                    .itemStack(stack)
+                    .modifier(modifier)
                     .setCalculator(calculator);
             core.onPulling(args);
         }

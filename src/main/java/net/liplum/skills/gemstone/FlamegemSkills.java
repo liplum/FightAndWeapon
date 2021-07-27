@@ -6,10 +6,9 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
 import net.liplum.events.weapon.WeaponAttackEvent;
+import net.liplum.lib.utils.PotionUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.MobEffects;
-import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 
 import javax.annotation.Nonnull;
@@ -23,7 +22,7 @@ public final class FlamegemSkills {
                 public PSkillResult onTrigger(@Nonnull TickEvent.PlayerTickEvent event) {
                     if (event.phase == TickEvent.Phase.START) {
                         EntityPlayer player = event.player;
-                        player.addPotionEffect(new PotionEffect(MobEffects.FIRE_RESISTANCE, 5, 0, false, false));
+                        PotionUtil.addFireResistance(player, 5, false);
                         return PSkillResult.Complete;
                     }
                     return PSkillResult.Fail;
@@ -31,7 +30,7 @@ public final class FlamegemSkills {
             }.setBanedWhenBroken(false);
 
     public final static IPassiveSkill<WeaponAttackEvent.Attacking> ScorchingTouch =
-            new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.ScorchingTouch, WeaponAttackEvent.Attacking.class,100) {
+            new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.ScorchingTouch, WeaponAttackEvent.Attacking.class, 100) {
                 @Nonnull
                 @Override
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {

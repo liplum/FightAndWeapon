@@ -1,5 +1,7 @@
 package net.liplum.api.weapon;
 
+import net.liplum.api.fight.FawArgsGetter;
+import net.liplum.api.fight.FawArgsSetter;
 import net.liplum.attributes.AttrCalculator;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -9,7 +11,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class WeaponSkillArgs {
+public class WeaponSkillArgs implements FawArgsGetter, FawArgsSetter<WeaponSkillArgs> {
     private World world = null;
     private EntityPlayer player = null;
     private WeaponBaseItem weapon = null;
@@ -22,45 +24,50 @@ public class WeaponSkillArgs {
      * @return the modifier or null if this weapon didn't have a modifier.
      */
     @Nullable
-    public Modifier getModifier() {
+    @Override
+    public Modifier modifier() {
         return modifier;
     }
 
     @Nonnull
-    public WeaponSkillArgs setModifier(@Nullable Modifier modifier) {
+    @Override
+    public WeaponSkillArgs modifier(@Nullable Modifier modifier) {
         this.modifier = modifier;
         return this;
     }
 
     @Nonnull
-    public World getWorld() {
+    public World world() {
         return world;
     }
 
     @Nonnull
-    public WeaponSkillArgs setWorld(@Nonnull World world) {
+    public WeaponSkillArgs world(@Nonnull World world) {
         this.world = world;
         return this;
     }
 
     @Nonnull
-    public EntityPlayer getPlayer() {
+    @Override
+    public EntityPlayer entity() {
         return player;
     }
 
     @Nonnull
-    public WeaponSkillArgs setPlayer(@Nonnull EntityPlayer player) {
+    public WeaponSkillArgs entity(@Nonnull EntityPlayer player) {
         this.player = player;
         return this;
     }
 
     @Nonnull
-    public ItemStack getItemStack() {
+    @Override
+    public ItemStack itemStack() {
         return itemStack;
     }
 
     @Nonnull
-    public WeaponSkillArgs setItemStack(@Nonnull ItemStack itemStack) {
+    @Override
+    public WeaponSkillArgs itemStack(@Nonnull ItemStack itemStack) {
         this.itemStack = itemStack;
         return this;
     }

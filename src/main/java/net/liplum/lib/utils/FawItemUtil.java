@@ -122,10 +122,10 @@ public final class FawItemUtil {
         IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
         Modifier modifier = GemUtil.getModifierFrom(itemStack);
         AttrCalculator calculator = new AttrCalculator()
-                .setWeaponCore(core)
-                .setPlayer(attackerPlayer)
-                .setModifier(modifier)
-                .setItemStack(itemStack);
+                .weaponCore(core)
+                .player(attackerPlayer)
+                .modifier(modifier)
+                .itemStack(itemStack);
 
         FinalAttrValue finalStrength = calculator.calcu(Strength);
 
@@ -269,13 +269,13 @@ public final class FawItemUtil {
         }
         boolean hasOneSucceed = false;
         AttrCalculator calculator = new AttrCalculator()
-                .setPlayer(player);
+                .player(player);
         for (ItemStack itemStack : getAllFawWeaponSlotsFormPlayerInventory(player)) {
             Item item = itemStack.getItem();
             WeaponBaseItem weapon = (WeaponBaseItem) item;
             if (weapon.getWeaponType() == weaponType) {
-                calculator.setWeaponCore(weapon.getCore())
-                        .setModifier(GemUtil.getModifierFrom(itemStack));
+                calculator.weaponCore(weapon.getCore())
+                        .modifier(GemUtil.getModifierFrom(itemStack));
                 int coolDown = calculator.calcu(CoolDown).getInt();
                 if (coolDown != 0) {
                     hasOneSucceed |= ItemTool.heatItem(player, weapon, coolDown);

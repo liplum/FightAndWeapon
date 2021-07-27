@@ -106,6 +106,7 @@ public final class I18ns {
     @LongSupport
     public static final class Command {
         public static final String Inlay = prefixCommandUnloc(Names.Command.Inlay);
+        public static final String MasteryExp = prefixCommandUnloc(Names.Command.MasteryExp);
     }
 
     @LongSupport

@@ -58,8 +58,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         AttrCalculator calculator = new AttrCalculator(this);
         if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
             Modifier modifier = GemUtil.getModifierFrom(stack);
-            calculator.setModifier(modifier)
-                    .setPlayer(attacker);
+            calculator.modifier(modifier)
+                    .player(attacker);
             FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
             if (AttackReach.isDefaultValue(finalAttackReach)) {
                 return weapon.attackEntity(stack, attacker, target);
@@ -210,7 +210,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         builder.addMainHand(
                 SharedMonsterAttributes.ATTACK_SPEED, AttackReachModifier)
                 .set(Durability, Durability.newBasicAttrValue(100))
-                .setTooltipPipe(DefaultPipe);
+                .set(DefaultPipe);
     }
 
     /**
@@ -255,7 +255,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
         @Nonnull
         @LongSupport
-        public WeaponCoreBuilder addPassiveSkills(@Nonnull AggregatePassiveSkill passiveSkills) {
+        public WeaponCoreBuilder add(@Nonnull AggregatePassiveSkill passiveSkills) {
             WeaponCore thisCore = WeaponCore.this;
             if (thisCore.weaponPassiveSkills == null) {
                 thisCore.weaponPassiveSkills = passiveSkills;
@@ -266,7 +266,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
 
         @Nonnull
-        public WeaponCoreBuilder setWeaponSkillPredicate(@Nonnull IWeaponSkillPredicate newWeaponSkillPredicate) {
+        public WeaponCoreBuilder set(@Nonnull IWeaponSkillPredicate newWeaponSkillPredicate) {
             weaponSkillPredicate = newWeaponSkillPredicate;
             return this;
         }
@@ -284,39 +284,39 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
 
         @Nonnull
-        public WeaponCoreBuilder setLeftClickEntityBehavior(@Nonnull ILeftClickEntityBehavior behavior) {
+        public WeaponCoreBuilder set(@Nonnull ILeftClickEntityBehavior behavior) {
             leftClickEntityBehavior = behavior;
             return this;
         }
 
         @Nonnull
-        public WeaponCoreBuilder setRightClickUseAction(EnumAction action) {
+        public WeaponCoreBuilder set(EnumAction action) {
             rightClickUseAction = action;
             return this;
         }
 
         @Nonnull
-        public WeaponCoreBuilder setTooltipPipe(@Nonnull TooltipPipe pipe) {
+        public WeaponCoreBuilder set(@Nonnull TooltipPipe pipe) {
             tooltipPipe = pipe;
             return this;
         }
 
         @Nonnull
-        public WeaponCoreBuilder setHasWeaponSkill(boolean has) {
+        public WeaponCoreBuilder set(boolean has) {
             hasWeaponSkill = has;
             return this;
         }
 
         @Nonnull
         @LongSupport
-        public WeaponCoreBuilder setRegisterName(@Nonnull String name) {
+        public WeaponCoreBuilder set(@Nonnull String name) {
             registerName = name;
             return this;
         }
 
         @Nonnull
         @Developing
-        public WeaponCoreBuilder setLockedPassiveSkill(int number, IPassiveSkill<?> passiveSkill) {
+        public WeaponCoreBuilder set(int number, IPassiveSkill<?> passiveSkill) {
             lockedPassiveSkills.put(number, passiveSkill);
             return this;
         }

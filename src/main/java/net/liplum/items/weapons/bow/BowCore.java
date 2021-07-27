@@ -29,7 +29,7 @@ public abstract class BowCore extends WeaponCore {
     @Override
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);
-        builder.setRightClickUseAction(
+        builder.set(
                 EnumAction.BOW
         ).set(
                 MaxUseDuration, MaxUseDuration.newBasicAttrValue(72000)
