@@ -136,7 +136,7 @@ public class PassiveSkillHandler {
 
     private static void onWeaponAttack(WeaponAttackEvent<?> e, Class<? extends WeaponAttackEvent<?>> eventType) {
         WeaponAttackArgs<?> args = e.getArgs();
-        EntityLivingBase attacker = args.getAttacker();
+        EntityLivingBase attacker = args.attacker();
         Collection<IPassiveSkill<Event>> skills =
                 SkillUtil.getAvailablePassiveSkills(eventType, attacker);
         for (IPassiveSkill<Event> skill : skills) {

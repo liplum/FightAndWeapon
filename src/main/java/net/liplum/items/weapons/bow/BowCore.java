@@ -3,7 +3,9 @@ package net.liplum.items.weapons.bow;
 import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
+import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
@@ -34,6 +36,10 @@ public abstract class BowCore extends WeaponCore {
         ).set(
                 MaxUseDuration, MaxUseDuration.newBasicAttrValue(72000)
         );
+    }
+
+    public boolean isAmmo(ItemStack itemStack){
+        return ItemUtil.isArrow(itemStack);
     }
 
     public boolean isCheckPulling() {

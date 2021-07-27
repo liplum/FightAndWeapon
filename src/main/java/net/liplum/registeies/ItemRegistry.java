@@ -14,13 +14,13 @@ import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.items.weapons.QuartzAxeItem;
 import net.liplum.items.weapons.QuartzSwordItem;
 import net.liplum.items.weapons.TestSwordItem;
-import net.liplum.items.weapons.battleaxe.BattleAxeCoreTypes;
+import net.liplum.items.weapons.battleaxe.BattleAxeCores;
 import net.liplum.items.weapons.battleaxe.BattleAxeItem;
-import net.liplum.items.weapons.harp.HarpCoreTypes;
+import net.liplum.items.weapons.harp.HarpCores;
 import net.liplum.items.weapons.harp.HarpItem;
-import net.liplum.items.weapons.lance.LanceCoreTypes;
+import net.liplum.items.weapons.lance.LanceCores;
 import net.liplum.items.weapons.lance.LanceItem;
-import net.liplum.items.weapons.rangedweapon.RangedWeaponCoreTypes;
+import net.liplum.items.weapons.rangedweapon.RangedWeaponCores;
 import net.liplum.items.weapons.rangedweapon.SickleItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
@@ -74,19 +74,19 @@ public final class ItemRegistry {
     public static final Item Test_Sword_Item = weapon(new TestSwordItem(), Names.Item.TestSwordItem);
 
     //Battle Axe
-    public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCoreTypes.Normal), Names.Item.BattleAxe.BattleAxeItem);
-    public static final Item Berserker_Axe_Item = weapon(new BattleAxeItem(BattleAxeCoreTypes.BerserkerAxe), Names.Item.BattleAxe.BerserkerAxeItem);
+    public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCores.Normal), Names.Item.BattleAxe.BattleAxeItem);
+    public static final Item Berserker_Axe_Item = weapon(new BattleAxeItem(BattleAxeCores.BerserkerAxe), Names.Item.BattleAxe.BerserkerAxeItem);
 
     //Lance
-    public static final Item Training_Lance_Item = weapon(new LanceItem(LanceCoreTypes.TrainingLance), Names.Item.Lance.TrainingLanceItem);
-    public static final Item Light_Lance_Item = weapon(new LanceItem(LanceCoreTypes.LightLance), Names.Item.Lance.LightLanceItem);
-    public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCoreTypes.KnightLance), Names.Item.Lance.KnightLanceItem);
-    public static final Item Arena_Lance_Item = weapon(new LanceItem(LanceCoreTypes.ArenaLance), Names.Item.Lance.ArenaLanceItem);
+    public static final Item Training_Lance_Item = weapon(new LanceItem(LanceCores.TrainingLance), Names.Item.Lance.TrainingLanceItem);
+    public static final Item Light_Lance_Item = weapon(new LanceItem(LanceCores.LightLance), Names.Item.Lance.LightLanceItem);
+    public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCores.KnightLance), Names.Item.Lance.KnightLanceItem);
+    public static final Item Arena_Lance_Item = weapon(new LanceItem(LanceCores.ArenaLance), Names.Item.Lance.ArenaLanceItem);
 
     //Harp
-    public static final Item Harp_Item = weapon(new HarpItem(HarpCoreTypes.Normal), Names.Item.Harp.HarpItem);
+    public static final Item Harp_Item = weapon(new HarpItem(HarpCores.Normal), Names.Item.Harp.HarpItem);
 
-    public static final Item Sickle_Item = weapon(new SickleItem(RangedWeaponCoreTypes.Sickle), Names.Item.RangedWeapon.SickleItem);
+    public static final Item Sickle_Item = weapon(new SickleItem(RangedWeaponCores.Sickle), Names.Item.RangedWeapon.SickleItem);
 
     //Block
     public static final Item Forge_Block_Item = forge(new ItemBlock(BlockRegistry.Forge_Block), Names.Block.Forge);

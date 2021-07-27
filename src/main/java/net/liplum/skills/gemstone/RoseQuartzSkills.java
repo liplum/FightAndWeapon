@@ -23,10 +23,10 @@ public final class RoseQuartzSkills {
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
                     WeaponAttackEvent.Attacking.Args args = event.getArgs();
                     List<DamageArgs> allDamages = args.getAllDamages();
-                    EntityLivingBase attacker = args.getAttacker();
+                    EntityLivingBase attacker = args.attacker();
                     DamageSource extraDamageSource = EntityUtil.genDamageSource(attacker).
                             setMagicDamage().setDamageBypassesArmor();
-                    allDamages.add(new DamageArgs(1F, extraDamageSource, args.getTarget()));
+                    allDamages.add(new DamageArgs(1F, extraDamageSource, args.target()));
                     return PSkillResult.Complete;
                 }
             };

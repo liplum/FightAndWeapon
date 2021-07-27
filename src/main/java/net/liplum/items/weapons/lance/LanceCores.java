@@ -1,6 +1,7 @@
 package net.liplum.items.weapons.lance;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.coroutine.Coroutine;
@@ -14,12 +15,10 @@ import net.liplum.lib.math.P2D;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.lib.utils.PhysicsTool;
+import net.liplum.lib.utils.PhysicsUtil;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -33,8 +32,10 @@ import java.util.Set;
 
 import static net.liplum.Attributes.Generic.*;
 import static net.liplum.Attributes.Lance.SprintStrength;
+import static net.liplum.items.weapons.lance.PSkills.Unstoppable;
 
-public final class LanceCoreTypes {
+@LongSupport
+public final class LanceCores {
     public static final LanceCore Empty = new LanceCore() {
 
         @Override
@@ -75,18 +76,18 @@ public final class LanceCoreTypes {
                 return false;
             }
             World world = args.world();
-            EntityPlayer player = args.entity();
-            AttrCalculator calculator = args.getCalculator();
+            EntityLivingBase player = args.entity();
+            AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
 
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
-            PhysicsTool.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
+            PhysicsUtil.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
             if (!world.isRemote) {
                 player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
-                CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Yield<IWaitable>() {
+                CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
                     final Set<EntityLivingBase> damaged = new HashSet<>();
 
                     @Override
@@ -96,9 +97,9 @@ public final class LanceCoreTypes {
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
                             if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
-                                e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
+                                e.attackEntityFrom(EntityUtil.genDamageSource(player), strength);
                                 damaged.add(e);
-                                FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 1, player);
+                                FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 1, player);
                             }
                         }
                         yieldReturn(new WaitForNextTick());
@@ -122,6 +123,8 @@ public final class LanceCoreTypes {
                     Strength, SprintStrength.newBasicAttrValue(5F)
             ).set(
                     AttackReach, AttackReach.newBasicAttrValue(8F)
+            ).set(
+                    1, Unstoppable
             );
         }
     };
@@ -131,8 +134,8 @@ public final class LanceCoreTypes {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.world();
-            EntityPlayer player = args.entity();
-            AttrCalculator calculator = args.getCalculator();
+            EntityLivingBase player = args.entity();
+            AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
@@ -143,13 +146,13 @@ public final class LanceCoreTypes {
             Vector2D look = P2D.toV2D(player.getLookVec());
             int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
-                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, PhysicsTool.get2DPosition(player), PhysicsTool.get2DPosition(e), 1.5, sprintLength)) {
-                    e.attackEntityFrom(DamageSource.causePlayerDamage(player), 1.5F * strength);
+                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, PhysicsUtil.get2DPosition(player), PhysicsUtil.get2DPosition(e), 1.5, sprintLength)) {
+                    e.attackEntityFrom(EntityUtil.genDamageSource(player), 1.5F * strength);
                     damagedEntityCount++;
                 }
             }
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) damagedEntityCount / 3);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), weaponDamage, player);
+            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), weaponDamage, player);
 
             return true;
         }
@@ -172,18 +175,18 @@ public final class LanceCoreTypes {
     public static final LanceCore ArenaLance = new LanceCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            EntityPlayer player = args.entity();
+            EntityLivingBase player = args.entity();
             World world = args.world();
             double x = player.posX,
                     y = player.posY,
                     z = player.posZ;
-            AttrCalculator calculator = args.getCalculator();
+            AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
 
 
             if (!world.isRemote) {
-                CoroutineSystem.Instance().attachCoroutineToPlayer(player, new Coroutine(new Yield<IWaitable>() {
+                CoroutineSystem.Instance().attachCoroutine(player, new Coroutine(new Yield<IWaitable>() {
                     private int duration = 20;
 
                     @Override
@@ -213,8 +216,8 @@ public final class LanceCoreTypes {
                                     return d1 > d2 ? 1 : -1;
                                 }).toArray()[0];
                             }
-                            target.attackEntityFrom(DamageSource.causePlayerDamage(player), 2.5F * strength);
-                            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 2, player);
+                            target.attackEntityFrom(EntityUtil.genDamageSource(player), 2.5F * strength);
+                            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 2, player);
                         }
                     }
                 }));
@@ -239,9 +242,9 @@ public final class LanceCoreTypes {
     public static final LanceCore TestLance = new LanceCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            EntityPlayer player = args.entity();
+            EntityLivingBase player = args.entity();
 
-            AttrCalculator calculator = args.getCalculator();
+            AttrCalculator calculator = args.calculator();
 
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
 
@@ -249,8 +252,8 @@ public final class LanceCoreTypes {
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(sprintLength);
             Vec3d nowPos = new Vec3d(sprintForce.x + originPos.x, originPos.y, sprintForce.z + originPos.z);
-            PhysicsTool.setPosition(player, nowPos.x, nowPos.y + 0.5, nowPos.z);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 5, player);
+            PhysicsUtil.setPosition(player, nowPos.x, nowPos.y + 0.5, nowPos.z);
+            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 5, player);
             return true;
         }
 

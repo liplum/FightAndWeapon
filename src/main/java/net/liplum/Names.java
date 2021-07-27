@@ -180,7 +180,7 @@ public final class Names {
 
     public final static class PassiveSkill {
 
-        public static final String UnstoppableSprint = "UnstoppableSprint";
+        public static final String Unstoppable = "Unstoppable";
 
         public static final String Fireproof = "Fireproof";
         public static final String ScorchingTouch = "ScorchingTouch";
@@ -195,6 +195,7 @@ public final class Names {
         public static final String FrostWalker = "FrostWalker";
         public static final String Sweeping = "Sweeping";
         public static final String Ap2Strength = "Ap2Strength";
+        public static final String Combo = "Combo";
     }
 
     public final static class Mastery {

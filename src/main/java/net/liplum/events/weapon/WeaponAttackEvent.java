@@ -19,15 +19,17 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
     public abstract WeaponAttackArgs<Args> getArgs();
 
     public static class Attacked extends WeaponAttackEvent<Attacked.Args> {
+        private final Args myArgs;
 
         public Attacked(Args args) {
             super(args);
+            this.myArgs = args;
         }
 
         @Nonnull
         @Override
         public Args getArgs() {
-            return (Args) args;
+            return myArgs;
         }
 
         public static class Args extends WeaponAttackArgs<Args> {
@@ -56,15 +58,17 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
     }
 
     public static class Attacking extends WeaponAttackEvent<Attacking.Args> {
+        private final Args myArgs;
 
         public Attacking(Args args) {
             super(args);
+            this.myArgs = args;
         }
 
         @Nonnull
         @Override
         public Args getArgs() {
-            return (Args) args;
+            return myArgs;
         }
 
         public static class Args extends WeaponAttackArgs<Args> {
@@ -77,8 +81,8 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
 
             @Nonnull
             @Override
-            public Args setInitialDamage(@Nonnull DamageArgs initialDamage) {
-                super.setInitialDamage(initialDamage);
+            public Args initialDamage(@Nonnull DamageArgs initialDamage) {
+                super.initialDamage(initialDamage);
                 allDamages.clear();
                 allDamages.add(initialDamage);
                 return this;

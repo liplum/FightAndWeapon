@@ -2,10 +2,10 @@ package net.liplum.items.weapons.bow;
 
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.attributes.AttrCalculator;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.ItemTool;
+import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -33,14 +33,22 @@ public class BowItem extends WeaponBaseItem {
     @Nonnull
     @Override
     public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+        EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
-        if (FawItemUtil.isWeaponBroken(held)) {
-            return ActionResult.newResult(EnumActionResult.FAIL, held);
+        if (!FawItemUtil.isWeaponBroken(held)) {
+            if (playerIn.isCreative()) {
+                boolean hasAmmo = FawItemUtil.hasAmmo(playerIn, core);
+                ActionResult<ItemStack> newResult = ForgeEventFactory.onArrowNock(held, worldIn, playerIn, handIn, hasAmmo);
+                if (newResult != null) {
+                    return newResult;
+                }
+                if (hasAmmo) {
+                    playerIn.setActiveHand(handIn);
+                    result = EnumActionResult.SUCCESS;
+                }
+            }
         }
-        if (playerIn.isCreative() || FawItemUtil.hasAmmo(playerIn)) {
-            playerIn.setActiveHand(handIn);
-        }
-        return ActionResult.newResult(EnumActionResult.SUCCESS, held);
+        return ActionResult.newResult(result, held);
     }
 
     @Override
@@ -50,7 +58,7 @@ public class BowItem extends WeaponBaseItem {
         if (useTime < 5) {
             return;
         }
-        FawItemUtil.onWeaponUse(player,this);
+        FawItemUtil.onWeaponUse(player, this);
         super.onPlayerStoppedUsing(stack, worldIn, entityLiving, useTime);
     }
 
@@ -58,24 +66,19 @@ public class BowItem extends WeaponBaseItem {
     public void onUsingTick(@Nonnull ItemStack stack, @Nonnull EntityLivingBase player, int count) {
         if (core.isCheckPulling()) {
             EntityPlayer p = (EntityPlayer) player;
-            EnumHand hand = ItemTool.inWhichHand(p, stack);
+            EnumHand hand = ItemUtil.inWhichHand(p, stack);
             if (hand == null) {
                 return;
             }
             Modifier modifier = GemUtil.getModifierFrom(stack);
-            AttrCalculator calculator = new AttrCalculator()
-                    .weaponCore(core)
-                    .modifier(modifier)
-                    .entity(p);
-            PullingBowArgs args = new PullingBowArgs();
-            args.setPullingTick(count)
-                    .entity(p)
+            PullingBowArgs args = new PullingBowArgs().setPullingTick(count);
+            args.entity(p)
                     .setHand(hand)
                     .world(p.world)
-                    .setWeapon(this)
+                    .weapon(this)
                     .itemStack(stack)
                     .modifier(modifier)
-                    .setCalculator(calculator);
+                    .calculator(FawUtil.toCalculator(args));
             core.onPulling(args);
         }
     }

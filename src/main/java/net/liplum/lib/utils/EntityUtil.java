@@ -121,7 +121,7 @@ public class EntityUtil {
 
     @Developing
     public static void setRooting(@Nonnull EntityLivingBase entity, double originX, double originY, double originZ) {
-        PhysicsTool.setPosition(entity, originX, originY, originZ);
+        PhysicsUtil.setPosition(entity, originX, originY, originZ);
     }
 
     @Developing

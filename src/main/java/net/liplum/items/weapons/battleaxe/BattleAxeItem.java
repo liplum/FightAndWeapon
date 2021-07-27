@@ -4,9 +4,9 @@ import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -43,11 +43,6 @@ public class BattleAxeItem extends WeaponBaseItem {
                     new WeaponSkillReleaseEvent.Pre(worldIn, playerIn, this, modifier, held, handIn)
             );
             if (!cancelRelease) {
-                AttrCalculator calculator = new AttrCalculator()
-                        .weaponCore(core)
-                        .modifier(modifier);
-                FinalAttrValue finalCoolDown = calculator.calcu(CoolDown);
-                int coolDown = finalCoolDown.getInt();
 
                 WeaponSkillArgs args = new WeaponSkillArgs()
                         .world(worldIn)
@@ -55,10 +50,10 @@ public class BattleAxeItem extends WeaponBaseItem {
                         .itemStack(held)
                         .setHand(handIn)
                         .modifier(modifier)
-                        .setWeapon(this)
-                        .setCalculator(
-                                new AttrCalculator(core).modifier(modifier).entity(playerIn).itemStack(held)
-                        );
+                        .weapon(this);
+                AttrCalculator calculator = FawUtil.toCalculator(args);
+                args.calculator(calculator);
+                int coolDown = calculator.calcu(CoolDown).getInt();
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
 
@@ -74,7 +69,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawItemUtil.onWeaponUse(playerIn,this);
+                    FawItemUtil.onWeaponUse(playerIn, this);
                 }
             }
         }

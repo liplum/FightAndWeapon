@@ -1,12 +1,14 @@
 package net.liplum.items.weapons.rangedweapon;
 
 import net.liplum.Names;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.minecraft.item.EnumAction;
 
 import javax.annotation.Nonnull;
 
-public class RangedWeaponCoreTypes {
+@LongSupport
+public class RangedWeaponCores {
     public static final RangedWeaponCore Sickle = new RangedWeaponCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {

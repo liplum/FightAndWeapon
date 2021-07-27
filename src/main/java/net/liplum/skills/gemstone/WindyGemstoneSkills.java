@@ -21,8 +21,8 @@ public final class WindyGemstoneSkills {
                 @Override
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
                     WeaponAttackEvent.Attacked.Args args = event.getArgs();
-                    if (args.getAttacker().isServerWorld() && args.isHitSuccessfully() && args.isFullAttack()) {
-                        EntityUtil.ifLivingThenDO(args.getTarget(), e ->
+                    if (args.attacker().isServerWorld() && args.isHitSuccessfully() && args.isFullAttack()) {
+                        EntityUtil.ifLivingThenDO(args.target(), e ->
                                 e.addPotionEffect(new PotionEffect(MobEffects.LEVITATION, 8, 0, false, false)));
                         return PSkillResult.Complete;
                     }

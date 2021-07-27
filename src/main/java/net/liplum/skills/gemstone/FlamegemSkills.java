@@ -34,7 +34,7 @@ public final class FlamegemSkills {
                 @Nonnull
                 @Override
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
-                    Entity target = event.getArgs().getTarget();
+                    Entity target = event.getArgs().target();
                     target.setFire(3);
                     return PSkillResult.Complete;
                 }

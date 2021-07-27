@@ -6,6 +6,7 @@ import net.liplum.lib.math.MathUtil;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.EnumHand;
@@ -18,9 +19,10 @@ import java.util.List;
 import java.util.UUID;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 @LongSupport
-public final class ItemTool {
+public final class ItemUtil {
     /**
      * Heats the weapon if player is in survival mode.
      *
@@ -35,6 +37,24 @@ public final class ItemTool {
         }
         player.getCooldownTracker().setCooldown(item, coolDownTicks);
         return true;
+    }
+
+    public static boolean hasAmmo(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> whatIsAmmo) {
+        return !findAmmo(player, whatIsAmmo).isEmpty();
+    }
+
+    @Nonnull
+    public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> whatIsAmmo) {
+        EnumHand hand = inWhichHand(player, whatIsAmmo, EnumHand.OFF_HAND);
+        if (hand != null) {
+            return player.getHeldItem(hand);
+        } else {
+            return getMainSlotsStream(player).filter(whatIsAmmo).findFirst().orElse(ItemStack.EMPTY);
+        }
+    }
+
+    public static boolean isArrow(ItemStack stack) {
+        return stack.getItem() instanceof ItemArrow;
     }
 
     /**
@@ -101,15 +121,45 @@ public final class ItemTool {
         return Arrays.stream(itemStacks).filter(filter).collect(Collectors.toList());
     }
 
+    /**
+     * It will check {@link EnumHand#MAIN_HAND} at the first.
+     */
     @Nullable
-    public static EnumHand inWhichHand(EntityPlayer player, ItemStack itemStack) {
-        if (player.getHeldItem(EnumHand.MAIN_HAND) == itemStack) {
+    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull ItemStack itemStack) {
+        return inWhichHand(player, itemStack, EnumHand.MAIN_HAND);
+    }
+
+    /**
+     * It will check {@link EnumHand#MAIN_HAND} at the first.
+     */
+    @Nullable
+    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull ItemStack itemStack, @Nonnull EnumHand firstChecked) {
+        return inWhichHand(player, itemStack::equals, firstChecked);
+    }
+
+    @Nonnull
+    public static EnumHand otherHand(@Nonnull EnumHand hand) {
+        return hand == EnumHand.MAIN_HAND ? EnumHand.OFF_HAND : EnumHand.MAIN_HAND;
+    }
+
+    /**
+     * It will check {@link EnumHand#MAIN_HAND} at the first.
+     */
+    @Nullable
+    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return inWhichHand(player, filter, EnumHand.MAIN_HAND);
+    }
+
+    @Nullable
+    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter, @Nonnull EnumHand firstChecked) {
+        if (filter.test(player.getHeldItem(firstChecked))) {
             return EnumHand.MAIN_HAND;
-        } else if (player.getHeldItem(EnumHand.OFF_HAND) == itemStack) {
-            return EnumHand.OFF_HAND;
-        } else {
-            return null;
         }
+        EnumHand otherHand = otherHand(firstChecked);
+        if (filter.test(player.getHeldItem(otherHand))) {
+            return otherHand;
+        }
+        return null;
     }
 
     /**
@@ -166,60 +216,115 @@ public final class ItemTool {
             itemStack.setItemDamage(itemStack.getItemDamage() - finalHeal);
         }
     }
+
+    //----------------------------------------------------------------------------------
+
+    @Nonnull
+    public static Stream<ItemStack> getMainSlotsStream(@Nonnull EntityPlayer player) {
+        return player.inventory.mainInventory.stream();
+    }
+
+    @Nonnull
+    public static Stream<ItemStack> getArmorSlotsStream(@Nonnull EntityPlayer player) {
+        return player.inventory.armorInventory.stream();
+    }
+
+    @Nonnull
+    public static Stream<ItemStack> getOffHandSlotsStream(@Nonnull EntityPlayer player) {
+        return player.inventory.offHandInventory.stream();
+    }
+
+    @Nonnull
+    public static Stream<ItemStack> getMainAndOffHandSlotsStream(@Nonnull EntityPlayer player) {
+        return Utils.mergeStream(player.inventory.mainInventory, player.inventory.offHandInventory);
+    }
+
+    @Nonnull
+    public static Stream<ItemStack> getMainAndArmorSlotsStream(@Nonnull EntityPlayer player) {
+        return Utils.mergeStream(player.inventory.mainInventory, player.inventory.armorInventory);
+    }
+
+    @Nonnull
+    public static Stream<ItemStack> getAllSlotsStream(@Nonnull EntityPlayer player) {
+        return Utils.mergeStream(player.inventory.mainInventory, player.inventory.armorInventory, player.inventory.offHandInventory);
+    }
+
+    @Nonnull
+    public static Stream<ItemStack> getArmorAndOffHandSlotsStream(@Nonnull EntityPlayer player) {
+        return Utils.mergeStream(player.inventory.armorInventory, player.inventory.offHandInventory);
+    }
+
+    //----------------------------------------------------------------------------------
+
     @Nonnull
     public static Iterable<ItemStack> getMainSlots(@Nonnull EntityPlayer player) {
-        return () -> player.inventory.mainInventory.stream().iterator();
+        return () -> getMainSlotsStream(player).iterator();
     }
+
     @Nonnull
     public static Iterable<ItemStack> getArmorSlots(@Nonnull EntityPlayer player) {
-        return () -> player.inventory.armorInventory.stream().iterator();
+        return () -> getArmorSlotsStream(player).iterator();
     }
+
     @Nonnull
     public static Iterable<ItemStack> getOffHandSlots(@Nonnull EntityPlayer player) {
-        return () -> player.inventory.offHandInventory.stream().iterator();
+        return () -> getOffHandSlotsStream(player).iterator();
     }
+
     @Nonnull
     public static Iterable<ItemStack> getMainAndOffHandSlots(@Nonnull EntityPlayer player) {
-        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.offHandInventory).iterator();
+        return () -> getMainAndOffHandSlotsStream(player).iterator();
     }
+
     @Nonnull
     public static Iterable<ItemStack> getMainAndArmorSlots(@Nonnull EntityPlayer player) {
-        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.armorInventory).iterator();
+        return () -> getMainAndArmorSlotsStream(player).iterator();
     }
+
     @Nonnull
     public static Iterable<ItemStack> getAllSlots(@Nonnull EntityPlayer player) {
-        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.armorInventory, player.inventory.offHandInventory).iterator();
+        return () -> getAllSlotsStream(player).iterator();
     }
+
     @Nonnull
     public static Iterable<ItemStack> getArmorAndOffHandSlots(@Nonnull EntityPlayer player) {
-        return () -> Utils.mergeStream(player.inventory.armorInventory, player.inventory.offHandInventory).iterator();
+        return () -> getArmorAndOffHandSlotsStream(player).iterator();
     }
+
+    //----------------------------------------------------------------------------------
+
     @Nonnull
-    public static Iterable<ItemStack> getMainSlots(@Nonnull EntityPlayer player,@Nonnull Predicate<ItemStack> filter) {
-        return () -> player.inventory.mainInventory.stream().filter(filter).iterator();
+    public static Iterable<ItemStack> getMainSlots(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return () -> getMainSlotsStream(player).filter(filter).iterator();
     }
+
     @Nonnull
-    public static Iterable<ItemStack> getArmorSlots(@Nonnull EntityPlayer player,@Nonnull Predicate<ItemStack> filter) {
-        return () -> player.inventory.armorInventory.stream().filter(filter).iterator();
+    public static Iterable<ItemStack> getArmorSlots(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return () -> getArmorSlotsStream(player).filter(filter).iterator();
     }
+
     @Nonnull
-    public static Iterable<ItemStack> getOffHandSlots(@Nonnull EntityPlayer player,@Nonnull Predicate<ItemStack> filter) {
-        return () -> player.inventory.offHandInventory.stream().filter(filter).iterator();
+    public static Iterable<ItemStack> getOffHandSlots(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return () -> getOffHandSlotsStream(player).filter(filter).iterator();
     }
+
     @Nonnull
-    public static Iterable<ItemStack> getMainAndOffHandSlots(@Nonnull EntityPlayer player,@Nonnull Predicate<ItemStack> filter) {
-        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.offHandInventory).filter(filter).iterator();
+    public static Iterable<ItemStack> getMainAndOffHandSlots(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return () -> getMainAndOffHandSlotsStream(player).filter(filter).iterator();
     }
+
     @Nonnull
-    public static Iterable<ItemStack> getMainAndArmorSlots(@Nonnull EntityPlayer player,@Nonnull Predicate<ItemStack> filter) {
-        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.armorInventory).filter(filter).iterator();
+    public static Iterable<ItemStack> getMainAndArmorSlots(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return () -> getMainAndArmorSlotsStream(player).filter(filter).iterator();
     }
+
     @Nonnull
-    public static Iterable<ItemStack> getAllSlots(@Nonnull EntityPlayer player,@Nonnull Predicate<ItemStack> filter) {
-        return () -> Utils.mergeStream(player.inventory.mainInventory, player.inventory.armorInventory, player.inventory.offHandInventory).filter(filter).iterator();
+    public static Iterable<ItemStack> getAllSlots(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return () -> getAllSlotsStream(player).filter(filter).iterator();
     }
+
     @Nonnull
-    public static Iterable<ItemStack> getArmorAndOffHandSlots(@Nonnull EntityPlayer player,@Nonnull Predicate<ItemStack> filter) {
-        return () -> Utils.mergeStream(player.inventory.armorInventory, player.inventory.offHandInventory).filter(filter).iterator();
+    public static Iterable<ItemStack> getArmorAndOffHandSlots(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
+        return () -> getArmorAndOffHandSlotsStream(player).filter(filter).iterator();
     }
 }

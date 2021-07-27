@@ -1,4 +1,4 @@
-package net.liplum.skills.weapon;
+package net.liplum.items.weapons.magickwand;
 
 import net.liplum.Names;
 import net.liplum.api.fight.IPassiveSkill;
@@ -14,7 +14,7 @@ import javax.annotation.Nonnull;
 import static net.liplum.Attributes.Generic.AbilityPower;
 import static net.liplum.Attributes.Generic.Strength;
 
-public class MagickWand {
+public class PSkills {
     public static final IPassiveSkill<AttributeAccessEvent> Ap2Strength =
             new PassiveSkill<AttributeAccessEvent>(Names.PassiveSkill.Ap2Strength, AttributeAccessEvent.class) {
                 @Nonnull

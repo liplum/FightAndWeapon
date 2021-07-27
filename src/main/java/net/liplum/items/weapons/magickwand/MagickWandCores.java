@@ -1,11 +1,12 @@
 package net.liplum.items.weapons.magickwand;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
-import net.liplum.skills.weapon.MagickWand;
 
 import javax.annotation.Nonnull;
 
-public class MagickWandCoreTypes {
+@LongSupport
+public final class MagickWandCores {
 
     public static final MagickWandCore MagickSword = new MagickWandCore() {
         @Override
@@ -17,7 +18,7 @@ public class MagickWandCoreTypes {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    1, MagickWand.Ap2Strength
+                    1, PSkills.Ap2Strength
             );
         }
     };

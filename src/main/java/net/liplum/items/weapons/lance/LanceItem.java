@@ -6,6 +6,7 @@ import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -42,12 +43,9 @@ public class LanceItem extends WeaponBaseItem {
                         .entity(playerIn)
                         .itemStack(held)
                         .setHand(handIn)
-                        .setWeapon(this)
-                        .modifier(modifier)
-                        .setCalculator(
-                                new AttrCalculator(core).modifier(modifier).entity(playerIn).itemStack(held)
-                        );
-
+                        .weapon(this)
+                        .modifier(modifier);
+                args.calculator(FawUtil.toCalculator(args));
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
 
                 if (releasedSuccessfully) {
@@ -56,7 +54,7 @@ public class LanceItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawItemUtil.onWeaponUse(playerIn,this);
+                    FawItemUtil.onWeaponUse(playerIn, this);
                 }
             }
         }

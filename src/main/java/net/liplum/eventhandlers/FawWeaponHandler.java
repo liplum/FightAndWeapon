@@ -12,7 +12,7 @@ public class FawWeaponHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onBrokenWeaponWantReleaseSkill(WeaponSkillReleaseEvent.Pre event) {
-        if (FawItemUtil.isWeaponBroken(event.getItemStack())) {
+        if (FawItemUtil.isWeaponBroken(event.itemStack())) {
             event.setCanceled(true);
         }
     }

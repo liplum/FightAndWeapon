@@ -2,6 +2,7 @@ package net.liplum.items.weapons.harp;
 
 import net.liplum.Attributes;
 import net.liplum.Names;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.lib.math.MathUtil;
@@ -10,7 +11,6 @@ import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.EnumParticleTypes;
@@ -25,7 +25,8 @@ import static net.liplum.Attributes.Generic.*;
 import static net.liplum.Attributes.Harp.Frequency;
 import static net.liplum.Attributes.Harp.Radius;
 
-public final class HarpCoreTypes {
+@LongSupport
+public final class HarpCores {
     public static final HarpCore Empty = new HarpCore() {
         @Override
         public boolean continueSkill(ContinuousHarpArgs args) {
@@ -67,8 +68,8 @@ public final class HarpCoreTypes {
         @Override
         public boolean continueSkill(ContinuousHarpArgs args) {
             World world = args.world();
-            EntityPlayer player = args.entity();
-            AttrCalculator calculator = args.getCalculator();
+            EntityLivingBase player = args.entity();
+            AttrCalculator calculator = args.calculator();
 
             double radius = calculator.calcu(Radius).getFloat();
 
@@ -98,7 +99,7 @@ public final class HarpCoreTypes {
             }
 
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) effectedEntityCount / 3);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), weaponDamage, player);
+            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), weaponDamage, player);
 
             double px = player.posX, py = player.posY, pz = player.posZ;
 
@@ -118,8 +119,8 @@ public final class HarpCoreTypes {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.world();
-            EntityPlayer player = args.entity();
-            AttrCalculator calculator = args.getCalculator();
+            EntityLivingBase player = args.entity();
+            AttrCalculator calculator = args.calculator();
 
             double radius = calculator.calcu(Radius).getFloat();
 
@@ -130,7 +131,7 @@ public final class HarpCoreTypes {
             for (EntityLivingBase target : allInRange) {
                 target.addPotionEffect(new PotionEffect(MobEffects.HASTE, 60, 0));
             }
-            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 3, player);
+            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 3, player);
             return true;
         }
     };

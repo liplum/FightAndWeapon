@@ -11,7 +11,7 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.attributes.*;
 import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.ItemTool;
+import net.liplum.lib.utils.ItemUtil;
 import net.liplum.tooltips.AggregateThroughable;
 import net.liplum.tooltips.TooltipPipe;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -54,12 +54,12 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     private final Map<Integer, IPassiveSkill<?>> lockedPassiveSkills = new HashMap<>();
     @Nonnull
-    private ILeftClickEntityBehavior leftClickEntityBehavior = (weapon, stack, attacker, target) -> {
-        AttrCalculator calculator = new AttrCalculator(this);
+    private static final ILeftClickEntityBehavior DefaultLeftClickEntityBehavior = (weapon, stack, attacker, target) -> {
+        AttrCalculator calculator = new AttrCalculator(weapon);
         if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
             Modifier modifier = GemUtil.getModifierFrom(stack);
             calculator.modifier(modifier)
-                    .player(attacker);
+                    .entity(attacker);
             FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
             if (AttackReach.isDefaultValue(finalAttackReach)) {
                 return weapon.attackEntity(stack, attacker, target);
@@ -70,6 +70,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return weapon.attackEntity(stack, attacker, target);
         }
     };
+    @Nonnull
+    private ILeftClickEntityBehavior leftClickEntityBehavior = DefaultLeftClickEntityBehavior;
     @Nonnull
     private TooltipPipe tooltipPipe = TooltipPipe.Empty;
     @Nonnull
@@ -189,7 +191,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         float attackSpeed = context.calculator.calcu(AttackSpeed).getFloat();
         if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
             double attackSpeedDelta = attackSpeed - Vanilla.DefaultAttackSpeed;
-            return ItemTool.genAttrModifier(
+            return ItemUtil.genAttrModifier(
                     Item.ATTACK_SPEED_MODIFIER,
                     Vanilla.AttrModifierType.DeltaAddition,
                     Names.WeaponAttributeModifier, attackSpeedDelta);

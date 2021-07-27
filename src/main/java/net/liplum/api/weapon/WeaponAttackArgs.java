@@ -1,5 +1,7 @@
 package net.liplum.api.weapon;
 
+import net.liplum.api.fight.FawArgsGetter;
+import net.liplum.api.fight.FawArgsSetter;
 import net.liplum.attributes.AttrCalculator;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
@@ -9,7 +11,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
-public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
+public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> implements FawArgsGetter, FawArgsSetter<This> {
     private World world;
     private EntityLivingBase attacker;
     private Entity target;
@@ -22,87 +24,103 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
     private boolean isFullAttack;
 
     @Nonnull
-    public World getWorld() {
+    public World world() {
         return world;
     }
 
     @Nonnull
-    public This setWorld(@Nonnull World world) {
+    public This world(@Nonnull World world) {
         this.world = world;
         return (This) this;
     }
 
-    @Nonnull
-    public EntityLivingBase getAttacker() {
+    /**
+     * @return the attacker
+     */
+    @Nullable
+    @Override
+    public EntityLivingBase entity() {
         return attacker;
     }
 
     @Nonnull
-    public This setAttacker(@Nonnull EntityLivingBase attacker) {
+    public EntityLivingBase attacker() {
+        return attacker;
+    }
+
+    @Nonnull
+    public This attacker(@Nonnull EntityLivingBase attacker) {
         this.attacker = attacker;
         return (This) this;
     }
 
     @Nonnull
-    public Entity getTarget() {
+    public Entity target() {
         return target;
     }
 
     @Nonnull
-    public This setTarget(@Nonnull Entity target) {
+    public This target(@Nonnull Entity target) {
         this.target = target;
         return (This) this;
     }
 
     @Nonnull
-    public WeaponBaseItem getWeapon() {
+    public WeaponBaseItem weapon() {
         return weapon;
     }
 
     @Nonnull
-    public This setWeapon(@Nullable WeaponBaseItem weapon) {
+    public This weapon(@Nullable WeaponBaseItem weapon) {
         this.weapon = weapon;
         return (This) this;
     }
 
     @Nullable
-    public Modifier getModifier() {
+    public Modifier modifier() {
         return modifier;
     }
 
     @Nonnull
-    public This setModifier(@Nullable Modifier modifier) {
+    public This modifier(@Nullable Modifier modifier) {
         this.modifier = modifier;
         return (This) this;
     }
 
     @Nonnull
-    public ItemStack getItemStack() {
+    public ItemStack itemStack() {
         return itemStack;
     }
 
     @Nonnull
-    public This setItemStack(@Nonnull ItemStack itemStack) {
+    public This itemStack(@Nonnull ItemStack itemStack) {
         this.itemStack = itemStack;
         return (This) this;
     }
 
     @Nonnull
-    public DamageArgs getInitialDamage() {
+    @Override
+    public This entity(@Nonnull EntityLivingBase entity) {
+        this.attacker = entity;
+        return (This) this;
+    }
+
+    @Nonnull
+    public DamageArgs initialDamage() {
         return initialDamage;
     }
 
     @Nonnull
-    public This setInitialDamage(@Nonnull DamageArgs initialDamage) {
+    public This initialDamage(@Nonnull DamageArgs initialDamage) {
         this.initialDamage = initialDamage;
         return (This) this;
     }
 
-    public IGemstone getGemstone() {
+    public IGemstone gemstone() {
         return gemstone;
     }
 
-    public This setGemstone(IGemstone gemstone) {
+    public This gemstone(IGemstone gemstone) {
         this.gemstone = gemstone;
         return (This) this;
     }
@@ -116,11 +134,11 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> {
         return (This) this;
     }
 
-    public AttrCalculator getCalculator() {
+    public AttrCalculator calculator() {
         return calculator;
     }
 
-    public This setCalculator(AttrCalculator calculator) {
+    public This calculator(AttrCalculator calculator) {
         this.calculator = calculator;
         return (This) this;
     }

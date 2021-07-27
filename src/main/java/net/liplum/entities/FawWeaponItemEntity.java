@@ -4,7 +4,7 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.BoolAttribute;
 import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.ItemTool;
+import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
@@ -38,10 +38,10 @@ public class FawWeaponItemEntity extends IndestructibleItemEntity {
         if (item instanceof WeaponBaseItem) {
             WeaponBaseItem weapon = (WeaponBaseItem) item;
             if (source.isFireDamage()) {
-                AttrCalculator calculator = new AttrCalculator(weapon.getCore()).modifier(GemUtil.getModifierFrom(itemStack));
+                AttrCalculator calculator = new AttrCalculator(weapon).modifier(GemUtil.getModifierFrom(itemStack));
                 if (!BoolAttribute.toBool(calculator.calcu(DropsFireproof))) {
                     //FIXME:When it floats on fluid lava, it loses durability very fast because of the duplication of In Fire damage.
-                    ItemTool.decreaseItemDurability(itemStack, 1);
+                    ItemUtil.decreaseItemDurability(itemStack, 1);
                 }
             }
         }

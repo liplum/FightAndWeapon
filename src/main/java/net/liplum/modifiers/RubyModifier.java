@@ -3,7 +3,7 @@ package net.liplum.modifiers;
 import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.items.weapons.lance.LanceCore;
-import net.liplum.items.weapons.lance.LanceCoreTypes;
+import net.liplum.items.weapons.lance.LanceCores;
 import net.liplum.items.weapons.lance.LanceModifier;
 
 import static net.liplum.Attributes.Generic.Strength;
@@ -22,7 +22,7 @@ public final class RubyModifier {
 
         @Override
         public LanceCore getCore() {
-            return LanceCoreTypes.LightLance;
+            return LanceCores.LightLance;
         }
     };
 }

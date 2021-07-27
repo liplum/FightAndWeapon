@@ -7,8 +7,9 @@ import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.ItemTool;
+import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -47,11 +48,9 @@ public class HarpItem extends WeaponBaseItem {
                         .entity(playerIn)
                         .itemStack(held)
                         .setHand(handIn)
-                        .setWeapon(this)
-                        .modifier(modifier)
-                        .setCalculator(
-                                new AttrCalculator(core).modifier(modifier).entity(playerIn).itemStack(held)
-                        );
+                        .weapon(this)
+                        .modifier(modifier);
+                args.calculator(FawUtil.toCalculator(args));
 
                 boolean releasedSuccessfully = FawItemUtil.releaseWeaponSkill(core, modifier, args);
                 if (releasedSuccessfully) {
@@ -73,13 +72,13 @@ public class HarpItem extends WeaponBaseItem {
     public void onUsingTick(@Nonnull ItemStack stack, @Nonnull EntityLivingBase player, int count) {
         Modifier modifier = GemUtil.getModifierFrom(stack);
         EntityPlayer p = (EntityPlayer) player;
-        EnumHand hand = ItemTool.inWhichHand(p, stack);
+        EnumHand hand = ItemUtil.inWhichHand(p, stack);
         if (hand == null) {
             return;
         }
         World world = player.world;
         AttrCalculator calculator = new AttrCalculator()
-                .weaponCore(core)
+                .weapon(this)
                 .modifier(modifier)
                 .itemStack(stack)
                 .entity(p);
@@ -97,11 +96,9 @@ public class HarpItem extends WeaponBaseItem {
                     .entity(p)
                     .itemStack(stack)
                     .setHand(hand)
-                    .setWeapon(this)
-                    .modifier(modifier)
-                    .setCalculator(
-                            new AttrCalculator(core).modifier(modifier).entity(p).itemStack(stack)
-                    );
+                    .weapon(this)
+                    .modifier(modifier);
+            args.calculator(FawUtil.toCalculator(args));
             if (modifier != null) {
                 HarpModifier mod = (HarpModifier) modifier;
                 mod.continueSkill(core, args);

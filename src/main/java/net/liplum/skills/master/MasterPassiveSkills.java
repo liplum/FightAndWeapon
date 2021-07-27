@@ -33,22 +33,6 @@ import static net.liplum.Attributes.Sword.Sweep;
  */
 @Developing
 public final class MasterPassiveSkills {
-
-    /**
-     * It can make the player unstoppable when sprinting with a lance.
-     */
-    public final static IPassiveSkill<LanceSprintEvent> UnstoppableSprint =
-            new PassiveSkill<LanceSprintEvent>(Names.PassiveSkill.UnstoppableSprint, LanceSprintEvent.class) {
-                @Nonnull
-                @Override
-                public PSkillResult onTrigger(@Nonnull LanceSprintEvent event) {
-                    WeaponSkillArgs args = event.getArgs();
-                    EntityPlayer player = args.entity();
-                    player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
-                    return PSkillResult.Complete;
-                }
-            }.setShownInTooltip(false);
-
     public final static IPassiveSkill<WeaponAttackEvent.Attacked> Sweeping =
             new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.Sweeping, WeaponAttackEvent.Attacked.class) {
                 @Nonnull
@@ -56,24 +40,22 @@ public final class MasterPassiveSkills {
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
                     WeaponAttackEvent.Attacked.Args args = event.getArgs();
                     if (args.isHitSuccessfully() && args.isFullAttack()) {
-                        WeaponBaseItem weapon = args.getWeapon();
+                        WeaponBaseItem weapon = args.weapon();
                         if (weapon.getWeaponType() == WeaponTypes.Sword) {
-                            AttrCalculator calculator = args.getCalculator();
+                            AttrCalculator calculator = args.calculator();
                             float sweep = calculator.calcu(Sweep).getFloat();
                             float strength = calculator.calcu(Strength).getFloat();
                             float dmg = MathUtil.fixMax(sweep, strength);
-                            Entity target = args.getTarget();
-                            World world = args.getWorld();
-                            EntityLivingBase attacker = args.getAttacker();
+                            Entity target = args.target();
+                            World world = args.world();
+                            EntityLivingBase attacker = args.attacker();
                             boolean atLeastSweepOne = false;
-                            for (EntityLivingBase entitylivingbase :
+                            for (EntityLivingBase entity :
                                     world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(1.0D, 0.25D, 1.0D))) {
-                                if (EntityUtil.canAttack(attacker, entitylivingbase) &&
-                                        attacker.getDistanceSq(entitylivingbase) < 9.0D) {
-                                    entitylivingbase.knockBack(attacker, 0.4F,
-                                            MathHelper.sin(Angle.toRadian(attacker.rotationYaw)),
-                                            -MathHelper.cos(Angle.toRadian(attacker.rotationYaw)));
-                                    entitylivingbase.attackEntityFrom(EntityUtil.genDamageSource(attacker), dmg);
+                                if (EntityUtil.canAttack(attacker, entity) &&
+                                        attacker.getDistanceSq(entity) < 9.0D) {
+                                    EntityUtil.knockBack(attacker,entity,0.4F);
+                                    entity.attackEntityFrom(EntityUtil.genDamageSource(attacker), dmg);
                                     atLeastSweepOne = true;
                                 }
                             }

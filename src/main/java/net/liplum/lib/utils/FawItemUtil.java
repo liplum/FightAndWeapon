@@ -9,6 +9,7 @@ import net.liplum.events.weapon.WeaponAttackEvent;
 import net.liplum.events.weapon.WeaponDurabilityEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
+import net.liplum.items.weapons.bow.BowCore;
 import net.liplum.lib.FawDamage;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -122,8 +123,8 @@ public final class FawItemUtil {
         IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
         Modifier modifier = GemUtil.getModifierFrom(itemStack);
         AttrCalculator calculator = new AttrCalculator()
-                .weaponCore(core)
-                .player(attackerPlayer)
+                .weapon(weapon)
+                .entity(attacker)
                 .modifier(modifier)
                 .itemStack(itemStack);
 
@@ -144,15 +145,15 @@ public final class FawItemUtil {
 
         DamageArgs initialDamage = new DamageArgs(finalDamage, damageSource, target);
         WeaponAttackEvent.Attacking.Args attackingArgs = new WeaponAttackEvent.Attacking.Args();
-        attackingArgs.setWorld(world)
-                .setAttacker(attacker)
-                .setTarget(target)
-                .setItemStack(itemStack)
-                .setModifier(modifier)
-                .setWeapon(weapon)
-                .setInitialDamage(initialDamage)
+        attackingArgs.world(world)
+                .attacker(attacker)
+                .target(target)
+                .itemStack(itemStack)
+                .modifier(modifier)
+                .weapon(weapon)
+                .initialDamage(initialDamage)
                 .setFullAttack(isFullAttack)
-                .setCalculator(calculator);
+                .calculator(calculator);
 
         WeaponAttackEvent.Attacking attackingEvent = new WeaponAttackEvent.Attacking(attackingArgs);
         MinecraftForge.EVENT_BUS.post(attackingEvent);
@@ -199,17 +200,17 @@ public final class FawItemUtil {
 
         //TODO:More!!!
         WeaponAttackEvent.Attacked.Args postArgs = new WeaponAttackEvent.Attacked.Args();
-        postArgs.setWorld(world)
-                .setAttacker(attacker)
-                .setTarget(target)
-                .setItemStack(itemStack)
-                .setModifier(modifier)
-                .setInitialDamage(initialDamage)
-                .setWeapon(weapon)
+        postArgs.world(world)
+                .attacker(attacker)
+                .target(target)
+                .itemStack(itemStack)
+                .modifier(modifier)
+                .initialDamage(initialDamage)
+                .weapon(weapon)
                 .setHitSuccessfully(isHitSuccessfully)
                 .setTotalDamage(totalDamage)
                 .setFullAttack(isFullAttack)
-                .setCalculator(calculator);
+                .calculator(calculator);
 
         WeaponAttackEvent.Attacked postAttackEvent = new WeaponAttackEvent.Attacked(postArgs);
         MinecraftForge.EVENT_BUS.post(postAttackEvent);
@@ -259,7 +260,7 @@ public final class FawItemUtil {
 
     @Nonnull
     public static Iterable<ItemStack> getAllFawWeaponSlotsFormPlayerInventory(@Nonnull EntityPlayer player) {
-        return ItemTool.getMainAndOffHandSlots(player, FawItemUtil::isFawWeapon);
+        return ItemUtil.getMainAndOffHandSlots(player, FawItemUtil::isFawWeapon);
     }
 
     @LongSupport
@@ -269,16 +270,16 @@ public final class FawItemUtil {
         }
         boolean hasOneSucceed = false;
         AttrCalculator calculator = new AttrCalculator()
-                .player(player);
+                .entity(player);
         for (ItemStack itemStack : getAllFawWeaponSlotsFormPlayerInventory(player)) {
             Item item = itemStack.getItem();
             WeaponBaseItem weapon = (WeaponBaseItem) item;
             if (weapon.getWeaponType() == weaponType) {
-                calculator.weaponCore(weapon.getCore())
+                calculator.weapon(weapon)
                         .modifier(GemUtil.getModifierFrom(itemStack));
                 int coolDown = calculator.calcu(CoolDown).getInt();
                 if (coolDown != 0) {
-                    hasOneSucceed |= ItemTool.heatItem(player, weapon, coolDown);
+                    hasOneSucceed |= ItemUtil.heatItem(player, weapon, coolDown);
                 }
             }
         }
@@ -302,7 +303,7 @@ public final class FawItemUtil {
         }
     }
 
-    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount,@Nonnull EntityLivingBase entity) {
+    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount, @Nonnull EntityLivingBase entity) {
         if (amount == 0) {
             return;
         }
@@ -316,7 +317,7 @@ public final class FawItemUtil {
         MinecraftForge.EVENT_BUS.post(damagedEvent);
         int finalAmount = damagedEvent.getAmount();
         if (finalAmount > 0) {
-            ItemTool.decreaseItemDurability(itemStack, finalAmount);
+            ItemUtil.decreaseItemDurability(itemStack, finalAmount);
         }
     }
 
@@ -328,7 +329,7 @@ public final class FawItemUtil {
         MinecraftForge.EVENT_BUS.post(healedEvent);
         int finalAmount = healedEvent.getAmount();
         if (finalAmount > 0) {
-            ItemTool.increaseItemDurability(itemStack, finalAmount);
+            ItemUtil.increaseItemDurability(itemStack, finalAmount);
         }
     }
 
@@ -336,14 +337,19 @@ public final class FawItemUtil {
         return (itemStack.getItem() instanceof WeaponBaseItem) && itemStack.getItemDamage() == itemStack.getMaxDamage();
     }
 
-    public static boolean hasAmmo(EntityPlayer player) {
-        return false;
-    }
-
-    public static void onWeaponUse(@Nonnull EntityPlayer player, Item item){
+    public static void onWeaponUse(@Nonnull EntityPlayer player, Item item) {
         StatBase state = StatList.getObjectUseStats(item);
         if (state != null) {
             player.addStat(state);
         }
+    }
+
+    public static boolean hasAmmo(@Nonnull EntityPlayer player, @Nonnull BowCore bowCore) {
+        return ItemUtil.hasAmmo(player,bowCore::isAmmo);
+    }
+
+    @Nonnull
+    public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull BowCore bowCore) {
+        return ItemUtil.findAmmo(player, bowCore::isAmmo);
     }
 }

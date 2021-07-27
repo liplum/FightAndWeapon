@@ -1,8 +1,9 @@
 package net.liplum.items.weapons.battleaxe;
 
 import net.liplum.Names;
-import net.liplum.api.fight.AggregatePassiveSkill;
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.PSkillResult;
+import net.liplum.api.fight.PassiveSkill;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.events.weapon.WeaponAttackEvent;
@@ -11,13 +12,12 @@ import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.lib.utils.ItemTool;
+import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.MobEffects;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -28,7 +28,8 @@ import java.util.List;
 import static net.liplum.Attributes.BattleAxe.SweepRange;
 import static net.liplum.Attributes.Generic.*;
 
-public final class BattleAxeCoreTypes {
+@LongSupport
+public final class BattleAxeCores {
     public static final BattleAxeCore Empty = new BattleAxeCore() {
 
         @Override
@@ -49,8 +50,8 @@ public final class BattleAxeCoreTypes {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.world();
-            EntityPlayer player = args.entity();
-            AttrCalculator calculator = args.getCalculator();
+            EntityLivingBase player = args.entity();
+            AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
             float sweepRange = calculator.calcu(SweepRange).getFloat();
@@ -71,18 +72,18 @@ public final class BattleAxeCoreTypes {
                     Point2D spNew = sp.minus(pp);
                     Vector2D sv = spNew.toV2D();
                     if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
-                        e.attackEntityFrom(DamageSource.causePlayerDamage(player), strength);
-                        EntityUtil.knockBack(player,e,0.5F);
+                        e.attackEntityFrom(EntityUtil.genDamageSource(player), strength);
+                        EntityUtil.knockBack(player, e, 0.5F);
                         damagedEntityCount++;
                     }
                 }
             }
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) damagedEntityCount / 3);
-            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), weaponDamage, player);
+            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), weaponDamage, player);
 
             //Some effects of attack
             player.playSound(SoundEvents.ENTITY_PLAYER_ATTACK_SWEEP, 1.0f, 1.0f);
-            player.spawnSweepParticles();
+            EntityUtil.spawnSweepParticles(player);
             return true;
         }
 
@@ -104,9 +105,9 @@ public final class BattleAxeCoreTypes {
     public static final BattleAxeCore BerserkerAxe = new BattleAxeCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
-            EntityPlayer player = args.entity();
+            EntityLivingBase player = args.entity();
             player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 8 * 20, 1));
-            FawItemUtil.damageWeapon(args.getWeapon(), args.itemStack(), 3, player);
+            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 3, player);
             return true;
         }
 
@@ -121,21 +122,22 @@ public final class BattleAxeCoreTypes {
                     CoolDown, CoolDown.newBasicAttrValue(350)
             ).set(
                     AttackSpeed, AttackSpeed.newBasicAttrValue(1F)
-            ).add(
-                    new AggregatePassiveSkill("BerserkerAxePS")
-                            .add(WeaponAttackEvent.Attacked.class,
-                                    event -> {
-                                        WeaponAttackEvent.Attacked.Args args = event.getArgs();
-                                        EntityLivingBase attacker = args.getAttacker();
-                                        if (attacker instanceof EntityPlayer) {
-                                            EntityPlayer player = (EntityPlayer) attacker;
-                                            if (args.isHitSuccessfully() && args.isFullAttack()) {
-                                                ItemTool.reduceItemCoolDown(player, args.getWeapon(), 20);
-                                            }
-                                        }
-                                        return PSkillResult.Complete;
-                                    })
-            );
+            ).set(
+                    1, new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.Combo,WeaponAttackEvent.Attacked.class) {
+                        @Nonnull
+                        @Override
+                        public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
+                            WeaponAttackEvent.Attacked.Args args = event.getArgs();
+                            EntityLivingBase attacker = args.attacker();
+                            if (attacker instanceof EntityPlayer) {
+                                EntityPlayer player = (EntityPlayer) attacker;
+                                if (args.isHitSuccessfully() && args.isFullAttack()) {
+                                    ItemUtil.reduceItemCoolDown(player, args.weapon(), 20);
+                                }
+                            }
+                            return PSkillResult.Complete;
+                        }
+                    });
         }
     };
 

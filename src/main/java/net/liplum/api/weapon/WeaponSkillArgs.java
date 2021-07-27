@@ -3,6 +3,7 @@ package net.liplum.api.weapon;
 import net.liplum.api.fight.FawArgsGetter;
 import net.liplum.api.fight.FawArgsSetter;
 import net.liplum.attributes.AttrCalculator;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
@@ -13,7 +14,7 @@ import javax.annotation.Nullable;
 
 public class WeaponSkillArgs implements FawArgsGetter, FawArgsSetter<WeaponSkillArgs> {
     private World world = null;
-    private EntityPlayer player = null;
+    private EntityLivingBase entity = null;
     private WeaponBaseItem weapon = null;
     private ItemStack itemStack = null;
     private Modifier modifier = null;
@@ -49,13 +50,13 @@ public class WeaponSkillArgs implements FawArgsGetter, FawArgsSetter<WeaponSkill
 
     @Nonnull
     @Override
-    public EntityPlayer entity() {
-        return player;
+    public EntityLivingBase entity() {
+        return entity;
     }
 
     @Nonnull
-    public WeaponSkillArgs entity(@Nonnull EntityPlayer player) {
-        this.player = player;
+    public WeaponSkillArgs entity(@Nonnull EntityLivingBase entity) {
+        this.entity = entity;
         return this;
     }
 
@@ -83,28 +84,25 @@ public class WeaponSkillArgs implements FawArgsGetter, FawArgsSetter<WeaponSkill
         return this;
     }
 
-    public WeaponBaseItem getWeapon() {
+    @Nonnull
+    public WeaponBaseItem weapon() {
         return weapon;
     }
 
-    public WeaponSkillArgs setWeapon(WeaponBaseItem weapon) {
+    @Override
+    @Nonnull
+    public WeaponSkillArgs weapon(@Nonnull WeaponBaseItem weapon) {
         this.weapon = weapon;
         return this;
     }
 
-    public WeaponType getWeaponType() {
-        return weapon.getWeaponType();
-    }
-
-    public WeaponCore getWeaponCore() {
-        return weapon.getCore();
-    }
-
-    public AttrCalculator getCalculator() {
+    @Nonnull
+    public AttrCalculator calculator() {
         return calculator;
     }
 
-    public WeaponSkillArgs setCalculator(AttrCalculator calculator) {
+    @Nonnull
+    public WeaponSkillArgs calculator(AttrCalculator calculator) {
         this.calculator = calculator;
         return this;
     }

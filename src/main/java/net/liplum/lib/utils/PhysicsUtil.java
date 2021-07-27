@@ -6,14 +6,16 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.math.Vec3d;
 
-public class PhysicsTool {
+import javax.annotation.Nonnull;
+
+public class PhysicsUtil {
     /**
      * Sets the direction of movement
      *
      * @param e   the entity
      * @param v3d the direction
      */
-    public static void setMotion(EntityLivingBase e, Vec3d v3d) {
+    public static void setMotion(@Nonnull EntityLivingBase e, @Nonnull Vec3d v3d) {
         e.motionX = v3d.x;
         e.motionY = v3d.y;
         e.motionZ = v3d.z;
@@ -27,7 +29,7 @@ public class PhysicsTool {
      * @param y the Y-axis of direction
      * @param z the Z-axis of direction
      */
-    public static void setMotion(EntityLivingBase e, double x, double y, double z) {
+    public static void setMotion(@Nonnull EntityLivingBase e, double x, double y, double z) {
         e.motionX = x;
         e.motionY = y;
         e.motionZ = z;
@@ -39,15 +41,15 @@ public class PhysicsTool {
      * @param e   the entity
      * @param v2d the direction without Y-axis.
      */
-    public static void setMotion(EntityLivingBase e, Vector2D v2d) {
+    public static void setMotion(@Nonnull EntityLivingBase e, @Nonnull Vector2D v2d) {
         setMotion(e, v2d.x, 0.0D, v2d.y);
     }
 
-    public static void setPosition(Entity e, double x, double y, double z) {
+    public static void setPosition(@Nonnull Entity e, double x, double y, double z) {
         e.setPosition(x, y, z);
     }
 
-    public static Point2D get2DPosition(Entity e) {
+    public static Point2D get2DPosition(@Nonnull Entity e) {
         return new Point2D(e.posX, e.posZ);
     }
 }

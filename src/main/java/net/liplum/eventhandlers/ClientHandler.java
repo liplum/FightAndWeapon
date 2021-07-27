@@ -41,10 +41,10 @@ public class ClientHandler {
             if (!player.isHandActive()) {
                 if (item instanceof WeaponBaseItem) {
                     WeaponBaseItem weapon = (WeaponBaseItem) item;
-                    AttrCalculator calculator = new AttrCalculator(weapon.getCore());
+                    AttrCalculator calculator = new AttrCalculator(weapon);
                     if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
                         calculator.modifier(GemUtil.getModifierFrom(mainHand))
-                                .player(player);
+                                .entity(player);
                         FinalAttrValue finalAttackReach = calculator.calcu(AttackReach);
                         if (!AttackReach.isDefaultValue(finalAttackReach)) {
                             RayTraceResult rayTrace = RenderUtil.extendReachRayTrace(finalAttackReach.getFloat());

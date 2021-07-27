@@ -12,7 +12,6 @@ public abstract class WeaponDurabilityEvent extends Event {
     public final ItemStack itemStack;
     @Nonnull
     public final WeaponBaseItem weaponItem;
-
     @Nonnull
     public final EntityLivingBase entity;
 

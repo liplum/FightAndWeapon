@@ -26,12 +26,12 @@ public final class MagicPearlSkills {
                 @Override
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
                     WeaponAttackEvent.Attacking.Args args = event.getArgs();
-                    EntityLivingBase attacker = args.getAttacker();
-                    WeaponBaseItem weapon = args.getWeapon();
-                    IGemstone gemstone = args.getGemstone();
-                    Modifier modifier = args.getModifier();
+                    EntityLivingBase attacker = args.attacker();
+                    WeaponBaseItem weapon = args.weapon();
+                    IGemstone gemstone = args.gemstone();
+                    Modifier modifier = args.modifier();
                     List<DamageArgs> allDamages = args.getAllDamages();
-                    DamageArgs initialDamage = args.getInitialDamage();
+                    DamageArgs initialDamage = args.initialDamage();
                     float initialDamageValue = initialDamage.getDamage();
                     Entity target = initialDamage.getTarget();
 
@@ -43,7 +43,7 @@ public final class MagicPearlSkills {
                             gemstone, modifier);
 
                     magicDamage.setMagicDamage().setDamageBypassesArmor();
-                    args.setInitialDamage(new DamageArgs(initialDamageValue / 2, normalDamage, target));
+                    args.initialDamage(new DamageArgs(initialDamageValue / 2, normalDamage, target));
                     allDamages.add(new DamageArgs(initialDamageValue / 2, magicDamage, target));
 
                     return PSkillResult.Complete;
