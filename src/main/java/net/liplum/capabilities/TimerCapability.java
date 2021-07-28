@@ -24,7 +24,7 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 @LongSupport
-public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkillCoolingTimer {
+public class TimerCapability implements INBTSerializable<NBTTagCompound>{
     @Nonnull
     private Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();
 
@@ -48,7 +48,6 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkil
         return needSync;
     }
 
-    @Override
     public void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
         coolingPassiveSkills.put(passiveSkill, new CoolDown(coolDownTicks));
         markDirty();
@@ -63,7 +62,6 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound>, IPSkil
         this.coolingPassiveSkills = coolingPassiveSkills;
     }
 
-    @Override
     public boolean isInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill) {
         CoolDown coolDown = coolingPassiveSkills.get(passiveSkill);
         if (coolDown != null) {

@@ -59,7 +59,7 @@ public class BowItem extends WeaponBaseItem {
         if (useTime < 5) {
             return;
         }
-        FawBehaviors.onWeaponUse(player, this);
+        FawBehaviors.onWeaponUse(player, this, stack);
         super.onPlayerStoppedUsing(stack, worldIn, entityLiving, useTime);
     }
 

@@ -148,7 +148,13 @@ public final class Names {
 
     public final static class Command {
         public static final String Inlay = "inlay";
-        public static final String MasteryExp = "masteryexp";
+        public static final String Mastery = "mastery";
+
+        public final static class MasterySub{
+            public static final String MasteryShow = "show";
+            public static final String MasteryExp = "exp";
+            public static final String All = "all";
+        }
 
         public final static class InlaySub {
             public static final String Remove = "remove";
@@ -196,6 +202,10 @@ public final class Names {
         public static final String Sweeping = "Sweeping";
         public static final String Ap2Strength = "Ap2Strength";
         public static final String Combo = "Combo";
+
+        public final static class WeaponCore{
+            public static final String RangedWeaponPS = "RangedWeaponPS";
+        }
     }
 
     public final static class Mastery {

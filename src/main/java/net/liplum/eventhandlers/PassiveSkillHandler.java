@@ -150,7 +150,7 @@ public class PassiveSkillHandler {
 
     @SubscribeEvent(priority = EventPriority.HIGHEST)
     public static void onFawWeaponLeftClick(FawWeaponLeftClickEvent e) {
-        EntityPlayer player = e.getPlayer();
+        EntityPlayer player = e.player();
         Collection<IPassiveSkill<Event>> skills =
                 SkillUtil.getAvailablePassiveSkills(FawWeaponLeftClickEvent.class, player);
         for (IPassiveSkill<Event> skill : skills) {

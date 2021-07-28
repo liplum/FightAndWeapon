@@ -3,14 +3,18 @@ package net.liplum.api.fight;
 import net.liplum.api.annotations.Developing;
 
 import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 @Developing
 public class UnlockedPSkillList {
+    public static final UnlockedPSkillList Empty = new UnlockedPSkillList(Collections.emptyList());
+    @Nonnull
     private final List<Integer> slots;
 
     @Developing
-    public UnlockedPSkillList(List<Integer> slots) {
+    public UnlockedPSkillList(@Nonnull List<Integer> slots) {
         this.slots = slots;
     }
 

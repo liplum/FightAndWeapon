@@ -52,11 +52,11 @@ public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
             String masterType = entry.getKey();
             LvExpPair lvExpPair = entry.getValue();
             int lv = lvExpPair.getLevel();
-            long exp = lvExpPair.getExp();
+            int exp = lvExpPair.getExp();
             NBTTagCompound master = new NBTTagCompound();
             master.setString(Tags.Mastery.MasteryObject.Type, masterType);
             master.setInteger(Tags.Mastery.MasteryObject.Level, lv);
-            master.setLong(Tags.Mastery.MasteryObject.Exp, exp);
+            master.setInteger(Tags.Mastery.MasteryObject.Exp, exp);
             allMasters.appendTag(master);
         }
         return nbt;
@@ -69,7 +69,7 @@ public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
             NBTTagCompound master = (NBTTagCompound) masterObject;
             String type = master.getString(Tags.Mastery.MasteryObject.Type);
             int lv = master.getInteger(Tags.Mastery.MasteryObject.Level);
-            long exp = master.getLong(Tags.Mastery.MasteryObject.Exp);
+            int exp = master.getInteger(Tags.Mastery.MasteryObject.Exp);
             allMasteries.put(type, new LvExpPair(lv, exp));
         }
     }

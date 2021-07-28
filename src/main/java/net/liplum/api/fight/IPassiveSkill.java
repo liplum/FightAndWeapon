@@ -24,6 +24,7 @@ public interface IPassiveSkill<EventType extends Event> {
      * Larger number means later<br/>
      * O is default.
      */
+    @Require(func = "isShownInTooltip", is = "true")
     default int getTriggerPriority() {
         return 0;
     }

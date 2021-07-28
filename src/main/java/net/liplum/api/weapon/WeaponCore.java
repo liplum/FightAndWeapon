@@ -43,8 +43,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private final List<IAttribute> allAttributes = new LinkedList<>();
     @Nonnull
     private IWeaponSkillPredicate weaponSkillPredicate;
-    @Nullable
-    private AggregatePassiveSkill weaponPassiveSkills;
+    @Nonnull
+    private final List<IPassiveSkill<?>> weaponPassiveSkills = new LinkedList<>();
 
     private boolean hasWeaponSkill = true;
     @Nonnull
@@ -91,13 +91,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             builder.set(attribute, attribute.emptyBasicAttrValue());
         }
         build(builder);
-        if (weaponPassiveSkills != null) {
-            weaponPassiveSkills.setBanedWhenBroken(false).setTriggerPriority(Integer.MIN_VALUE).build();
-        }
     }
 
-    @Nullable
-    public AggregatePassiveSkill getWeaponPassiveSkills() {
+    @Nonnull
+    @LongSupport
+    public List<IPassiveSkill<?>> getWeaponPassiveSkills() {
         return weaponPassiveSkills;
     }
 
@@ -257,13 +255,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
         @Nonnull
         @LongSupport
-        public WeaponCoreBuilder add(@Nonnull AggregatePassiveSkill passiveSkills) {
-            WeaponCore thisCore = WeaponCore.this;
-            if (thisCore.weaponPassiveSkills == null) {
-                thisCore.weaponPassiveSkills = passiveSkills;
-            } else {
-                thisCore.weaponPassiveSkills.aggregate(passiveSkills);
-            }
+        public WeaponCoreBuilder add(@Nonnull IPassiveSkill<?> passiveSkill) {
+            weaponPassiveSkills.add(passiveSkill);
             return this;
         }
 

@@ -60,7 +60,7 @@ public class HarpItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawBehaviors.onWeaponUse(playerIn,this);
+                    FawBehaviors.onWeaponUse(playerIn,this,held);
                 }
             }
         } else {

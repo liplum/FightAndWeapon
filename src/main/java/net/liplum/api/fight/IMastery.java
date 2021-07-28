@@ -10,7 +10,9 @@ import java.util.Map;
 
 public interface IMastery {
     @Nonnull
-    String getRegisterName();
+    default String getRegisterName() {
+        return getWeaponType().getRegisterName();
+    }
 
     @Nonnull
     WeaponType getWeaponType();

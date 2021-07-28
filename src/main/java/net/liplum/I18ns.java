@@ -106,7 +106,20 @@ public final class I18ns {
     @LongSupport
     public static final class Command {
         public static final String Inlay = prefixCommandUnloc(Names.Command.Inlay);
-        public static final String MasteryExp = prefixCommandUnloc(Names.Command.MasteryExp);
+        public static final String Inlay_Failure_NotFawWeapon = "commands.inlay.failure.notFawWeapon";
+        public static final String Inlay_Failure_NoFawWeapon = "commands.inlay.failure.noGemstone";
+        public static final String Inlay_Failure_NoSuchGemstone = "commands.inlay.failure.noSuchGemstone";
+
+
+        public static final String MasteryExp = prefixCommandUnloc(Names.Command.MasterySub.MasteryExp);
+        public static final String MasteryShow = prefixCommandUnloc(Names.Command.MasterySub.MasteryShow);
+        public static final String Mastery = prefixCommandUnloc(Names.Command.Mastery);
+        public static final String Mastery_Failure_NotSuchWeaponType = "commands.mastery.failure.noSuchWeaponType";
+        public static final String Mastery_Failure_NaN = "commands.mastery.failure.NaN";
+        public static final String Mastery_Failure_NegativeNumber = "commands.mastery.failure.negativeNumber";
+
+        public static final String Mastery_Show_Level = "commands.mastery.level";
+        public static final String Mastery_Show_Exp = "commands.mastery.exp";
     }
 
     @LongSupport

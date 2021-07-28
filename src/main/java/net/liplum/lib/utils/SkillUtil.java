@@ -1,11 +1,13 @@
 package net.liplum.lib.utils;
 
 import net.liplum.api.annotations.LongSupport;
-import net.liplum.api.fight.*;
+import net.liplum.api.fight.IPSkillCoolingTimer;
+import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.fight.PSkillCoolingTimer;
+import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
-import net.liplum.api.weapon.WeaponType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
@@ -14,10 +16,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -30,10 +29,8 @@ public final class SkillUtil {
             //First, gets the passive skills from weapon's gemstone
             WeaponBaseItem weapon = (WeaponBaseItem) item;
             WeaponCore core = weapon.getCore();
-            AggregatePassiveSkill coreSkill = core.getWeaponPassiveSkills();
-            if (coreSkill != null && coreSkill.getEventTypeArgs().has(eventType)) {
-                allSkills.add(coreSkill);
-            }
+            List<IPassiveSkill<?>> coreSkill = core.getWeaponPassiveSkills();
+            coreSkill.stream().filter(s -> s.getEventTypeArgs().has(eventType)).forEach(s -> allSkills.add((IPassiveSkill<Event>) s));
             IGemstone gemstone = GemUtil.getGemstoneFrom(itemStack);
             if (gemstone != null) {
                 //I told it can be converted so that it must can be converted!!!

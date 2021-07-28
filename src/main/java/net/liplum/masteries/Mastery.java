@@ -41,12 +41,6 @@ public class Mastery implements IMastery {
 
     @Nonnull
     @Override
-    public String getRegisterName() {
-        return weaponType.getRegisterName();
-    }
-
-    @Nonnull
-    @Override
     public WeaponType getWeaponType() {
         return weaponType;
     }

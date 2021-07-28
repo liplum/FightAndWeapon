@@ -10,8 +10,9 @@ import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.IAttribute;
 import net.liplum.capabilities.MasteryCapability;
+import net.liplum.masteries.IMasteryDetail;
 import net.liplum.masteries.LvExpPair;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.masteries.MasteryDetail;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
@@ -20,8 +21,8 @@ import java.util.*;
 
 public final class MasteryUtil {
     private static final int MaxLevel = 99;
-    private static final long[] RequiredExpSheet = new long[MaxLevel];//default maximum is 100.
-    private static final long BaseRequiredExp = 100;
+    private static final int[] RequiredExpSheet = new int[MaxLevel];//default maximum is 100.
+    private static final int BaseRequiredExp = 100;
 
     public static void init() {
         initRequiredExpSheet();
@@ -34,71 +35,82 @@ public final class MasteryUtil {
         }
     }
 
-    public static long getRequiredExpToUpgrade(int currentLevel) throws IllegalArgumentException {
+    public static int getRequiredExpToUpgrade(int currentLevel) throws IllegalArgumentException {
         if (currentLevel < 1 || currentLevel > RequiredExpSheet.length) {
             throw new IllegalArgumentException();
         }
         return RequiredExpSheet[currentLevel - 1];
     }
 
-    private static long curExp(int endLevel) {
-        long total = BaseRequiredExp;
+    private static int curExp(int endLevel) {
+        int total = BaseRequiredExp;
         for (int i = 1; i < endLevel; i++) {
-            total += BaseRequiredExp + 0.1 * ((long) endLevel * endLevel);
+            total += BaseRequiredExp + 0.1 * (endLevel * endLevel);
         }
-        return total;
+        //Expands 10 times to avoid the decimal
+        return total * 10;
     }
 
-    public static boolean tryUpgrade(LvExpPair lvAndExp) throws IllegalArgumentException {
+    /**
+     * @return how many level it upgraded
+     */
+    public static int tryUpgrade(LvExpPair lvAndExp) {
         int lv = lvAndExp.getLevel();
-        long exp = lvAndExp.getExp();
-        long required = getRequiredExpToUpgrade(lv);
-        if (exp >= required) {
+        int exp = lvAndExp.getExp();
+        int required = getRequiredExpToUpgrade(lv);
+        int upgraded = 0;
+
+        while (exp >= required) {
             exp -= required;
             lvAndExp.setLevel(lv + 1);
             lvAndExp.setExp(exp);
-            return true;
+            upgraded++;
+
+            lv = lvAndExp.getLevel();
+            exp = lvAndExp.getExp();
+            required = getRequiredExpToUpgrade(lv);
         }
-        return false;
+
+        return upgraded;
     }
 
     public static boolean canUpgrade(LvExpPair lvAndExp) {
         int lv = lvAndExp.getLevel();
-        long exp = lvAndExp.getExp();
-        long required = getRequiredExpToUpgrade(lv);
+        int exp = lvAndExp.getExp();
+        int required = getRequiredExpToUpgrade(lv);
         return exp >= required;
     }
 
-    public static void addExp(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType, int amount) {
-        //TODO:Add mastery exp
+    /**
+     * @return how many level it upgraded
+     */
+    public static int addExp(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType, int amount) {
+        return MasteryDetail.create(player).addExp(weaponType, amount);
+    }
+
+    /**
+     * @return how many level it upgraded
+     */
+    public static int addExp(@Nonnull EntityPlayer player, @Nonnull IMastery mastery, int amount) {
+        return MasteryDetail.create(player).addExp(mastery, amount);
     }
 
     @Nonnull
-    public static LvExpPair getMaster(@Nonnull MasteryCapability masteryCapability, @Nonnull String masterName) {
-        return masteryCapability.getLevelAndExp(masterName);
-    }
-
-    @Nonnull
-    private static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMastery master, @Nonnull WeaponCore weaponCore) {
-        MasteryCapability masteryCapability = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
+    private static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMastery mastery, @Nonnull WeaponCore weaponCore) {
         HashSet<IPassiveSkill<?>> res = new HashSet<>();
-        if (masteryCapability != null) {
-            LvExpPair lvAndExp = getMaster(masteryCapability, master.getRegisterName());
-            int lv = lvAndExp.getLevel();
-            addPassiveSkillsFromMasteryGiven(res, lv, master);
-            addPassiveSkillsFromUnlock(res, lv, master, weaponCore);
-        }
+        IMasteryDetail detail = MasteryDetail.create(player);
+        addPassiveSkillsFromMasteryGiven(res, detail, mastery);
+        addPassiveSkillsFromUnlock(res, detail, mastery, weaponCore);
         return res;
     }
 
-    private static void addPassiveSkillsFromMasteryGiven(@Nonnull HashSet<IPassiveSkill<?>> result, int level, @Nonnull IMastery master) {
-        List<IPassiveSkill<?>> fromGiven = master.getPassiveSkills(level);
+    private static void addPassiveSkillsFromMasteryGiven(@Nonnull HashSet<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery) {
+        List<IPassiveSkill<?>> fromGiven = detail.getPassiveSkills(mastery);
         result.addAll(fromGiven);
-        UnlockedPSkillList unlock = master.getUnlockedPassiveSkills(level);
     }
 
-    private static void addPassiveSkillsFromUnlock(@Nonnull HashSet<IPassiveSkill<?>> result, int level, @Nonnull IMastery master, @Nonnull WeaponCore weaponCore) {
-        UnlockedPSkillList unlock = master.getUnlockedPassiveSkills(level);
+    private static void addPassiveSkillsFromUnlock(@Nonnull HashSet<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery, @Nonnull WeaponCore weaponCore) {
+        UnlockedPSkillList unlock = detail.getUnlockedPassiveSkills(mastery);
         List<IPassiveSkill<?>> fromUnlock = weaponCore.unlockPassiveSkills(unlock);
         result.addAll(fromUnlock);
     }
@@ -106,15 +118,15 @@ public final class MasteryUtil {
     @Nonnull
     public static Collection<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponCore weaponCore) {
         WeaponType weaponType = weaponCore.getWeaponType();
-        IMastery mastery = MasteryRegistry.getMasterOf(weaponType);
+        IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getPassiveSkills(player, mastery, weaponCore);
         }
-        return new HashSet<>();
+        return Collections.emptyList();
     }
 
     public static AttrDelta getAttributeValue(@Nonnull MasteryCapability masteryCapability, @Nonnull WeaponType weaponType, @Nonnull IAttribute attribute) {
-        IMastery mastery = MasteryRegistry.getMasterOf(weaponType);
+        IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
             int lv = levelAndExp.getLevel();
@@ -125,14 +137,5 @@ public final class MasteryUtil {
             }
         }
         return attribute.emptyAttrDelta();
-    }
-
-    @Nullable
-    public static IMastery getMasterOf(@Nonnull String registerName) {
-        WeaponType weaponType = WeaponTypeRegistry.getWeaponTypeOf(registerName);
-        if (weaponType != null) {
-            return MasteryRegistry.getMasterOf(weaponType);
-        }
-        return null;
     }
 }

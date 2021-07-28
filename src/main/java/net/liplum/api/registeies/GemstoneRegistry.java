@@ -16,11 +16,14 @@ public final class GemstoneRegistry {
     private static ArrayList<String> NamesCache = new ArrayList<>();
     private static boolean IsChanged = true;
 
+    /**
+     * Mustn't register a Weapon Type named "clear"
+     */
     @LongSupport
     public static void register(IGemstone gemstone) {
         String name = gemstone.getRegisterName();
-        if(GemstoneMap.containsKey(name)){
-            FawMod.Logger.warn("Gemstone "+name+" has been already registered! Notice whether it override another one unexpectedly.");
+        if (GemstoneMap.containsKey(name)) {
+            FawMod.Logger.warn("Gemstone " + name + " has been already registered! Notice whether it override another one unexpectedly.");
         }
         GemstoneMap.put(name, gemstone);
         IsChanged = true;

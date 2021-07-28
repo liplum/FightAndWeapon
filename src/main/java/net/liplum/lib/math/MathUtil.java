@@ -145,4 +145,16 @@ public class MathUtil {
         return res + Utils.getRandom().nextInt(1);
     }
 
+    /**
+     * {@code round(12345,2) == 123}
+     *
+     * @param number the number
+     * @param digit  it decides how many Digit the result will be removed and mustn't be negative
+     * @return the result
+     */
+    public static int removeDigit(int number, int digit) {
+        digit = fixMin(digit, 0);
+        return digit == 0 ? number : number / digit * 10;
+    }
+
 }

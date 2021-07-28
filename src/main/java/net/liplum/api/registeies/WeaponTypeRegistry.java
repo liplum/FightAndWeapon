@@ -16,6 +16,9 @@ public final class WeaponTypeRegistry {
     private static ArrayList<String> NamesCache = new ArrayList<>();
     private static boolean IsChanged = true;
 
+    /**
+     * Mustn't register a Weapon Type named "all"
+     */
     @Nonnull
     @LongSupport
     public static WeaponType register(@Nonnull WeaponType weapon) {
@@ -34,6 +37,7 @@ public final class WeaponTypeRegistry {
     }
 
     @LongSupport
+    @Nonnull
     public static List<String> getAllWeaponTypeNames() {
         if (IsChanged) {
             genNamesCache();
