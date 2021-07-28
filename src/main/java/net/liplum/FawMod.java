@@ -49,6 +49,7 @@ public class FawMod {
         Gemstones.load();
         Logger.info("Gemstone Component loaded successfully.");
         MasteryUtil.init();
+        BehaviorHandlers.init();
         Proxy.init(event);
         Logger.info("Proxy Component initialized successfully.");
     }

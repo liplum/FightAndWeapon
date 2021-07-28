@@ -337,13 +337,6 @@ public final class FawItemUtil {
         return (itemStack.getItem() instanceof WeaponBaseItem) && itemStack.getItemDamage() == itemStack.getMaxDamage();
     }
 
-    public static void onWeaponUse(@Nonnull EntityPlayer player, Item item) {
-        StatBase state = StatList.getObjectUseStats(item);
-        if (state != null) {
-            player.addStat(state);
-        }
-    }
-
     public static boolean hasAmmo(@Nonnull EntityPlayer player, @Nonnull BowCore bowCore) {
         return ItemUtil.hasAmmo(player,bowCore::isAmmo);
     }

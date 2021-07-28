@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.harp;
 
+import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
@@ -47,7 +48,7 @@ public class HarpItem extends WeaponBaseItem {
                         .world(worldIn)
                         .entity(playerIn)
                         .itemStack(held)
-                        .setHand(handIn)
+                        .hand(handIn)
                         .weapon(this)
                         .modifier(modifier);
                 args.calculator(FawUtil.toCalculator(args));
@@ -59,7 +60,7 @@ public class HarpItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawItemUtil.onWeaponUse(playerIn,this);
+                    FawBehaviors.onWeaponUse(playerIn,this);
                 }
             }
         } else {
@@ -95,7 +96,7 @@ public class HarpItem extends WeaponBaseItem {
             args.world(world)
                     .entity(p)
                     .itemStack(stack)
-                    .setHand(hand)
+                    .hand(hand)
                     .weapon(this)
                     .modifier(modifier);
             args.calculator(FawUtil.toCalculator(args));

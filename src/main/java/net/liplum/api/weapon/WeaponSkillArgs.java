@@ -74,12 +74,12 @@ public class WeaponSkillArgs implements FawArgsGetter, FawArgsSetter<WeaponSkill
     }
 
     @Nonnull
-    public EnumHand getHand() {
+    public EnumHand hand() {
         return hand;
     }
 
     @Nonnull
-    public WeaponSkillArgs setHand(@Nonnull EnumHand hand) {
+    public WeaponSkillArgs hand(@Nonnull EnumHand hand) {
         this.hand = hand;
         return this;
     }

@@ -1,5 +1,6 @@
 package net.liplum.api.registeies;
 
+import net.liplum.FawMod;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponType;
 
@@ -18,7 +19,11 @@ public final class WeaponTypeRegistry {
     @Nonnull
     @LongSupport
     public static WeaponType register(@Nonnull WeaponType weapon) {
-        WeaponTypesMap.put(weapon.getRegisterName(), weapon);
+        String name = weapon.getRegisterName();
+        if (WeaponTypesMap.containsKey(name)) {
+            FawMod.Logger.warn("Weapon Type " + name + " has been already registered! Notice whether it override another one unexpectedly.");
+        }
+        WeaponTypesMap.put(name, weapon);
         return weapon;
     }
 

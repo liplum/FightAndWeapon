@@ -1,5 +1,6 @@
 package net.liplum.api.registeies;
 
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.Cast;
 import net.liplum.api.weapon.WeaponPart;
 
@@ -10,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Developing
 public final class WeaponPartRegistry {
     private static final Map<String, WeaponPart> WeaponPartMap = new HashMap<>();
     private static ArrayList<String> NamesCache = new ArrayList<>();

@@ -1,5 +1,6 @@
 package net.liplum.api.registeies;
 
+import net.liplum.FawMod;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.IGemstone;
 
@@ -17,7 +18,11 @@ public final class GemstoneRegistry {
 
     @LongSupport
     public static void register(IGemstone gemstone) {
-        GemstoneMap.put(gemstone.getRegisterName(), gemstone);
+        String name = gemstone.getRegisterName();
+        if(GemstoneMap.containsKey(name)){
+            FawMod.Logger.warn("Gemstone "+name+" has been already registered! Notice whether it override another one unexpectedly.");
+        }
+        GemstoneMap.put(name, gemstone);
         IsChanged = true;
     }
 

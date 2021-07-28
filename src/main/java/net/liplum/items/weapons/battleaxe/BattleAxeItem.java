@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.battleaxe;
 
+import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
@@ -48,7 +49,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                         .world(worldIn)
                         .entity(playerIn)
                         .itemStack(held)
-                        .setHand(handIn)
+                        .hand(handIn)
                         .modifier(modifier)
                         .weapon(this);
                 AttrCalculator calculator = FawUtil.toCalculator(args);
@@ -69,7 +70,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawItemUtil.onWeaponUse(playerIn, this);
+                    FawBehaviors.onWeaponUse(playerIn, this);
                 }
             }
         }

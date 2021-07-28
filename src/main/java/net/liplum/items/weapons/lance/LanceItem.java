@@ -1,9 +1,9 @@
 package net.liplum.items.weapons.lance;
 
+import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
-import net.liplum.attributes.AttrCalculator;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.FawUtil;
@@ -42,7 +42,7 @@ public class LanceItem extends WeaponBaseItem {
                         .world(worldIn)
                         .entity(playerIn)
                         .itemStack(held)
-                        .setHand(handIn)
+                        .hand(handIn)
                         .weapon(this)
                         .modifier(modifier);
                 args.calculator(FawUtil.toCalculator(args));
@@ -54,7 +54,7 @@ public class LanceItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawItemUtil.onWeaponUse(playerIn, this);
+                    FawBehaviors.onWeaponUse(playerIn, this);
                 }
             }
         }

@@ -4,6 +4,7 @@ import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.api.registeies.MasteryRegistry;
+import net.liplum.api.registeies.WeaponTypeRegistry;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
@@ -14,6 +15,7 @@ import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.*;
 
 public final class MasteryUtil {
@@ -67,7 +69,7 @@ public final class MasteryUtil {
         return exp >= required;
     }
 
-    public static void addExp(@Nonnull EntityPlayer player,@Nonnull WeaponType weaponType,int amount){
+    public static void addExp(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType, int amount) {
         //TODO:Add mastery exp
     }
 
@@ -123,5 +125,14 @@ public final class MasteryUtil {
             }
         }
         return attribute.emptyAttrDelta();
+    }
+
+    @Nullable
+    public static IMastery getMasterOf(@Nonnull String registerName) {
+        WeaponType weaponType = WeaponTypeRegistry.getWeaponTypeOf(registerName);
+        if (weaponType != null) {
+            return MasteryRegistry.getMasterOf(weaponType);
+        }
+        return null;
     }
 }

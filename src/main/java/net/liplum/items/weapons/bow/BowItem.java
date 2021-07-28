@@ -1,5 +1,6 @@
 package net.liplum.items.weapons.bow;
 
+import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.utils.FawItemUtil;
@@ -58,7 +59,7 @@ public class BowItem extends WeaponBaseItem {
         if (useTime < 5) {
             return;
         }
-        FawItemUtil.onWeaponUse(player, this);
+        FawBehaviors.onWeaponUse(player, this);
         super.onPlayerStoppedUsing(stack, worldIn, entityLiving, useTime);
     }
 
@@ -73,7 +74,7 @@ public class BowItem extends WeaponBaseItem {
             Modifier modifier = GemUtil.getModifierFrom(stack);
             PullingBowArgs args = new PullingBowArgs().setPullingTick(count);
             args.entity(p)
-                    .setHand(hand)
+                    .hand(hand)
                     .world(p.world)
                     .weapon(this)
                     .itemStack(stack)

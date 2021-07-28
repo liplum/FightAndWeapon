@@ -1,5 +1,6 @@
 package net.liplum.api.registeies;
 
+import net.liplum.FawMod;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.IEventTypeArgs;
 import net.liplum.api.fight.IPassiveSkill;
@@ -20,6 +21,10 @@ public final class SkillRegistry {
     @Nonnull
     @LongSupport
     public static <T extends IPassiveSkill<? extends Event>> T register(@Nonnull T passiveSkill) {
+        String name = passiveSkill.getRegisterName();
+        if (AllPassiveSkills.containsKey(name)) {
+            FawMod.Logger.warn("Passive Skill " + name + " has been already registered! Notice whether it override another one unexpectedly.");
+        }
         //Register it to passiveSkillsMap
         IEventTypeArgs eventTypeArgs = passiveSkill.getEventTypeArgs();
         for (Class<? extends Event> eventType : eventTypeArgs.getAllEventTypes()) {
@@ -32,7 +37,7 @@ public final class SkillRegistry {
             }
             //Register it to all passive skills
         }
-        AllPassiveSkills.put(passiveSkill.getRegisterName(), passiveSkill);
+        AllPassiveSkills.put(name, passiveSkill);
         return passiveSkill;
     }
 
