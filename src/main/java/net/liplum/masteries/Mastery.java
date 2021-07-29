@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.Map;
 
 public class Mastery implements IMastery {
+    public static final int MaxLevel = 99;
     @Nonnull
     private final WeaponType weaponType;
     @Nonnull

@@ -4,7 +4,6 @@ import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.api.registeies.MasteryRegistry;
-import net.liplum.api.registeies.WeaponTypeRegistry;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
@@ -12,16 +11,15 @@ import net.liplum.attributes.IAttribute;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.masteries.IMasteryDetail;
 import net.liplum.masteries.LvExpPair;
+import net.liplum.masteries.Mastery;
 import net.liplum.masteries.MasteryDetail;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.*;
 
 public final class MasteryUtil {
-    private static final int MaxLevel = 99;
-    private static final int[] RequiredExpSheet = new int[MaxLevel];//default maximum is 100.
+    private static final int[] RequiredExpSheet = new int[Mastery.MaxLevel];//default maximum is 100.
     private static final int BaseRequiredExp = 100;
 
     public static void init() {

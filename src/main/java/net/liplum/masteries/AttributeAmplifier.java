@@ -5,6 +5,12 @@ import net.liplum.attributes.DataType;
 import javax.annotation.Nonnull;
 
 public class AttributeAmplifier {
+    /**
+     * You should use this constructor directly.
+     */
+    public AttributeAmplifier() {
+    }
+
     @Nonnull
     private String attributeName = "";
     @Nonnull
@@ -40,5 +46,16 @@ public class AttributeAmplifier {
     public AttributeAmplifier setValue(@Nonnull Number value) {
         this.value = value;
         return this;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof AttributeAmplifier){
+            AttributeAmplifier amp = (AttributeAmplifier) obj;
+            return this.attributeName.equals(amp.attributeName) &&
+                    this.type.equals(amp.getType())&&
+                    this.value.equals(amp.value);
+        }
+        return false;
     }
 }

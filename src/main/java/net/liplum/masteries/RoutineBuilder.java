@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.ListIterator;
 
+import static net.liplum.masteries.Mastery.MaxLevel;
+
 @Developing
 public class RoutineBuilder implements IRoutineReader {
     @Nonnull
@@ -21,7 +23,14 @@ public class RoutineBuilder implements IRoutineReader {
     @Override
     public Routine toRoutine() {
         toNextLv();
+        truncate();
         return new Routine(new ArrayList<>(nodes));
+    }
+
+    private void truncate() {
+        while (nodes.size() > MaxLevel) {
+            nodes.removeLast();
+        }
     }
 
     public RoutineBuilder node(@Nonnull Node node) {

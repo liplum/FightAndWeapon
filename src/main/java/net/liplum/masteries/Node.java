@@ -11,8 +11,8 @@ public class Node {
     public static final Node Empty = new Node(){
         @Nonnull
         @Override
-        public Node addAttributeAmplifiers(AttributeAmplifier... attributeAmplifier) {
-            return super.addAttributeAmplifiers(attributeAmplifier);
+        public Node addAttrAmps(AttributeAmplifier... attributeAmplifier) {
+            return super.addAttrAmps(attributeAmplifier);
         }
 
         @Nonnull
@@ -35,7 +35,7 @@ public class Node {
 
         @Nonnull
         @Override
-        public Node setLockedPassiveSkill(int slot) {
+        public Node lockedPSkill(int slot) {
             return this;
         }
     };
@@ -58,7 +58,7 @@ public class Node {
     }
 
     @Nonnull
-    public Node addAttributeAmplifiers(AttributeAmplifier... attributeAmplifier) {
+    public Node addAttrAmps(AttributeAmplifier... attributeAmplifier) {
         this.attributeAmplifiers.addAll(Arrays.asList(attributeAmplifier));
         return this;
     }
@@ -86,7 +86,7 @@ public class Node {
     }
 
     @Nonnull
-    public Node setLockedPassiveSkill(int slot) {
+    public Node lockedPSkill(int slot) {
         this.lockedPassiveSkill = slot;
         return this;
     }

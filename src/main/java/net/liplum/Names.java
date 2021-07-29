@@ -202,6 +202,7 @@ public final class Names {
         public static final String Sweeping = "Sweeping";
         public static final String Ap2Strength = "Ap2Strength";
         public static final String Combo = "Combo";
+        public static final String ManaBarrier = "ManaBarrier";
 
         public final static class WeaponCore{
             public static final String RangedWeaponPS = "RangedWeaponPS";
