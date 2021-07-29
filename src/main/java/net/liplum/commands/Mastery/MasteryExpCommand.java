@@ -58,7 +58,7 @@ public class MasteryExpCommand extends CommandBase {
             if (exp <= 0) {
                 throw new CommandException(Mastery_Failure_NegativeNumber, weaponTypeName);
             }
-            MasteryUtil.addExp(player, mastery, exp);
+            MasteryUtil.addExp(player, mastery, exp * 10);
         }
     }
 

@@ -38,8 +38,12 @@ public class FawMod {
         Logger.info("Capability Component initialized successfully.");
         FawNetworkRegistry.init();
         Logger.info("Network Component initialized successfully.");
+        WeaponTypes.init();
+        Logger.info("Weapon Type Component initialized successfully.");
         WeaponParts.load();
         Logger.info("Weapon Part Component initialized successfully.");
+        Masteries.init();
+        Logger.info("Mastery Component initialized successfully.");
         Proxy.preInit(event);
         Logger.info("Proxy Component pre-initialized successfully.");
     }

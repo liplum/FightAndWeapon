@@ -11,12 +11,18 @@ public final class Masteries {
     public static final Mastery Lance = new Mastery(WeaponTypes.Lance)
             .setRoutine(new RoutineBuilder()
                     .node(new Node().addAttributeAmplifiers(Strength.newAttributeAmplifier(1))).nextLv()
-                    .node(new Node().addAttributeAmplifiers())
+                    .repeat(2)
+                    .node(new Node().setLockedPassiveSkill(1)).nextLv()
                     .toRoutine());
 
     public static final Mastery Harp = new Mastery(WeaponTypes.Harp);
 
-    public static final Mastery BattleAxe = new Mastery(WeaponTypes.BattleAxe);
+    public static final Mastery BattleAxe = new Mastery(WeaponTypes.BattleAxe)
+            .setRoutine(new RoutineBuilder()
+                    .node(new Node().addAttributeAmplifiers(Strength.newAttributeAmplifier(1))).nextLv()
+                    .repeat(2)
+                    .node(new Node().setLockedPassiveSkill(1)).nextLv()
+                    .toRoutine());
 
     public static final Mastery MagickWand = new Mastery(WeaponTypes.MagickWand)
             .setRoutine(new RoutineBuilder()
@@ -35,4 +41,10 @@ public final class Masteries {
                     .node(new Node().setLockedPassiveSkill(4)).nextLv()
                     .node(new Node().addAttributeAmplifiers(AbilityPower.newAttributeAmplifier(4))).nextLv()
                     .toRoutine());
+
+
+    //You must call it to load this class and all the static fields.
+    public static void init() {
+
+    }
 }

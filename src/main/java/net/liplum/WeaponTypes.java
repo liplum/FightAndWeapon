@@ -25,4 +25,9 @@ public final class WeaponTypes {
 
     public static final WeaponType MagickWand = new WeaponType(Names.Item.MagickWand.TypeName)
             .setWeaponSkillPredicate(((world, player, weapon) -> true));
+
+    //You must call it to load this class and all the static fields.
+    public static void init() {
+
+    }
 }

@@ -17,19 +17,22 @@ import java.util.List;
 import java.util.Map;
 
 public class Mastery implements IMastery {
+    @Nonnull
     private final WeaponType weaponType;
-    private Routine routine;
+    @Nonnull
+    private Routine routine = new Routine();
 
     /**
      * Whenever you create the instance, it will register it self to {@link MasteryRegistry} automatically.
      *
      * @param weaponType the corresponding weapon type of this master
      */
-    public Mastery(WeaponType weaponType) {
+    public Mastery(@Nonnull WeaponType weaponType) {
         this.weaponType = weaponType;
         MasteryRegistry.register(this);
     }
 
+    @Nonnull
     public Routine getRoutine() {
         return routine;
     }

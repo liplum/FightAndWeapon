@@ -50,7 +50,9 @@ public class RoutineBuilder implements IRoutineReader {
 
     private void toNextLv() {
         iterator.add(this.currentGetter.get());
-        iterator.next();
+        if (iterator.hasNext()) {
+            iterator.next();
+        }
         level++;
     }
 
