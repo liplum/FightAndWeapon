@@ -19,8 +19,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.stats.StatBase;
-import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
@@ -338,11 +336,28 @@ public final class FawItemUtil {
     }
 
     public static boolean hasAmmo(@Nonnull EntityPlayer player, @Nonnull BowCore bowCore) {
-        return ItemUtil.hasAmmo(player,bowCore::isAmmo);
+        return ItemUtil.hasAmmo(player, bowCore::isAmmo);
+    }
+
+    public static boolean hasAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowCore bowCore) {
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            return ItemUtil.hasAmmo(player, bowCore::isAmmo);
+        }
+        return true;
     }
 
     @Nonnull
     public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull BowCore bowCore) {
         return ItemUtil.findAmmo(player, bowCore::isAmmo);
+    }
+
+    @Nonnull
+    public static ItemStack findAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowCore bowCore) {
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            return ItemUtil.findAmmo(player, bowCore::isAmmo);
+        }
+        return bowCore.getDefaultAmmo();
     }
 }

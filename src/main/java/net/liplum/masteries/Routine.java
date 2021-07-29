@@ -26,11 +26,15 @@ public class Routine {
     }
 
     @Nonnull
-    public Map<String, Number> getAttributeAmplifiers(int count) {
+    public Map<String, Number> getAttributeAmplifiers(int level) {
         HashMap<String, Number> res = new HashMap<>();
-        for (Node node : allNodes.subList(0, count)) {
-            List<AttributeAmplifier> amplifiers = node.getAttributeAmplifiers();
-            for (AttributeAmplifier amp : amplifiers) {
+        int index = 0;
+        for (Node node : allNodes) {
+            if(index >= level){
+                break;
+            }
+            List<AttrAmp> amplifiers = node.getAttributeAmplifiers();
+            for (AttrAmp amp : amplifiers) {
                 String attrName = amp.getAttributeName();
                 Number value = amp.getValue();
                 if (res.containsKey(attrName)) {
@@ -40,6 +44,7 @@ public class Routine {
                     res.put(attrName, value);
                 }
             }
+            index++;
         }
         return res;
     }
@@ -55,21 +60,31 @@ public class Routine {
 
     @Nonnull
     public List<String> getPassiveSkills(int level) {
+        int index = 0;
         List<String> res = new LinkedList<>();
-        for (Node node : allNodes.subList(0, level)) {
+        for (Node node : allNodes) {
+            if(index >= level){
+                break;
+            }
             res.addAll(node.getPassiveSkills());
+            index++;
         }
         return res;
     }
 
     @Nonnull
     public List<Integer> getLockedPassiveSkills(int level) {
+        int index = 0;
         List<Integer> res = new LinkedList<>();
-        for (Node node : allNodes.subList(0, level)) {
+        for (Node node : allNodes) {
+            if(index >= level){
+                break;
+            }
             Integer skill = node.getLockedPassiveSkill();
             if (skill != null) {
                 res.add(skill);
             }
+            index++;
         }
         return res;
     }

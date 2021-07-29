@@ -13,6 +13,9 @@ import net.liplum.masteries.IMasteryDetail;
 import net.liplum.masteries.LvExpPair;
 import net.liplum.masteries.Mastery;
 import net.liplum.masteries.MasteryDetail;
+import net.minecraft.block.BlockCrops;
+import net.minecraft.block.BlockMelon;
+import net.minecraft.block.BlockPumpkin;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
@@ -108,7 +111,7 @@ public final class MasteryUtil {
     }
 
     private static void addPassiveSkillsFromUnlock(@Nonnull HashSet<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery, @Nonnull WeaponCore weaponCore) {
-        UnlockedPSkillList unlock = detail.getUnlockedPassiveSkills(mastery);
+        UnlockedPSkillList unlock = detail.getUnlockedPSkills(mastery);
         List<IPassiveSkill<?>> fromUnlock = weaponCore.unlockPassiveSkills(unlock);
         result.addAll(fromUnlock);
     }
@@ -121,19 +124,5 @@ public final class MasteryUtil {
             return getPassiveSkills(player, mastery, weaponCore);
         }
         return Collections.emptyList();
-    }
-
-    public static AttrDelta getAttributeValue(@Nonnull MasteryCapability masteryCapability, @Nonnull WeaponType weaponType, @Nonnull IAttribute attribute) {
-        IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
-        if (mastery != null) {
-            LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
-            int lv = levelAndExp.getLevel();
-            Map<IAttribute, AttrDelta> amplifiers = mastery.getAttributeAmplifier(lv);
-            AttrDelta res = amplifiers.get(attribute);
-            if (res != null) {
-                return res;
-            }
-        }
-        return attribute.emptyAttrDelta();
     }
 }

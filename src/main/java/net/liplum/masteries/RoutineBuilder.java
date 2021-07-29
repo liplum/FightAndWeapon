@@ -40,9 +40,17 @@ public class RoutineBuilder implements IRoutineReader {
 
     public RoutineBuilder repeat(int count) {
         for (int i = 0; i < count; i++) {
-            this.toNextLv();
+            this.repeatOnce();
         }
         return this;
+    }
+
+    public void repeatOnce(){
+        iterator.add(this.currentGetter.previous);
+        if (iterator.hasNext()) {
+            iterator.next();
+        }
+        level++;
     }
 
     @Developing
@@ -78,9 +86,12 @@ public class RoutineBuilder implements IRoutineReader {
         private static final Node Default = new Node();
         @Nullable
         private Node current;
+        @Nullable
+        private Node previous;
 
-        public void setCurrent(@Nonnull Node getter) {
-            this.current = getter;
+        public void setCurrent(@Nonnull Node newOne) {
+            this.previous = this.current;
+            this.current = newOne;
         }
 
         public void clear() {

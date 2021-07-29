@@ -1,7 +1,7 @@
 package net.liplum.attributes;
 
 import net.liplum.api.annotations.Require;
-import net.liplum.masteries.AttributeAmplifier;
+import net.liplum.masteries.AttrAmp;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -185,8 +185,8 @@ public class BoolAttribute implements IAttribute {
 
     @Nonnull
     @Override
-    public AttributeAmplifier newAttributeAmplifier(@Nonnull Number value) {
-        return new AttributeAmplifier().setAttributeName(registerName).setType(DataType.Int).setValue(toBoolInt(value));
+    public AttrAmp newAttributeAmplifier(@Nonnull Number value) {
+        return AttrAmp.create(this,value);
     }
 
     @Nonnull

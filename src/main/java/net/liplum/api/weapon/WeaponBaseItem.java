@@ -1,6 +1,7 @@
 package net.liplum.api.weapon;
 
 import com.google.common.collect.Multimap;
+import net.liplum.FawBehaviors;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
@@ -116,6 +117,7 @@ public abstract class WeaponBaseItem extends FawItem {
      * @return true if the target was hit.
      */
     public boolean dealDamage(@Nonnull ItemStack stack, @Nonnull EntityLivingBase attacker, @Nonnull Entity target, @Nonnull DamageSource damageSource, float damage) {
+        FawBehaviors.onCauseDamageWithWeapon(attacker, this, stack, target, damage);
         return target.attackEntityFrom(damageSource, damage);
     }
 

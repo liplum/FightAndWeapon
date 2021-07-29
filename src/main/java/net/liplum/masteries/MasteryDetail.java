@@ -11,8 +11,10 @@ import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +31,7 @@ public class MasteryDetail implements IMasteryDetail {
     }
 
     @Nonnull
-    public static IMasteryDetail create(@Nonnull EntityLivingBase entity) {
+    public static IMasteryDetail create(@Nullable EntityLivingBase entity) {
         if (entity instanceof EntityPlayer) {
             return create((EntityPlayer) entity);
         }
@@ -37,7 +39,10 @@ public class MasteryDetail implements IMasteryDetail {
     }
 
     @Nonnull
-    public static IMasteryDetail create(@Nonnull EntityPlayer player) {
+    public static IMasteryDetail create(@Nullable EntityPlayer player) {
+        if (player == null) {
+            return Empty;
+        }
         MasteryCapability capability = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
         if (capability != null) {
             return new MasteryDetail(player, capability);
@@ -61,18 +66,21 @@ public class MasteryDetail implements IMasteryDetail {
         int formerLevel = levelAndExp.getLevel();
         levelAndExp.addExp(amount);
         int upgraded = MasteryUtil.tryUpgrade(levelAndExp);
-        new MasteryUpgradedEvent(player, mastery, formerLevel, upgraded);
+        if (upgraded > 0) {
+            MasteryUpgradedEvent upgradedEvent = new MasteryUpgradedEvent(player, mastery, formerLevel, upgraded);
+            MinecraftForge.EVENT_BUS.post(upgradedEvent);
+        }
         return upgraded;
     }
 
     @Nonnull
-    public Map<IAttribute, AttrDelta> getAttributeAmplifier(@Nonnull IMastery mastery) {
+    public Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
         return mastery.getAttributeAmplifier(lv);
     }
 
     @Nonnull
-    public UnlockedPSkillList getUnlockedPassiveSkills(@Nonnull IMastery mastery) {
+    public UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
         return mastery.getUnlockedPassiveSkills(lv);
     }
@@ -98,13 +106,13 @@ public class MasteryDetail implements IMasteryDetail {
 
         @Nonnull
         @Override
-        public Map<IAttribute, AttrDelta> getAttributeAmplifier(@Nonnull IMastery mastery) {
+        public Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery) {
             return Collections.emptyMap();
         }
 
         @Nonnull
         @Override
-        public UnlockedPSkillList getUnlockedPassiveSkills(@Nonnull IMastery mastery) {
+        public UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery) {
             return UnlockedPSkillList.Empty;
         }
 

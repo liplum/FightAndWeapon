@@ -5,12 +5,9 @@ import net.liplum.api.fight.FawArgsGetter;
 import net.liplum.api.fight.FawArgsSetter;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponCore;
-import net.liplum.api.weapon.WeaponType;
-import net.liplum.capabilities.MasteryCapability;
 import net.liplum.events.AttributeAccessEvent;
-import net.liplum.lib.utils.MasteryUtil;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.masteries.IMasteryDetail;
+import net.liplum.masteries.MasteryDetail;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -47,7 +44,7 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
      * NOTE: All Attributes' access must be via this.
      *
      * @param attribute         the attribute which you want to calculate in this weapon
-     * @param weapon              the weapon core which can provide the basic value of this attribute
+     * @param weapon            the weapon core which can provide the basic value of this attribute
      * @param modifier          (optional) the modifier of this weapon which can provide the modifier value of this attribute
      * @param player            (optional) the player which can provide the mastery capability(It stands for the attacker or who need access this attribute is not a player when the parameter is null)
      * @param itemStack
@@ -59,15 +56,10 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
         ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = weapon.getCore().getValue(attribute);
         //Mastery
-        MasteryCapability mastery = null;
         AttrDelta masteryValue = null;
         if (computeType.computeMastery) {
-            if (player != null) {
-                mastery = player.getCapability(CapabilityRegistry.Mastery_Capability, null);
-            }
-            if (mastery != null) {
-                masteryValue = MasteryUtil.getAttributeValue(mastery, weapon.getWeaponType(), attribute);
-            }
+            IMasteryDetail mastery = MasteryDetail.create(player);
+            masteryValue = mastery.getAttrAmpValue(weapon.getWeaponType(), attribute);
         }
         //Modifier
         AttrModifier attrModifier = null;

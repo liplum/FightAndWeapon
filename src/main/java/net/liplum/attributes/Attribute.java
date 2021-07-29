@@ -3,7 +3,7 @@ package net.liplum.attributes;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.annotations.Require;
 import net.liplum.lib.math.MathUtil;
-import net.liplum.masteries.AttributeAmplifier;
+import net.liplum.masteries.AttrAmp;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -461,8 +461,8 @@ public class Attribute implements IAttribute {
 
     @Nonnull
     @Override
-    public AttributeAmplifier newAttributeAmplifier(@Nonnull Number value) {
-        return new AttributeAmplifier().setAttributeName(registerName).setType(dataType).setValue(value);
+    public AttrAmp newAttributeAmplifier(@Nonnull Number value) {
+        return AttrAmp.create(this,value);
     }
 
     @Nonnull

@@ -3,12 +3,15 @@ package net.liplum.items.weapons.bow;
 import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.attributes.AttrCalculator;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -54,13 +57,25 @@ public class BowItem extends WeaponBaseItem {
 
     @Override
     public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityLivingBase entityLiving, int useTime) {
-        EntityPlayer player = (EntityPlayer) entityLiving;
-        useTime = ForgeEventFactory.onArrowLoose(stack, worldIn, player, useTime, true);
-        if (useTime < 5) {
+        if (entityLiving instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entityLiving;
+            useTime = ForgeEventFactory.onArrowLoose(stack, worldIn, player, useTime, true);
+            if (useTime < 5) {
+                return;
+            }
+        }
+        ItemStack ammo = FawItemUtil.findAmmo(entityLiving, core);
+        Item item = ammo.getItem();
+        if (!(item instanceof ItemArrow)) {
             return;
         }
-        FawBehaviors.onWeaponUse(player, this, stack);
-        super.onPlayerStoppedUsing(stack, worldIn, entityLiving, useTime);
+        Modifier modifier = GemUtil.getModifierFrom(stack);
+        AttrCalculator calculator = new AttrCalculator(this)
+                .entity(entityLiving)
+                .itemStack(stack)
+                .modifier(modifier);
+
+        FawBehaviors.onWeaponUse(entityLiving, this, stack);
     }
 
     @Override

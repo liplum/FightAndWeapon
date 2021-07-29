@@ -2,6 +2,7 @@ package net.liplum.items.weapons.lance;
 
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.coroutine.Coroutine;
@@ -18,6 +19,7 @@ import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsUtil;
 import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
@@ -77,6 +79,8 @@ public final class LanceCores {
             }
             World world = args.world();
             EntityLivingBase player = args.entity();
+            final WeaponBaseItem weapon = args.weapon();
+            final ItemStack itemStack = args.itemStack();
             AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
@@ -86,7 +90,7 @@ public final class LanceCores {
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
             PhysicsUtil.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
             if (!world.isRemote) {
-                player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
+      //          player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
                 CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
                     final Set<EntityLivingBase> damaged = new HashSet<>();
 
@@ -97,9 +101,9 @@ public final class LanceCores {
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
                             if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
-                                e.attackEntityFrom(EntityUtil.genDamageSource(player), strength);
+                                weapon.dealDamage(itemStack, player, e, EntityUtil.genDamageSource(player), strength);
                                 damaged.add(e);
-                                FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 1, player);
+                                FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
                             }
                         }
                         yieldReturn(new WaitForNextTick());
@@ -135,6 +139,8 @@ public final class LanceCores {
         public boolean releaseSkill(WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
+            WeaponBaseItem weapon = args.weapon();
+            ItemStack itemStack = args.itemStack();
             AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
@@ -147,12 +153,12 @@ public final class LanceCores {
             int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
                 if (EntityUtil.canAttack(player, e) && P2D.isInside(look, PhysicsUtil.get2DPosition(player), PhysicsUtil.get2DPosition(e), 1.5, sprintLength)) {
-                    e.attackEntityFrom(EntityUtil.genDamageSource(player), 1.5F * strength);
+                    weapon.dealDamage(itemStack, player, e, EntityUtil.genDamageSource(player), strength);
                     damagedEntityCount++;
                 }
             }
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) damagedEntityCount / 3);
-            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), weaponDamage, player);
+            FawItemUtil.damageWeapon(weapon, itemStack, weaponDamage, player);
 
             return true;
         }
@@ -180,6 +186,8 @@ public final class LanceCores {
             double x = player.posX,
                     y = player.posY,
                     z = player.posZ;
+            final WeaponBaseItem weapon = args.weapon();
+            final ItemStack itemStack = args.itemStack();
             AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
@@ -216,8 +224,8 @@ public final class LanceCores {
                                     return d1 > d2 ? 1 : -1;
                                 }).toArray()[0];
                             }
-                            target.attackEntityFrom(EntityUtil.genDamageSource(player), 2.5F * strength);
-                            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 2, player);
+                            weapon.dealDamage(itemStack, player, target, EntityUtil.genDamageSource(player), strength);
+                            FawItemUtil.damageWeapon(weapon, itemStack, 2, player);
                         }
                     }
                 }));

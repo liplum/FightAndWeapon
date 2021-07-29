@@ -3,7 +3,7 @@ package net.liplum.attributes;
 import net.liplum.api.annotations.Developing;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.annotations.Require;
-import net.liplum.masteries.AttributeAmplifier;
+import net.liplum.masteries.AttrAmp;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -119,7 +119,7 @@ public interface IAttribute {
     AttrModifier newAttrModifier(@Nonnull Number delta, float deltaRate);
 
     @Nonnull
-    AttributeAmplifier newAttributeAmplifier(@Nonnull Number value);
+    AttrAmp newAttributeAmplifier(@Nonnull Number value);
 
     @Nonnull
     AttrDelta emptyAttrDelta();

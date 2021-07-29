@@ -11,8 +11,8 @@ public class Node {
     public static final Node Empty = new Node(){
         @Nonnull
         @Override
-        public Node addAttrAmps(AttributeAmplifier... attributeAmplifier) {
-            return super.addAttrAmps(attributeAmplifier);
+        public Node addAttrAmps(AttrAmp... attrAmp) {
+            return super.addAttrAmps(attrAmp);
         }
 
         @Nonnull
@@ -23,7 +23,7 @@ public class Node {
 
         @Nonnull
         @Override
-        public Node setAttributeAmplifiers(@Nonnull List<AttributeAmplifier> attributeAmplifiers) {
+        public Node setAttributeAmplifiers(@Nonnull List<AttrAmp> attrAmps) {
             return this;
         }
 
@@ -40,26 +40,26 @@ public class Node {
         }
     };
     @Nonnull
-    private List<AttributeAmplifier> attributeAmplifiers = new LinkedList<>();
+    private List<AttrAmp> attrAmps = new LinkedList<>();
     @Nonnull
     private List<String> passiveSkills = new LinkedList<>();
     @Nullable
     private Integer lockedPassiveSkill = null;
 
     @Nonnull
-    public List<AttributeAmplifier> getAttributeAmplifiers() {
-        return attributeAmplifiers;
+    public List<AttrAmp> getAttributeAmplifiers() {
+        return attrAmps;
     }
 
     @Nonnull
-    public Node setAttributeAmplifiers(@Nonnull List<AttributeAmplifier> attributeAmplifiers) {
-        this.attributeAmplifiers = attributeAmplifiers;
+    public Node setAttributeAmplifiers(@Nonnull List<AttrAmp> attrAmps) {
+        this.attrAmps = attrAmps;
         return this;
     }
 
     @Nonnull
-    public Node addAttrAmps(AttributeAmplifier... attributeAmplifier) {
-        this.attributeAmplifiers.addAll(Arrays.asList(attributeAmplifier));
+    public Node addAttrAmps(AttrAmp... attrAmp) {
+        this.attrAmps.addAll(Arrays.asList(attrAmp));
         return this;
     }
 

@@ -189,6 +189,12 @@ public final class Attributes {
 
     @LongSupport
     public static final class Bow {
-        
+        public static final IAttribute ProjectileVelocity = new Attribute()
+                .setRegisterName(Names.Attribute.Bow.ProjectileVelocity)
+                .setDataType(DataType.Float)
+                .setDefaultValue(1F)
+                .setComputeType(ComputeType.Full)
+                .setMinimum(0F)
+                .setShownInTooltip(false);
     }
 }

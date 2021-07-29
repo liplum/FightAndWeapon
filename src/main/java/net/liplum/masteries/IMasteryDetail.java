@@ -31,7 +31,7 @@ public interface IMasteryDetail {
     }
 
     default int getExp(@Nonnull IMastery mastery) {
-        return MathUtil.removeDigit(getLvAndExp(mastery).getExp(),1);
+        return MathUtil.removeDigit(getLvAndExp(mastery).getExp(), 1);
     }
 
     default int getExp(@Nonnull WeaponType weaponType) {
@@ -59,28 +59,28 @@ public interface IMasteryDetail {
     }
 
     @Nonnull
-    Map<IAttribute, AttrDelta> getAttributeAmplifier(@Nonnull IMastery mastery);
+    Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery);
 
     @Nonnull
-    UnlockedPSkillList getUnlockedPassiveSkills(@Nonnull IMastery mastery);
+    UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery);
 
     @Nonnull
     List<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery);
 
     @Nonnull
-    default Map<IAttribute, AttrDelta> getAttributeAmplifier(@Nonnull WeaponType weaponType) {
+    default Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
-            return getAttributeAmplifier(mastery);
+            return getAttrAmp(mastery);
         }
         return Collections.emptyMap();
     }
 
     @Nonnull
-    default UnlockedPSkillList getUnlockedPassiveSkills(@Nonnull WeaponType weaponType) {
+    default UnlockedPSkillList getUnlockedPSkills(@Nonnull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
-            return getUnlockedPassiveSkills(mastery);
+            return getUnlockedPSkills(mastery);
         }
         return UnlockedPSkillList.Empty;
     }
@@ -92,5 +92,21 @@ public interface IMasteryDetail {
             return getPassiveSkills(mastery);
         }
         return Collections.emptyList();
+    }
+
+    @Nonnull
+    default AttrDelta getAttrAmpValue(@Nonnull IMastery mastery, @Nonnull IAttribute attribute) {
+        Map<IAttribute, AttrDelta> map = this.getAttrAmp(mastery);
+        AttrDelta res = map.get(attribute);
+        return res == null ? attribute.emptyAttrDelta() : res;
+    }
+
+    @Nonnull
+    default AttrDelta getAttrAmpValue(@Nonnull WeaponType weaponType, @Nonnull IAttribute attribute) {
+        IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
+        if (mastery != null) {
+            return getAttrAmpValue(mastery, attribute);
+        }
+        return attribute.emptyAttrDelta();
     }
 }

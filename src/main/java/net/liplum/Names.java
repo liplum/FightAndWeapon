@@ -114,6 +114,10 @@ public final class Names {
             public static final String Radius = "Radius";
             public static final String Frequency = "Frequency";
         }
+
+        public static final class Bow{
+            public static final String ProjectileVelocity = "ProjectileVelocity";
+        }
     }
 
     public final static class Entity {
