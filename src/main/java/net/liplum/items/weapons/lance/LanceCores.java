@@ -122,9 +122,9 @@ public final class LanceCores {
                     //  It means you can dash 4 units.
                     SprintStrength, SprintStrength.newBasicAttrValue(2F)
             ).set(
-                    CoolDown, SprintStrength.newBasicAttrValue(6 * 20)
+                    CoolDown, CoolDown.newBasicAttrValue(6 * 20)
             ).set(
-                    Strength, SprintStrength.newBasicAttrValue(5F)
+                    Strength, Strength.newBasicAttrValue(5F)
             ).set(
                     AttackReach, AttackReach.newBasicAttrValue(8F)
             ).set(

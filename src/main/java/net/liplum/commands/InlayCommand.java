@@ -18,6 +18,7 @@ import net.minecraft.util.math.BlockPos;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import static net.liplum.I18ns.Command.*;
@@ -88,7 +89,9 @@ public class InlayCommand extends CommandBase {
     @Override
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
-            return getListOfStringsMatchingLastWord(args, GemstoneRegistry.getAllGemstoneNames());
+            List<String> allGemstoneNames = new LinkedList<>(GemstoneRegistry.getAllGemstoneNames());
+            allGemstoneNames.add(Names.Command.InlaySub.Remove);
+            return getListOfStringsMatchingLastWord(args, allGemstoneNames);
         }
         return Collections.emptyList();
     }

@@ -157,6 +157,7 @@ public final class Names {
         public final static class MasterySub{
             public static final String MasteryShow = "show";
             public static final String MasteryExp = "exp";
+            public static final String MasteryReset = "reset";
             public static final String All = "all";
         }
 

@@ -14,6 +14,7 @@ import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface IMasteryDetail {
     @Nonnull
@@ -66,7 +67,7 @@ public interface IMasteryDetail {
     UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery);
 
     @Nonnull
-    List<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery);
+    Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery);
 
     @Nonnull
     default Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull WeaponType weaponType) {
@@ -87,12 +88,12 @@ public interface IMasteryDetail {
     }
 
     @Nonnull
-    default List<IPassiveSkill<?>> getPassiveSkills(@Nonnull WeaponType weaponType) {
+    default Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getPassiveSkills(mastery);
         }
-        return Collections.emptyList();
+        return Collections.emptySet();
     }
 
     @Nonnull
@@ -113,4 +114,15 @@ public interface IMasteryDetail {
 
     @Nullable
     Map<String, LvExpPair> getAllMasteries();
+
+    void resetMastery(@Nonnull IMastery mastery);
+
+    default void resetMastery(@Nonnull WeaponType weaponType) {
+        IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
+        if (mastery != null) {
+            resetMastery(mastery);
+        }
+    }
+
+    void sync();
 }

@@ -115,6 +115,7 @@ public final class I18ns {
 
         public static final String MasteryExp = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryExp));
         public static final String MasteryShow = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryShow));
+        public static final String MasteryReset = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryReset));
         public static final String Mastery = prefixCommandUnloc(Names.Command.Mastery);
         public static final String Mastery_Failure_NotSuchWeaponType = "commands.mastery.failure.noSuchWeaponType";
         public static final String Mastery_Failure_NaN = "commands.mastery.failure.NaN";
@@ -122,6 +123,10 @@ public final class I18ns {
 
         public static final String Mastery_Show_Level = "commands.mastery.level";
         public static final String Mastery_Show_Exp = "commands.mastery.exp";
+
+        public static final String Mastery_Yours_Is_Reset = "commands.mastery.yoursIsReset";
+        public static final String Mastery_Reset_Successfully = "commands.mastery.resetSuccessfully";
+        public static final String Mastery_Reset_Yours_Successfully = "commands.mastery.resetYourSuccessfully";
 
         public static String subCommand(@Nonnull String parent, @Nonnull String sub) {
             return parent + "." + sub;

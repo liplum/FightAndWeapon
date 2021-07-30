@@ -21,6 +21,7 @@ import net.minecraft.util.text.TextComponentString;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
+import java.util.LinkedList;
 import java.util.List;
 
 import static net.liplum.I18ns.Command.Mastery_Failure_NotSuchWeaponType;
@@ -97,7 +98,9 @@ public class MasteryShowCommand extends CommandBase {
     @Override
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
-            return getListOfStringsMatchingLastWord(args, MasteryRegistry.getAllMasteriesNames());
+            List<String> allMasteriesNames = new LinkedList<>(MasteryRegistry.getAllMasteriesNames());
+            allMasteriesNames.add(Names.Command.MasterySub.All);
+            return getListOfStringsMatchingLastWord(args, allMasteriesNames);
         }
         return Collections.emptyList();
     }

@@ -19,8 +19,8 @@ import net.minecraftforge.common.MinecraftForge;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
-import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class MasteryDetail implements IMasteryDetail {
     @Nonnull
@@ -80,7 +80,7 @@ public class MasteryDetail implements IMasteryDetail {
         return upgraded;
     }
 
-    private void sync() {
+    public void sync() {
         if (player.isServerWorld() && player instanceof EntityPlayerMP) {
             MessageManager.sendMessageToPlayer(
                     new MasteryMsg(masteryCapability.getAllMasteries()), (EntityPlayerMP) player
@@ -91,7 +91,7 @@ public class MasteryDetail implements IMasteryDetail {
     @Nonnull
     public Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
-        return mastery.getAttributeAmplifier(lv);
+        return mastery.getAttributeAmplifiers(lv);
     }
 
     @Nonnull
@@ -101,7 +101,7 @@ public class MasteryDetail implements IMasteryDetail {
     }
 
     @Nonnull
-    public List<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
+    public Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
         return mastery.getPassiveSkills(lv);
     }
@@ -110,6 +110,13 @@ public class MasteryDetail implements IMasteryDetail {
     @Nonnull
     public Map<String, LvExpPair> getAllMasteries() {
         return masteryCapability.getAllMasteries();
+    }
+
+    @Override
+    public void resetMastery(@Nonnull IMastery mastery) {
+        LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
+        levelAndExp.setLevel(LvExpPair.BaseLevel);
+        levelAndExp.setExp(LvExpPair.BaseExp);
     }
 
     @Nonnull
@@ -139,14 +146,24 @@ public class MasteryDetail implements IMasteryDetail {
 
         @Nonnull
         @Override
-        public List<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
-            return Collections.emptyList();
+        public Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
+            return Collections.emptySet();
         }
 
         @Override
         @Nullable
         public Map<String, LvExpPair> getAllMasteries() {
             return null;
+        }
+
+        @Override
+        public void resetMastery(@Nonnull IMastery mastery) {
+
+        }
+
+        @Override
+        public void sync() {
+
         }
     };
 }

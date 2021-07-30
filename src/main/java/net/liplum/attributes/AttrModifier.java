@@ -19,4 +19,14 @@ public class AttrModifier extends AttrDelta {
     public float getDeltaRate() {
         return deltaRate;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AttrModifier) {
+            AttrModifier b = (AttrModifier) obj;
+            return super.equals(obj) &&
+                    b.deltaRate.equals(this.deltaRate);
+        }
+        return false;
+    }
 }

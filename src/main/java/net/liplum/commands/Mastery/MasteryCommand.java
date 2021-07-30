@@ -11,6 +11,7 @@ public class MasteryCommand extends CommandTreeBase {
     public MasteryCommand() {
         this.addSubcommand(new MasteryExpCommand());
         this.addSubcommand(new MasteryShowCommand());
+        this.addSubcommand(new MasteryResetCommand());
     }
 
     @Nonnull

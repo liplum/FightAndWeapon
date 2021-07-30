@@ -27,6 +27,10 @@ public class Routine {
         return this;
     }
 
+    public int getNodesCount() {
+        return allNodes.size();
+    }
+
     @Nonnull
     public Map<String, Number> getAttributeAmplifiers(int level) {
         HashMap<String, Number> res = new HashMap<>();
@@ -61,9 +65,9 @@ public class Routine {
     }
 
     @Nonnull
-    public List<String> getPassiveSkills(int level) {
+    public Set<String> getPassiveSkills(int level) {
         int index = 0;
-        List<String> res = new LinkedList<>();
+        Set<String> res = new HashSet<>();
         for (Node node : allNodes) {
             if (index >= level) {
                 break;

@@ -52,7 +52,12 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessEvent}.)
      */
     @Nonnull
-    public static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nullable EntityPlayer player, @Nullable ItemStack itemStack, boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
+    public static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute,
+                                                @Nonnull WeaponBaseItem weapon,
+                                                @Nullable Modifier modifier,
+                                                @Nullable EntityPlayer player,
+                                                @Nullable ItemStack itemStack,
+                                                boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
         BasicAttrValue baseAttrValue = weapon.getCore().getValue(attribute);
         //Mastery

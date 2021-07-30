@@ -1,6 +1,7 @@
 package net.liplum.networks;
 
 import io.netty.buffer.ByteBuf;
+import net.liplum.api.registeies.MasteryRegistry;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.masteries.LvExpPair;
 import net.liplum.registeies.CapabilityRegistry;
@@ -39,11 +40,10 @@ public class MasteryMsg implements IMessage {
         data = new LinkedList<>();
         while (buf.isReadable()) {
             int strLength = buf.readInt();
+            String name = buf.readCharSequence(strLength, StandardCharsets.UTF_8).toString();
             int lv = buf.readInt();
             int exp = buf.readInt();
-            data.add(new Tuple<>(
-                    buf.readCharSequence(strLength, StandardCharsets.UTF_8).toString(),
-                    new LvExpPair(lv, exp)));
+            data.add(new Tuple<>(name, new LvExpPair(lv, exp)));
         }
     }
 
@@ -51,11 +51,13 @@ public class MasteryMsg implements IMessage {
     public void toBytes(ByteBuf buf) {
         for (Tuple<String, LvExpPair> entry : data) {
             String name = entry.getFirst();
-            LvExpPair lvAndExp = entry.getSecond();
-            buf.writeInt(name.length());
-            buf.writeCharSequence(name, StandardCharsets.UTF_8);
-            buf.writeInt(lvAndExp.getLevel());
-            buf.writeInt(lvAndExp.getExp());
+            if (MasteryRegistry.getMasteryOf(name) != null) {
+                LvExpPair lvAndExp = entry.getSecond();
+                buf.writeInt(name.length());
+                buf.writeCharSequence(name, StandardCharsets.UTF_8);
+                buf.writeInt(lvAndExp.getLevel());
+                buf.writeInt(lvAndExp.getExp());
+            }
         }
     }
 

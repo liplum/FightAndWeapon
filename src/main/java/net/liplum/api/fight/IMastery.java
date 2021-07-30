@@ -7,6 +7,7 @@ import net.liplum.attributes.IAttribute;
 import javax.annotation.Nonnull;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface IMastery {
     @Nonnull
@@ -18,10 +19,10 @@ public interface IMastery {
     WeaponType getWeaponType();
 
     @Nonnull
-    Map<IAttribute, AttrDelta> getAttributeAmplifier(int level);
+    Map<IAttribute, AttrDelta> getAttributeAmplifiers(int level);
 
     @Nonnull
-    List<IPassiveSkill<?>> getPassiveSkills(int level);
+    Set<IPassiveSkill<?>> getPassiveSkills(int level);
 
     @Nonnull
     UnlockedPSkillList getUnlockedPassiveSkills(int level);

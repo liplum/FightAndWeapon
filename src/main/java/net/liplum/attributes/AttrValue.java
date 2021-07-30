@@ -13,4 +13,13 @@ public abstract class AttrValue {
     public DataType getDataType() {
         return dataType;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if(obj instanceof AttrValue){
+            AttrValue b = (AttrValue) obj;
+            return b.dataType.equals(this.dataType);
+        }
+        return false;
+    }
 }

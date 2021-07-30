@@ -22,4 +22,15 @@ public class BasicAttrValue extends AttrValue {
     public float getFloat() {
         return value.floatValue();
     }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof BasicAttrValue) {
+            BasicAttrValue b = (BasicAttrValue) obj;
+            return super.equals(obj) &&
+                    b.value.equals(this.value);
+        }
+        return false;
+    }
 }

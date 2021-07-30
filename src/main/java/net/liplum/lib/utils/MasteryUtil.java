@@ -106,7 +106,7 @@ public final class MasteryUtil {
     }
 
     private static void addPassiveSkillsFromMasteryGiven(@Nonnull HashSet<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery) {
-        List<IPassiveSkill<?>> fromGiven = detail.getPassiveSkills(mastery);
+        Set<IPassiveSkill<?>> fromGiven = detail.getPassiveSkills(mastery);
         result.addAll(fromGiven);
     }
 

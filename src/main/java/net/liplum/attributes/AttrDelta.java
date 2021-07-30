@@ -20,4 +20,14 @@ public class AttrDelta extends AttrValue {
     public Number getDelta() {
         return delta;
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof AttrDelta) {
+            AttrDelta b = (AttrDelta) obj;
+            return super.equals(obj) &&
+                    b.delta.equals(this.delta);
+        }
+        return false;
+    }
 }

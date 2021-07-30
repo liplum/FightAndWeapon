@@ -11,14 +11,17 @@ itemGroup.faw_forges=FAW's Forges
 enchantment.faw.music=Music
 
 #Commands
-commands.inlay.usage=/inlay <Gemstone Name|remove>
+commands.inlay.usage=/inlay <Gemstone Name | remove>
 commands.inlay.failure.notFawWeapon=%s doesn't hold any weapon from Fight And Weapon mod in hand.
 commands.inlay.failure.noGemstone=Couldn't remove the gemstone from %s as their weapon has no gemstone.
 commands.inlay.failure.noSuchGemstone=Couldn't inlay the gemstone called %s as it doesn't exist in the mod.
 
 commands.mastery.usage=/mastery show|exp
 commands.mastery.exp.usage=/mastery <Weapon Type Name> <exp amount>
-commands.mastery.show.usage=/mastery <Weapon Type Name|all>
+commands.mastery.show.usage=/mastery <Weapon Type Name | all>
+commands.mastery.yoursIsReset=Your mastery is reset.
+commands.mastery.resetSuccessfully=you reset %s's mastery successfully.
+commands.mastery.resetYourSuccessfully=you reset your mastery successfully.
 commands.mastery.failure.noSuchWeaponType=Couldn't find the weapon type called %s, please ensure it's right.
 commands.mastery.failure.negativeNumber=Please enter a number more than 0.
 commands.mastery.failure.NaN=%s is not a number, please enter a true number.

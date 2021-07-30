@@ -4,7 +4,6 @@ import net.liplum.api.annotations.Developing;
 
 import javax.annotation.Nonnull;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 @Developing
@@ -22,5 +21,17 @@ public class UnlockedPSkillList {
     @Developing
     public List<Integer> getSlots() {
         return slots;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof UnlockedPSkillList) {
+            UnlockedPSkillList b = (UnlockedPSkillList) obj;
+            if (b.slots.size() != this.slots.size()) {
+                return false;
+            }
+            return b.slots.containsAll(this.slots);
+        }
+        return false;
     }
 }
