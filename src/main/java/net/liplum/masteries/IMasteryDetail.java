@@ -10,6 +10,7 @@ import net.liplum.attributes.IAttribute;
 import net.liplum.lib.math.MathUtil;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -109,4 +110,7 @@ public interface IMasteryDetail {
         }
         return attribute.emptyAttrDelta();
     }
+
+    @Nullable
+    Map<String, LvExpPair> getAllMasteries();
 }

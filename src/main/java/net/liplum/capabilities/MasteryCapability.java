@@ -1,26 +1,38 @@
 package net.liplum.capabilities;
 
+import net.liplum.MetaData;
 import net.liplum.Tags;
 import net.liplum.lib.nbt.NbtUtil;
+import net.liplum.masteries.IMasteryDetail;
 import net.liplum.masteries.LvExpPair;
+import net.liplum.masteries.MasteryDetail;
+import net.liplum.networks.MasteryMsg;
+import net.liplum.networks.MessageManager;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import net.minecraftforge.common.util.INBTSerializable;
+import net.minecraftforge.event.entity.EntityJoinWorldEvent;
+import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
+@Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
 
-    private HashMap<String, LvExpPair> allMasteries = new HashMap<>();
+    private Map<String, LvExpPair> allMasteries = new HashMap<>();
 
-    public HashMap<String, LvExpPair> shallowCloneAllMasters() {
-        return (HashMap<String, LvExpPair>) allMasteries.clone();
+    public Map<String, LvExpPair> getAllMasteries() {
+        return allMasteries;
     }
 
-    public void setAllMasteries(HashMap<String, LvExpPair> newMasters) {
+    public void setAllMasteries(Map<String, LvExpPair> newMasters) {
         allMasteries = newMasters;
     }
 
@@ -71,6 +83,23 @@ public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
             int lv = master.getInteger(Tags.Mastery.MasteryObject.Level);
             int exp = master.getInteger(Tags.Mastery.MasteryObject.Exp);
             allMasteries.put(type, new LvExpPair(lv, exp));
+        }
+    }
+
+    @SubscribeEvent
+    public static void onPlayerJoin(EntityJoinWorldEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            if (player.isServerWorld() && player instanceof EntityPlayerMP) {
+                IMasteryDetail masteryDetail = MasteryDetail.create(player);
+                Map<String, LvExpPair> all = masteryDetail.getAllMasteries();
+                if (all != null) {
+                    MessageManager.sendMessageToPlayer(
+                            new MasteryMsg(all), (EntityPlayerMP) player
+                    );
+                }
+            }
         }
     }
 }

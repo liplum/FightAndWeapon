@@ -8,9 +8,12 @@ import net.liplum.attributes.IAttribute;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.events.mastery.MasteryUpgradedEvent;
 import net.liplum.lib.utils.MasteryUtil;
+import net.liplum.networks.MasteryMsg;
+import net.liplum.networks.MessageManager;
 import net.liplum.registeies.CapabilityRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
@@ -62,15 +65,27 @@ public class MasteryDetail implements IMasteryDetail {
      */
     @Override
     public int addExp(@Nonnull IMastery mastery, int amount) {
+        if (amount <= 0) {
+            return 0;
+        }
         LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
         int formerLevel = levelAndExp.getLevel();
         levelAndExp.addExp(amount);
+        sync();
         int upgraded = MasteryUtil.tryUpgrade(levelAndExp);
         if (upgraded > 0) {
             MasteryUpgradedEvent upgradedEvent = new MasteryUpgradedEvent(player, mastery, formerLevel, upgraded);
             MinecraftForge.EVENT_BUS.post(upgradedEvent);
         }
         return upgraded;
+    }
+
+    private void sync() {
+        if (player.isServerWorld() && player instanceof EntityPlayerMP) {
+            MessageManager.sendMessageToPlayer(
+                    new MasteryMsg(masteryCapability.getAllMasteries()), (EntityPlayerMP) player
+            );
+        }
     }
 
     @Nonnull
@@ -89,6 +104,12 @@ public class MasteryDetail implements IMasteryDetail {
     public List<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
         return mastery.getPassiveSkills(lv);
+    }
+
+    @Override
+    @Nonnull
+    public Map<String, LvExpPair> getAllMasteries() {
+        return masteryCapability.getAllMasteries();
     }
 
     @Nonnull
@@ -120,6 +141,12 @@ public class MasteryDetail implements IMasteryDetail {
         @Override
         public List<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
             return Collections.emptyList();
+        }
+
+        @Override
+        @Nullable
+        public Map<String, LvExpPair> getAllMasteries() {
+            return null;
         }
     };
 }

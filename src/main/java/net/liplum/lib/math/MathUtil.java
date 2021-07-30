@@ -154,7 +154,9 @@ public class MathUtil {
      */
     public static int removeDigit(int number, int digit) {
         digit = fixMin(digit, 0);
-        return digit == 0 ? number : number / digit * 10;
+        return digit == 0 ?
+                number :
+                number / (digit * 10);
     }
 
 }

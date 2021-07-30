@@ -7,12 +7,13 @@ import javax.annotation.Nullable;
 import java.util.*;
 
 public class Routine {
+    @Nonnull
     private ArrayList<Node> allNodes = new ArrayList<>();
 
     public Routine() {
     }
 
-    public Routine(ArrayList<Node> allNodes) {
+    public Routine(@Nonnull ArrayList<Node> allNodes) {
         this.allNodes = allNodes;
     }
 
@@ -21,8 +22,9 @@ public class Routine {
         return allNodes;
     }
 
-    public void setAllNodes(@Nonnull ArrayList<Node> allNodes) {
+    public Routine setAllNodes(@Nonnull ArrayList<Node> allNodes) {
         this.allNodes = allNodes;
+        return this;
     }
 
     @Nonnull
@@ -30,7 +32,7 @@ public class Routine {
         HashMap<String, Number> res = new HashMap<>();
         int index = 0;
         for (Node node : allNodes) {
-            if(index >= level){
+            if (index >= level) {
                 break;
             }
             List<AttrAmp> amplifiers = node.getAttributeAmplifiers();
@@ -63,10 +65,11 @@ public class Routine {
         int index = 0;
         List<String> res = new LinkedList<>();
         for (Node node : allNodes) {
-            if(index >= level){
+            if (index >= level) {
                 break;
             }
-            res.addAll(node.getPassiveSkills());
+            List<String> ps = node.getPassiveSkills();
+            res.addAll(ps);
             index++;
         }
         return res;
@@ -77,7 +80,7 @@ public class Routine {
         int index = 0;
         List<Integer> res = new LinkedList<>();
         for (Node node : allNodes) {
-            if(index >= level){
+            if (index >= level) {
                 break;
             }
             Integer skill = node.getLockedPassiveSkill();

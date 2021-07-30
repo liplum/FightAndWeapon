@@ -2,6 +2,8 @@ package net.liplum;
 
 import net.liplum.api.annotations.LongSupport;
 
+import javax.annotation.Nonnull;
+
 @LongSupport
 public final class I18ns {
     @LongSupport
@@ -111,8 +113,8 @@ public final class I18ns {
         public static final String Inlay_Failure_NoSuchGemstone = "commands.inlay.failure.noSuchGemstone";
 
 
-        public static final String MasteryExp = prefixCommandUnloc(Names.Command.MasterySub.MasteryExp);
-        public static final String MasteryShow = prefixCommandUnloc(Names.Command.MasterySub.MasteryShow);
+        public static final String MasteryExp = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryExp));
+        public static final String MasteryShow = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryShow));
         public static final String Mastery = prefixCommandUnloc(Names.Command.Mastery);
         public static final String Mastery_Failure_NotSuchWeaponType = "commands.mastery.failure.noSuchWeaponType";
         public static final String Mastery_Failure_NaN = "commands.mastery.failure.NaN";
@@ -120,6 +122,10 @@ public final class I18ns {
 
         public static final String Mastery_Show_Level = "commands.mastery.level";
         public static final String Mastery_Show_Exp = "commands.mastery.exp";
+
+        public static String subCommand(@Nonnull String parent, @Nonnull String sub) {
+            return parent + "." + sub;
+        }
     }
 
     @LongSupport

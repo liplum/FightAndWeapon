@@ -4,9 +4,8 @@ import net.liplum.api.annotations.Developing;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.ListIterator;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import static net.liplum.masteries.Mastery.MaxLevel;
 
@@ -24,7 +23,8 @@ public class RoutineBuilder implements IRoutineReader {
     public Routine toRoutine() {
         toNextLv();
         truncate();
-        return new Routine(new ArrayList<>(nodes));
+        List<Node> cleaned = nodes.stream().filter(Objects::nonNull).collect(Collectors.toList());
+        return new Routine(new ArrayList<>(cleaned));
     }
 
     private void truncate() {
@@ -45,8 +45,11 @@ public class RoutineBuilder implements IRoutineReader {
         return this;
     }
 
-    public void repeatOnce(){
-        iterator.add(this.currentGetter.previous);
+    public void repeatOnce() {
+        @Nullable Node previous = this.currentGetter.previous;
+        if (previous != null) {
+            iterator.add(previous);
+        }
         if (iterator.hasNext()) {
             iterator.next();
         }

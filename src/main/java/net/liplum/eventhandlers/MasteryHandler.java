@@ -18,7 +18,7 @@ public class MasteryHandler {
         MasteryCapability oldOne = event.getOriginal().getCapability(CapabilityRegistry.Mastery_Capability, null);
         MasteryCapability newOne = event.getEntityPlayer().getCapability(CapabilityRegistry.Mastery_Capability, null);
         if (newOne != null && oldOne != null) {
-            newOne.setAllMasteries(oldOne.shallowCloneAllMasters());
+            newOne.setAllMasteries(oldOne.getAllMasteries());
         }
     }
 

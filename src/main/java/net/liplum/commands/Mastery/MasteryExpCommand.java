@@ -70,7 +70,7 @@ public class MasteryExpCommand extends CommandBase {
     @Nonnull
     @Override
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        if (args.length == 2) {
+        if (args.length == 1) {
             return getListOfStringsMatchingLastWord(args, MasteryRegistry.getAllMasteriesNames());
         }
         return Collections.emptyList();

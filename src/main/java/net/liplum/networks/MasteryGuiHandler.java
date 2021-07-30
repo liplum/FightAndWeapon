@@ -21,7 +21,7 @@ import java.util.UUID;
 
 public class MasteryGuiHandler implements IDataPacketHandler {
     public static final MasteryGuiHandler instance = new MasteryGuiHandler();
-    private static final String ChannelName = ChannelNames.Master.GUI;
+    private static final String ChannelName = ChannelNames.Mastery.GUI;
 
     public static MasteryGuiHandler getInstance() {
         return instance;
