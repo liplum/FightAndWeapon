@@ -1,4 +1,4 @@
-package net.liplum.items.weapons.rangedweapon;
+package net.liplum.items.weapons.ranged;
 
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
@@ -8,8 +8,8 @@ import net.minecraft.item.EnumAction;
 import javax.annotation.Nonnull;
 
 @LongSupport
-public class RangedWeaponCores {
-    public static final RangedWeaponCore Sickle = new RangedWeaponCore() {
+public class RangedCores {
+    public static final RangedCore Sickle = new RangedCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
@@ -19,12 +19,12 @@ public class RangedWeaponCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.RangedWeapon.SickleItem
+                    Names.Item.Ranged.SickleItem
             );
         }
     };
 
-    public static final RangedWeaponCore ChainedHammer = new RangedWeaponCore() {
+    public static final RangedCore ChainedHammer = new RangedCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
@@ -36,12 +36,12 @@ public class RangedWeaponCores {
             builder.set(
                     EnumAction.BOW
             ).set(
-                    Names.Item.RangedWeapon.ChainedHammerItem
+                    Names.Item.Ranged.ChainedHammerItem
             );
         }
     };
 
-    public static final RangedWeaponCore MeteorHammer = new RangedWeaponCore() {
+    public static final RangedCore MeteorHammer = new RangedCore() {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
@@ -53,7 +53,7 @@ public class RangedWeaponCores {
             builder.set(
                     EnumAction.BOW
             ).set(
-                    Names.Item.RangedWeapon.MeteorHammerItem
+                    Names.Item.Ranged.MeteorHammerItem
             );
         }
     };

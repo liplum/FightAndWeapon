@@ -1,4 +1,4 @@
-package net.liplum.skills.master;
+package net.liplum.skills.mastery;
 
 import net.liplum.Names;
 import net.liplum.WeaponTypes;
@@ -13,8 +13,10 @@ import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.EntityUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.world.World;
+import net.minecraftforge.event.entity.living.LivingHurtEvent;
 
 import javax.annotation.Nonnull;
 
@@ -25,7 +27,7 @@ import static net.liplum.Attributes.Sword.Sweep;
  * There are all the passive skills of master in FAW mod.
  */
 @Developing
-public final class MasterPassiveSkills {
+public final class MasteryPassiveSkills {
     public final static IPassiveSkill<WeaponAttackEvent.Attacked> Sweeping =
             new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.Sweeping, WeaponAttackEvent.Attacked.class) {
                 @Nonnull
@@ -64,4 +66,27 @@ public final class MasterPassiveSkills {
                     return PSkillResult.Fail;
                 }
             };
+
+    public final static IPassiveSkill<LivingHurtEvent> ManaBarrier =
+            new PassiveSkill<LivingHurtEvent>(Names.PassiveSkill.ManaBarrier, LivingHurtEvent.class, 100 * 20) {
+                @Nonnull
+                @Override
+                public PSkillResult onTrigger(@Nonnull LivingHurtEvent event) {
+                    EntityLivingBase entity = event.getEntityLiving();
+                    if (entity instanceof EntityPlayer) {
+                        event.setAmount(0);
+                        World world = entity.world;
+                        for (EntityLivingBase e :
+                                world.getEntitiesWithinAABB(EntityLivingBase.class, entity.getEntityBoundingBox().grow(1.5D, 0.25D, 1.5D))) {
+                            EntityUtil.knockBackForward(entity, e, 0.5F);
+                        }
+                        return PSkillResult.Complete;
+                    }
+                    return PSkillResult.Fail;
+                }
+            };
+
+    //You must call it to load this class and all the static fields.
+    public static void load() {
+    }
 }

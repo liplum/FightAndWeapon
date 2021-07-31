@@ -5,7 +5,7 @@ import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.FawDamage;
-import net.liplum.lib.math.Angle;
+import net.liplum.lib.math.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -40,6 +40,10 @@ public class EntityUtil {
         }
     }
 
+    public static boolean isCreative(@Nullable EntityPlayer player) {
+        return player != null && player.isCreative();
+    }
+
     public static boolean spawnEntityIfServer(@Nonnull World world, @Nonnull Entity entity) {
         if (!world.isRemote) {
             world.spawnEntity(entity);
@@ -52,6 +56,13 @@ public class EntityUtil {
         object.knockBack(subject, strength,
                 MathHelper.sin(Angle.toRadian(subject.rotationYaw)),
                 -MathHelper.cos(Angle.toRadian(subject.rotationYaw)));
+    }
+
+    public static void knockBackForward(@Nonnull EntityLivingBase subject, @Nonnull EntityLivingBase object, float strength) {
+        Point2D sub = P2D.toPosition(subject);
+        Point2D obj = P2D.toPosition(object);
+        Point2D v = obj.minus(sub);
+        object.knockBack(subject, strength, v.x, v.y);
     }
 
     public static void spawnSweepParticles(@Nonnull EntityLivingBase entity) {

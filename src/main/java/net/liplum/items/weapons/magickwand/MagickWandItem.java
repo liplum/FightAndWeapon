@@ -17,11 +17,6 @@ public class MagickWandItem extends WeaponBaseItem {
         this.core = weaponCore;
     }
 
-    @Override
-    public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
-        return true;
-    }
-
     @Nonnull
     @Override
     public MagickWandCore getConcreteCore() {

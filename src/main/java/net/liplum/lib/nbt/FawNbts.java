@@ -113,7 +113,7 @@ public final class FawNbts {
     }
 
 
-    public static final class Master {
+    public static final class Mastery {
 
     }
 

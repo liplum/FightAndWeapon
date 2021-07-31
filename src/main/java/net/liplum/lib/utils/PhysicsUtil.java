@@ -49,7 +49,4 @@ public class PhysicsUtil {
         e.setPosition(x, y, z);
     }
 
-    public static Point2D get2DPosition(@Nonnull Entity e) {
-        return new Point2D(e.posX, e.posZ);
-    }
 }

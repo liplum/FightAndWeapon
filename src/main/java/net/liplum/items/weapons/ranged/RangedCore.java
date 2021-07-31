@@ -1,4 +1,4 @@
-package net.liplum.items.weapons.rangedweapon;
+package net.liplum.items.weapons.ranged;
 
 import net.liplum.Names;
 import net.liplum.WeaponTypes;
@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
 
 import static net.liplum.Attributes.Generic.*;
 
-public abstract class RangedWeaponCore extends WeaponCore {
+public abstract class RangedCore extends WeaponCore {
 
     private static final IPassiveSkill<FawWeaponLeftClickEvent> RangedWeaponPS =
             new PassiveSkill<FawWeaponLeftClickEvent>(Names.PassiveSkill.WeaponCore.RangedWeaponPS, FawWeaponLeftClickEvent.class) {
@@ -77,7 +77,7 @@ public abstract class RangedWeaponCore extends WeaponCore {
     @Nonnull
     @Override
     public WeaponType getWeaponType() {
-        return WeaponTypes.RangedWeapon;
+        return WeaponTypes.Ranged;
     }
 
     @Override

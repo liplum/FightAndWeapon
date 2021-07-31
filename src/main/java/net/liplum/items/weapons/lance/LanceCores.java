@@ -150,7 +150,7 @@ public final class LanceCores {
             Vector2D look = P2D.toV2D(player.getLookVec());
             int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
-                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, PhysicsUtil.get2DPosition(player), PhysicsUtil.get2DPosition(e), 1.5, sprintLength)) {
+                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, P2D.toPosition(player), P2D.toPosition(e), 1.5, sprintLength)) {
                     weapon.dealDamage(itemStack, player, e, EntityUtil.genDamageSource(player), strength);
                     damagedEntityCount++;
                 }

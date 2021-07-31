@@ -1,7 +1,6 @@
-package net.liplum.items.weapons.rangedweapon;
+package net.liplum.items.weapons.ranged;
 
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.items.weapons.battleaxe.BattleAxeCore;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
@@ -10,9 +9,9 @@ import javax.annotation.Nonnull;
 
 public class SickleItem extends WeaponBaseItem {
     @Nonnull
-    private final RangedWeaponCore core;
+    private final RangedCore core;
 
-    public SickleItem(@Nonnull RangedWeaponCore weaponCore) {
+    public SickleItem(@Nonnull RangedCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
     }
@@ -24,7 +23,7 @@ public class SickleItem extends WeaponBaseItem {
 
     @Nonnull
     @Override
-    public RangedWeaponCore getConcreteCore() {
+    public RangedCore getConcreteCore() {
         return core;
     }
 }

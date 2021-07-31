@@ -6,6 +6,7 @@ import net.liplum.proxies.ProxyBase;
 import net.liplum.registeies.CapabilityRegistry;
 import net.liplum.registeies.CommandRegistry;
 import net.liplum.registeies.FawNetworkRegistry;
+import net.liplum.skills.mastery.MasteryPassiveSkills;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -44,6 +45,8 @@ public class FawMod {
         Logger.info("Weapon Type Component initialized successfully.");
         WeaponParts.load();
         Logger.info("Weapon Part Component initialized successfully.");
+        MasteryPassiveSkills.load();
+        Logger.info("Mastery Passive Skill Component initialized successfully.");
         Masteries.load();
         Logger.info("Mastery Component initialized successfully.");
         Proxy.preInit(event);

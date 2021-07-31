@@ -22,8 +22,10 @@ import net.liplum.items.weapons.harp.HarpCores;
 import net.liplum.items.weapons.harp.HarpItem;
 import net.liplum.items.weapons.lance.LanceCores;
 import net.liplum.items.weapons.lance.LanceItem;
-import net.liplum.items.weapons.rangedweapon.RangedWeaponCores;
-import net.liplum.items.weapons.rangedweapon.SickleItem;
+import net.liplum.items.weapons.magickwand.MagickWandCores;
+import net.liplum.items.weapons.magickwand.MagickWandItem;
+import net.liplum.items.weapons.ranged.RangedCores;
+import net.liplum.items.weapons.ranged.SickleItem;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
@@ -89,10 +91,12 @@ public final class ItemRegistry {
     public static final Item Harp_Item = weapon(new HarpItem(HarpCores.Normal), Names.Item.Harp.HarpItem);
 
     //Ranged Weapon
-    public static final Item Sickle_Item = weapon(new SickleItem(RangedWeaponCores.Sickle), Names.Item.RangedWeapon.SickleItem);
+    public static final Item Sickle_Item = weapon(new SickleItem(RangedCores.Sickle), Names.Item.Ranged.SickleItem);
+
+    //Magick Wand
+    public static final Item Gemsword_Item = weapon(new MagickWandItem(MagickWandCores.Gemsword), Names.Item.MagickWand.GemswordItem);
 
     //Bow
-
     public static final Item Simple_Bow_Item = weapon(new BowItem(BowCores.Empty), Names.Item.Bow.SimpleBow);
 
     //Block

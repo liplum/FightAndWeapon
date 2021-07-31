@@ -9,6 +9,7 @@ import net.liplum.lib.Delegate;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.utils.FawI18n;
 import net.liplum.lib.utils.FawItemUtil;
+import net.liplum.lib.utils.Utils;
 import net.liplum.tooltips.*;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.util.text.TextFormatting;
@@ -119,13 +120,13 @@ public final class TooltipMiddlewares {
 
     @Nonnull
     public static final IThroughable ShowPassiveSkills = pipe -> {
-        Collection<IPassiveSkill<?>> passiveSkills = pipe.getContext().passiveSkills;
+        TooltipContext context = pipe.getContext();
+        Collection<IPassiveSkill<?>> passiveSkills = context.gemstonePSkills;
+        Collection<IPassiveSkill<?>> unlockedPSkills = context.unlockedPSkills;
         LinkedList<String> tooltips = new LinkedList<>();
-        if (passiveSkills != null) {
-            for (IPassiveSkill<?> passiveSkill : passiveSkills) {
-                if (passiveSkill.isShownInTooltip()) {
-                    FawItemUtil.addPassiveSkillTooltip(tooltips, passiveSkill);
-                }
+        for (IPassiveSkill<?> passiveSkill : Utils.mergeIterator(passiveSkills, unlockedPSkills)) {
+            if (passiveSkill.isShownInTooltip()) {
+                FawItemUtil.addPassiveSkillTooltip(tooltips, passiveSkill);
             }
         }
         return new TooltipPart(tooltips);

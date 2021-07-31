@@ -5,8 +5,11 @@ import cern.colt.matrix.DoubleMatrix2D;
 import cern.colt.matrix.impl.DenseDoubleMatrix1D;
 import cern.colt.matrix.impl.DenseDoubleMatrix2D;
 import cern.colt.matrix.linalg.Algebra;
+import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
+
+import javax.annotation.Nonnull;
 
 public class P3D {
 
@@ -113,5 +116,10 @@ public class P3D {
                 Algebra.DEFAULT.mult(
                         genPitchRotateMatrix(pitch), genYawRotateMatrix(yaw))
                 , genRollRotateMatrix(roll));
+    }
+
+
+    public static Point3D toPosition(@Nonnull Entity e) {
+        return new Point3D(e.posX, e.posY, e.posZ);
     }
 }

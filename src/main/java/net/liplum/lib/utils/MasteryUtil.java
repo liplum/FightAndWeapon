@@ -13,7 +13,10 @@ import net.liplum.masteries.MasteryDetail;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class MasteryUtil {
     private static final int[] RequiredExpSheet = new int[Mastery.MaxLevel];//default maximum is 100.
@@ -52,21 +55,24 @@ public final class MasteryUtil {
     public static int tryUpgrade(LvExpPair lvAndExp) {
         int lv = lvAndExp.getLevel();
         int exp = lvAndExp.getExp();
-        int required = getRequiredExpToUpgrade(lv);
-        int upgraded = 0;
+        try {
+            int required = getRequiredExpToUpgrade(lv);
+            int upgraded = 0;
 
-        while (exp >= required) {
-            exp -= required;
-            lvAndExp.setLevel(lv + 1);
-            lvAndExp.setExp(exp);
-            upgraded++;
+            while (exp >= required) {
+                exp -= required;
+                lvAndExp.setLevel(lv + 1);
+                lvAndExp.setExp(exp);
+                upgraded++;
 
-            lv = lvAndExp.getLevel();
-            exp = lvAndExp.getExp();
-            required = getRequiredExpToUpgrade(lv);
+                lv = lvAndExp.getLevel();
+                exp = lvAndExp.getExp();
+                required = getRequiredExpToUpgrade(lv);
+            }
+            return upgraded;
+        } catch (IllegalArgumentException e) {
+            return 0;
         }
-
-        return upgraded;
     }
 
     public static boolean canUpgrade(LvExpPair lvAndExp) {
@@ -99,14 +105,14 @@ public final class MasteryUtil {
         return res;
     }
 
-    private static void addPassiveSkillsFromMasteryGiven(@Nonnull HashSet<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery) {
+    private static void addPassiveSkillsFromMasteryGiven(@Nonnull Set<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery) {
         Set<IPassiveSkill<?>> fromGiven = detail.getPassiveSkills(mastery);
         result.addAll(fromGiven);
     }
 
-    private static void addPassiveSkillsFromUnlock(@Nonnull HashSet<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery, @Nonnull WeaponCore weaponCore) {
+    private static void addPassiveSkillsFromUnlock(@Nonnull Set<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery, @Nonnull WeaponCore weaponCore) {
         UnlockedPSkillList unlock = detail.getUnlockedPSkills(mastery);
-        List<IPassiveSkill<?>> fromUnlock = weaponCore.unlockPassiveSkills(unlock);
+        Set<IPassiveSkill<?>> fromUnlock = weaponCore.unlockPassiveSkills(unlock);
         result.addAll(fromUnlock);
     }
 

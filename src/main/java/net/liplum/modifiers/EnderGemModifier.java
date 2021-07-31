@@ -57,7 +57,7 @@ public final class EnderGemModifier {
             Vector2D look = P2D.toV2D(player.getLookVec());
             int damagedCount = 0;
             for (EntityLivingBase e : allInRange) {
-                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, PhysicsUtil.get2DPosition(player), PhysicsUtil.get2DPosition(e), 2, sprintLength)) {
+                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, P2D.toPosition(player), P2D.toPosition(e), 2, sprintLength)) {
                     e.attackEntityFrom(EntityUtil.genDamageSource(player), strength);
                     damagedCount++;
                 }

@@ -1,10 +1,13 @@
 package net.liplum.masteries;
 
+import net.liplum.api.fight.IPassiveSkill;
+
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Node {
     @Nonnull
@@ -66,6 +69,12 @@ public class Node {
     @Nonnull
     public Node addPassiveSkills(String... passiveSkills) {
         this.passiveSkills.addAll(Arrays.asList(passiveSkills));
+        return this;
+    }
+
+    @Nonnull
+    public Node addPassiveSkills(IPassiveSkill<?>... passiveSkills) {
+        this.passiveSkills.addAll(Arrays.stream(passiveSkills).map(IPassiveSkill::getRegisterName).collect(Collectors.toList()));
         return this;
     }
 

@@ -15,8 +15,8 @@ import static net.liplum.Attributes.Generic.AbilityPower;
 import static net.liplum.Attributes.Generic.Strength;
 
 public class PSkills {
-    public static final IPassiveSkill<AttributeAccessEvent> Ap2Strength =
-            new PassiveSkill<AttributeAccessEvent>(Names.PassiveSkill.Ap2Strength, AttributeAccessEvent.class) {
+    public static final IPassiveSkill<AttributeAccessEvent> AP2Strength =
+            new PassiveSkill<AttributeAccessEvent>(Names.PassiveSkill.AP2Strength, AttributeAccessEvent.class) {
                 @Nonnull
                 @Override
                 public PSkillResult onTrigger(@Nonnull AttributeAccessEvent event) {
@@ -30,5 +30,5 @@ public class PSkills {
                     }
                     return PSkillResult.Fail;
                 }
-            }.setShownInTooltip(false);
+            };
 }

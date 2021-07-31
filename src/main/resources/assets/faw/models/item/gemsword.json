@@ -1,0 +1,9 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "faw:items/gemsword/handle",
+    "layer1": "faw:items/gemsword/background",
+    "layer2": "faw:items/gemsword/foreground",
+    "layer3": "faw:items/gemsword/guard"
+  }
+}

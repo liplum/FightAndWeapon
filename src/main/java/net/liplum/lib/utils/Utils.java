@@ -160,32 +160,50 @@ public class Utils {
 
     @SafeVarargs
     @Nonnull
+    public static <T> Iterable<T> mergeIterator(@Nonnull Stream<T>... streams) {
+        return () -> mergeStream(streams).iterator();
+    }
+
+    @SafeVarargs
+    @Nonnull
     public static <T> Stream<T> mergeStream(@Nonnull Stream<T>... streams) {
         if (streams.length == 0) {
-            throw new IllegalArgumentException();
+            return Stream.empty();
         }
+        Stream<T> firstStream = streams[0] != null ? streams[0] : Stream.empty();
         if (streams.length == 1) {
-            return streams[0];
+            return firstStream;
         }
-        Stream<T> res = streams[0];
+        Stream<T> res = firstStream;
         for (int i = 1; i < streams.length; i++) {
-            res = Stream.concat(res, streams[i]);
+            if (streams[i] != null) {
+                res = Stream.concat(res, streams[i]);
+            }
         }
         return res;
     }
 
     @SafeVarargs
     @Nonnull
+    public static <T> Iterable<T> mergeIterator(@Nonnull Collection<T>... collections) {
+        return () -> mergeStream(collections).iterator();
+    }
+
+    @SafeVarargs
+    @Nonnull
     public static <T> Stream<T> mergeStream(@Nonnull Collection<T>... collections) {
         if (collections.length == 0) {
-            throw new IllegalArgumentException();
+            return Stream.empty();
         }
+        Stream<T> firstStream = collections[0] != null ? collections[0].stream() : Stream.empty();
         if (collections.length == 1) {
-            return collections[0].stream();
+            return firstStream;
         }
-        Stream<T> res = collections[0].stream();
+        Stream<T> res = firstStream;
         for (int i = 1; i < collections.length; i++) {
-            res = Stream.concat(res, collections[i].stream());
+            if (collections[i] != null) {
+                res = Stream.concat(res, collections[i].stream());
+            }
         }
         return res;
     }

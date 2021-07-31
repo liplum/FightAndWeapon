@@ -20,10 +20,7 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 
 import javax.annotation.Nonnull;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 import static net.liplum.Attributes.Generic.*;
@@ -142,8 +139,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
 
     @Nonnull
     @Developing
-    public List<IPassiveSkill<?>> unlockPassiveSkills(@Nonnull UnlockedPSkillList list) {
-        List<IPassiveSkill<?>> skills = new LinkedList<>();
+    public Set<IPassiveSkill<?>> unlockPassiveSkills(@Nonnull UnlockedPSkillList list) {
+        Set<IPassiveSkill<?>> skills = new HashSet<>();
         for (int slot : list.getSlots()) {
             IPassiveSkill<?> skill = lockedPassiveSkills.get(slot);
             if (skill != null) {

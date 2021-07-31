@@ -1,20 +1,18 @@
 package net.liplum.items.weapons.bow;
 
+import com.google.common.base.Supplier;
 import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.items.weapons.battleaxe.BattleAxeCore;
-import net.liplum.lib.utils.FawItemUtil;
-import net.liplum.lib.utils.FawUtil;
-import net.liplum.lib.utils.GemUtil;
-import net.liplum.lib.utils.ItemUtil;
+import net.liplum.lib.utils.*;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -44,16 +42,14 @@ public class BowItem extends WeaponBaseItem {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         if (!FawItemUtil.isWeaponBroken(held)) {
-            if (playerIn.isCreative()) {
-                boolean hasAmmo = FawItemUtil.hasAmmo(playerIn, core);
-                ActionResult<ItemStack> newResult = ForgeEventFactory.onArrowNock(held, worldIn, playerIn, handIn, hasAmmo);
-                if (newResult != null) {
-                    return newResult;
-                }
-                if (hasAmmo) {
-                    playerIn.setActiveHand(handIn);
-                    result = EnumActionResult.SUCCESS;
-                }
+            boolean hasAmmo = FawItemUtil.hasAmmo(playerIn, core);
+            ActionResult<ItemStack> newResult = ForgeEventFactory.onArrowNock(held, worldIn, playerIn, handIn, hasAmmo);
+            if (newResult != null) {
+                return newResult;
+            }
+            if (hasAmmo || playerIn.isCreative()) {
+                playerIn.setActiveHand(handIn);
+                result = EnumActionResult.SUCCESS;
             }
         }
         return ActionResult.newResult(result, held);
@@ -83,6 +79,9 @@ public class BowItem extends WeaponBaseItem {
         //float f = getArrowVelocity(i);
         if (!worldIn.isRemote) {
             EntityArrow arrowEntity = arrowItem.createArrow(worldIn, stack, entityLiving);
+            if (EntityUtil.isCreative(player)) {
+                arrowEntity.pickupStatus = EntityArrow.PickupStatus.CREATIVE_ONLY;
+            }
             arrowEntity.shoot(entityLiving, entityLiving.rotationPitch, entityLiving.rotationYaw, 0F, 3F, 1F);
             /*if (f == 1.0F) {
                 arrowEntity.setIsCritical(true);
@@ -92,7 +91,7 @@ public class BowItem extends WeaponBaseItem {
             worldIn.spawnEntity(arrowEntity);
         }
         entityLiving.playSound(SoundEvents.ENTITY_ARROW_SHOOT, 1F, 1F);
-        if (!(player != null && player.isCreative())) {
+        if (!EntityUtil.isCreative(player)) {
             ammo.shrink(1);
         }
 

@@ -118,8 +118,8 @@ public class MasteryDetail implements IMasteryDetail {
         LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
         int formerLevel = levelAndExp.getLevel();
         levelAndExp.addExp(amount);
-        sync();
         int upgraded = MasteryUtil.tryUpgrade(levelAndExp);
+        sync();
         if (upgraded > 0) {
             MasteryUpgradedEvent upgradedEvent = new MasteryUpgradedEvent(player, mastery, formerLevel, upgraded);
             MinecraftForge.EVENT_BUS.post(upgradedEvent);

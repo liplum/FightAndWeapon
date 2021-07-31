@@ -190,7 +190,7 @@ public final class Attributes {
     @LongSupport
     public static final class Bow {
         public static final IAttribute ProjectileVelocity = new Attribute()
-                .setRegisterName(Names.Attribute.Bow.ProjectileVelocity)
+                .setRegisterName(Names.Attribute.Bow.Force)
                 .setDataType(DataType.Float)
                 .setDefaultValue(1F)
                 .setComputeType(ComputeType.Full)

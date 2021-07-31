@@ -61,8 +61,6 @@ public final class Names {
 
         public static final class Sword {
             public static final String TypeName = "sword";
-            public static final String MagicSwordItem = "magic_sword";
-            public static final String GemstoneSwordItem = "gemstone_sword";
         }
 
         public static final class Bow {
@@ -72,10 +70,12 @@ public final class Names {
 
         public static final class MagickWand {
             public static final String TypeName = "magick_wand";
+            public static final String GemswordItem = "gemsword";
+            public static final String MagickSwordItem = "magick_sword";
         }
 
-        public static final class RangedWeapon {
-            public static final String TypeName = "ranged_weapon";
+        public static final class Ranged {
+            public static final String TypeName = "ranged";
             public static final String SickleItem = "sickle";
             public static final String ChainedHammerItem = "chained_hammer";
             public static final String MeteorHammerItem = "meteor_hammer";
@@ -116,7 +116,7 @@ public final class Names {
         }
 
         public static final class Bow {
-            public static final String ProjectileVelocity = "ProjectileVelocity";
+            public static final String Force = "Force";
         }
     }
 
@@ -205,7 +205,7 @@ public final class Names {
         public static final String ExpMending = "ExpMending";
         public static final String FrostWalker = "FrostWalker";
         public static final String Sweeping = "Sweeping";
-        public static final String Ap2Strength = "Ap2Strength";
+        public static final String AP2Strength = "AP2Strength";
         public static final String Combo = "Combo";
         public static final String ManaBarrier = "ManaBarrier";
 

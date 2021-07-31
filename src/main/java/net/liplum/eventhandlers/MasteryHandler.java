@@ -24,10 +24,12 @@ public class MasteryHandler {
 
     @SubscribeEvent
     public static void onMasteryUpgraded(MasteryUpgradedEvent event) {
-        EntityPlayer player = event.player;
-        IMastery mastery = event.mastery;
-        int newLevel = event.newLevel;
-        TextComponentString text = new TextComponentString("Now you are " + newLevel + " in " + mastery.getRegisterName());
-        player.sendMessage(text);
+        if (!event.player.world.isRemote) {
+            EntityPlayer player = event.player;
+            IMastery mastery = event.mastery;
+            int newLevel = event.newLevel;
+            TextComponentString text = new TextComponentString("Now you are " + newLevel + " in " + mastery.getRegisterName());
+            player.sendMessage(text);
+        }
     }
 }

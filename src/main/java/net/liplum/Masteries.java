@@ -3,10 +3,10 @@ package net.liplum;
 import net.liplum.masteries.AttrAmp;
 import net.liplum.masteries.Mastery;
 import net.liplum.masteries.RoutineBuilder;
+import net.liplum.skills.mastery.MasteryPassiveSkills;
 
 import static net.liplum.Attributes.Generic.AbilityPower;
 import static net.liplum.Attributes.Generic.Strength;
-import static net.liplum.Names.PassiveSkill.ManaBarrier;
 
 public final class Masteries {
     public static final Mastery Lance = new Mastery(WeaponTypes.Lance)
@@ -42,10 +42,16 @@ public final class Masteries {
                     .node(n -> n.lockedPSkill(3))//10
                     .node(n -> n.addAttrAmps(AttrAmp.create(AbilityPower, 2)))//11
                     .node(n -> n.addAttrAmps(AttrAmp.create(AbilityPower, 2)))//12
-                    .node(n -> n.addPassiveSkills(ManaBarrier))//13
+                    .node(n -> n.addPassiveSkills(MasteryPassiveSkills.ManaBarrier))//13
                     .node(n -> n.lockedPSkill(4))//14
                     .node(n -> n.addAttrAmps(AttrAmp.create(AbilityPower, 4)))//15
                     .toRoutine());
+
+    public static final Mastery Bow = new Mastery(WeaponTypes.Bow);
+
+    public static final Mastery Ranged = new Mastery(WeaponTypes.Ranged);
+
+    public static final Mastery Sword = new Mastery(WeaponTypes.Sword);
 
 
     //You must call it to load this class and all the static fields.

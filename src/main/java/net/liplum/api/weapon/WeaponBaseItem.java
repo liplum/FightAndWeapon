@@ -2,6 +2,7 @@ package net.liplum.api.weapon;
 
 import com.google.common.collect.Multimap;
 import net.liplum.FawBehaviors;
+import net.liplum.FawMod;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
@@ -80,25 +81,29 @@ public abstract class WeaponBaseItem extends FawItem {
         if (player == null) {
             return;
         }
-        boolean vanillaAdvanced = flagIn.isAdvanced();
-        boolean shiftPressed = Utils.isShiftDown();
-        boolean ctrlPressed = Utils.isCtrlDown();
-        boolean altPressed = Utils.isAltDown();
-        TooltipOption tooltipOption = new TooltipOption(shiftPressed, altPressed, ctrlPressed, vanillaAdvanced);
-        IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
-        Modifier modifier = null;
-        if (gemstone != null) {
-            modifier = gemstone.getModifierOf(weaponCore);
+        try {
+            boolean vanillaAdvanced = flagIn.isAdvanced();
+            boolean shiftPressed = Utils.isShiftDown();
+            boolean ctrlPressed = Utils.isCtrlDown();
+            boolean altPressed = Utils.isAltDown();
+            TooltipOption tooltipOption = new TooltipOption(shiftPressed, altPressed, ctrlPressed, vanillaAdvanced);
+            IGemstone gemstone = GemUtil.getGemstoneFrom(stack);
+            Modifier modifier = null;
+            if (gemstone != null) {
+                modifier = gemstone.getModifierOf(weaponCore);
+            }
+            AttrCalculator calculator = new AttrCalculator()
+                    .weapon(this)
+                    .modifier(modifier)
+                    .entity(player)
+                    .itemStack(stack)
+                    .setUseSpecialValueWhenWeaponBroken(false);
+            TooltipContext context = new TooltipContext(stack, this, calculator, tooltipOption, player);
+            IWeaponTooltipBuilder builder = new WeaponTooltipBuilder(context);
+            tooltip.addAll(builder.build().getTooltip());
+        } catch (Exception e) {
+            FawMod.Logger.error(e.getClass().getName() + e.getMessage());
         }
-        AttrCalculator calculator = new AttrCalculator()
-                .weapon(this)
-                .modifier(modifier)
-                .entity(player)
-                .itemStack(stack)
-                .setUseSpecialValueWhenWeaponBroken(false);
-        TooltipContext context = new TooltipContext(stack, this, calculator, tooltipOption);
-        IWeaponTooltipBuilder builder = new WeaponTooltipBuilder(context);
-        tooltip.addAll(builder.build().getTooltip());
     }
 
     @Override

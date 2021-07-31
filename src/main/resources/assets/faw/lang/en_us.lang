@@ -36,6 +36,9 @@ weaponType.lance=Lance
 weaponType.harp=Harp
 weaponType.battle_axe=Battle axe
 weaponType.sword=Sword
+weaponType.bow=Bow
+weaponType.magick_wand=Magick Wand
+weaponType.ranged_weapon=Ranged
 
 #Tooltips
 tooltip.faw.weapon.inlaid=Inlaid
@@ -56,18 +59,25 @@ tooltip.faw.skill.lance.knight_lance=Jab Forward
 tooltip.faw.skill.lance.light_lance.endergem=Teleport to Destination Instead
 
 #Attributes
+#Generic
 attributes.faw.generic.Strength=Strength
 attributes.faw.generic.CoolDown=Cool Down
 attributes.faw.generic.AttackReach=Attack Reach
 attributes.faw.generic.AttackSpeed=Attack Speed
 attributes.faw.generic.AbilityPower=AP
 
+#Lance
 attributes.faw.lance.SprintStrength=Sprint Strength
 
+#Harp
 attributes.faw.harp.Radius=Radius
 attributes.faw.harp.Frequency=Frequency
 
+#Battle Axe
 attributes.faw.battle_axe.SweepRange=SweepRange
+
+#Bow
+attributes.faw.bow.Force=SweepRange
 
 
 #Tiles
@@ -92,6 +102,9 @@ pskill.faw.ScorchingTouch=Scorching Touch
 pskill.faw.ExpMending=EXP Mending
 pskill.faw.FrostWalker=Frost Walker
 pskill.faw.Sweeping=Sweeping
+pskill.faw.AP2Strength=AP to Strength
+pskill.faw.ManaBarrier=Mana Barrier
+pskill.faw.Combo=Combo
 
 
 #Items
@@ -111,24 +124,41 @@ item.faw.endergem.name=Endergem
 item.faw.magic_pearl.name=Magic Pearl
 item.faw.windy_gemstone.name=Windy Gemstone
 
+#Tool
 item.faw.inlaying_tool.name=Inlaying Tool
 item.faw.forge_hammer.name=Forge Hammer
 item.faw.blacksmith_glove.name=Blacksmith Glove
 item.faw.cast_blueprint.name=Cast Blueprint
 
+#Legacy
 item.faw.quartz_sword.name=Quartz Sword
 item.faw.quartz_axe.name=Quartz Axe
 item.faw.test_sword.name=Test Sword
 
+#Lance
 item.faw.training_lance.name=Training Lance
 item.faw.arena_lance.name=Arena Lance
 item.faw.light_lance.name=Light Lance
 item.faw.knight_lance.name=Knight Lance
 
+#Battle Axe
 item.faw.battle_axe.name=Battle Axe
 item.faw.berserker_axe.name=Berserker Axe
 
+#Harp
 item.faw.harp.name=Harp
+
+#Magick Wand
+item.faw.gemsword.name=Gemsword
+item.faw.magick_sword.name=Magick Sword
+
+#Bow
+item.faw.simple_bow.name=Simple Bow
+
+#Ranged
+item.faw.sickle.name=Sickle
+item.faw.chained_hammer.name=Chained Hammer
+item.faw.meteor_hammer.name=Meteor Hammer
 
 #Weapon Parts
 item.faw.weapon_part.name=Weapon Part
