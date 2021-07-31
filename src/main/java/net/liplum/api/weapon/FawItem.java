@@ -10,6 +10,7 @@ import java.util.Set;
 @Developing
 public abstract class FawItem extends Item {
     public final Set<Category> categories = new HashSet<>();
+
     @Developing
     public FawItem(Category... categories) {
         Collections.addAll(this.categories, categories);

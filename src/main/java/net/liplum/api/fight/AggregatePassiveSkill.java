@@ -1,7 +1,7 @@
 package net.liplum.api.fight;
 
-import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.api.annotations.Require;
+import net.liplum.api.registeies.SkillRegistry;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
@@ -59,9 +59,22 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
         return triggerPriority;
     }
 
+    public AggregatePassiveSkill setTriggerPriority(int triggerPriority) {
+        this.triggerPriority = triggerPriority;
+        return this;
+    }
+
     @Override
     public boolean isBanedWhenBroken() {
         return isBannedWhenBroken;
+    }
+
+    /**
+     * The default is true.
+     */
+    public AggregatePassiveSkill setBanedWhenBroken(boolean banedWhenBroken) {
+        this.isBannedWhenBroken = banedWhenBroken;
+        return this;
     }
 
     @Override
@@ -76,21 +89,8 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
     }
 
     @Nonnull
-    public AggregatePassiveSkill setCoolDownTicks(int coolDownTicks){
-        this.coolDownTicks=coolDownTicks;
-        return this;
-    }
-
-    /**
-     * The default is true.
-     */
-    public AggregatePassiveSkill setBanedWhenBroken(boolean banedWhenBroken) {
-        this.isBannedWhenBroken = banedWhenBroken;
-        return this;
-    }
-
-    public AggregatePassiveSkill setTriggerPriority(int triggerPriority) {
-        this.triggerPriority = triggerPriority;
+    public AggregatePassiveSkill setCoolDownTicks(int coolDownTicks) {
+        this.coolDownTicks = coolDownTicks;
         return this;
     }
 

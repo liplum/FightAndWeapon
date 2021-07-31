@@ -27,7 +27,7 @@ public final class WeaponTypes {
             .setWeaponSkillPredicate(((world, player, weapon) -> true));
 
     //You must call it to load this class and all the static fields.
-    public static void init() {
+    public static void load() {
 
     }
 }

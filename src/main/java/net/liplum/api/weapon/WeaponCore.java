@@ -6,7 +6,6 @@ import net.liplum.Names;
 import net.liplum.Vanilla;
 import net.liplum.api.annotations.Developing;
 import net.liplum.api.annotations.LongSupport;
-import net.liplum.api.fight.AggregatePassiveSkill;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.attributes.*;
@@ -21,7 +20,6 @@ import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 
 import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -34,25 +32,17 @@ import static net.liplum.TooltipMiddlewares.*;
 @LongSupport
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
-    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
-    @Nonnull
-    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
-    @Nonnull
-    private final Map<IAttribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
-    @Nonnull
-    private final List<IAttribute> allAttributes = new LinkedList<>();
-    @Nonnull
-    private IWeaponSkillPredicate weaponSkillPredicate;
-    @Nonnull
-    private final List<IPassiveSkill<?>> weaponPassiveSkills = new LinkedList<>();
-
-    private boolean hasWeaponSkill = true;
-    @Nonnull
-    private String registerName = "default";
-    @Nonnull
-    private EnumAction rightClickUseAction = EnumAction.NONE;
-    @Nonnull
-    private final Map<Integer, IPassiveSkill<?>> lockedPassiveSkills = new HashMap<>();
+    public static final Function<WeaponAttrModifierContext, AttributeModifier> AttackReachModifier = context -> {
+        float attackSpeed = context.calculator.calcu(AttackSpeed).getFloat();
+        if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
+            double attackSpeedDelta = attackSpeed - Vanilla.DefaultAttackSpeed;
+            return ItemUtil.genAttrModifier(
+                    Item.ATTACK_SPEED_MODIFIER,
+                    Vanilla.AttrModifierType.DeltaAddition,
+                    Names.WeaponAttributeModifier, attackSpeedDelta);
+        }
+        return null;
+    };
     @Nonnull
     private static final ILeftClickEntityBehavior DefaultLeftClickEntityBehavior = (weapon, stack, attacker, target) -> {
         AttrCalculator calculator = new AttrCalculator(weapon);
@@ -71,15 +61,34 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
     };
     @Nonnull
-    private ILeftClickEntityBehavior leftClickEntityBehavior = DefaultLeftClickEntityBehavior;
-    @Nonnull
-    private TooltipPipe tooltipPipe = TooltipPipe.Empty;
-    @Nonnull
     private static final TooltipPipe DefaultPipe = new TooltipPipe()
             .addMiddleware(AutoAddSpaceLine)
             .addMiddleware(new AggregateThroughable(ShowWeaponType, ShowGemstone, ShowWeaponSkillTip))
             .addMiddleware(ShowAttributes)
             .addMiddleware(ShowPassiveSkills);
+    @Nonnull
+    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
+    @Nonnull
+    protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
+    @Nonnull
+    private final Map<IAttribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
+    @Nonnull
+    private final List<IAttribute> allAttributes = new LinkedList<>();
+    @Nonnull
+    private final List<IPassiveSkill<?>> weaponPassiveSkills = new LinkedList<>();
+    @Nonnull
+    private final Map<Integer, IPassiveSkill<?>> lockedPassiveSkills = new HashMap<>();
+    @Nonnull
+    private IWeaponSkillPredicate weaponSkillPredicate;
+    private boolean hasWeaponSkill = true;
+    @Nonnull
+    private String registerName = "default";
+    @Nonnull
+    private EnumAction rightClickUseAction = EnumAction.NONE;
+    @Nonnull
+    private ILeftClickEntityBehavior leftClickEntityBehavior = DefaultLeftClickEntityBehavior;
+    @Nonnull
+    private TooltipPipe tooltipPipe = TooltipPipe.Empty;
 
     @LongSupport
     public WeaponCore() {
@@ -183,19 +192,6 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
                 }
         }
     }
-
-    @Nonnull
-    public static final Function<WeaponAttrModifierContext, AttributeModifier> AttackReachModifier = context -> {
-        float attackSpeed = context.calculator.calcu(AttackSpeed).getFloat();
-        if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
-            double attackSpeedDelta = attackSpeed - Vanilla.DefaultAttackSpeed;
-            return ItemUtil.genAttrModifier(
-                    Item.ATTACK_SPEED_MODIFIER,
-                    Vanilla.AttrModifierType.DeltaAddition,
-                    Names.WeaponAttributeModifier, attackSpeedDelta);
-        }
-        return null;
-    };
 
     /**
      * It will be called in constructor at {@link WeaponCore}.<br/>

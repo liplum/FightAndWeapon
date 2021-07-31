@@ -21,8 +21,8 @@ public class TooltipOption {
         return altPressed;
     }
 
-    public boolean isWeaponSkillTipShown(){
-        return ctrlPressed;
+    public boolean isWeaponSkillTipShown() {
+        return shiftPressed;
     }
 
     public boolean isVanillaAdvanced() {

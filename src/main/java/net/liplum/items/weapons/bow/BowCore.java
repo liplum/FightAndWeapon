@@ -45,7 +45,7 @@ public abstract class BowCore extends WeaponCore {
     }
 
     @Nonnull
-    public ItemStack getDefaultAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowItem bow, @Nonnull ItemStack itemStack) {
+    public ItemStack getDefaultAmmo(@Nonnull EntityLivingBase entity, @Nonnull ItemStack itemStack) {
         return new ItemStack(Items.ARROW);
     }
 

@@ -71,7 +71,7 @@ public class BattleAxeItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawBehaviors.onWeaponUse(playerIn, this,held);
+                    FawBehaviors.onWeaponUse(playerIn, this, held);
                 }
             }
         }
@@ -80,7 +80,7 @@ public class BattleAxeItem extends WeaponBaseItem {
 
     @Nonnull
     @Override
-    public BattleAxeCore getCore() {
+    public BattleAxeCore getConcreteCore() {
         return core;
     }
 }

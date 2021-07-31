@@ -32,47 +32,47 @@ public abstract class RangedWeaponCore extends WeaponCore {
 
     private static final IPassiveSkill<FawWeaponLeftClickEvent> RangedWeaponPS =
             new PassiveSkill<FawWeaponLeftClickEvent>(Names.PassiveSkill.WeaponCore.RangedWeaponPS, FawWeaponLeftClickEvent.class) {
-        @Nonnull
-        @Override
-        public PSkillResult onTrigger(@Nonnull FawWeaponLeftClickEvent event) {
-            EntityLivingBase attacker = event.entity();
-            AttrCalculator calculator = FawUtil.toCalculator(event);
-            float attackReach = calculator.calcu(AttackReach).getFloat();
-            float strength = calculator.calcu(Strength).getFloat();
+                @Nonnull
+                @Override
+                public PSkillResult onTrigger(@Nonnull FawWeaponLeftClickEvent event) {
+                    EntityLivingBase attacker = event.entity();
+                    AttrCalculator calculator = FawUtil.toCalculator(event);
+                    float attackReach = calculator.calcu(AttackReach).getFloat();
+                    float strength = calculator.calcu(Strength).getFloat();
 
-            AxisAlignedBB playerBox = attacker.getEntityBoundingBox();
-            List<EntityLivingBase> allInRange = attacker.world
-                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(attackReach, attackReach, attackReach));
-            //Gets player's look vector and turn it to v2d.
-            Point3D p = new Point3D(attacker.posX, attacker.posY, attacker.posZ);
-            AxisAlignedCube range = new AxisAlignedCube(0, attackReach, 0, 2, -1.5, 1.5);
-            float pitch = Angle.toRadian(Angle.toNormalDegreeAngle(attacker.rotationPitch));
-            float yaw = Angle.toRadian(Angle.toNormalDegreeAngle(attacker.rotationYaw));
-            List<EntityLivingBase> allInCube = allInRange.stream()
-                    .filter(e ->
-                            EntityUtil.canAttack(attacker, e) &&
-                                    P3D.isInside(p, new Point3D(e.posX, e.posY, e.posZ)
-                                            , pitch, yaw,
-                                            range)).collect(Collectors.toList());
-            Optional<EntityLivingBase> nearTarget = allInCube.stream()
-                    .min(Comparator.comparing(
-                            e -> e.getDistanceSq(attacker) < attackReach * attackReach));
+                    AxisAlignedBB playerBox = attacker.getEntityBoundingBox();
+                    List<EntityLivingBase> allInRange = attacker.world
+                            .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(attackReach, attackReach, attackReach));
+                    //Gets player's look vector and turn it to v2d.
+                    Point3D p = new Point3D(attacker.posX, attacker.posY, attacker.posZ);
+                    AxisAlignedCube range = new AxisAlignedCube(0, attackReach, 0, 2, -1.5, 1.5);
+                    float pitch = Angle.toRadian(Angle.toNormalDegreeAngle(attacker.rotationPitch));
+                    float yaw = Angle.toRadian(Angle.toNormalDegreeAngle(attacker.rotationYaw));
+                    List<EntityLivingBase> allInCube = allInRange.stream()
+                            .filter(e ->
+                                    EntityUtil.canAttack(attacker, e) &&
+                                            P3D.isInside(p, new Point3D(e.posX, e.posY, e.posZ)
+                                                    , pitch, yaw,
+                                                    range)).collect(Collectors.toList());
+                    Optional<EntityLivingBase> nearTarget = allInCube.stream()
+                            .min(Comparator.comparing(
+                                    e -> e.getDistanceSq(attacker) < attackReach * attackReach));
 
-            if (nearTarget.isPresent()) {
-                EntityLivingBase target = nearTarget.get();
-                float distance = target.getDistance(attacker);
-                AxisAlignedCube nextToTargetCube = new AxisAlignedCube(distance, distance + 1, 0, 2, -1.5, 1.5);
-                List<EntityLivingBase> allInAttackRange = allInCube.stream().filter(e ->
-                        P3D.isInside(p, new Point3D(e.posX, e.posY, e.posZ),
-                                pitch, yaw, nextToTargetCube)
-                ).collect(Collectors.toList());
-                for (EntityLivingBase e : allInAttackRange) {
-                    e.attackEntityFrom(EntityUtil.genDamageSource(attacker), strength);
+                    if (nearTarget.isPresent()) {
+                        EntityLivingBase target = nearTarget.get();
+                        float distance = target.getDistance(attacker);
+                        AxisAlignedCube nextToTargetCube = new AxisAlignedCube(distance, distance + 1, 0, 2, -1.5, 1.5);
+                        List<EntityLivingBase> allInAttackRange = allInCube.stream().filter(e ->
+                                P3D.isInside(p, new Point3D(e.posX, e.posY, e.posZ),
+                                        pitch, yaw, nextToTargetCube)
+                        ).collect(Collectors.toList());
+                        for (EntityLivingBase e : allInAttackRange) {
+                            e.attackEntityFrom(EntityUtil.genDamageSource(attacker), strength);
+                        }
+                    }
+                    return PSkillResult.Complete;
                 }
-            }
-            return PSkillResult.Complete;
-        }
-    }.setShownInTooltip(false).setBanedWhenBroken(false);
+            }.setShownInTooltip(false).setBanedWhenBroken(false);
 
     @Nonnull
     @Override

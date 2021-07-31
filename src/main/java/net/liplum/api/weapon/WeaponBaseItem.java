@@ -43,11 +43,11 @@ import static net.liplum.Attributes.Generic.MaxUseDuration;
 @LongSupport
 public abstract class WeaponBaseItem extends FawItem {
     @Nonnull
+    protected final FixedAttrCalculator onlyCoreCalculator;
+    @Nonnull
     private final WeaponCore weaponCore;
     @Nonnull
     private final WeaponType weaponType;
-    @Nonnull
-    protected final FixedAttrCalculator onlyCoreCalculator;
 
     @LongSupport
     public WeaponBaseItem(@Nonnull WeaponCore weaponCore) {
@@ -174,9 +174,13 @@ public abstract class WeaponBaseItem extends FawItem {
      */
     @Nonnull
     @LongSupport
-    public WeaponCore getCore() {
+    public final WeaponCore getCore() {
         return weaponCore;
     }
+
+    @Nonnull
+    @LongSupport
+    public abstract WeaponCore getConcreteCore();
 
     @Nonnull
     @LongSupport

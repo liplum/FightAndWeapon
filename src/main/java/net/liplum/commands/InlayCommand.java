@@ -26,6 +26,26 @@ import static net.liplum.I18ns.Command.*;
 @LongSupport
 public class InlayCommand extends CommandBase {
 
+    public static void removeCurrentGemstone(@Nonnull EntityLivingBase entity, @Nonnull ItemStack held) throws CommandException {
+        GemUtil.RemoveResult removeResult = GemUtil.removeGemstone(held);
+        switch (removeResult) {
+            case NotFawWeapon:
+                throw new CommandException(Inlay_Failure_NotFawWeapon, entity);
+            case NoGemstone:
+                throw new CommandException(Inlay_Failure_NoFawWeapon, entity);
+        }
+    }
+
+    public static void inlayNewGemstone(@Nonnull EntityLivingBase entity, @Nonnull ItemStack held, @Nonnull String gemstoneName) throws CommandException {
+        GemUtil.InlayResult inlayResult = GemUtil.inlayGemstone(held, gemstoneName);
+        switch (inlayResult) {
+            case NotFawWeapon:
+                throw new CommandException(Inlay_Failure_NotFawWeapon, entity);
+            case NoSuchGemstone:
+                throw new CommandException(Inlay_Failure_NoSuchGemstone, gemstoneName);
+        }
+    }
+
     @Nonnull
     @Override
     public String getName() {
@@ -57,26 +77,6 @@ public class InlayCommand extends CommandBase {
             } else {
                 throw new WrongUsageException(getUsage(sender));
             }
-        }
-    }
-
-    public static void removeCurrentGemstone(@Nonnull EntityLivingBase entity, @Nonnull ItemStack held) throws CommandException {
-        GemUtil.RemoveResult removeResult = GemUtil.removeGemstone(held);
-        switch (removeResult) {
-            case NotFawWeapon:
-                throw new CommandException(Inlay_Failure_NotFawWeapon, entity);
-            case NoGemstone:
-                throw new CommandException(Inlay_Failure_NoFawWeapon, entity);
-        }
-    }
-
-    public static void inlayNewGemstone(@Nonnull EntityLivingBase entity, @Nonnull ItemStack held, @Nonnull String gemstoneName) throws CommandException {
-        GemUtil.InlayResult inlayResult = GemUtil.inlayGemstone(held, gemstoneName);
-        switch (inlayResult) {
-            case NotFawWeapon:
-                throw new CommandException(Inlay_Failure_NotFawWeapon, entity);
-            case NoSuchGemstone:
-                throw new CommandException(Inlay_Failure_NoSuchGemstone, gemstoneName);
         }
     }
 

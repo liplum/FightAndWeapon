@@ -113,9 +113,9 @@ public final class I18ns {
         public static final String Inlay_Failure_NoSuchGemstone = "commands.inlay.failure.noSuchGemstone";
 
 
-        public static final String MasteryExp = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryExp));
-        public static final String MasteryShow = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryShow));
-        public static final String MasteryReset = prefixCommandUnloc(subCommand(Names.Command.Mastery,Names.Command.MasterySub.MasteryReset));
+        public static final String MasteryExp = prefixCommandUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryExp));
+        public static final String MasteryShow = prefixCommandUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryShow));
+        public static final String MasteryReset = prefixCommandUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryReset));
         public static final String Mastery = prefixCommandUnloc(Names.Command.Mastery);
         public static final String Mastery_Failure_NotSuchWeaponType = "commands.mastery.failure.noSuchWeaponType";
         public static final String Mastery_Failure_NaN = "commands.mastery.failure.NaN";

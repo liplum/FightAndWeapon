@@ -48,7 +48,7 @@ public class EntityUtil {
         return false;
     }
 
-    public static void knockBack(@Nonnull EntityLivingBase subject,@Nonnull EntityLivingBase object,float strength) {
+    public static void knockBack(@Nonnull EntityLivingBase subject, @Nonnull EntityLivingBase object, float strength) {
         object.knockBack(subject, strength,
                 MathHelper.sin(Angle.toRadian(subject.rotationYaw)),
                 -MathHelper.cos(Angle.toRadian(subject.rotationYaw)));

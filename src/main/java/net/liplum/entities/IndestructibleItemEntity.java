@@ -28,18 +28,18 @@ public class IndestructibleItemEntity extends EntityItem {
         this.isImmuneToFire = true;
     }
 
+    @SubscribeEvent
+    public static void onFawWeaponExpire(ItemExpireEvent event) {
+        if (event.getEntityItem() instanceof IndestructibleItemEntity) {
+            event.setCanceled(true);
+        }
+    }
+
     @Override
     public boolean attackEntityFrom(@Nonnull DamageSource source, float amount) {
         if (source.getDamageType().equals(DamageSource.OUT_OF_WORLD.getDamageType())) {
             return true;
         }
         return false;
-    }
-
-    @SubscribeEvent
-    public static void onFawWeaponExpire(ItemExpireEvent event) {
-        if (event.getEntityItem() instanceof IndestructibleItemEntity) {
-            event.setCanceled(true);
-        }
     }
 }

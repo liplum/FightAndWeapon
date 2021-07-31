@@ -66,6 +66,8 @@ public class Attribute implements IAttribute {
     private Function<String, String> I18nKeyMapping = str -> str;
     @Nonnull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(defaultValue);
+    @Nonnull
+    private Function<Number, Number> valueWhenWeaponBrokenGetter = (former) -> defaultValue;
 
     @LongSupport
     public static void register(IAttribute attribute) {
@@ -462,7 +464,7 @@ public class Attribute implements IAttribute {
     @Nonnull
     @Override
     public AttrAmp newAttributeAmplifier(@Nonnull Number value) {
-        return AttrAmp.create(this,value);
+        return AttrAmp.create(this, value);
     }
 
     @Nonnull
@@ -530,9 +532,6 @@ public class Attribute implements IAttribute {
         return emptyFinalAttrValue();
     }
 
-    @Nonnull
-    private Function<Number,Number> valueWhenWeaponBrokenGetter = (former) -> defaultValue;
-
     /*
      * The default is returning the default value of this attribute.
      */
@@ -545,8 +544,8 @@ public class Attribute implements IAttribute {
     /**
      * The default is returning the default value of this attribute.
      *
-     * @return the final value when weapon was broken
      * @param former
+     * @return the final value when weapon was broken
      */
     @Nonnull
     @Override

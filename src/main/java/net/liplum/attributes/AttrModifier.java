@@ -25,7 +25,7 @@ public class AttrModifier extends AttrDelta {
         if (obj instanceof AttrModifier) {
             AttrModifier b = (AttrModifier) obj;
             return super.equals(obj) &&
-                    b.deltaRate.equals(this.deltaRate);
+                    b.deltaRate == this.deltaRate;
         }
         return false;
     }

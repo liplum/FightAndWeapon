@@ -8,7 +8,7 @@ import java.util.List;
 
 public class Node {
     @Nonnull
-    public static final Node Empty = new Node(){
+    public static final Node Empty = new Node() {
         @Nonnull
         @Override
         public Node addAttrAmps(AttrAmp... attrAmp) {

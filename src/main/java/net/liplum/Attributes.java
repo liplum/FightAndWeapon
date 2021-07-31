@@ -104,7 +104,7 @@ public final class Attributes {
                 .setOnlyGemstoneCompute((base, modifier) -> base || modifier)
                 .setDefaultValue(false);
 
-         public static final IAttribute SpecialAttackReachJudgment = new BoolAttribute()
+        public static final IAttribute SpecialAttackReachJudgment = new BoolAttribute()
                 .setRegisterName(Names.Attribute.Generic.SpecialAttackReachJudgment)
                 .setBasic()
                 .setComputeType(ComputeType.Only_Base)
@@ -196,5 +196,9 @@ public final class Attributes {
                 .setComputeType(ComputeType.Full)
                 .setMinimum(0F)
                 .setShownInTooltip(false);
+    }
+
+    //You must call it to load this class and all the static fields.
+    public static void load() {
     }
 }

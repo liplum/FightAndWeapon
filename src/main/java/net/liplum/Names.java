@@ -115,7 +115,7 @@ public final class Names {
             public static final String Frequency = "Frequency";
         }
 
-        public static final class Bow{
+        public static final class Bow {
             public static final String ProjectileVelocity = "ProjectileVelocity";
         }
     }
@@ -154,7 +154,7 @@ public final class Names {
         public static final String Inlay = "inlay";
         public static final String Mastery = "mastery";
 
-        public final static class MasterySub{
+        public final static class MasterySub {
             public static final String MasteryShow = "show";
             public static final String MasteryExp = "exp";
             public static final String MasteryReset = "reset";
@@ -209,7 +209,7 @@ public final class Names {
         public static final String Combo = "Combo";
         public static final String ManaBarrier = "ManaBarrier";
 
-        public final static class WeaponCore{
+        public final static class WeaponCore {
             public static final String RangedWeaponPS = "RangedWeaponPS";
         }
     }

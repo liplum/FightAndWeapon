@@ -5,7 +5,6 @@ import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.IAttribute;
 
 import javax.annotation.Nonnull;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 

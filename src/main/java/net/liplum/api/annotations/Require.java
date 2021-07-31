@@ -9,5 +9,6 @@ import java.lang.annotation.*;
 @LongSupport
 public @interface Require {
     String func();
+
     String is();
 }

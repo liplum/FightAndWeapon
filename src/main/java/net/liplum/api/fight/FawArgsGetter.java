@@ -20,7 +20,7 @@ public interface FawArgsGetter {
 
     @Nonnull
     @LongSupport
-    default WeaponCore weaponCore(){
+    default WeaponCore weaponCore() {
         return weapon().getCore();
     }
 

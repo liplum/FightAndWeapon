@@ -9,10 +9,14 @@ import java.util.Set;
 
 public class AttrAmp {
     private static final Set<AttrAmp> Pool = new HashSet<>();
-
+    @Nonnull
+    private String attributeName = "";
+    @Nonnull
+    private DataType type = DataType.Int;
+    @Nonnull
+    private Number value = 0;
     private AttrAmp() {
     }
-
     public AttrAmp(@Nonnull String attributeName, @Nonnull DataType type, @Nonnull Number value) {
         this.attributeName = attributeName;
         this.type = type;
@@ -20,15 +24,8 @@ public class AttrAmp {
     }
 
     @Nonnull
-    private String attributeName = "";
-    @Nonnull
-    private DataType type = DataType.Int;
-    @Nonnull
-    private Number value = 0;
-
-    @Nonnull
     public static AttrAmp create(@Nonnull IAttribute attribute, @Nonnull Number number) {
-        AttrAmp amp = new AttrAmp(attribute.getRegisterName(), attribute.getDataType(),number);
+        AttrAmp amp = new AttrAmp(attribute.getRegisterName(), attribute.getDataType(), number);
         if (Pool.stream().noneMatch(amp::equals)) {
             Pool.add(amp);
         }
@@ -71,10 +68,10 @@ public class AttrAmp {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof AttrAmp){
+        if (obj instanceof AttrAmp) {
             AttrAmp amp = (AttrAmp) obj;
             return this.attributeName.equals(amp.attributeName) &&
-                    this.type.equals(amp.getType())&&
+                    this.type.equals(amp.getType()) &&
                     this.value.equals(amp.value);
         }
         return false;

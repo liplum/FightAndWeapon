@@ -1,7 +1,7 @@
 package net.liplum.api.fight;
 
-import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.api.annotations.Require;
+import net.liplum.api.registeies.SkillRegistry;
 import net.minecraftforge.fml.common.eventhandler.Event;
 
 import javax.annotation.Nonnull;
@@ -13,15 +13,11 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
     private final String registerName;
     @Nonnull
     private final EventTypeArgs eventTypeArgs;
-    private boolean isShownInTooltip = true;
-
-    private int triggerPriority = 0;
-
-    private boolean isBannedWhenBroken = true;
-
     private final boolean hasCoolDown;
-
     private final int coolDownTicks;
+    private boolean isShownInTooltip = true;
+    private int triggerPriority = 0;
+    private boolean isBannedWhenBroken = true;
 
     /**
      * Whenever you create the instance, it will register itself to {@link SkillRegistry} automatically.

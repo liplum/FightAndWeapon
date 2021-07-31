@@ -4,7 +4,6 @@ import net.liplum.api.fight.FawArgsGetter;
 import net.liplum.api.fight.FawArgsSetter;
 import net.liplum.attributes.AttrCalculator;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;

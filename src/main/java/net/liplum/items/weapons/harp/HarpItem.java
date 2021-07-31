@@ -3,11 +3,11 @@ package net.liplum.items.weapons.harp;
 import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
+import net.liplum.items.weapons.battleaxe.BattleAxeCore;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -61,7 +61,7 @@ public class HarpItem extends WeaponBaseItem {
                     MinecraftForge.EVENT_BUS.post(
                             new WeaponSkillReleaseEvent.Post(worldIn, playerIn, this, modifier, held, handIn)
                     );
-                    FawBehaviors.onWeaponUse(playerIn,this,held);
+                    FawBehaviors.onWeaponUse(playerIn, this, held);
                 }
             }
         } else {
@@ -124,10 +124,9 @@ public class HarpItem extends WeaponBaseItem {
             p.resetActiveHand();
         }
     }
-
     @Nonnull
     @Override
-    public HarpCore getCore() {
+    public HarpCore getConcreteCore() {
         return core;
     }
 }

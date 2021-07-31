@@ -23,10 +23,9 @@ public class AttributeAccessEvent extends Event implements FawArgsGetter {
     protected final EntityLivingBase entity;
     @Nullable
     protected final ItemStack itemStack;
+    private final boolean useSpecialValueWhenWeaponBroken;
     @Nonnull
     protected FinalAttrValue finalAttrValue;
-
-    private final boolean useSpecialValueWhenWeaponBroken;
 
 
     public AttributeAccessEvent(@Nonnull IAttribute attribute,

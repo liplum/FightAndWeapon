@@ -17,10 +17,8 @@ import net.liplum.lib.math.Vector2D;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsUtil;
-import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -90,7 +88,7 @@ public final class LanceCores {
             Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
             PhysicsUtil.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
             if (!world.isRemote) {
-      //          player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
+                //          player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
                 CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
                     final Set<EntityLivingBase> damaged = new HashSet<>();
 

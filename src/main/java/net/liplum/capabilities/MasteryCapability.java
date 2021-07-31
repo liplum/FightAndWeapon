@@ -28,6 +28,23 @@ public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
 
     private Map<String, LvExpPair> allMasteries = new HashMap<>();
 
+    @SubscribeEvent
+    public static void onPlayerJoin(EntityJoinWorldEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            if (player.isServerWorld() && player instanceof EntityPlayerMP) {
+                IMasteryDetail masteryDetail = MasteryDetail.create(player);
+                Map<String, LvExpPair> all = masteryDetail.getAllMasteries();
+                if (all != null) {
+                    MessageManager.sendMessageToPlayer(
+                            new MasteryMsg(all), (EntityPlayerMP) player
+                    );
+                }
+            }
+        }
+    }
+
     public Map<String, LvExpPair> getAllMasteries() {
         return allMasteries;
     }
@@ -83,23 +100,6 @@ public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
             int lv = master.getInteger(Tags.Mastery.MasteryObject.Level);
             int exp = master.getInteger(Tags.Mastery.MasteryObject.Exp);
             allMasteries.put(type, new LvExpPair(lv, exp));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerJoin(EntityJoinWorldEvent event) {
-        Entity entity = event.getEntity();
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            if (player.isServerWorld() && player instanceof EntityPlayerMP) {
-                IMasteryDetail masteryDetail = MasteryDetail.create(player);
-                Map<String, LvExpPair> all = masteryDetail.getAllMasteries();
-                if (all != null) {
-                    MessageManager.sendMessageToPlayer(
-                            new MasteryMsg(all), (EntityPlayerMP) player
-                    );
-                }
-            }
         }
     }
 }

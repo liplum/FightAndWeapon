@@ -16,6 +16,8 @@ import net.liplum.items.weapons.QuartzSwordItem;
 import net.liplum.items.weapons.TestSwordItem;
 import net.liplum.items.weapons.battleaxe.BattleAxeCores;
 import net.liplum.items.weapons.battleaxe.BattleAxeItem;
+import net.liplum.items.weapons.bow.BowCores;
+import net.liplum.items.weapons.bow.BowItem;
 import net.liplum.items.weapons.harp.HarpCores;
 import net.liplum.items.weapons.harp.HarpItem;
 import net.liplum.items.weapons.lance.LanceCores;
@@ -86,7 +88,12 @@ public final class ItemRegistry {
     //Harp
     public static final Item Harp_Item = weapon(new HarpItem(HarpCores.Normal), Names.Item.Harp.HarpItem);
 
+    //Ranged Weapon
     public static final Item Sickle_Item = weapon(new SickleItem(RangedWeaponCores.Sickle), Names.Item.RangedWeapon.SickleItem);
+
+    //Bow
+
+    public static final Item Simple_Bow_Item = weapon(new BowItem(BowCores.Empty), Names.Item.Bow.SimpleBow);
 
     //Block
     public static final Item Forge_Block_Item = forge(new ItemBlock(BlockRegistry.Forge_Block), Names.Block.Forge);

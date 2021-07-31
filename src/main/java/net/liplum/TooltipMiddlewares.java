@@ -81,7 +81,7 @@ public final class TooltipMiddlewares {
             );
             if (gemstone != null) {
                 res.add(
-                        I18n.format(FawI18n.getGemstoneSkillTipI18nKey(core,gemstone))
+                        I18n.format(FawI18n.getGemstoneSkillTipI18nKey(core, gemstone))
                 );
             }
         }

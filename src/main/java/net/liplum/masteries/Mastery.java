@@ -1,6 +1,5 @@
 package net.liplum.masteries;
 
-import com.google.common.collect.Lists;
 import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.UnlockedPSkillList;
@@ -20,15 +19,13 @@ public class Mastery implements IMastery {
     @Nonnull
     private final WeaponType weaponType;
     @Nonnull
-    private Routine routine = new Routine();
-
-    @Nonnull
     private final HashSet<Map<IAttribute, AttrDelta>> attrAmpsPool = new HashSet<>();
     @Nonnull
     private final HashSet<Set<IPassiveSkill<?>>> pSkillsPool = new HashSet<>();
     @Nonnull
     private final HashSet<UnlockedPSkillList> unlockedPSkillsPool = new HashSet<>();
-
+    @Nonnull
+    private Routine routine;
     private ArrayList<Map<IAttribute, AttrDelta>> attrAmpsCache;
     private ArrayList<Set<IPassiveSkill<?>>> pSkillsCache;
     private ArrayList<UnlockedPSkillList> unlockedPSkillListCache;
@@ -40,6 +37,8 @@ public class Mastery implements IMastery {
      */
     public Mastery(@Nonnull WeaponType weaponType) {
         this.weaponType = weaponType;
+        this.routine = new Routine();
+        genCache();
         MasteryRegistry.register(this);
     }
 
@@ -63,7 +62,7 @@ public class Mastery implements IMastery {
         attrAmpsCache = new ArrayList<>(nodesCount);
         pSkillsCache = new ArrayList<>(nodesCount);
         unlockedPSkillListCache = new ArrayList<>(nodesCount);
-        int level = 0;
+        int level = 1;
         for (int i = 0; i < nodesCount; i++, level++) {
             genAttrAmpCache(level);
             genPSkillsCache(level);

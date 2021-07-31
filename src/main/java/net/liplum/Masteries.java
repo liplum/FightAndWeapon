@@ -11,7 +11,7 @@ import static net.liplum.Names.PassiveSkill.ManaBarrier;
 public final class Masteries {
     public static final Mastery Lance = new Mastery(WeaponTypes.Lance)
             .setRoutine(new RoutineBuilder()
-                    .node(n -> n.addAttrAmps(AttrAmp.create(Strength, 1)))//1
+                    .node(RoutineBuilder.Empty)//1
                     .node(n -> n.addAttrAmps(AttrAmp.create(Strength, 1)))//2
                     .node(n -> n.addAttrAmps(AttrAmp.create(Strength, 1)))//3
                     .node(n -> n.addAttrAmps(AttrAmp.create(Strength, 1)))//4
@@ -22,7 +22,7 @@ public final class Masteries {
 
     public static final Mastery BattleAxe = new Mastery(WeaponTypes.BattleAxe)
             .setRoutine(new RoutineBuilder()
-                    .node(n -> n.addAttrAmps(AttrAmp.create(Strength, 1)))//1
+                    .node(RoutineBuilder.Empty)//1
                     .node(n -> n.addAttrAmps(AttrAmp.create(Strength, 1)))//2
                     .node(n -> n.addAttrAmps(AttrAmp.create(Strength, 1)))//3
                     .node(n -> n.lockedPSkill(1))//4
@@ -49,7 +49,7 @@ public final class Masteries {
 
 
     //You must call it to load this class and all the static fields.
-    public static void init() {
+    public static void load() {
 
     }
 }

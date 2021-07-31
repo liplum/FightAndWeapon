@@ -16,7 +16,7 @@ public abstract class AttrValue {
 
     @Override
     public boolean equals(Object obj) {
-        if(obj instanceof AttrValue){
+        if (obj instanceof AttrValue) {
             AttrValue b = (AttrValue) obj;
             return b.dataType.equals(this.dataType);
         }

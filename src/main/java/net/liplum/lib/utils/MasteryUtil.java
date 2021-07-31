@@ -6,16 +6,10 @@ import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.api.registeies.MasteryRegistry;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
-import net.liplum.attributes.AttrDelta;
-import net.liplum.attributes.IAttribute;
-import net.liplum.capabilities.MasteryCapability;
 import net.liplum.masteries.IMasteryDetail;
 import net.liplum.masteries.LvExpPair;
 import net.liplum.masteries.Mastery;
 import net.liplum.masteries.MasteryDetail;
-import net.minecraft.block.BlockCrops;
-import net.minecraft.block.BlockMelon;
-import net.minecraft.block.BlockPumpkin;
 import net.minecraft.entity.player.EntityPlayer;
 
 import javax.annotation.Nonnull;

@@ -10,12 +10,12 @@ import net.liplum.items.weapons.lance.LanceModifier;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import static net.liplum.Attributes.Generic.DropsFireproof;
+
 @Developing
 public class FlameGemModifier {
     public final static LanceModifier Light_Lance = new LanceModifier() {

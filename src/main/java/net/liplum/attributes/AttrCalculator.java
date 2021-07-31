@@ -5,6 +5,7 @@ import net.liplum.api.fight.FawArgsGetter;
 import net.liplum.api.fight.FawArgsSetter;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.events.AttributeAccessEvent;
 import net.liplum.masteries.IMasteryDetail;
 import net.liplum.masteries.MasteryDetail;
@@ -59,7 +60,8 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
                                                 @Nullable ItemStack itemStack,
                                                 boolean showSpecialValueWhenWeaponBroken, boolean postAccessedEvent) {
         ComputeType computeType = attribute.getComputeType();
-        BasicAttrValue baseAttrValue = weapon.getCore().getValue(attribute);
+        WeaponCore core = weapon.getCore();
+        BasicAttrValue baseAttrValue = core.getValue(attribute);
         //Mastery
         AttrDelta masteryValue = null;
         if (computeType.computeMastery) {

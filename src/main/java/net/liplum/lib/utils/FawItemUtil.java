@@ -5,6 +5,7 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
+import net.liplum.events.weapon.FoundAmmoEvent;
 import net.liplum.events.weapon.WeaponAttackEvent;
 import net.liplum.events.weapon.WeaponDurabilityEvent;
 import net.liplum.items.GemstoneItem;
@@ -96,8 +97,8 @@ public final class FawItemUtil {
             return false;
         }
         World world = attacker.world;
-        EntityLivingBase targetLiving = null;
-        EntityPlayer attackerPlayer = null;
+        @Nullable EntityLivingBase targetLiving = null;
+        @Nullable EntityPlayer attackerPlayer = null;
         if (target instanceof EntityLivingBase) {
             targetLiving = (EntityLivingBase) target;
         }
@@ -349,22 +350,24 @@ public final class FawItemUtil {
     }
 
     @Nonnull
-    public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull BowItem bow, @Nonnull ItemStack itemStack) {
-        BowCore core = bow.getCore();
+    public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull BowItem bow, @Nonnull ItemStack itemStack, @Nullable Modifier modifier) {
+        BowCore core = bow.getConcreteCore();
         ItemStack res = ItemUtil.findAmmo(player, core::isAmmo);
         if (res.isEmpty() && player.isCreative()) {
-            return core.getDefaultAmmo(player,bow,itemStack);
+            res = core.getDefaultAmmo(player, itemStack);
         }
-        return res;
+        FoundAmmoEvent event = new FoundAmmoEvent(bow, modifier, itemStack, player, res);
+        MinecraftForge.EVENT_BUS.post(event);
+        return event.ammo();
     }
 
     @Nonnull
-    public static ItemStack findAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowItem bow, @Nonnull ItemStack itemStack) {
-        BowCore core = bow.getCore();
+    public static ItemStack findAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowItem bow, @Nonnull ItemStack itemStack, @Nullable Modifier modifier) {
+        BowCore core = bow.getConcreteCore();
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            return ItemUtil.findAmmo(player, core::isAmmo);
+            return findAmmo(player, bow, itemStack, modifier);
         }
-        return core.getDefaultAmmo(entity,bow,itemStack);
+        return core.getDefaultAmmo(entity, itemStack);
     }
 }

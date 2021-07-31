@@ -24,6 +24,53 @@ import java.util.Set;
 
 public class MasteryDetail implements IMasteryDetail {
     @Nonnull
+    private static final IMasteryDetail Empty = new IMasteryDetail() {
+        @Nonnull
+        @Override
+        public LvExpPair getLvAndExp(@Nonnull IMastery mastery) {
+            return LvExpPair.Empty;
+        }
+
+        @Override
+        public int addExp(@Nonnull IMastery mastery, int amount) {
+            return 0;
+        }
+
+        @Nonnull
+        @Override
+        public Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery) {
+            return Collections.emptyMap();
+        }
+
+        @Nonnull
+        @Override
+        public UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery) {
+            return UnlockedPSkillList.Empty;
+        }
+
+        @Nonnull
+        @Override
+        public Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
+            return Collections.emptySet();
+        }
+
+        @Override
+        @Nullable
+        public Map<String, LvExpPair> getAllMasteries() {
+            return null;
+        }
+
+        @Override
+        public void resetMastery(@Nonnull IMastery mastery) {
+
+        }
+
+        @Override
+        public void sync() {
+
+        }
+    };
+    @Nonnull
     private final EntityPlayer player;
     @Nonnull
     private final MasteryCapability masteryCapability;
@@ -118,52 +165,4 @@ public class MasteryDetail implements IMasteryDetail {
         levelAndExp.setLevel(LvExpPair.BaseLevel);
         levelAndExp.setExp(LvExpPair.BaseExp);
     }
-
-    @Nonnull
-    private static final IMasteryDetail Empty = new IMasteryDetail() {
-        @Nonnull
-        @Override
-        public LvExpPair getLvAndExp(@Nonnull IMastery mastery) {
-            return LvExpPair.Empty;
-        }
-
-        @Override
-        public int addExp(@Nonnull IMastery mastery, int amount) {
-            return 0;
-        }
-
-        @Nonnull
-        @Override
-        public Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery) {
-            return Collections.emptyMap();
-        }
-
-        @Nonnull
-        @Override
-        public UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery) {
-            return UnlockedPSkillList.Empty;
-        }
-
-        @Nonnull
-        @Override
-        public Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
-            return Collections.emptySet();
-        }
-
-        @Override
-        @Nullable
-        public Map<String, LvExpPair> getAllMasteries() {
-            return null;
-        }
-
-        @Override
-        public void resetMastery(@Nonnull IMastery mastery) {
-
-        }
-
-        @Override
-        public void sync() {
-
-        }
-    };
 }

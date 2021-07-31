@@ -34,7 +34,7 @@ public class Angle {
         if (target <= afterHalfCircle) {
             return target - radius;
         }
-        return supplementary(radius-target);
+        return supplementary(radius - target);
     }
 
     /**

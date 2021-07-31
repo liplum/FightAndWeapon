@@ -24,11 +24,28 @@ import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 @LongSupport
-public class TimerCapability implements INBTSerializable<NBTTagCompound>{
+public class TimerCapability implements INBTSerializable<NBTTagCompound> {
     @Nonnull
     private Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();
 
     private boolean dirty = false;
+
+    @SubscribeEvent
+    public static void onPlayerJoin(EntityJoinWorldEvent event) {
+        Entity entity = event.getEntity();
+        if (entity instanceof EntityPlayer) {
+            EntityPlayer player = (EntityPlayer) entity;
+            if (player.isServerWorld() && player instanceof EntityPlayerMP) {
+                IPSkillCoolingTimer timer = PSkillCoolingTimer.create(player);
+                Map<IPassiveSkill<?>, CoolDown> all = timer.getCoolingPassiveSkills();
+                if (all != null) {
+                    MessageManager.sendMessageToPlayer(
+                            new CoolingMsg(all), (EntityPlayerMP) player
+                    );
+                }
+            }
+        }
+    }
 
     public void tick() {
         coolingPassiveSkills.values().forEach(CoolDown::tick);
@@ -84,23 +101,6 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound>{
         for (String key : nbt.getKeySet()) {
             IPassiveSkill<?> name = SkillRegistry.getPassiveSkillsFromName(key);
             coolingPassiveSkills.put(name, new CoolDown(nbt.getInteger(key)));
-        }
-    }
-
-    @SubscribeEvent
-    public static void onPlayerJoin(EntityJoinWorldEvent event) {
-        Entity entity = event.getEntity();
-        if (entity instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entity;
-            if (player.isServerWorld() && player instanceof EntityPlayerMP) {
-                IPSkillCoolingTimer timer = PSkillCoolingTimer.create(player);
-                Map<IPassiveSkill<?>, CoolDown> all = timer.getCoolingPassiveSkills();
-                if (all != null) {
-                    MessageManager.sendMessageToPlayer(
-                            new CoolingMsg(all), (EntityPlayerMP) player
-                    );
-                }
-            }
         }
     }
 

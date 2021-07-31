@@ -4,12 +4,15 @@ import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.attributes.AttrCalculator;
+import net.liplum.items.weapons.battleaxe.BattleAxeCore;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.projectile.EntityArrow;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
 import net.minecraft.item.ItemStack;
@@ -20,6 +23,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 
 public class BowItem extends WeaponBaseItem {
     private final BowCore core;
@@ -57,23 +61,40 @@ public class BowItem extends WeaponBaseItem {
 
     @Override
     public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityLivingBase entityLiving, int useTime) {
+        @Nullable EntityPlayer player = null;
         if (entityLiving instanceof EntityPlayer) {
-            EntityPlayer player = (EntityPlayer) entityLiving;
+            player = (EntityPlayer) entityLiving;
             useTime = ForgeEventFactory.onArrowLoose(stack, worldIn, player, useTime, true);
             if (useTime < 5) {
                 return;
             }
         }
-        ItemStack ammo = FawItemUtil.findAmmo(entityLiving, this, stack);
+        Modifier modifier = GemUtil.getModifierFrom(stack);
+        ItemStack ammo = FawItemUtil.findAmmo(entityLiving, this, stack, modifier);
         Item item = ammo.getItem();
         if (!(item instanceof ItemArrow)) {
             return;
         }
-        Modifier modifier = GemUtil.getModifierFrom(stack);
+        ItemArrow arrowItem = (ItemArrow) item;
         AttrCalculator calculator = new AttrCalculator(this)
                 .entity(entityLiving)
                 .itemStack(stack)
                 .modifier(modifier);
+        //float f = getArrowVelocity(i);
+        if (!worldIn.isRemote) {
+            EntityArrow arrowEntity = arrowItem.createArrow(worldIn, stack, entityLiving);
+            arrowEntity.shoot(entityLiving, entityLiving.rotationPitch, entityLiving.rotationYaw, 0F, 3F, 1F);
+            /*if (f == 1.0F) {
+                arrowEntity.setIsCritical(true);
+            }*/
+            arrowEntity.setDamage(10);
+            arrowEntity.setKnockbackStrength(1);
+            worldIn.spawnEntity(arrowEntity);
+        }
+        entityLiving.playSound(SoundEvents.ENTITY_ARROW_SHOOT, 1F, 1F);
+        if (!(player != null && player.isCreative())) {
+            ammo.shrink(1);
+        }
 
         FawBehaviors.onWeaponUse(entityLiving, this, stack);
     }
@@ -101,7 +122,7 @@ public class BowItem extends WeaponBaseItem {
 
     @Nonnull
     @Override
-    public BowCore getCore() {
+    public BowCore getConcreteCore() {
         return core;
     }
 }

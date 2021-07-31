@@ -11,6 +11,14 @@ public class BoolAttribute implements IAttribute {
     public static final int FalseInt = toInt(false);
     public static final FinalAttrValue EmptyFinalAttrValue = new FinalAttrValue(DataType.Int, FalseInt);
     public static final int TrueInt = toInt(true);
+    public static final BasicAttrValue TrueBasicAttrValue = genBasicAttrValue(true);
+    public static final AttrDelta TrueAttrDelta = genAttrDelta(true);
+    public static final AttrModifier TrueAttrModifier = genAttrModifier(true);
+    public static final FinalAttrValue TrueFinalAttrValue = genFinalAttrValue(true);
+    public static final BasicAttrValue FalseBasicAttrValue = genBasicAttrValue(false);
+    public static final AttrModifier FalseAttrModifier = genAttrModifier(false);
+    public static final AttrDelta FalseAttrDelta = genAttrDelta(false);
+    public static final FinalAttrValue FalseFinalAttrValue = genFinalAttrValue(false);
     private static final AttrModifier EmptyAttrModifier = new AttrModifier(DataType.Int, FalseInt, 0);
     private static final AttrDelta EmptyAttrDelta = new AttrDelta(DataType.Int, FalseInt);
     private String registerName;
@@ -23,16 +31,9 @@ public class BoolAttribute implements IAttribute {
     private IFullCompute fullCompute;
     private IOnlyGemstoneCompute onlyGemstoneCompute;
     private IOnlyMasteryCompute onlyMasteryCompute;
-
-    public static final BasicAttrValue TrueBasicAttrValue = genBasicAttrValue(true);
-    public static final AttrDelta TrueAttrDelta = genAttrDelta(true);
-    public static final AttrModifier TrueAttrModifier = genAttrModifier(true);
-    public static final FinalAttrValue TrueFinalAttrValue = genFinalAttrValue(true);
-
-    public static final BasicAttrValue FalseBasicAttrValue = genBasicAttrValue(false);
-    public static final AttrModifier FalseAttrModifier = genAttrModifier(false);
-    public static final AttrDelta FalseAttrDelta = genAttrDelta(false);
-    public static final FinalAttrValue FalseFinalAttrValue = genFinalAttrValue(false);
+    private boolean useSpecialValueWhenWeaponBroken = false;
+    @Nonnull
+    private Function<Boolean, Boolean> valueWhenWeaponBrokenGetter = (former) -> defaultValueBool;
 
     public static BasicAttrValue genBasicAttrValue(boolean b) {
         return new BasicAttrValue(DataType.Int, toInt(b));
@@ -186,7 +187,7 @@ public class BoolAttribute implements IAttribute {
     @Nonnull
     @Override
     public AttrAmp newAttributeAmplifier(@Nonnull Number value) {
-        return AttrAmp.create(this,value);
+        return AttrAmp.create(this, value);
     }
 
     @Nonnull
@@ -280,11 +281,6 @@ public class BoolAttribute implements IAttribute {
     public boolean hasUnit() {
         return false;
     }
-
-    private boolean useSpecialValueWhenWeaponBroken = false;
-
-    @Nonnull
-    private Function<Boolean, Boolean> valueWhenWeaponBrokenGetter = (former) -> defaultValueBool;
 
     /*
      * The default is returning the default value of this attribute.

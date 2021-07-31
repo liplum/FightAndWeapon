@@ -7,20 +7,13 @@ import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.events.weapon.WeaponAttackEvent;
-import net.liplum.lib.math.Angle;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.EntityUtil;
-import net.liplum.registeies.PotionRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
-import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
-import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
@@ -54,7 +47,7 @@ public final class MasterPassiveSkills {
                                     world.getEntitiesWithinAABB(EntityLivingBase.class, target.getEntityBoundingBox().grow(1.0D, 0.25D, 1.0D))) {
                                 if (EntityUtil.canAttack(attacker, entity) &&
                                         attacker.getDistanceSq(entity) < 9.0D) {
-                                    EntityUtil.knockBack(attacker,entity,0.4F);
+                                    EntityUtil.knockBack(attacker, entity, 0.4F);
                                     entity.attackEntityFrom(EntityUtil.genDamageSource(attacker), dmg);
                                     atLeastSweepOne = true;
                                 }

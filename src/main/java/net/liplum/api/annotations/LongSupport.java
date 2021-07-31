@@ -9,6 +9,6 @@ import java.lang.annotation.*;
  */
 @Documented
 @Retention(RetentionPolicy.SOURCE)
-@Target({ElementType.CONSTRUCTOR, ElementType.METHOD,ElementType.TYPE})
+@Target({ElementType.CONSTRUCTOR, ElementType.METHOD, ElementType.TYPE})
 public @interface LongSupport {
 }
