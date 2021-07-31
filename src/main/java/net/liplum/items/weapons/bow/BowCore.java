@@ -4,6 +4,7 @@ import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.lib.utils.ItemUtil;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
@@ -39,12 +40,12 @@ public abstract class BowCore extends WeaponCore {
         );
     }
 
-    public boolean isAmmo(ItemStack itemStack){
+    public boolean isAmmo(ItemStack itemStack) {
         return ItemUtil.isArrow(itemStack);
     }
 
     @Nonnull
-    public ItemStack getDefaultAmmo(){
+    public ItemStack getDefaultAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowItem bow, @Nonnull ItemStack itemStack) {
         return new ItemStack(Items.ARROW);
     }
 
@@ -52,5 +53,6 @@ public abstract class BowCore extends WeaponCore {
         return checkPulling;
     }
 
-    public void onPulling(PullingBowArgs args){}
+    public void onPulling(PullingBowArgs args) {
+    }
 }

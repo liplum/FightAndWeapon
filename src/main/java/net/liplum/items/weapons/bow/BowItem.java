@@ -64,7 +64,7 @@ public class BowItem extends WeaponBaseItem {
                 return;
             }
         }
-        ItemStack ammo = FawItemUtil.findAmmo(entityLiving, core);
+        ItemStack ammo = FawItemUtil.findAmmo(entityLiving, this, stack);
         Item item = ammo.getItem();
         if (!(item instanceof ItemArrow)) {
             return;
@@ -97,5 +97,11 @@ public class BowItem extends WeaponBaseItem {
                     .calculator(FawUtil.toCalculator(args));
             core.onPulling(args);
         }
+    }
+
+    @Nonnull
+    @Override
+    public BowCore getCore() {
+        return core;
     }
 }

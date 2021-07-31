@@ -3,6 +3,7 @@ package net.liplum.items.weapons.lance;
 import net.liplum.FawBehaviors;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
+import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
 import net.liplum.lib.utils.FawItemUtil;
@@ -59,5 +60,11 @@ public class LanceItem extends WeaponBaseItem {
             }
         }
         return ActionResult.newResult(result, held);
+    }
+
+    @Nonnull
+    @Override
+    public LanceCore getCore() {
+        return core;
     }
 }

@@ -1,4 +1,4 @@
-package net.liplum.items.weapons.sword;
+package net.liplum.items.weapons.magickwand;
 
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.Entity;
@@ -7,11 +7,11 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
-public class SwordItem extends WeaponBaseItem {
+public class MagickWandItem extends WeaponBaseItem {
     @Nonnull
-    private final SwordCore core;
+    private final MagickWandCore core;
 
-    public SwordItem(@Nonnull SwordCore weaponCore) {
+    public MagickWandItem(@Nonnull MagickWandCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
     }
@@ -23,7 +23,7 @@ public class SwordItem extends WeaponBaseItem {
 
     @Nonnull
     @Override
-    public SwordCore getCore() {
+    public MagickWandCore getCore() {
         return core;
     }
 }

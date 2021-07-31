@@ -10,6 +10,7 @@ import net.liplum.events.weapon.WeaponDurabilityEvent;
 import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.items.weapons.bow.BowCore;
+import net.liplum.items.weapons.bow.BowItem;
 import net.liplum.lib.FawDamage;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.Entity;
@@ -348,16 +349,22 @@ public final class FawItemUtil {
     }
 
     @Nonnull
-    public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull BowCore bowCore) {
-        return ItemUtil.findAmmo(player, bowCore::isAmmo);
+    public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull BowItem bow, @Nonnull ItemStack itemStack) {
+        BowCore core = bow.getCore();
+        ItemStack res = ItemUtil.findAmmo(player, core::isAmmo);
+        if (res.isEmpty() && player.isCreative()) {
+            return core.getDefaultAmmo(player,bow,itemStack);
+        }
+        return res;
     }
 
     @Nonnull
-    public static ItemStack findAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowCore bowCore) {
+    public static ItemStack findAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowItem bow, @Nonnull ItemStack itemStack) {
+        BowCore core = bow.getCore();
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
-            return ItemUtil.findAmmo(player, bowCore::isAmmo);
+            return ItemUtil.findAmmo(player, core::isAmmo);
         }
-        return bowCore.getDefaultAmmo();
+        return core.getDefaultAmmo(entity,bow,itemStack);
     }
 }
