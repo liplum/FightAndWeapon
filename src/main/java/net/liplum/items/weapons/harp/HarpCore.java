@@ -1,7 +1,7 @@
 package net.liplum.items.weapons.harp;
 
 import net.liplum.WeaponTypes;
-import net.liplum.api.weapon.MagicToolCore;
+import net.liplum.api.weapon.MagickToolCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.IAttribute;
 import net.minecraft.item.EnumAction;
@@ -13,7 +13,11 @@ import static net.liplum.Attributes.Generic.MaxUseDuration;
 import static net.liplum.Attributes.Harp.Frequency;
 import static net.liplum.Attributes.Harp.Radius;
 
-public abstract class HarpCore extends MagicToolCore {
+public abstract class HarpCore extends MagickToolCore {
+
+    public HarpCore(@Nonnull String registerName) {
+        super(registerName);
+    }
 
     @Override
     protected void build(@Nonnull WeaponCoreBuilder builder) {

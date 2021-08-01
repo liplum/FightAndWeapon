@@ -1,11 +1,12 @@
 package net.liplum.lib.utils;
 
 import net.liplum.api.annotations.Developing;
-import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.lib.FawDamage;
-import net.liplum.lib.math.*;
+import net.liplum.lib.math.Angle;
+import net.liplum.lib.math.P2D;
+import net.liplum.lib.math.Point2D;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.boss.EntityDragon;
@@ -14,6 +15,7 @@ import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.entity.monster.EntityShulker;
 import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.scoreboard.Team;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumParticleTypes;
@@ -103,29 +105,14 @@ public class EntityUtil {
     }
 
     @Nonnull
-    public static FawDamage genFawDamage(@Nonnull EntityLivingBase attacker, @Nonnull WeaponBaseItem weapon, @Nullable IGemstone gemstone) {
+    public static FawDamage genFawDamage(@Nonnull EntityLivingBase attacker, @Nonnull ItemStack itemStack) {
         FawDamage damage;
+        WeaponBaseItem weapon = (WeaponBaseItem) itemStack.getItem();
+        Modifier modifier = GemUtil.getModifierFrom(itemStack);
         if (attacker instanceof EntityPlayer) {
-            damage = FawDamage.byPlayer((EntityPlayer) attacker, weapon);
+            damage = FawDamage.byPlayer((EntityPlayer) attacker, weapon, modifier, itemStack);
         } else {
-            damage = FawDamage.byMob(attacker, weapon);
-        }
-        if (gemstone != null) {
-            damage.setGemstone(gemstone);
-        }
-        return damage;
-    }
-
-    @Nonnull
-    public static FawDamage genFawDamage(@Nonnull EntityLivingBase attacker, @Nonnull WeaponBaseItem weapon, @Nullable IGemstone gemstone, @Nullable Modifier modifier) {
-        FawDamage damage;
-        if (attacker instanceof EntityPlayer) {
-            damage = FawDamage.byPlayer((EntityPlayer) attacker, weapon);
-        } else {
-            damage = FawDamage.byMob(attacker, weapon);
-        }
-        if (gemstone != null && modifier != null) {
-            damage.setGemstone(gemstone, modifier);
+            damage = FawDamage.byMob(attacker, weapon, modifier, itemStack);
         }
         return damage;
     }

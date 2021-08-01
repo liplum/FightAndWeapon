@@ -74,6 +74,10 @@ public abstract class RangedCore extends WeaponCore {
                 }
             }.setShownInTooltip(false).setBanedWhenBroken(false);
 
+    public RangedCore(@Nonnull String registerName) {
+        super(registerName);
+    }
+
     @Nonnull
     @Override
     public WeaponType getWeaponType() {

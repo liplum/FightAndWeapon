@@ -16,12 +16,13 @@ import static net.liplum.Attributes.Generic.MaxUseDuration;
 public abstract class BowCore extends WeaponCore {
     private final boolean checkPulling;
 
-    public BowCore(boolean checkPulling) {
+    public BowCore(@Nonnull String registerName, boolean checkPulling) {
+        super(registerName);
         this.checkPulling = checkPulling;
     }
 
-    public BowCore() {
-        this(false);
+    public BowCore(@Nonnull String registerName) {
+        this(registerName, false);
     }
 
     @Nonnull

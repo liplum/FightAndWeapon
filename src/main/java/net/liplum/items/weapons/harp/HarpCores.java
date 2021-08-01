@@ -27,7 +27,7 @@ import static net.liplum.Attributes.Harp.Radius;
 
 @LongSupport
 public final class HarpCores {
-    public static final HarpCore Empty = new HarpCore() {
+    public static final HarpCore Empty = new HarpCore(Names.Item.EmptyCore) {
         @Override
         public boolean continueSkill(ContinuousHarpArgs args) {
             return false;
@@ -45,14 +45,12 @@ public final class HarpCores {
         }
     };
 
-    public static final HarpCore Normal = new HarpCore() {
+    public static final HarpCore Normal = new HarpCore(Names.Item.Harp.HarpItem) {
 
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.Harp.HarpItem
-            ).set(
                     AbilityPower, AbilityPower.newBasicAttrValue(5F)
             ).set(
                     Frequency, Frequency.newBasicAttrValue(40)

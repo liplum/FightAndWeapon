@@ -8,6 +8,7 @@ import net.liplum.api.registeies.WeaponRegistry;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FixedAttrCalculator;
 import net.liplum.entities.FawWeaponItemEntity;
+import net.liplum.lib.FawDamage;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.FawItemUtil;
@@ -111,6 +112,20 @@ public abstract class WeaponBaseItem extends FawItem {
         return onlyCoreCalculator.calcu(MaxUseDuration).getInt();
     }
 
+    /**
+     * Deals damage to a target form the attacker.
+     * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
+     *
+     *
+     * @param fawDamage
+     * @param target
+     * @param damage
+     * @return true if the target was hit.
+     */
+    public boolean dealDamage(@Nonnull FawDamage fawDamage, @Nonnull Entity target, float damage) {
+        FawBehaviors.onCauseDamageWithWeapon(fawDamage.attacker(), this, fawDamage.itemStack(), target, damage);
+        return target.attackEntityFrom(fawDamage, damage);
+    }
     /**
      * Deals damage to a target form the attacker.
      * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}

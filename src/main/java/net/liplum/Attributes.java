@@ -189,13 +189,26 @@ public final class Attributes {
 
     @LongSupport
     public static final class Bow {
-        public static final IAttribute ProjectileVelocity = new Attribute()
-                .setRegisterName(Names.Attribute.Bow.Force)
+        /**
+         * It decides how fast the arrow shoots
+         */
+        public static final IAttribute Velocity = new Attribute()
+                .setRegisterName(Names.Attribute.Bow.Velocity)
                 .setDataType(DataType.Float)
                 .setDefaultValue(1F)
-                .setComputeType(ComputeType.Full)
+                .setComputeType(ComputeType.Only_Gemstone)
                 .setMinimum(0F)
                 .setShownInTooltip(false);
+
+        /**
+         * It decides how much the arrow can damage
+         */
+        public static final IAttribute Force = new Attribute()
+                .setRegisterName(Names.Attribute.Bow.Force)
+                .setDataType(DataType.Float)
+                .setDefaultValue(0F)
+                .setComputeType(ComputeType.Full)
+                .setMinimum(0F);
     }
 
     //You must call it to load this class and all the static fields.

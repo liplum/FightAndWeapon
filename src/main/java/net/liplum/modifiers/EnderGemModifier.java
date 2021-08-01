@@ -2,6 +2,7 @@ package net.liplum.modifiers;
 
 import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.Modifier;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
@@ -16,6 +17,7 @@ import net.liplum.lib.utils.PhysicsUtil;
 import net.liplum.lib.utils.Utils;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.SoundEvents;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
@@ -47,6 +49,8 @@ public final class EnderGemModifier {
             World world = args.world();
             EntityLivingBase player = args.entity();
             AttrCalculator calculator = args.calculator();
+            WeaponBaseItem weapon = args.weapon();
+            ItemStack itemStack = args.itemStack();
 
             float strength = calculator.calcu(Strength).getFloat();
             float sprintLength = calculator.calcu(SprintStrength).getFloat();
@@ -58,11 +62,12 @@ public final class EnderGemModifier {
             int damagedCount = 0;
             for (EntityLivingBase e : allInRange) {
                 if (EntityUtil.canAttack(player, e) && P2D.isInside(look, P2D.toPosition(player), P2D.toPosition(e), 2, sprintLength)) {
-                    e.attackEntityFrom(EntityUtil.genDamageSource(player), strength);
+
+                    weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
                     damagedCount++;
                 }
             }
-            FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), damagedCount, player);
+            FawItemUtil.damageWeapon(weapon, itemStack, damagedCount, player);
             Vec3d originPos = player.getPositionVector();
             Vec3d playerFace = player.getLookVec();
             Vec3d sprintForce = playerFace.scale(sprintLength);

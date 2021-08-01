@@ -21,7 +21,6 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.DamageSource;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -75,7 +74,7 @@ public final class FawItemUtil {
 
 
     /**
-     * It calls {@link WeaponBaseItem#dealDamage(ItemStack, EntityLivingBase, Entity, DamageSource, float)} to deal damage to the target.
+     * It calls {@link WeaponBaseItem#dealDamage(FawDamage, Entity, float)} to deal damage to the target.
      * It's called by {@link WeaponBaseItem#onLeftClickEntity(ItemStack, EntityPlayer, Entity)}.
      *
      * @param itemStack
@@ -141,7 +140,7 @@ public final class FawItemUtil {
             isFullAttack = cooldown >= 1F;
         }
 
-        FawDamage damageSource = EntityUtil.genFawDamage(attacker, weapon, gemstone, modifier);
+        FawDamage damageSource = EntityUtil.genFawDamage(attacker, itemStack);
 
         DamageArgs initialDamage = new DamageArgs(finalDamage, damageSource, target);
         WeaponAttackEvent.Attacking.Args attackingArgs = new WeaponAttackEvent.Attacking.Args();
@@ -163,7 +162,8 @@ public final class FawItemUtil {
         List<DamageArgs> allDamages = attackingArgs.getAllDamages();
         for (DamageArgs damageArgs : allDamages) {
             float singleDamage = damageArgs.getDamage();
-            boolean currentHitSuccessfully = weapon.dealDamage(itemStack, attacker, damageArgs.getTarget(), damageArgs.getDamageSource(), singleDamage);
+            boolean currentHitSuccessfully =
+                    weapon.dealDamage(itemStack,attacker, damageArgs.getTarget(),damageArgs.getDamageSource(), singleDamage);
             if (currentHitSuccessfully) {
                 totalDamage += singleDamage;
                 isHitSuccessfully = true;

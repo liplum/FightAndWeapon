@@ -35,6 +35,7 @@ public final class BehaviorHandlers {
             detail.addExp(weapon.getWeaponType(), exp);
         }
     };
+
     public static final IBehaviorHandler OnKillMob = new BehaviorHandler(Behavior.KillEntity) {
         /**
          * The var-args are {@code Entity target, float damage}.
@@ -48,6 +49,30 @@ public final class BehaviorHandlers {
                 int exp = (int) (5 + maxHp * 0.05) * 10;
                 IMasteryDetail detail = MasteryDetail.create(player);
                 detail.addExp(weapon.getWeaponType(), exp);
+            }
+        }
+    };
+
+    public static final IBehaviorHandler OnHarpHealing = new BehaviorHandler(Behaviors.HarpHealing) {
+        /**
+         * The var-args are {@code Float amount}
+         */
+        @Override
+        public void handle(@Nonnull EntityPlayer player, @Nonnull WeaponBaseItem weapon, @Nonnull ItemStack itemStack, Object... args) {
+            if (weapon.getWeaponType() == WeaponTypes.Harp) {
+
+            }
+        }
+    };
+
+    public static final IBehaviorHandler OnHarpBuff = new BehaviorHandler(Behaviors.HarpBuff) {
+        /**
+         * The var-args are {@code ?}
+         */
+        @Override
+        public void handle(@Nonnull EntityPlayer player, @Nonnull WeaponBaseItem weapon, @Nonnull ItemStack itemStack, Object... args) {
+            if (weapon.getWeaponType() == WeaponTypes.Harp) {
+
             }
         }
     };

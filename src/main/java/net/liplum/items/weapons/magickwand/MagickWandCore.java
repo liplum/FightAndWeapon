@@ -1,12 +1,16 @@
 package net.liplum.items.weapons.magickwand;
 
 import net.liplum.WeaponTypes;
-import net.liplum.api.weapon.WeaponCore;
+import net.liplum.api.weapon.MagickToolCore;
 import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;
 
-public abstract class MagickWandCore extends WeaponCore {
+abstract class MagickWandCore extends MagickToolCore {
+
+    public MagickWandCore(@Nonnull String registerName) {
+        super(registerName);
+    }
 
     @Override
     protected void build(@Nonnull WeaponCoreBuilder builder) {

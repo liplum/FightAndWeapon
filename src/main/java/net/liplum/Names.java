@@ -40,6 +40,8 @@ public final class Names {
         public static final String CastBlueprintItem = "cast_blueprint";
         public static final String WeaponPartItem = "weapon_part";
 
+        public static final String EmptyCore = "default";
+
         public static final class Lance {
             public static final String TypeName = "lance";
             public static final String ArenaLanceItem = "arena_lance";
@@ -117,6 +119,7 @@ public final class Names {
 
         public static final class Bow {
             public static final String Force = "Force";
+            public static final String Velocity = "Velocity";
         }
     }
 
@@ -215,5 +218,20 @@ public final class Names {
     }
 
     public final static class Mastery {
+    }
+
+    public final static class Behavior {
+        public static final String KillEntity = "KillEntity";
+        public static final String HealWeapon = "HealWeapon";
+        public static final String DamageWeapon = "DamageWeapon";
+        public static final String CauseDamage = "CauseDamage";
+        public static final String DestroyBlock = "DestroyBlock";
+        public static final String ReleaseWeaponSkill = "ReleaseWeaponSkill";
+        public static final String UseWeapon = "UseWeapon";
+        public static final String TriggerPassiveSkill = "TriggerPassiveSkill";
+        public static final String Injury = "Injury";
+
+        public static final String HarpHealing = "HarpHealing";
+        public static final String HarpBuff = "HarpBuff";
     }
 }

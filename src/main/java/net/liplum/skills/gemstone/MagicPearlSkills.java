@@ -14,6 +14,7 @@ import net.liplum.lib.FawDamage;
 import net.liplum.lib.utils.EntityUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.List;
@@ -27,20 +28,14 @@ public final class MagicPearlSkills {
                 public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
                     WeaponAttackEvent.Attacking.Args args = event.getArgs();
                     EntityLivingBase attacker = args.attacker();
-                    WeaponBaseItem weapon = args.weapon();
-                    IGemstone gemstone = args.gemstone();
-                    Modifier modifier = args.modifier();
+                    ItemStack itemStack = args.itemStack();
                     List<DamageArgs> allDamages = args.getAllDamages();
                     DamageArgs initialDamage = args.initialDamage();
                     float initialDamageValue = initialDamage.getDamage();
                     Entity target = initialDamage.getTarget();
 
-                    FawDamage normalDamage = EntityUtil.genFawDamage(attacker,
-                            weapon,
-                            gemstone, modifier);
-                    FawDamage magicDamage = EntityUtil.genFawDamage(attacker,
-                            weapon,
-                            gemstone, modifier);
+                    FawDamage normalDamage = EntityUtil.genFawDamage(attacker, itemStack);
+                    FawDamage magicDamage = EntityUtil.genFawDamage(attacker, itemStack);
 
                     magicDamage.setMagicDamage().setDamageBypassesArmor();
                     args.initialDamage(new DamageArgs(initialDamageValue / 2, normalDamage, target));

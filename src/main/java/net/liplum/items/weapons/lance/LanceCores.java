@@ -36,7 +36,7 @@ import static net.liplum.items.weapons.lance.PSkills.Unstoppable;
 
 @LongSupport
 public final class LanceCores {
-    public static final LanceCore Empty = new LanceCore() {
+    public static final LanceCore Empty = new LanceCore(Names.Item.EmptyCore) {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
@@ -51,7 +51,7 @@ public final class LanceCores {
 
     };
 
-    public static final LanceCore TrainingLance = new LanceCore() {
+    public static final LanceCore TrainingLance = new LanceCore(Names.Item.Lance.TrainingLanceItem) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
@@ -61,14 +61,12 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.Lance.TrainingLanceItem
-            ).set(
                     Strength, Strength.newBasicAttrValue(5)
             ).set(false);
         }
     };
 
-    public static final LanceCore LightLance = new LanceCore() {
+    public static final LanceCore LightLance = new LanceCore(Names.Item.Lance.LightLanceItem) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
@@ -99,7 +97,7 @@ public final class LanceCores {
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
                             if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
-                                weapon.dealDamage(itemStack, player, e, EntityUtil.genDamageSource(player), strength);
+                                weapon.dealDamage(EntityUtil.genFawDamage(player,itemStack), e, strength);
                                 damaged.add(e);
                                 FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
                             }
@@ -115,8 +113,6 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.Lance.LightLanceItem
-            ).set(
                     //  It means you can dash 4 units.
                     SprintStrength, SprintStrength.newBasicAttrValue(2F)
             ).set(
@@ -131,7 +127,7 @@ public final class LanceCores {
         }
     };
 
-    public static final LanceCore KnightLance = new LanceCore() {
+    public static final LanceCore KnightLance = new LanceCore(Names.Item.Lance.KnightLanceItem) {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
@@ -151,7 +147,7 @@ public final class LanceCores {
             int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
                 if (EntityUtil.canAttack(player, e) && P2D.isInside(look, P2D.toPosition(player), P2D.toPosition(e), 1.5, sprintLength)) {
-                    weapon.dealDamage(itemStack, player, e, EntityUtil.genDamageSource(player), strength);
+                    weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
                     damagedEntityCount++;
                 }
             }
@@ -165,8 +161,6 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.Lance.KnightLanceItem
-            ).set(
                     SprintStrength, SprintStrength.newBasicAttrValue(4F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
@@ -176,7 +170,7 @@ public final class LanceCores {
         }
     };
 
-    public static final LanceCore ArenaLance = new LanceCore() {
+    public static final LanceCore ArenaLance = new LanceCore(Names.Item.Lance.ArenaLanceItem) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
@@ -222,7 +216,7 @@ public final class LanceCores {
                                     return d1 > d2 ? 1 : -1;
                                 }).toArray()[0];
                             }
-                            weapon.dealDamage(itemStack, player, target, EntityUtil.genDamageSource(player), strength);
+                            weapon.dealDamage(EntityUtil.genFawDamage(player,itemStack), target, strength);
                             FawItemUtil.damageWeapon(weapon, itemStack, 2, player);
                         }
                     }
@@ -236,8 +230,6 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.Lance.ArenaLanceItem
-            ).set(
                     CoolDown, CoolDown.newBasicAttrValue(10 * 20)
             ).set(
                     Strength, Strength.newBasicAttrValue(6F)
@@ -245,7 +237,7 @@ public final class LanceCores {
         }
     };
 
-    public static final LanceCore TestLance = new LanceCore() {
+    public static final LanceCore TestLance = new LanceCore(Names.Item.EmptyCore) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();

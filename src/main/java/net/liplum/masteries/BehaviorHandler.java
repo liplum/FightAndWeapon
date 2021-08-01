@@ -1,5 +1,7 @@
 package net.liplum.masteries;
 
+import net.liplum.api.registeies.WeaponActionHook;
+
 import javax.annotation.Nonnull;
 
 public abstract class BehaviorHandler implements IBehaviorHandler {
@@ -8,7 +10,7 @@ public abstract class BehaviorHandler implements IBehaviorHandler {
 
     public BehaviorHandler(@Nonnull Behavior behavior) {
         this.behavior = behavior;
-        MasterySheet.register(this);
+        WeaponActionHook.register(this);
     }
 
     @Nonnull

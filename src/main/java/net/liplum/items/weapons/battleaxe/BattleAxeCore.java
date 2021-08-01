@@ -14,6 +14,10 @@ import static net.liplum.Attributes.Generic.AttackSpeed;
 
 public abstract class BattleAxeCore extends WeaponCore {
 
+    public BattleAxeCore(@Nonnull String registerName) {
+        super(registerName);
+    }
+
     @Override
     protected void initAllAttributes(List<IAttribute> attributes) {
         super.initAllAttributes(attributes);

@@ -11,6 +11,10 @@ import javax.annotation.Nonnull;
 import static net.liplum.Attributes.Sword.Sweep;
 
 public class SwordCore extends WeaponCore {
+    public SwordCore(@Nonnull String registerName) {
+        super(registerName);
+    }
+
     @Override
     public boolean releaseSkill(WeaponSkillArgs args) {
         return false;

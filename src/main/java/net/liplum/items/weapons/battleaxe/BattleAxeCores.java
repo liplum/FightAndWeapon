@@ -28,7 +28,7 @@ import static net.liplum.items.weapons.battleaxe.PSkills.Combo;
 
 @LongSupport
 public final class BattleAxeCores {
-    public static final BattleAxeCore Empty = new BattleAxeCore() {
+    public static final BattleAxeCore Empty = new BattleAxeCore(Names.Item.EmptyCore) {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
@@ -43,7 +43,7 @@ public final class BattleAxeCores {
 
     };
 
-    public static final BattleAxeCore Normal = new BattleAxeCore() {
+    public static final BattleAxeCore Normal = new BattleAxeCore(Names.Item.BattleAxe.BattleAxeItem) {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
@@ -72,7 +72,7 @@ public final class BattleAxeCores {
                     Point2D spNew = sp.minus(pp);
                     Vector2D sv = spNew.toV2D();
                     if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
-                        weapon.dealDamage(itemStack, player, e, EntityUtil.genDamageSource(player), strength);
+                        weapon.dealDamage(EntityUtil.genFawDamage(player,itemStack), e, strength);
                         EntityUtil.knockBack(player, e, 0.5F);
                         damagedEntityCount++;
                     }
@@ -91,8 +91,6 @@ public final class BattleAxeCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.BattleAxe.BattleAxeItem
-            ).set(
                     SweepRange, SweepRange.newBasicAttrValue(3F)
             ).set(
                     Strength, Strength.newBasicAttrValue(7F)
@@ -102,7 +100,7 @@ public final class BattleAxeCores {
         }
     };
 
-    public static final BattleAxeCore BerserkerAxe = new BattleAxeCore() {
+    public static final BattleAxeCore BerserkerAxe = new BattleAxeCore(Names.Item.BattleAxe.BerserkerAxeItem) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
@@ -115,8 +113,6 @@ public final class BattleAxeCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Names.Item.BattleAxe.BerserkerAxeItem
-            ).set(
                     Strength, Strength.newBasicAttrValue(7F)
             ).set(
                     CoolDown, CoolDown.newBasicAttrValue(350)

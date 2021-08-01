@@ -79,7 +79,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private IWeaponSkillPredicate weaponSkillPredicate;
     private boolean hasWeaponSkill = true;
     @Nonnull
-    private String registerName = "default";
+    private final String registerName;
     @Nonnull
     private EnumAction rightClickUseAction = EnumAction.NONE;
     @Nonnull
@@ -88,7 +88,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private TooltipPipe tooltipPipe = TooltipPipe.Empty;
 
     @LongSupport
-    public WeaponCore() {
+    public WeaponCore(@Nonnull String registerName) {
+        this.registerName = registerName;
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
         initAllAttributes(allAttributes);
 
@@ -292,13 +293,6 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         @Nonnull
         public WeaponCoreBuilder set(boolean has) {
             hasWeaponSkill = has;
-            return this;
-        }
-
-        @Nonnull
-        @LongSupport
-        public WeaponCoreBuilder set(@Nonnull String name) {
-            registerName = name;
             return this;
         }
 
