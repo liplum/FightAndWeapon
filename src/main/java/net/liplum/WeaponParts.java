@@ -1,5 +1,6 @@
 package net.liplum;
 
+import net.liplum.api.annotations.OnlyWhenInitialization;
 import net.liplum.api.registeies.WeaponPartRegistry;
 import net.liplum.api.weapon.WeaponPart;
 
@@ -17,6 +18,7 @@ public final class WeaponParts {
     }
 
     //You must call it to load this class and all the static fields.
+    @OnlyWhenInitialization
     public static void load() {
     }
 }

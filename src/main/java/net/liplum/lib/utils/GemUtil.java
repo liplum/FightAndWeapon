@@ -1,6 +1,8 @@
 package net.liplum.lib.utils;
 
 import net.liplum.api.annotations.LongSupport;
+import net.liplum.api.annotations.OnlyWhenInitialization;
+import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.GemstoneRegistry;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.Modifier;
@@ -14,6 +16,7 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @LongSupport
@@ -140,5 +143,14 @@ public final class GemUtil {
         Succeed,
         NotFawWeapon,
         NoGemstone
+    }
+
+    @OnlyWhenInitialization
+    public static void addPassivesSkillToWeaponCoreInAllGemstones(@Nonnull WeaponCore weaponCore, @Nonnull IPassiveSkill<?>... passiveSkills) {
+        for (IGemstone gemstone : GemstoneRegistry.getAllGemstones()) {
+            for (IPassiveSkill<?> passiveSkill : passiveSkills) {
+                gemstone.addPassiveSkillToCore(weaponCore, passiveSkill);
+            }
+        }
     }
 }

@@ -15,6 +15,6 @@ public abstract class LanceModifier extends Modifier {
 
     @Override
     protected void build(ModifierBuilder builder) {
-
+        super.build(builder);
     }
 }

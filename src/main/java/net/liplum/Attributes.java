@@ -11,10 +11,10 @@ public final class Attributes {
                 .setRegisterName(Names.Attribute.Generic.Durability)
                 .setBasic()
                 .setDataType(DataType.Int)
-                .setComputeType(ComputeType.Only_Base)
-                .setDefaultValue(0)
+                .setComputeType(ComputeType.Only_Gemstone)
+                .setDefaultValue(1)
                 .setShownInTooltip(false)
-                .setMinimum(0);
+                .setMinimum(1);
         public static final IAttribute Strength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Strength)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)

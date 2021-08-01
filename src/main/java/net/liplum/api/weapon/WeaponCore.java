@@ -203,7 +203,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         builder.addMainHand(
                 SharedMonsterAttributes.ATTACK_SPEED, AttackReachModifier)
-                .set(Durability, Durability.newBasicAttrValue(100))
+                .set(Durability, 100)
                 .set(DefaultPipe);
     }
 
@@ -245,6 +245,12 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull BasicAttrValue value) {
             AttributeValueMap.put(attribute, value);
             return this;
+        }
+
+        @Nonnull
+        @Override
+        public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull Number value) {
+            return (WeaponCoreBuilder) IBasicAttrValueBuilder.super.set(attribute,value);
         }
 
         @Nonnull

@@ -16,7 +16,7 @@ public final class RubyModifier {
         protected void build(Modifier.ModifierBuilder builder) {
             super.build(builder);
             builder.set(
-                    Strength, Strength.newAttrModifier(2, 0.2F)
+                    Strength, 2, 0.2F
             );
         }
 

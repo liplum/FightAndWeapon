@@ -1,6 +1,7 @@
 package net.liplum;
 
 import net.liplum.api.annotations.LongSupport;
+import net.liplum.api.annotations.OnlyWhenInitialization;
 import net.liplum.api.weapon.WeaponType;
 
 @LongSupport
@@ -27,6 +28,7 @@ public final class WeaponTypes {
             .setWeaponSkillPredicate(((world, player, weapon) -> true));
 
     //You must call it to load this class and all the static fields.
+    @OnlyWhenInitialization
     public static void load() {
 
     }

@@ -39,7 +39,7 @@ public class BowItem extends WeaponBaseItem {
     @Nonnull
     @Override
     public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
-        EnumActionResult result = EnumActionResult.PASS;
+        EnumActionResult result = EnumActionResult.FAIL;
         ItemStack held = playerIn.getHeldItem(handIn);
         if (!FawItemUtil.isWeaponBroken(held)) {
             boolean hasAmmo = FawItemUtil.hasAmmo(playerIn, core);

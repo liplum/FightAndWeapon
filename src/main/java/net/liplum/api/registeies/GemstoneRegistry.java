@@ -4,11 +4,9 @@ import net.liplum.FawMod;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.IGemstone;
 
+import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @LongSupport
 public final class GemstoneRegistry {
@@ -49,6 +47,12 @@ public final class GemstoneRegistry {
             genNamesCache();
         }
         return NamesCache;
+    }
+
+    @LongSupport
+    @Nonnull
+    public static Collection<IGemstone> getAllGemstones() {
+        return GemstoneMap.values();
     }
 
     private static void genNamesCache() {

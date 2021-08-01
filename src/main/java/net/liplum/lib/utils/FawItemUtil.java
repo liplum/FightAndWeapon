@@ -18,10 +18,13 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Enchantments;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemAxe;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.SoundEvent;
+import net.minecraft.util.datafix.fixes.TotemItemRename;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
@@ -177,7 +180,6 @@ public final class FawItemUtil {
             //calcu enemy breaking time
             FinalAttrValue finalEnemyBreakingTime = calculator.calcu(EnemyBreakingTime);
             int enemyBreakingTime = finalEnemyBreakingTime.getInt();
-
             if (enemyBreakingTime >= 0) {
                 target.hurtResistantTime = enemyBreakingTime;
             }
@@ -189,6 +191,9 @@ public final class FawItemUtil {
                     weapon.reduceDurabilityOnHit(itemStack, attackerPlayer, totalDamage);
                 }
             }
+        }
+        if(isWeaponBroken(itemStack)){
+            sound = SoundEvents.ENTITY_ITEM_BREAK;
         }
         //If attacker is not a player, it will be null.
         if (attackerPlayer != null &&

@@ -79,7 +79,9 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
         return AttributeModifierMap.get(attribute);
     }
 
-    protected abstract void build(ModifierBuilder builder);
+    protected void build(ModifierBuilder builder) {
+
+    }
 
     public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
         return core.releaseSkill(args);
@@ -93,6 +95,12 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
         public ModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull AttrModifier modifier) {
             AttributeModifierMap.put(attribute, modifier);
             return this;
+        }
+
+        @Nonnull
+        @Override
+        public ModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull Number delta, float rate) {
+            return (ModifierBuilder) IAttrModifierBuilder.super.set(attribute, delta, rate);
         }
 
         @Nonnull

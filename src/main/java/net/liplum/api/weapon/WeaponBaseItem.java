@@ -116,7 +116,6 @@ public abstract class WeaponBaseItem extends FawItem {
      * Deals damage to a target form the attacker.
      * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
      *
-     *
      * @param fawDamage
      * @param target
      * @param damage
@@ -126,6 +125,7 @@ public abstract class WeaponBaseItem extends FawItem {
         FawBehaviors.onCauseDamageWithWeapon(fawDamage.attacker(), this, fawDamage.itemStack(), target, damage);
         return target.attackEntityFrom(fawDamage, damage);
     }
+
     /**
      * Deals damage to a target form the attacker.
      * It's called by {@link FawItemUtil#attackEntity(ItemStack, WeaponBaseItem, EntityLivingBase, Entity)}
@@ -233,4 +233,9 @@ public abstract class WeaponBaseItem extends FawItem {
         return entity;
     }
 
+    @Override
+    public int getMaxDamage(@Nonnull ItemStack stack) {
+        AttrCalculator calculator = new AttrCalculator(this).modifier(GemUtil.getModifierFrom(stack));
+        return calculator.calcu(Durability).getInt();
+    }
 }

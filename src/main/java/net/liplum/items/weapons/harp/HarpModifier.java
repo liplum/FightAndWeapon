@@ -13,7 +13,7 @@ import static net.liplum.Attributes.Harp.Radius;
 public abstract class HarpModifier extends MagicToolModifier {
     @Override
     protected void build(ModifierBuilder builder) {
-
+        super.build(builder);
     }
 
     @Override

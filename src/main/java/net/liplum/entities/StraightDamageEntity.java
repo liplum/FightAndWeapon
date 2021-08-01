@@ -11,7 +11,7 @@ import java.util.List;
 
 public class StraightDamageEntity extends EntityLiving {
 
-    private float straightDamage = 0;
+    private float straightDamage = 10;
     private EntityPlayer player;
 
     public StraightDamageEntity(World worldIn) {
@@ -22,6 +22,7 @@ public class StraightDamageEntity extends EntityLiving {
         super(worldIn);
         this.player = player;
         this.straightDamage = damage;
+        setSize(1F,1F);
     }
 
     @Override

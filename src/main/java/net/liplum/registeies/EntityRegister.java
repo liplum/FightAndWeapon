@@ -2,6 +2,7 @@ package net.liplum.registeies;
 
 import net.liplum.MetaData;
 import net.liplum.Names;
+import net.liplum.entities.GemswordBeam;
 import net.liplum.entities.StraightDamageEntity;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
@@ -19,6 +20,11 @@ public final class EntityRegister {
     public static final EntityEntry STRAIGHT_DAMAGE_ENTITY = build(
             with(EntityEntryBuilder.create().entity(StraightDamageEntity.class), Names.Entity.StraightDamageEntity, ID++)
                     .tracker(64, 10, true));
+
+    public static final EntityEntry GemswordBeam = build(
+            with(EntityEntryBuilder.create().entity(GemswordBeam.class), Names.Entity.GemswordBeam, ID++)
+                    .tracker(64, 10, true)
+    );
 
     public static EntityEntry build(EntityEntryBuilder<?> b) {
         EntityEntry e = b.build();

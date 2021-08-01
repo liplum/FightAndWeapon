@@ -40,7 +40,7 @@ public final class EnderGemModifier {
         protected void build(Modifier.ModifierBuilder builder) {
             super.build(builder);
             builder.set(
-                    SprintStrength, SprintStrength.newAttrModifier(2, 0)
+                    SprintStrength, 2F,0
             );
         }
 

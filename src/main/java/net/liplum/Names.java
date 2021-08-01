@@ -125,6 +125,7 @@ public final class Names {
 
     public final static class Entity {
         public static final String StraightDamageEntity = "straight_damage";
+        public static final String GemswordBeam = "gemsword_beam";
     }
 
     public final static class Capability {

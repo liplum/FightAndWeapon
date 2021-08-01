@@ -15,6 +15,6 @@ public abstract class BattleAxeModifier extends Modifier {
 
     @Override
     protected void build(ModifierBuilder builder) {
-
+        super.build(builder);
     }
 }

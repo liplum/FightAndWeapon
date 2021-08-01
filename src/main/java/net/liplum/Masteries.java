@@ -1,5 +1,6 @@
 package net.liplum;
 
+import net.liplum.api.annotations.OnlyWhenInitialization;
 import net.liplum.masteries.AttrAmp;
 import net.liplum.masteries.Mastery;
 import net.liplum.masteries.RoutineBuilder;
@@ -55,6 +56,7 @@ public final class Masteries {
 
 
     //You must call it to load this class and all the static fields.
+    @OnlyWhenInitialization
     public static void load() {
 
     }
