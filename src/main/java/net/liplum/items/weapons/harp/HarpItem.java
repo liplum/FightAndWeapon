@@ -7,7 +7,6 @@ import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
-import net.liplum.items.weapons.battleaxe.BattleAxeCore;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -124,6 +123,7 @@ public class HarpItem extends WeaponBaseItem {
             p.resetActiveHand();
         }
     }
+
     @Nonnull
     @Override
     public HarpCore getConcreteCore() {

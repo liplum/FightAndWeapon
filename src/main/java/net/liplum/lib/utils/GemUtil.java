@@ -131,6 +131,15 @@ public final class GemUtil {
         return RemoveResult.Succeed;
     }
 
+    @OnlyWhenInitialization
+    public static void addPassivesSkillToWeaponCoreInAllGemstones(@Nonnull WeaponCore weaponCore, @Nonnull IPassiveSkill<?>... passiveSkills) {
+        for (IGemstone gemstone : GemstoneRegistry.getAllGemstones()) {
+            for (IPassiveSkill<?> passiveSkill : passiveSkills) {
+                gemstone.addPassiveSkillToCore(weaponCore, passiveSkill);
+            }
+        }
+    }
+
     @LongSupport
     public enum InlayResult {
         Succeed,
@@ -143,14 +152,5 @@ public final class GemUtil {
         Succeed,
         NotFawWeapon,
         NoGemstone
-    }
-
-    @OnlyWhenInitialization
-    public static void addPassivesSkillToWeaponCoreInAllGemstones(@Nonnull WeaponCore weaponCore, @Nonnull IPassiveSkill<?>... passiveSkills) {
-        for (IGemstone gemstone : GemstoneRegistry.getAllGemstones()) {
-            for (IPassiveSkill<?> passiveSkill : passiveSkills) {
-                gemstone.addPassiveSkillToCore(weaponCore, passiveSkill);
-            }
-        }
     }
 }

@@ -12,6 +12,7 @@ import javax.annotation.Nullable;
 public class GemswordBeamRender extends Render<GemswordBeam> {
     private static final ResourceLocation Texture =
             new FawLocation("textures/entity/gemsword_beam.png");
+
     protected GemswordBeamRender(RenderManager renderManager) {
         super(renderManager);
     }

@@ -5,7 +5,6 @@ import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
 
 import javax.annotation.Nonnull;
-import javax.naming.Name;
 
 @LongSupport
 public final class MagickWandCores {
@@ -19,7 +18,7 @@ public final class MagickWandCores {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(
+            builder.add(
                     1, PSkills.AP2Strength
             );
         }

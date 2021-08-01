@@ -1,6 +1,5 @@
 package net.liplum.lib.utils;
 
-import net.liplum.lib.math.Point2D;
 import net.liplum.lib.math.Vector2D;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;

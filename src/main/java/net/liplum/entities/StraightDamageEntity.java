@@ -22,7 +22,7 @@ public class StraightDamageEntity extends EntityLiving {
         super(worldIn);
         this.player = player;
         this.straightDamage = damage;
-        setSize(1F,1F);
+        setSize(1F, 1F);
     }
 
     @Override

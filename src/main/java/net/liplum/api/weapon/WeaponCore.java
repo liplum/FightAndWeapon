@@ -76,10 +76,10 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     private final Map<Integer, IPassiveSkill<?>> lockedPassiveSkills = new HashMap<>();
     @Nonnull
+    private final String registerName;
+    @Nonnull
     private IWeaponSkillPredicate weaponSkillPredicate;
     private boolean hasWeaponSkill = true;
-    @Nonnull
-    private final String registerName;
     @Nonnull
     private EnumAction rightClickUseAction = EnumAction.NONE;
     @Nonnull
@@ -250,7 +250,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         @Nonnull
         @Override
         public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull Number value) {
-            return (WeaponCoreBuilder) IBasicAttrValueBuilder.super.set(attribute,value);
+            return (WeaponCoreBuilder) IBasicAttrValueBuilder.super.set(attribute, value);
         }
 
         @Nonnull
@@ -297,14 +297,14 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
 
         @Nonnull
-        public WeaponCoreBuilder set(boolean has) {
+        public WeaponCoreBuilder hasWeaponSkill(boolean has) {
             hasWeaponSkill = has;
             return this;
         }
 
         @Nonnull
         @Developing
-        public WeaponCoreBuilder set(int number, IPassiveSkill<?> passiveSkill) {
+        public WeaponCoreBuilder add(int number, IPassiveSkill<?> passiveSkill) {
             lockedPassiveSkills.put(number, passiveSkill);
             return this;
         }

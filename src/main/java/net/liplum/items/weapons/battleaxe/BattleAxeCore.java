@@ -28,7 +28,7 @@ public abstract class BattleAxeCore extends WeaponCore {
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
-                AttackSpeed, AttackSpeed.newBasicAttrValue(1.2F)
+                AttackSpeed, 1.2F
         ).set(
                 EnumAction.BLOCK
         );

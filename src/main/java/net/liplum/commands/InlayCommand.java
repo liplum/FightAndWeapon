@@ -30,9 +30,9 @@ public class InlayCommand extends CommandBase {
         GemUtil.RemoveResult removeResult = GemUtil.removeGemstone(held);
         switch (removeResult) {
             case NotFawWeapon:
-                throw new CommandException(Inlay_Failure_NotFawWeapon, entity);
+                throw new CommandException(Inlay_Failure_NotFawWeapon, entity.getName());
             case NoGemstone:
-                throw new CommandException(Inlay_Failure_NoFawWeapon, entity);
+                throw new CommandException(Inlay_Failure_NoFawWeapon, entity.getName());
         }
     }
 
@@ -40,7 +40,7 @@ public class InlayCommand extends CommandBase {
         GemUtil.InlayResult inlayResult = GemUtil.inlayGemstone(held, gemstoneName);
         switch (inlayResult) {
             case NotFawWeapon:
-                throw new CommandException(Inlay_Failure_NotFawWeapon, entity);
+                throw new CommandException(Inlay_Failure_NotFawWeapon, entity.getName());
             case NoSuchGemstone:
                 throw new CommandException(Inlay_Failure_NoSuchGemstone, gemstoneName);
         }

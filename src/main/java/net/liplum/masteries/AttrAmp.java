@@ -15,8 +15,10 @@ public class AttrAmp {
     private DataType type = DataType.Int;
     @Nonnull
     private Number value = 0;
+
     private AttrAmp() {
     }
+
     public AttrAmp(@Nonnull String attributeName, @Nonnull DataType type, @Nonnull Number value) {
         this.attributeName = attributeName;
         this.type = type;

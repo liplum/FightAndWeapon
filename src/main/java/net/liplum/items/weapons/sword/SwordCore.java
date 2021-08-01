@@ -32,7 +32,7 @@ public class SwordCore extends WeaponCore {
         builder.set(
                 EnumAction.BLOCK
         ).set(
-                Sweep, Sweep.newBasicAttrValue(0F)
+                Sweep, 0F
         );
     }
 }

@@ -1,10 +1,6 @@
 package net.liplum.items.weapons.magickwand;
 
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.api.weapon.WeaponCore;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 

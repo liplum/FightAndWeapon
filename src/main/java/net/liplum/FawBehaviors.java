@@ -1,8 +1,8 @@
 package net.liplum;
 
+import net.liplum.api.registeies.WeaponActionHook;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.masteries.Behavior;
-import net.liplum.api.registeies.WeaponActionHook;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;

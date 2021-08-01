@@ -38,7 +38,9 @@ public final class BattleAxeCores {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(false);
+            builder.hasWeaponSkill(
+                    false
+            );
         }
 
     };
@@ -72,7 +74,7 @@ public final class BattleAxeCores {
                     Point2D spNew = sp.minus(pp);
                     Vector2D sv = spNew.toV2D();
                     if (MathUtil.belongToCO(0, 1, sv.cosAngle(pLook2D))) {
-                        weapon.dealDamage(EntityUtil.genFawDamage(player,itemStack), e, strength);
+                        weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
                         EntityUtil.knockBack(player, e, 0.5F);
                         damagedEntityCount++;
                     }
@@ -91,11 +93,11 @@ public final class BattleAxeCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    SweepRange, SweepRange.newBasicAttrValue(3F)
+                    SweepRange, 3F
             ).set(
-                    Strength, Strength.newBasicAttrValue(7F)
+                    Strength, 7F
             ).set(
-                    CoolDown, CoolDown.newBasicAttrValue(5 * 20)
+                    CoolDown, 5 * 20
             );
         }
     };
@@ -118,7 +120,7 @@ public final class BattleAxeCores {
                     CoolDown, CoolDown.newBasicAttrValue(350)
             ).set(
                     AttackSpeed, AttackSpeed.newBasicAttrValue(1F)
-            ).set(
+            ).add(
                     1, Combo
             );
         }

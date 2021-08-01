@@ -1,6 +1,5 @@
 package net.liplum.items.weapons.harp;
 
-import net.liplum.Attributes;
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
@@ -41,7 +40,7 @@ public final class HarpCores {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(false);
+            builder.hasWeaponSkill(false);
         }
     };
 
@@ -51,15 +50,15 @@ public final class HarpCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    AbilityPower, AbilityPower.newBasicAttrValue(5F)
+                    AbilityPower, 5F
             ).set(
-                    Frequency, Frequency.newBasicAttrValue(40)
+                    Frequency, 40
             ).set(
-                    Radius, Radius.newBasicAttrValue(4F)
+                    Radius, 4F
             ).set(
-                    CoolDown, CoolDown.newBasicAttrValue(200)
+                    CoolDown, 10 * 20
             ).set(
-                    MaxUseDuration, Attributes.Generic.MaxUseDuration.newBasicAttrValue(400)
+                    MaxUseDuration, 400
             );
         }
 

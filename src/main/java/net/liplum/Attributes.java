@@ -5,6 +5,10 @@ import net.liplum.attributes.*;
 
 @LongSupport
 public final class Attributes {
+    //You must call it to load this class and all the static fields.
+    public static void load() {
+    }
+
     @LongSupport
     public static final class Generic {
         public static final IAttribute Durability = new Attribute()
@@ -209,9 +213,5 @@ public final class Attributes {
                 .setDefaultValue(0F)
                 .setComputeType(ComputeType.Full)
                 .setMinimum(0F);
-    }
-
-    //You must call it to load this class and all the static fields.
-    public static void load() {
     }
 }

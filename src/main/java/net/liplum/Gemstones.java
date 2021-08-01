@@ -4,12 +4,10 @@ import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.annotations.OnlyWhenInitialization;
 import net.liplum.api.weapon.Gemstone;
 import net.liplum.api.weapon.IGemstone;
-import net.liplum.events.init.GemstoneRegisterEvent;
 import net.liplum.modifiers.EnderGemModifier;
 import net.liplum.modifiers.FlameGemModifier;
 import net.liplum.modifiers.RubyModifier;
 import net.liplum.skills.UndeterminedSkills;
-import net.minecraftforge.common.MinecraftForge;
 
 import static net.liplum.skills.gemstone.FlamegemSkills.FireProof;
 import static net.liplum.skills.gemstone.FlamegemSkills.ScorchingTouch;

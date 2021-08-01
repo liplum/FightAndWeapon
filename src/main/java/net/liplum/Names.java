@@ -5,7 +5,7 @@ import net.minecraftforge.registries.IForgeRegistryEntry;
 
 @LongSupport
 public final class Names {
-    public static final String WeaponAttributeModifier = "Weapon Modifier";
+    public static final String WeaponAttributeModifier = "Weapon modifier";
 
     public static String prefixRegister(String name) {
         return MetaData.MOD_ID + ':' + name;

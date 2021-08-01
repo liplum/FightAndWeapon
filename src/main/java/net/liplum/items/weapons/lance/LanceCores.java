@@ -46,7 +46,7 @@ public final class LanceCores {
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.set(false);
+            builder.hasWeaponSkill(false);
         }
 
     };
@@ -61,8 +61,8 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    Strength, Strength.newBasicAttrValue(5)
-            ).set(false);
+                    Strength, 5
+            ).hasWeaponSkill(false);
         }
     };
 
@@ -97,7 +97,7 @@ public final class LanceCores {
                                 .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
                         for (EntityLivingBase e : allInRange) {
                             if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
-                                weapon.dealDamage(EntityUtil.genFawDamage(player,itemStack), e, strength);
+                                weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
                                 damaged.add(e);
                                 FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
                             }
@@ -114,14 +114,14 @@ public final class LanceCores {
             super.build(builder);
             builder.set(
                     //  It means you can dash 4 units.
-                    SprintStrength, SprintStrength.newBasicAttrValue(2F)
+                    SprintStrength, 2F
             ).set(
-                    CoolDown, CoolDown.newBasicAttrValue(6 * 20)
+                    CoolDown, 6 * 20
             ).set(
-                    Strength, Strength.newBasicAttrValue(5F)
+                    Strength, 5F
             ).set(
-                    AttackReach, AttackReach.newBasicAttrValue(8F)
-            ).set(
+                    AttackReach, 8F
+            ).add(
                     1, Unstoppable
             );
         }
@@ -161,11 +161,11 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    SprintStrength, SprintStrength.newBasicAttrValue(4F)
+                    SprintStrength, 4F
             ).set(
-                    CoolDown, CoolDown.newBasicAttrValue(10 * 20)
+                    CoolDown, 10 * 20
             ).set(
-                    Strength, Strength.newBasicAttrValue(6F)
+                    Strength, 6F
             );
         }
     };
@@ -216,7 +216,7 @@ public final class LanceCores {
                                     return d1 > d2 ? 1 : -1;
                                 }).toArray()[0];
                             }
-                            weapon.dealDamage(EntityUtil.genFawDamage(player,itemStack), target, strength);
+                            weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), target, strength);
                             FawItemUtil.damageWeapon(weapon, itemStack, 2, player);
                         }
                     }
@@ -230,9 +230,9 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    CoolDown, CoolDown.newBasicAttrValue(10 * 20)
+                    CoolDown, 10 * 20
             ).set(
-                    Strength, Strength.newBasicAttrValue(6F)
+                    Strength, 6F
             );
         }
     };
@@ -259,9 +259,9 @@ public final class LanceCores {
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
-                    SprintStrength, SprintStrength.newBasicAttrValue(10F)
+                    SprintStrength, 10F
             ).set(
-                    CoolDown, CoolDown.newBasicAttrValue(20)
+                    CoolDown, 20
             );
         }
     };

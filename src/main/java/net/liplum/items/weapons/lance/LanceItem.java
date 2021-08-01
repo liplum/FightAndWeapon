@@ -5,7 +5,6 @@ import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.events.weapon.WeaponSkillReleaseEvent;
-import net.liplum.items.weapons.battleaxe.BattleAxeCore;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.FawUtil;
 import net.liplum.lib.utils.GemUtil;
@@ -61,6 +60,7 @@ public class LanceItem extends WeaponBaseItem {
         }
         return ActionResult.newResult(result, held);
     }
+
     @Nonnull
     @Override
     public LanceCore getConcreteCore() {

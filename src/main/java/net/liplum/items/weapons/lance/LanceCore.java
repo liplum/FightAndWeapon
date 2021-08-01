@@ -28,7 +28,7 @@ public abstract class LanceCore extends WeaponCore {
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
-                AttackSpeed, AttackSpeed.newBasicAttrValue(2F)
+                AttackSpeed, 2F
         ).set(
                 EnumAction.BLOCK
         );
