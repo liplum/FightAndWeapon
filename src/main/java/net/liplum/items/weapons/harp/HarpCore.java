@@ -19,6 +19,10 @@ public abstract class HarpCore extends MagickToolCore {
         super(registerName);
     }
 
+    public HarpCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+        super(registerName, hasWeaponSkill);
+    }
+
     @Override
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);

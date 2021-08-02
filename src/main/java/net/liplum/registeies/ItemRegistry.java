@@ -56,21 +56,21 @@ public final class ItemRegistry {
     //  Registers all items
     //
     //Gemstone
-    public static final Item Ruby_Item = gemstone(new GemstoneItem(Gemstones.Ruby_Gemstone, 16));
-    public static final Item Aquamarine_Item = gemstone(new GemstoneItem(Gemstones.Aquamarine_Gemstone, 16));
-    public static final Item Citrine_Item = gemstone(new GemstoneItem(Gemstones.Citrine_Gemstone, 16));
-    public static final Item Jadeite_Item = gemstone(new GemstoneItem(Gemstones.Jadeite_Gemstone, 16));
-    public static final Item Amethyst_Item = gemstone(new GemstoneItem(Gemstones.Amethyst_Gemstone, 16));
-    public static final Item Rose_Quartz_Item = gemstone(new GemstoneItem(Gemstones.Rose_Quartz_Gemstone, 16));
-    public static final Item Turquoise_Item = gemstone(new GemstoneItem(Gemstones.Turquoise_Gemstone, 16));
+    public static final Item Ruby_Item = gemstone(new GemstoneItem(Gemstones.Ruby_Gemstone));
+    public static final Item Aquamarine_Item = gemstone(new GemstoneItem(Gemstones.Aquamarine_Gemstone));
+    public static final Item Citrine_Item = gemstone(new GemstoneItem(Gemstones.Citrine_Gemstone));
+    public static final Item Jadeite_Item = gemstone(new GemstoneItem(Gemstones.Jadeite_Gemstone));
+    public static final Item Amethyst_Item = gemstone(new GemstoneItem(Gemstones.Amethyst_Gemstone));
+    public static final Item Rose_Quartz_Item = gemstone(new GemstoneItem(Gemstones.Rose_Quartz_Gemstone));
+    public static final Item Turquoise_Item = gemstone(new GemstoneItem(Gemstones.Turquoise_Gemstone));
 
-    public static final Item Flamegem_Item = gemstone(new GemstoneItem(Gemstones.Flamegem_Gemstone, 1));
-    public static final Item Marinegem_Item = gemstone(new GemstoneItem(Gemstones.Marinegem_Gemstone, 1));
-    public static final Item Earthgem_Item = gemstone(new GemstoneItem(Gemstones.Earthgem_Gemstone, 1));
-    public static final Item Forestgem_Item = gemstone(new GemstoneItem(Gemstones.Forestgem_Gemstone, 1));
-    public static final Item Endergem_Item = gemstone(new GemstoneItem(Gemstones.Endergem_Gemstone, 1));
-    public static final Item Magic_Pearl_Item = gemstone(new GemstoneItem(Gemstones.Magic_Pearl_Gemstone, 1));
-    public static final Item Windy_Gemstone_Item = gemstone(new GemstoneItem(Gemstones.Windy_Gemstone, 1));
+    public static final Item Flamegem_Item = gemstone(new GemstoneItem(Gemstones.Flamegem_Gemstone));
+    public static final Item Marinegem_Item = gemstone(new GemstoneItem(Gemstones.Marinegem_Gemstone));
+    public static final Item Earthgem_Item = gemstone(new GemstoneItem(Gemstones.Earthgem_Gemstone));
+    public static final Item Forestgem_Item = gemstone(new GemstoneItem(Gemstones.Forestgem_Gemstone));
+    public static final Item Endergem_Item = gemstone(new GemstoneItem(Gemstones.Endergem_Gemstone));
+    public static final Item Magic_Pearl_Item = gemstone(new GemstoneItem(Gemstones.Magic_Pearl_Gemstone));
+    public static final Item Windy_Gemstone_Item = gemstone(new GemstoneItem(Gemstones.Windy_Gemstone));
 
     //Some test items
     public static final Item Quartz_Sword_Item = weapon(new QuartzSwordItem(), Names.Item.QuartzSwordItem);
@@ -78,26 +78,26 @@ public final class ItemRegistry {
     public static final Item Test_Sword_Item = weapon(new TestSwordItem(), Names.Item.TestSwordItem);
 
     //Battle Axe
-    public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCores.Normal), Names.Item.BattleAxe.BattleAxeItem);
-    public static final Item Berserker_Axe_Item = weapon(new BattleAxeItem(BattleAxeCores.BerserkerAxe), Names.Item.BattleAxe.BerserkerAxeItem);
+    public static final Item Battle_Axe_Item = weapon(new BattleAxeItem(BattleAxeCores.Normal));
+    public static final Item Berserker_Axe_Item = weapon(new BattleAxeItem(BattleAxeCores.BerserkerAxe));
 
     //Lance
-    public static final Item Training_Lance_Item = weapon(new LanceItem(LanceCores.TrainingLance), Names.Item.Lance.TrainingLanceItem);
-    public static final Item Light_Lance_Item = weapon(new LanceItem(LanceCores.LightLance), Names.Item.Lance.LightLanceItem);
-    public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCores.KnightLance), Names.Item.Lance.KnightLanceItem);
-    public static final Item Arena_Lance_Item = weapon(new LanceItem(LanceCores.ArenaLance), Names.Item.Lance.ArenaLanceItem);
+    public static final Item Training_Lance_Item = weapon(new LanceItem(LanceCores.TrainingLance));
+    public static final Item Light_Lance_Item = weapon(new LanceItem(LanceCores.LightLance));
+    public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCores.KnightLance));
+    public static final Item Arena_Lance_Item = weapon(new LanceItem(LanceCores.ArenaLance));
 
     //Harp
-    public static final Item Harp_Item = weapon(new HarpItem(HarpCores.Normal), Names.Item.Harp.HarpItem);
+    public static final Item Harp_Item = weapon(new HarpItem(HarpCores.Normal));
 
     //Ranged Weapon
-    public static final Item Sickle_Item = weapon(new SickleItem(RangedCores.Sickle), Names.Item.Ranged.SickleItem);
+    public static final Item Sickle_Item = weapon(new SickleItem(RangedCores.Sickle));
 
     //Magick Wand
-    public static final Item Gemsword_Item = weapon(new MagickWandItem(MagickWandCores.Gemsword), Names.Item.MagickWand.GemswordItem);
+    public static final Item Gemsword_Item = weapon(new MagickWandItem(MagickWandCores.Gemsword));
 
     //Bow
-    public static final Item Simple_Bow_Item = weapon(new BowItem(BowCores.Empty), Names.Item.Bow.SimpleBow);
+    public static final Item Simple_Bow_Item = weapon(new BowItem(BowCores.Empty));
 
     //Block
     public static final Item Forge_Block_Item = forge(new ItemBlock(BlockRegistry.Forge_Block), Names.Block.Forge);
@@ -162,8 +162,8 @@ public final class ItemRegistry {
         return with(item, item.getGemstone().getRegisterName(), ItemGroupRegistry.FawGemstones);
     }
 
-    public static Item weapon(WeaponBaseItem weapon, String name) {
-        return with(weapon, name, ItemGroupRegistry.FawWeapons);
+    public static Item weapon(WeaponBaseItem weapon) {
+        return with(weapon, weapon.getCore().getRegisterName(), ItemGroupRegistry.FawWeapons);
     }
 
     public static Item weapon(Item item, String name) {

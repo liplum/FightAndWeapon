@@ -12,6 +12,10 @@ abstract class MagickWandCore extends MagickToolCore {
         super(registerName);
     }
 
+    public MagickWandCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+        super(registerName, hasWeaponSkill);
+    }
+
     @Override
     protected void build(@Nonnull WeaponCoreBuilder builder) {
         super.build(builder);

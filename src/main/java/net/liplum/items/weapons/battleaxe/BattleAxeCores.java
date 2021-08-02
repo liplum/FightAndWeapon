@@ -28,19 +28,11 @@ import static net.liplum.items.weapons.battleaxe.PSkills.Combo;
 
 @LongSupport
 public final class BattleAxeCores {
-    public static final BattleAxeCore Empty = new BattleAxeCore(Names.Item.EmptyCore) {
+    public static final BattleAxeCore Empty = new BattleAxeCore(Names.Item.EmptyCore, false) {
 
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
-        }
-
-        @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
-            super.build(builder);
-            builder.hasWeaponSkill(
-                    false
-            );
         }
 
     };

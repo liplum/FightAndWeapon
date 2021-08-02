@@ -9,6 +9,14 @@ import javax.annotation.Nonnull;
 @LongSupport
 public final class MagickWandCores {
 
+
+    public static final MagickWandCore Empty = new MagickWandCore(Names.Item.MagickWand.GemswordItem, false) {
+        @Override
+        public boolean releaseSkill(WeaponSkillArgs args) {
+            return false;
+        }
+    };
+
     public static final MagickWandCore Gemsword = new MagickWandCore(Names.Item.MagickWand.GemswordItem) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {

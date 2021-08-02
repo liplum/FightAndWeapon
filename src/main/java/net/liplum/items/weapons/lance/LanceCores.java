@@ -36,22 +36,14 @@ import static net.liplum.items.weapons.lance.PSkills.Unstoppable;
 
 @LongSupport
 public final class LanceCores {
-    public static final LanceCore Empty = new LanceCore(Names.Item.EmptyCore) {
-
+    public static final LanceCore Empty = new LanceCore(Names.Item.EmptyCore,false) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
         }
-
-        @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
-            super.build(builder);
-            builder.hasWeaponSkill(false);
-        }
-
     };
 
-    public static final LanceCore TrainingLance = new LanceCore(Names.Item.Lance.TrainingLanceItem) {
+    public static final LanceCore TrainingLance = new LanceCore(Names.Item.Lance.TrainingLanceItem,false) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
@@ -62,7 +54,7 @@ public final class LanceCores {
             super.build(builder);
             builder.set(
                     Strength, 5
-            ).hasWeaponSkill(false);
+            );
         }
     };
 

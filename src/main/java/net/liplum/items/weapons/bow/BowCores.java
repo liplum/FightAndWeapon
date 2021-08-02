@@ -6,11 +6,33 @@ import net.liplum.api.weapon.WeaponSkillArgs;
 
 @LongSupport
 public final class BowCores {
-    public static final BowCore Empty = new BowCore(Names.Item.EmptyCore) {
+    public static final BowCore Empty = new BowCore(Names.Item.EmptyCore,false,false) {
+        @Override
+        public float computeDamage(float originalDamage, int tick) {
+            return 0;
+        }
+
+        @Override
+        public boolean releaseSkill(WeaponSkillArgs args) {
+            return false;
+        }
+
+    };
+    public static final BowCore SimpleBow = new BowCore(Names.Item.Bow.SimpleBow) {
+        @Override
+        public float computeDamage(float originalDamage, int pullingTick) {
+            //TODO: compute Damage
+            return 0;
+        }
+
+        @Override
+        public int fullPullingTime() {
+            return 60;
+        }
+
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {
             return false;
         }
     };
-
 }

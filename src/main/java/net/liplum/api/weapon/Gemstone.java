@@ -15,13 +15,45 @@ public class Gemstone implements IGemstone {
     private final AmplifierOfWeaponTypes amplifierOfWeaponTypes = new AmplifierOfWeaponTypes();
     private final AmplifierOfAllWeaponTypes amplifierOfAllWeaponTypes = new AmplifierOfAllWeaponTypes();
 
+    private final GemQuality gemQuality;
+    private final int displayedOrderID;
+
     /**
      * Whenever you create the instance, it will register itself to {@link GemstoneRegistry} automatically.
      *
      * @param registerName the name to register itself
      */
-    public Gemstone(String registerName) {
+    public Gemstone(@Nonnull String registerName) {
+        this(registerName, GemQuality.None, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Whenever you create the instance, it will register itself to {@link GemstoneRegistry} automatically.
+     *
+     * @param registerName the name to register itself
+     */
+    public Gemstone(@Nonnull String registerName, int displayedOrderID) {
+        this(registerName, GemQuality.None, displayedOrderID);
+    }
+
+    /**
+     * Whenever you create the instance, it will register itself to {@link GemstoneRegistry} automatically.
+     *
+     * @param registerName the name to register itself
+     */
+    public Gemstone(@Nonnull String registerName, @Nonnull GemQuality quality) {
+        this(registerName, quality, Integer.MAX_VALUE);
+    }
+
+    /**
+     * Whenever you create the instance, it will register itself to {@link GemstoneRegistry} automatically.
+     *
+     * @param registerName the name to register itself
+     */
+    public Gemstone(@Nonnull String registerName, @Nonnull GemQuality quality, int displayedOrderID) {
         this.registerName = registerName;
+        this.gemQuality = quality;
+        this.displayedOrderID = displayedOrderID;
         GemstoneRegistry.register(this);
     }
 
@@ -107,20 +139,42 @@ public class Gemstone implements IGemstone {
     }
 
     @Override
-    public IGemstone addPassiveSkillToCore(WeaponCore core, IPassiveSkill<?> newPassiveSkill) {
-        amplifierOfCores.addPassiveSkills(core, newPassiveSkill);
+    public IGemstone addPassiveSkillsToCore(WeaponCore core, IPassiveSkill<?>... newPassiveSkills) {
+        for (IPassiveSkill<?> passiveSkill : newPassiveSkills) {
+            amplifierOfCores.addPassiveSkills(core, passiveSkill);
+        }
         return this;
     }
 
     @Override
-    public IGemstone addPassiveSkillToWeaponType(WeaponType weaponType, IPassiveSkill<?> newPassiveSkill) {
-        amplifierOfWeaponTypes.addPassiveSkills(weaponType, newPassiveSkill);
+    public IGemstone addPassiveSkillsToWeaponType(WeaponType weaponType, IPassiveSkill<?>... newPassiveSkills) {
+        for (IPassiveSkill<?> passiveSkill : newPassiveSkills) {
+            amplifierOfWeaponTypes.addPassiveSkills(weaponType, passiveSkill);
+        }
         return this;
     }
 
     @Override
-    public IGemstone addPassiveSkillToAll(IPassiveSkill<?> newPassiveSkill) {
-        amplifierOfAllWeaponTypes.addPassiveSkills(newPassiveSkill);
+    public IGemstone addPassiveSkillsToAll(IPassiveSkill<?>... newPassiveSkills) {
+        for (IPassiveSkill<?> passiveSkill : newPassiveSkills) {
+            amplifierOfAllWeaponTypes.addPassiveSkills(passiveSkill);
+        }
+        return this;
+    }
+
+    @Override
+    public IGemstone addPassiveSkillToWeaponTypes(IPassiveSkill<?> newPassiveSkill, WeaponType... weaponTypes) {
+        for (WeaponType weaponType : weaponTypes) {
+            amplifierOfWeaponTypes.addPassiveSkills(weaponType, newPassiveSkill);
+        }
+        return this;
+    }
+
+    @Override
+    public IGemstone addPassiveSkillsToCores(IPassiveSkill<?> newPassiveSkill, WeaponCore... weaponCores) {
+        for (WeaponCore weaponCore : weaponCores) {
+            amplifierOfCores.addPassiveSkills(weaponCore, newPassiveSkill);
+        }
         return this;
     }
 
@@ -163,6 +217,17 @@ public class Gemstone implements IGemstone {
             return true;
         }
         return amplifierOfWeaponTypes.hasAnyAmplifier(core.getWeaponType());
+    }
+
+    @Override
+    public int getDisplayedOrderID() {
+        return displayedOrderID;
+    }
+
+    @Nonnull
+    @Override
+    public GemQuality getQuality() {
+        return gemQuality;
     }
 
 

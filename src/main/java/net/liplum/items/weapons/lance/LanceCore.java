@@ -18,6 +18,10 @@ public abstract class LanceCore extends WeaponCore {
         super(registerName);
     }
 
+    public LanceCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+        super(registerName, hasWeaponSkill);
+    }
+
     @Override
     protected void initAllAttributes(List<IAttribute> attributes) {
         super.initAllAttributes(attributes);

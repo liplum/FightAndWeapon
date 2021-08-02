@@ -159,4 +159,20 @@ public class MathUtil {
                 number / (digit * 10);
     }
 
+    public static int compoundInterest(int value, float... rates) {
+        float res = value;
+        for (Float rate : rates) {
+            res = res * (1 + rate);
+        }
+        return (int) res;
+    }
+
+    public static float compoundInterest(float value, float... rates) {
+        float res = value;
+        for (Float rate : rates) {
+            res = res * (1 + rate);
+        }
+        return res;
+    }
+
 }

@@ -9,9 +9,9 @@ import javax.annotation.Nonnull;
 public class GemstoneItem extends Item {
     private final IGemstone gemstone;
 
-    public GemstoneItem(@Nonnull IGemstone gemstone, int maxStackSize) {
+    public GemstoneItem(@Nonnull IGemstone gemstone) {
         this.gemstone = gemstone;
-        this.maxStackSize = maxStackSize;
+        this.maxStackSize = gemstone.getQuality().getMaxItemStackSize();
     }
 
     public IGemstone getGemstone() {

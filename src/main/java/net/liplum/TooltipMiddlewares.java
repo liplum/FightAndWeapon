@@ -74,8 +74,8 @@ public final class TooltipMiddlewares {
     public static final IThroughable ShowWeaponSkillTip = pipe -> {
         TooltipPart res = new TooltipPart();
         TooltipContext context = pipe.getContext();
-        if (context.tooltipOption.isWeaponSkillTipShown()) {
-            WeaponCore core = context.weaponCore;
+        WeaponCore core = context.weaponCore;
+        if (context.tooltipOption.isWeaponSkillTipShown() && core.hasWeaponSkill()) {
             IGemstone gemstone = context.gemstone;
             res.add(
                     I18n.format(FawI18n.getWeaponSkillTipI18nKey(core))

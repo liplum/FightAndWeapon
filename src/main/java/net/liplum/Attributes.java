@@ -11,6 +11,9 @@ public final class Attributes {
 
     @LongSupport
     public static final class Generic {
+        /**
+         *
+         */
         public static final IAttribute Durability = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Durability)
                 .setBasic()
@@ -19,6 +22,9 @@ public final class Attributes {
                 .setDefaultValue(1)
                 .setShownInTooltip(false)
                 .setMinimum(1);
+        /**
+         * It decides how much damage player can cause by attacking with weapon.
+         */
         public static final IAttribute Strength = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Strength)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
@@ -29,6 +35,10 @@ public final class Attributes {
                 .setDisplayPriority(-100)
                 .setDefaultValue(0)
                 .setUseSpecialValueWhenWeaponBroken();
+
+        /**
+         * It decides how far player can reach when they are attacking
+         */
         public static final IAttribute AttackReach = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.AttackReach)
                 .setHowToGetI18nKey(I18ns.Attribute::Generic)
@@ -214,4 +224,11 @@ public final class Attributes {
                 .setComputeType(ComputeType.Full)
                 .setMinimum(0F);
     }
+
+    public static final IAttribute KnockBack = new Attribute()
+            .setRegisterName(Names.Attribute.Bow.KnockBack)
+            .setDataType(DataType.Int)
+            .setDefaultValue(0)
+            .setComputeType(ComputeType.Full)
+            .setMinimum(0);
 }

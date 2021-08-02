@@ -9,6 +9,13 @@ import javax.annotation.Nonnull;
 
 @LongSupport
 public class RangedCores {
+    public static final RangedCore Empty = new RangedCore(Names.Item.EmptyCore, false) {
+        @Override
+        public boolean releaseSkill(WeaponSkillArgs args) {
+            return false;
+        }
+    };
+
     public static final RangedCore Sickle = new RangedCore(Names.Item.Ranged.SickleItem) {
         @Override
         public boolean releaseSkill(WeaponSkillArgs args) {

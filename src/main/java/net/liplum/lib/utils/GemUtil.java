@@ -135,7 +135,7 @@ public final class GemUtil {
     public static void addPassivesSkillToWeaponCoreInAllGemstones(@Nonnull WeaponCore weaponCore, @Nonnull IPassiveSkill<?>... passiveSkills) {
         for (IGemstone gemstone : GemstoneRegistry.getAllGemstones()) {
             for (IPassiveSkill<?> passiveSkill : passiveSkills) {
-                gemstone.addPassiveSkillToCore(weaponCore, passiveSkill);
+                gemstone.addPassiveSkillsToCore(weaponCore, passiveSkill);
             }
         }
     }

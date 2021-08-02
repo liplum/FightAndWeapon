@@ -15,6 +15,10 @@ public class SwordCore extends WeaponCore {
         super(registerName);
     }
 
+    public SwordCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+        super(registerName, hasWeaponSkill);
+    }
+
     @Override
     public boolean releaseSkill(WeaponSkillArgs args) {
         return false;

@@ -25,6 +25,11 @@ public abstract class BowCore extends WeaponCore {
         this(registerName, false);
     }
 
+    public BowCore(@Nonnull String registerName, boolean checkPulling, boolean hasWeaponSkill) {
+        super(registerName, hasWeaponSkill);
+        this.checkPulling = checkPulling;
+    }
+
     @Nonnull
     @Override
     public WeaponType getWeaponType() {
@@ -56,4 +61,15 @@ public abstract class BowCore extends WeaponCore {
 
     public void onPulling(PullingBowArgs args) {
     }
+
+    public boolean canShoot(int ticks) {
+        return ticks > 10;
+    }
+
+    public abstract float computeDamage(float originalDamage, int tick);
+
+    public int fullPullingTime(){
+        return 1;
+    }
+
 }

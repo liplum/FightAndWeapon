@@ -120,6 +120,7 @@ public final class Names {
         public static final class Bow {
             public static final String Force = "Force";
             public static final String Velocity = "Velocity";
+            public static final String KnockBack = "KnockBack";
         }
     }
 

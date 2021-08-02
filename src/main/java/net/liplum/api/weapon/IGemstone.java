@@ -93,11 +93,15 @@ public interface IGemstone {
         return this;
     }
 
-    IGemstone addPassiveSkillToCore(WeaponCore core, IPassiveSkill<?> newPassiveSkill);
+    IGemstone addPassiveSkillsToCore(WeaponCore core, IPassiveSkill<?>... newPassiveSkills);
 
-    IGemstone addPassiveSkillToWeaponType(WeaponType weaponType, IPassiveSkill<?> newPassiveSkill);
+    IGemstone addPassiveSkillsToWeaponType(WeaponType weaponType, IPassiveSkill<?>... newPassiveSkills);
 
-    IGemstone addPassiveSkillToAll(IPassiveSkill<?> newPassiveSkill);
+    IGemstone addPassiveSkillsToAll(IPassiveSkill<?>... newPassiveSkills);
+
+    IGemstone addPassiveSkillToWeaponTypes(IPassiveSkill<?> newPassiveSkill, WeaponType... weaponTypes);
+
+    IGemstone addPassiveSkillsToCores(IPassiveSkill<?> newPassiveSkill, WeaponCore... core);
 
     IGemstone removeModifier(WeaponCore core);
 
@@ -110,4 +114,10 @@ public interface IGemstone {
     IGemstone removePassiveSkillFromAll(IPassiveSkill<?> passiveSkill);
 
     boolean hasAnyAmplifier(WeaponCore core);
+
+    int getDisplayedOrderID();
+
+    @Nonnull
+    GemQuality getQuality();
+
 }

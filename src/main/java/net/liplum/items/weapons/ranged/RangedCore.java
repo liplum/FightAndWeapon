@@ -78,6 +78,10 @@ public abstract class RangedCore extends WeaponCore {
         super(registerName);
     }
 
+    public RangedCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+        super(registerName, hasWeaponSkill);
+    }
+
     @Nonnull
     @Override
     public WeaponType getWeaponType() {

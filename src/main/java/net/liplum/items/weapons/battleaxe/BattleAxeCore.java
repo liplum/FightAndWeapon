@@ -18,6 +18,10 @@ public abstract class BattleAxeCore extends WeaponCore {
         super(registerName);
     }
 
+    public BattleAxeCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+        super(registerName, hasWeaponSkill);
+    }
+
     @Override
     protected void initAllAttributes(List<IAttribute> attributes) {
         super.initAllAttributes(attributes);
