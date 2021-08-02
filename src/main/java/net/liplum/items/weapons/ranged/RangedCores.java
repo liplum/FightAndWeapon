@@ -11,14 +11,14 @@ import javax.annotation.Nonnull;
 public class RangedCores {
     public static final RangedCore Empty = new RangedCore(Names.Item.EmptyCore, false) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
     };
 
     public static final RangedCore Sickle = new RangedCore(Names.Item.Ranged.SickleItem) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
 
@@ -30,7 +30,7 @@ public class RangedCores {
 
     public static final RangedCore ChainedHammer = new RangedCore(Names.Item.Ranged.ChainedHammerItem) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
 
@@ -45,7 +45,7 @@ public class RangedCores {
 
     public static final RangedCore MeteorHammer = new RangedCore(Names.Item.Ranged.MeteorHammerItem) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
 

@@ -67,6 +67,7 @@ public final class MasteryPassiveSkills {
                 }
             };
 
+    //TODO:The KnockBack didn't work.
     public final static IPassiveSkill<LivingHurtEvent> ManaBarrier =
             new PassiveSkill<LivingHurtEvent>(Names.PassiveSkill.ManaBarrier, LivingHurtEvent.class, 100 * 20) {
                 @Nonnull

@@ -6,6 +6,7 @@ import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 
+@FunctionalInterface
 public interface ILeftClickEntityBehavior {
     boolean onLeftClickEntity(@Nonnull WeaponBaseItem weaponItem, @Nonnull ItemStack stack, @Nonnull EntityPlayer attacker, @Nonnull Entity target);
 }

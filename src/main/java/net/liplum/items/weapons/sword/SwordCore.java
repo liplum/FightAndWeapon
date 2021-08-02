@@ -20,7 +20,7 @@ public class SwordCore extends WeaponCore {
     }
 
     @Override
-    public boolean releaseSkill(WeaponSkillArgs args) {
+    public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
         return false;
     }
 

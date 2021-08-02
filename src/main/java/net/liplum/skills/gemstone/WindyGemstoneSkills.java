@@ -31,7 +31,7 @@ public final class WindyGemstoneSkills {
             };
 
     public final static IPassiveSkill<LivingFallEvent> Feather =
-            new PassiveSkill<LivingFallEvent>(Names.PassiveSkill.Feather, LivingFallEvent.class, 100) {
+            new PassiveSkill<LivingFallEvent>(Names.PassiveSkill.Feather, LivingFallEvent.class) {
 
                 @Nonnull
                 @Override

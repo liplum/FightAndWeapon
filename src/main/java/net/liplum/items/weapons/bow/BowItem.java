@@ -1,6 +1,7 @@
 package net.liplum.items.weapons.bow;
 
 import net.liplum.FawBehaviors;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.attributes.AttrCalculator;
@@ -11,6 +12,7 @@ import net.minecraft.entity.projectile.EntityArrow;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemArrow;
+import net.minecraft.item.ItemBow;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
@@ -21,17 +23,13 @@ import net.minecraftforge.event.ForgeEventFactory;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@Developing
 public class BowItem extends WeaponBaseItem {
     private final BowCore core;
 
     public BowItem(@Nonnull BowCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
-        this.addProperty();
-    }
-
-    protected void addProperty() {
-
     }
 
     @Nonnull

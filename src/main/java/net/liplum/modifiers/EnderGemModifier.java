@@ -23,6 +23,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.Strength;
@@ -37,7 +38,7 @@ public final class EnderGemModifier {
         }
 
         @Override
-        protected void build(Modifier.ModifierBuilder builder) {
+        protected void build(@Nonnull Modifier.ModifierBuilder builder) {
             super.build(builder);
             builder.set(
                     SprintStrength, 2F, 0
@@ -45,7 +46,7 @@ public final class EnderGemModifier {
         }
 
         @Override
-        public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             AttrCalculator calculator = args.calculator();

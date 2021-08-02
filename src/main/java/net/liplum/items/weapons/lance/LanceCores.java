@@ -4,21 +4,26 @@ import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.api.weapon.WeaponSkillPredicatePrecast;
 import net.liplum.attributes.AttrCalculator;
+import net.liplum.attributes.BoolAttribute;
 import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.IWaitable;
 import net.liplum.coroutine.WaitForNextTick;
 import net.liplum.enumerator.Yield;
 import net.liplum.events.skill.LanceSprintEvent;
+import net.liplum.lib.ItemProperty;
 import net.liplum.lib.coroutine.CoroutineSystem;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.math.P2D;
 import net.liplum.lib.math.Vector2D;
+import net.liplum.lib.nbt.NbtUtil;
 import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -26,6 +31,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -36,16 +42,16 @@ import static net.liplum.items.weapons.lance.PSkills.Unstoppable;
 
 @LongSupport
 public final class LanceCores {
-    public static final LanceCore Empty = new LanceCore(Names.Item.EmptyCore,false) {
+    public static final LanceCore Empty = new LanceCore(Names.Item.EmptyCore, false) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
     };
 
-    public static final LanceCore TrainingLance = new LanceCore(Names.Item.Lance.TrainingLanceItem,false) {
+    public static final LanceCore TrainingLance = new LanceCore(Names.Item.Lance.TrainingLanceItem, false) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
 
@@ -60,7 +66,7 @@ public final class LanceCores {
 
     public static final LanceCore LightLance = new LanceCore(Names.Item.Lance.LightLanceItem) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
             if (canceled) {
                 return false;
@@ -72,10 +78,10 @@ public final class LanceCores {
             AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
-            float sprintLength = calculator.calcu(SprintStrength).getFloat();
+            float sprintStrength = calculator.calcu(SprintStrength).getFloat();
 
             Vec3d playerFace = player.getLookVec();
-            Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintLength));
+            Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintStrength));
             PhysicsUtil.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
             if (!world.isRemote) {
                 //          player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));
@@ -122,7 +128,7 @@ public final class LanceCores {
     public static final LanceCore KnightLance = new LanceCore(Names.Item.Lance.KnightLanceItem) {
 
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             WeaponBaseItem weapon = args.weapon();
@@ -164,7 +170,7 @@ public final class LanceCores {
 
     public static final LanceCore ArenaLance = new LanceCore(Names.Item.Lance.ArenaLanceItem) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
             World world = args.world();
             double x = player.posX,
@@ -229,9 +235,76 @@ public final class LanceCores {
         }
     };
 
+    public static final LanceCore DrillLance = new LanceCore(Names.Item.Lance.DrillLanceItem) {
+        @Override
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+
+            return true;
+        }
+
+        @Override
+        protected void build(@Nonnull WeaponCoreBuilder builder) {
+            super.build(builder);
+            builder.add(new ItemProperty(Names.Item.Lance.DrillLanceItem_Property_Drilling) {
+                @Override
+                public float apply(@Nonnull ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
+                    return BoolAttribute.toInt(NbtUtil.getOrCreateFrom(stack).getBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling));
+                }
+            }).set(WeaponSkillPredicatePrecast.AlwaysTrue);
+        }
+
+        @Override
+        public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTickUsed, int tickLeft) {
+            //TODO:To be continued
+            AttrCalculator calculator = args.calculator();
+            float strength = calculator.calcu(Strength).getFloat();
+            float sprintStrength = calculator.calcu(SprintStrength).getFloat();
+            World world = args.world();
+            WeaponBaseItem weapon = args.weapon();
+            ItemStack itemStack = args.itemStack();
+            EntityLivingBase player = args.entity();
+            Vec3d playerFace = player.getLookVec();
+            Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintStrength));
+            PhysicsUtil.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
+            CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
+                int tick = 0;
+                final Set<EntityLivingBase> damaged = new HashSet<>();
+
+                @Override
+                protected void runTask() {
+                    AxisAlignedBB playerBox = player.getEntityBoundingBox();
+                    List<EntityLivingBase> allInRange = world
+                            .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
+                    for (EntityLivingBase e : allInRange) {
+                        if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
+                            weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
+                            damaged.add(e);
+                            FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
+                        }
+                    }
+                    if (tick == 24) {
+                        stopDrilling(itemStack);
+                    }
+                    tick++;
+                }
+            }, 25);
+            return true;
+        }
+
+        private void startDrilling(@Nonnull ItemStack drillLance) {
+            NBTTagCompound root = NbtUtil.getOrCreateFrom(drillLance);
+            root.setBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling, true);
+        }
+
+        private void stopDrilling(@Nonnull ItemStack drillLance) {
+            NBTTagCompound root = NbtUtil.getOrCreateFrom(drillLance);
+            root.setBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling, false);
+        }
+    };
+
     public static final LanceCore TestLance = new LanceCore(Names.Item.EmptyCore) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
 
             AttrCalculator calculator = args.calculator();

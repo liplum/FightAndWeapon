@@ -79,12 +79,21 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
         return AttributeModifierMap.get(attribute);
     }
 
-    protected void build(ModifierBuilder builder) {
+    protected void build(@Nonnull ModifierBuilder builder) {
 
     }
 
-    public boolean releaseSkill(WeaponCore core, WeaponSkillArgs args) {
+    public boolean releaseSkill(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args) {
         return core.releaseSkill(args);
+    }
+
+
+    public boolean onStopUsing(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args, int totalTimeUsed, int timeLeft) {
+        return core.onStopUsing(args, totalTimeUsed, timeLeft);
+    }
+
+    public boolean onUsingEveryTick(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args, int usedDuration) {
+        return core.onUsingEveryTick(args, usedDuration);
     }
 
     public abstract WeaponCore getCore();

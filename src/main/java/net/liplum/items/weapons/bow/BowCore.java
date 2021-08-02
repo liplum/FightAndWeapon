@@ -1,6 +1,7 @@
 package net.liplum.items.weapons.bow;
 
 import net.liplum.WeaponTypes;
+import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.lib.utils.ItemUtil;
@@ -13,6 +14,7 @@ import javax.annotation.Nonnull;
 
 import static net.liplum.Attributes.Generic.MaxUseDuration;
 
+@Developing
 public abstract class BowCore extends WeaponCore {
     private final boolean checkPulling;
 
@@ -46,7 +48,7 @@ public abstract class BowCore extends WeaponCore {
         );
     }
 
-    public boolean isAmmo(ItemStack itemStack) {
+    public boolean isAmmo(@Nonnull ItemStack itemStack) {
         return ItemUtil.isArrow(itemStack);
     }
 
@@ -59,7 +61,7 @@ public abstract class BowCore extends WeaponCore {
         return checkPulling;
     }
 
-    public void onPulling(PullingBowArgs args) {
+    public void onPulling(@Nonnull PullingBowArgs args) {
     }
 
     public boolean canShoot(int ticks) {

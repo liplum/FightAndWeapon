@@ -33,7 +33,7 @@ public final class HarpCores {
         }
 
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
     };
@@ -108,7 +108,7 @@ public final class HarpCores {
         }
 
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             AttrCalculator calculator = args.calculator();

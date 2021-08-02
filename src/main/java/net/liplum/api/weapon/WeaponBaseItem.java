@@ -58,10 +58,11 @@ public abstract class WeaponBaseItem extends FawItem {
         this.weaponType = weaponCore.getWeaponType();
         //Player can only hold ONE Weapon in an item stack.
         setMaxStackSize(1);
-        //Player can't repair the weapon in common way(an anvil)
+        //Player can't repair the weapon in common way(like an anvil)
         setNoRepair();
-        onlyCoreCalculator = new FixedAttrCalculator(this, true, true);
+        this.onlyCoreCalculator = new FixedAttrCalculator(this, true, true);
         setMaxDamage(onlyCoreCalculator.calcu(Durability).getInt());
+        weaponCore.applyPropertyOverride(this);
         WeaponRegistry.register(this);
     }
 

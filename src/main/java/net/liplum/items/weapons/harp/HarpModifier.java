@@ -3,6 +3,7 @@ package net.liplum.items.weapons.harp;
 import net.liplum.api.weapon.MagicToolModifier;
 import net.liplum.attributes.IAttribute;
 
+import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.MaxUseDuration;
@@ -12,7 +13,7 @@ import static net.liplum.Attributes.Harp.Radius;
 
 public abstract class HarpModifier extends MagicToolModifier {
     @Override
-    protected void build(ModifierBuilder builder) {
+    protected void build(@Nonnull ModifierBuilder builder) {
         super.build(builder);
     }
 

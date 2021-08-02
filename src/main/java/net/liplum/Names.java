@@ -48,6 +48,8 @@ public final class Names {
             public static final String TrainingLanceItem = "training_lance";
             public static final String LightLanceItem = "light_lance";
             public static final String KnightLanceItem = "knight_lance";
+            public static final String DrillLanceItem = "drill_lance";
+            public static final String DrillLanceItem_Property_Drilling = "drilling";
         }
 
         public static final class Harp {

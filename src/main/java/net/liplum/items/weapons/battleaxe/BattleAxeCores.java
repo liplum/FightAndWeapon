@@ -31,7 +31,7 @@ public final class BattleAxeCores {
     public static final BattleAxeCore Empty = new BattleAxeCore(Names.Item.EmptyCore, false) {
 
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
 
@@ -40,7 +40,7 @@ public final class BattleAxeCores {
     public static final BattleAxeCore Normal = new BattleAxeCore(Names.Item.BattleAxe.BattleAxeItem) {
 
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             WeaponBaseItem weapon = args.weapon();
@@ -96,7 +96,7 @@ public final class BattleAxeCores {
 
     public static final BattleAxeCore BerserkerAxe = new BattleAxeCore(Names.Item.BattleAxe.BerserkerAxeItem) {
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
             player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 8 * 20, 1));
             FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 3, player);

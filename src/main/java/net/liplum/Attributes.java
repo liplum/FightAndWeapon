@@ -12,7 +12,7 @@ public final class Attributes {
     @LongSupport
     public static final class Generic {
         /**
-         *
+         * It's equal to how long player can use the weapon
          */
         public static final IAttribute Durability = new Attribute()
                 .setRegisterName(Names.Attribute.Generic.Durability)

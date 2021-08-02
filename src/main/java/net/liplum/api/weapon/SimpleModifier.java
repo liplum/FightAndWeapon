@@ -33,7 +33,7 @@ public class SimpleModifier implements IAttrModifierBuilder {
             }
 
             @Override
-            protected void build(ModifierBuilder builder) {
+            protected void build(@Nonnull ModifierBuilder builder) {
                 super.build(builder);
                 for (Map.Entry<IAttribute, AttrModifier> entry : waitingForBeAdded.entrySet()) {
                     builder.set(entry.getKey(), entry.getValue());

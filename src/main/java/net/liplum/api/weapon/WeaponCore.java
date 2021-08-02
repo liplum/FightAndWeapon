@@ -9,6 +9,7 @@ import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.UnlockedPSkillList;
 import net.liplum.attributes.*;
+import net.liplum.lib.ItemProperty;
 import net.liplum.lib.utils.GemUtil;
 import net.liplum.lib.utils.ItemUtil;
 import net.liplum.tooltips.AggregateThroughable;
@@ -76,6 +77,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @Nonnull
     private final Map<Integer, IPassiveSkill<?>> lockedPassiveSkills = new HashMap<>();
     @Nonnull
+    private final List<ItemProperty> itemProperties = new LinkedList<>();
+    @Nonnull
     private final String registerName;
     @Nonnull
     private IWeaponSkillPredicate weaponSkillPredicate;
@@ -142,6 +145,13 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @LongSupport
     public EnumAction getRightClickUseAction() {
         return rightClickUseAction;
+    }
+
+    @LongSupport
+    public void applyPropertyOverride(@Nonnull Item item) {
+        for (ItemProperty property : itemProperties) {
+            item.addPropertyOverride(property.getPropertyName(), property);
+        }
     }
 
     @Nonnull
@@ -220,7 +230,15 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      * @return whether the skill released successfully
      */
     @LongSupport
-    public abstract boolean releaseSkill(WeaponSkillArgs args);
+    public abstract boolean releaseSkill(@Nonnull WeaponSkillArgs args);
+
+    public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTickUsed, int timeLeft) {
+        return false;
+    }
+
+    public boolean onUsingEveryTick(@Nonnull WeaponSkillArgs args, int totalTickUsed) {
+        return false;
+    }
 
     @Nonnull
     @LongSupport
@@ -247,7 +265,6 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     protected class WeaponCoreBuilder implements IBasicAttrValueBuilder {
         @Override
         @Nonnull
-        @LongSupport
         public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull BasicAttrValue value) {
             AttributeValueMap.put(attribute, value);
             return this;
@@ -267,45 +284,60 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
 
         @Nonnull
+        @LongSupport
         public WeaponCoreBuilder set(@Nonnull IWeaponSkillPredicate newWeaponSkillPredicate) {
             weaponSkillPredicate = newWeaponSkillPredicate;
             return this;
         }
 
         @Nonnull
-        public WeaponCoreBuilder addMainHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        @LongSupport
+        public WeaponCoreBuilder addMainHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr,
+                                             @Nonnull Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
         @Nonnull
-        public WeaponCoreBuilder addOffHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        @LongSupport
+        public WeaponCoreBuilder addOffHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr,
+                                            @Nonnull Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
         @Nonnull
+        @LongSupport
         public WeaponCoreBuilder set(@Nonnull ILeftClickEntityBehavior behavior) {
             leftClickEntityBehavior = behavior;
             return this;
         }
 
         @Nonnull
-        public WeaponCoreBuilder set(EnumAction action) {
+        @LongSupport
+        public WeaponCoreBuilder set(@Nonnull EnumAction action) {
             rightClickUseAction = action;
             return this;
         }
 
         @Nonnull
+        @LongSupport
         public WeaponCoreBuilder set(@Nonnull TooltipPipe pipe) {
             tooltipPipe = pipe;
             return this;
         }
 
         @Nonnull
-        @Developing
-        public WeaponCoreBuilder add(int number, IPassiveSkill<?> passiveSkill) {
+        @LongSupport
+        public WeaponCoreBuilder add(int number, @Nonnull IPassiveSkill<?> passiveSkill) {
             lockedPassiveSkills.put(number, passiveSkill);
+            return this;
+        }
+
+        @Nonnull
+        @LongSupport
+        public WeaponCoreBuilder add(@Nonnull ItemProperty itemProperty) {
+            itemProperties.add(itemProperty);
             return this;
         }
     }

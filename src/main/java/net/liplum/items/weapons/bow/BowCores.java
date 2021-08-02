@@ -3,6 +3,10 @@ package net.liplum.items.weapons.bow;
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.minecraft.entity.Entity;
+import net.minecraft.entity.passive.EntityCow;
+
+import javax.annotation.Nonnull;
 
 @LongSupport
 public final class BowCores {
@@ -13,7 +17,7 @@ public final class BowCores {
         }
 
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
 
@@ -31,7 +35,7 @@ public final class BowCores {
         }
 
         @Override
-        public boolean releaseSkill(WeaponSkillArgs args) {
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
             return false;
         }
     };
