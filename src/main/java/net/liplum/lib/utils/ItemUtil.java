@@ -3,6 +3,7 @@ package net.liplum.lib.utils;
 import net.liplum.Vanilla;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.lib.math.MathUtil;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -125,16 +126,16 @@ public final class ItemUtil {
      * It will check {@link EnumHand#MAIN_HAND} at the first.
      */
     @Nullable
-    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull ItemStack itemStack) {
-        return inWhichHand(player, itemStack, EnumHand.MAIN_HAND);
+    public static EnumHand inWhichHand(@Nonnull EntityLivingBase entity, @Nonnull ItemStack itemStack) {
+        return inWhichHand(entity, itemStack, EnumHand.MAIN_HAND);
     }
 
     /**
      * It will check {@link EnumHand#MAIN_HAND} at the first.
      */
     @Nullable
-    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull ItemStack itemStack, @Nonnull EnumHand firstChecked) {
-        return inWhichHand(player, itemStack::equals, firstChecked);
+    public static EnumHand inWhichHand(@Nonnull EntityLivingBase entity, @Nonnull ItemStack itemStack, @Nonnull EnumHand firstChecked) {
+        return inWhichHand(entity, itemStack::equals, firstChecked);
     }
 
     @Nonnull
@@ -146,17 +147,17 @@ public final class ItemUtil {
      * It will check {@link EnumHand#MAIN_HAND} at the first.
      */
     @Nullable
-    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter) {
-        return inWhichHand(player, filter, EnumHand.MAIN_HAND);
+    public static EnumHand inWhichHand(@Nonnull EntityLivingBase entity, @Nonnull Predicate<ItemStack> filter) {
+        return inWhichHand(entity, filter, EnumHand.MAIN_HAND);
     }
 
     @Nullable
-    public static EnumHand inWhichHand(@Nonnull EntityPlayer player, @Nonnull Predicate<ItemStack> filter, @Nonnull EnumHand firstChecked) {
-        if (filter.test(player.getHeldItem(firstChecked))) {
+    public static EnumHand inWhichHand(@Nonnull EntityLivingBase entity, @Nonnull Predicate<ItemStack> filter, @Nonnull EnumHand firstChecked) {
+        if (filter.test(entity.getHeldItem(firstChecked))) {
             return EnumHand.MAIN_HAND;
         }
         EnumHand otherHand = otherHand(firstChecked);
-        if (filter.test(player.getHeldItem(otherHand))) {
+        if (filter.test(entity.getHeldItem(otherHand))) {
             return otherHand;
         }
         return null;

@@ -140,6 +140,7 @@ item.faw.training_lance.name=Training Lance
 item.faw.arena_lance.name=Arena Lance
 item.faw.light_lance.name=Light Lance
 item.faw.knight_lance.name=Knight Lance
+item.faw.drill_lance.name=Drill Lance
 
 #Battle Axe
 item.faw.battle_axe.name=Battle Axe

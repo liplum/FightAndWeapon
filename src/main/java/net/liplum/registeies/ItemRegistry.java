@@ -20,6 +20,7 @@ import net.liplum.items.weapons.bow.BowCores;
 import net.liplum.items.weapons.bow.BowItem;
 import net.liplum.items.weapons.harp.HarpCores;
 import net.liplum.items.weapons.harp.HarpItem;
+import net.liplum.items.weapons.lance.DrillLanceItem;
 import net.liplum.items.weapons.lance.LanceCores;
 import net.liplum.items.weapons.lance.LanceItem;
 import net.liplum.items.weapons.magickwand.MagickWandCores;
@@ -86,6 +87,7 @@ public final class ItemRegistry {
     public static final Item Light_Lance_Item = weapon(new LanceItem(LanceCores.LightLance));
     public static final Item Knight_Lance_Item = weapon(new LanceItem(LanceCores.KnightLance));
     public static final Item Arena_Lance_Item = weapon(new LanceItem(LanceCores.ArenaLance));
+    public static final Item Drill_Lance_Item = weapon(new DrillLanceItem(LanceCores.DrillLance));
 
     //Harp
     public static final Item Harp_Item = weapon(new HarpItem(HarpCores.Normal));
@@ -97,7 +99,7 @@ public final class ItemRegistry {
     public static final Item Gemsword_Item = weapon(new MagickWandItem(MagickWandCores.Gemsword));
 
     //Bow
-    public static final Item Simple_Bow_Item = weapon(new BowItem(BowCores.Empty));
+    public static final Item Simple_Bow_Item = weapon(new BowItem(BowCores.SimpleBow));
 
     //Block
     public static final Item Forge_Block_Item = forge(new ItemBlock(BlockRegistry.Forge_Block), Names.Block.Forge);
@@ -163,7 +165,12 @@ public final class ItemRegistry {
     }
 
     public static Item weapon(WeaponBaseItem weapon) {
-        return with(weapon, weapon.getCore().getRegisterName(), ItemGroupRegistry.FawWeapons);
+        String registerName = weapon.getCore().getRegisterName();
+        if (registerName.equals(Names.Item.EmptyCore)) {
+            String weaponTypeName = weapon.getWeaponType().getRegisterName();
+            registerName = weaponTypeName + "_" + registerName;
+        }
+        return with(weapon, registerName, ItemGroupRegistry.FawWeapons);
     }
 
     public static Item weapon(Item item, String name) {

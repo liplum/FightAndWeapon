@@ -147,11 +147,10 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         return rightClickUseAction;
     }
 
+    @Nonnull
     @LongSupport
-    public void applyPropertyOverride(@Nonnull Item item) {
-        for (ItemProperty property : itemProperties) {
-            item.addPropertyOverride(property.getPropertyName(), property);
-        }
+    public List<ItemProperty> getItemProperties() {
+        return itemProperties;
     }
 
     @Nonnull
@@ -232,11 +231,11 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     @LongSupport
     public abstract boolean releaseSkill(@Nonnull WeaponSkillArgs args);
 
-    public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTickUsed, int timeLeft) {
+    public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int timeLeft) {
         return false;
     }
 
-    public boolean onUsingEveryTick(@Nonnull WeaponSkillArgs args, int totalTickUsed) {
+    public boolean onUsingEveryTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
         return false;
     }
 

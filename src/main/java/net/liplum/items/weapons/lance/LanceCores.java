@@ -22,8 +22,10 @@ import net.liplum.lib.utils.EntityUtil;
 import net.liplum.lib.utils.FawItemUtil;
 import net.liplum.lib.utils.PhysicsUtil;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -136,15 +138,15 @@ public final class LanceCores {
             AttrCalculator calculator = args.calculator();
 
             float strength = calculator.calcu(Strength).getFloat();
-            float sprintLength = calculator.calcu(SprintStrength).getFloat();
+            float sprintStrength = calculator.calcu(SprintStrength).getFloat();
 
             AxisAlignedBB playerBox = player.getEntityBoundingBox();
             List<EntityLivingBase> allInRange = world
-                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintLength, 0.25D, sprintLength));
+                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(sprintStrength, 0.25D, sprintStrength));
             Vector2D look = P2D.toV2D(player.getLookVec());
             int damagedEntityCount = 0;
             for (EntityLivingBase e : allInRange) {
-                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, P2D.toPosition(player), P2D.toPosition(e), 1.5, sprintLength)) {
+                if (EntityUtil.canAttack(player, e) && P2D.isInside(look, P2D.toPosition(player), P2D.toPosition(e), 1.5, sprintStrength)) {
                     weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
                     damagedEntityCount++;
                 }
@@ -238,56 +240,115 @@ public final class LanceCores {
     public static final LanceCore DrillLance = new LanceCore(Names.Item.Lance.DrillLanceItem) {
         @Override
         public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
-
+            EntityLivingBase player = args.entity();
+            EnumHand hand = args.hand();
+            player.setActiveHand(hand);
+            startDrilling(args.itemStack());
             return true;
         }
 
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
             super.build(builder);
-            builder.add(new ItemProperty(Names.Item.Lance.DrillLanceItem_Property_Drilling) {
-                @Override
-                public float apply(@Nonnull ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-                    return BoolAttribute.toInt(NbtUtil.getOrCreateFrom(stack).getBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling));
-                }
-            }).set(WeaponSkillPredicatePrecast.AlwaysTrue);
+            builder.add(
+                    new ItemProperty(Names.Item.Lance.DrillLanceItem_Property_Drilling) {
+                        @Override
+                        public float apply(@Nonnull ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
+                            return BoolAttribute.toInt(NbtUtil.getOrCreateFrom(stack).getBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling));
+                        }
+                    }
+            ).set(
+                    WeaponSkillPredicatePrecast.AlwaysTrue
+            ).set(
+                    EnumAction.BOW
+            ).set(
+                    MaxUseDuration, 200
+            ).set(
+                    SprintStrength, 6
+            ).set(
+                    Strength, 7
+            ).set(
+                    CoolDown, 500
+            );
         }
 
         @Override
-        public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTickUsed, int tickLeft) {
+        public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int tickLeft) {
             //TODO:To be continued
+            EntityLivingBase player = args.entity();
+            player.resetActiveHand();
+
             AttrCalculator calculator = args.calculator();
             float strength = calculator.calcu(Strength).getFloat();
             float sprintStrength = calculator.calcu(SprintStrength).getFloat();
             World world = args.world();
             WeaponBaseItem weapon = args.weapon();
             ItemStack itemStack = args.itemStack();
-            EntityLivingBase player = args.entity();
             Vec3d playerFace = player.getLookVec();
-            Vec3d sprintForce = playerFace.scale(MathHelper.sqrt(sprintStrength));
-            PhysicsUtil.setMotion(player, sprintForce.x, 0.32, sprintForce.z);
-            CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
-                int tick = 0;
-                final Set<EntityLivingBase> damaged = new HashSet<>();
+            float rate = (float) totalTicksUsed / 60;
+            rate = MathUtil.fixMax(rate, 1F);
+            Vec3d sprintForce = playerFace.scale(sprintStrength * rate);
+            PhysicsUtil.setMotion(player, sprintForce.x, 0, sprintForce.z);
+            if (!world.isRemote) {
+                CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
+                    int tick = 0;
+                    final Set<EntityLivingBase> damaged = new HashSet<>();
 
-                @Override
-                protected void runTask() {
-                    AxisAlignedBB playerBox = player.getEntityBoundingBox();
-                    List<EntityLivingBase> allInRange = world
-                            .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.25D, 0.25D, 0.25D));
-                    for (EntityLivingBase e : allInRange) {
-                        if (!damaged.contains(e) && EntityUtil.canAttack(player, e)) {
-                            weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
-                            damaged.add(e);
-                            FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
+                    @Override
+                    protected void runTask() {
+                        if (tick < 5) {
+                            AxisAlignedBB playerBox = player.getEntityBoundingBox();
+                            List<EntityLivingBase> allInRange = world
+                                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.8D, 0.25D, 0.8D));
+                            for (EntityLivingBase e : allInRange) {
+                                if (EntityUtil.canAttack(player, e)) {
+                                    if (!damaged.contains(e)) {
+                                        weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
+                                        damaged.add(e);
+                                        FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
+                                    }
+                                    EntityUtil.knockBackForward(player, e, 0.5F);
+                                }
+                            }
+                            PhysicsUtil.setMotion(player, player.motionX, MathUtil.fixMax(player.motionY, -2), player.motionZ);
                         }
+                        if (tick >= 5) {
+                            stopDrilling(itemStack);
+                        }
+                        tick++;
+                        yieldReturn(new WaitForNextTick());
                     }
-                    if (tick == 24) {
-                        stopDrilling(itemStack);
+                }, 12);
+            }
+            return true;
+        }
+
+        @Override
+        public boolean onUsingEveryTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
+            if (totalTicksUsed % 5 == 0) {
+                EntityLivingBase player = args.entity();
+
+                AttrCalculator calculator = args.calculator();
+                float strength = calculator.calcu(Strength).getFloat();
+                World world = args.world();
+                WeaponBaseItem weapon = args.weapon();
+                ItemStack itemStack = args.itemStack();
+                AxisAlignedBB playerBox = player.getEntityBoundingBox();
+                List<EntityLivingBase> allInRange = world
+                        .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(2, 0.25D, 2));
+                Vector2D look = P2D.toV2D(player.getLookVec());
+                boolean atLeastAttackOne = false;
+                for (EntityLivingBase e : allInRange) {
+                    if (EntityUtil.canAttack(player, e) && P2D.isInside(look, P2D.toPosition(player), P2D.toPosition(e), 1.5, 2)) {
+                        weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength / 0.2F);
+                        EntityUtil.knockBackForward(player, e, 0.5F);
+                        atLeastAttackOne = true;
                     }
-                    tick++;
                 }
-            }, 25);
+                if (atLeastAttackOne) {
+                    FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
+                }
+            }
             return true;
         }
 

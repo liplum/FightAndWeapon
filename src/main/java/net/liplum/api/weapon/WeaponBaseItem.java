@@ -9,6 +9,7 @@ import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FixedAttrCalculator;
 import net.liplum.entities.FawWeaponItemEntity;
 import net.liplum.lib.FawDamage;
+import net.liplum.lib.ItemProperty;
 import net.liplum.lib.TooltipOption;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.lib.utils.FawItemUtil;
@@ -28,6 +29,7 @@ import net.minecraft.entity.item.EntityItem;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.math.BlockPos;
@@ -62,8 +64,15 @@ public abstract class WeaponBaseItem extends FawItem {
         setNoRepair();
         this.onlyCoreCalculator = new FixedAttrCalculator(this, true, true);
         setMaxDamage(onlyCoreCalculator.calcu(Durability).getInt());
-        weaponCore.applyPropertyOverride(this);
+        this.applyPropertyOverride();
         WeaponRegistry.register(this);
+    }
+
+    @LongSupport
+    public void applyPropertyOverride() {
+        for (ItemProperty property : weaponCore.getItemProperties()) {
+            this.addPropertyOverride(property.getPropertyName(), property);
+        }
     }
 
     @Override

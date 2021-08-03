@@ -1,0 +1,14 @@
+{
+  "parent": "item/handheld",
+  "textures": {
+    "layer0": "faw:items/drill_lance/normal"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "drilling": 1
+      },
+      "model": "faw:item/drill_lance_drilling"
+    }
+  ]
+}
