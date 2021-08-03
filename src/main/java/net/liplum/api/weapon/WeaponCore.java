@@ -80,9 +80,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private final List<ItemProperty> itemProperties = new LinkedList<>();
     @Nonnull
     private final String registerName;
+    private final boolean hasWeaponSkill;
     @Nonnull
     private IWeaponSkillPredicate weaponSkillPredicate;
-    private final boolean hasWeaponSkill;
     @Nonnull
     private EnumAction rightClickUseAction = EnumAction.NONE;
     @Nonnull

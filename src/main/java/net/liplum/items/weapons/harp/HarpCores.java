@@ -26,7 +26,7 @@ import static net.liplum.Attributes.Harp.Radius;
 
 @LongSupport
 public final class HarpCores {
-    public static final HarpCore Empty = new HarpCore(Names.Item.EmptyCore,false) {
+    public static final HarpCore Empty = new HarpCore(Names.Item.EmptyCore, false) {
         @Override
         public boolean continueSkill(ContinuousHarpArgs args) {
             return false;

@@ -199,7 +199,7 @@ public final class ItemUtil {
     }
 
     public static int getCurrentDurability(ItemStack itemStack) {
-        return itemStack.getMaxDamage() - itemStack.getItemDamage();
+        return MathUtil.fixMin(itemStack.getMaxDamage() - itemStack.getItemDamage(), 0);
     }
 
     public static void decreaseItemDurability(ItemStack itemStack, @Nonnegative int amount) {

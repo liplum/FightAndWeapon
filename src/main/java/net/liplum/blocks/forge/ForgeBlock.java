@@ -23,7 +23,7 @@ public class ForgeBlock extends BlockContainer {
     }
 
     @Override
-    public boolean hasTileEntity(IBlockState state) {
+    public boolean hasTileEntity(@Nonnull IBlockState state) {
         return true;
     }
 

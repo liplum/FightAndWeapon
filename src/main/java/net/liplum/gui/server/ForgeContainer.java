@@ -37,7 +37,7 @@ public class ForgeContainer extends ContainerBase {
         this.world = world;
         this.pos = new BlockPos(x, y, z);
         this.forgeTE = (ForgeTE) world.getTileEntity(pos);
-
+        assert forgeTE != null;
         this.additionSlot = new SlotItemHandler(forgeTE.getAdditionHandler(), 0,
                 AdditionIconXOffset, AdditionIconYOffset) {
             @Override
@@ -77,6 +77,13 @@ public class ForgeContainer extends ContainerBase {
         setMaterialSlotHasItem(!material.isEmpty());
     }
 
+    @Override
+    public void onContainerClosed(@Nonnull EntityPlayer playerIn) {
+        super.onContainerClosed(playerIn);
+        materialSlotHasItem.getPropertyChangedEvent().clear();
+        additionSlotHasItem.getPropertyChangedEvent().clear();
+
+    }
 
     private void addAllSlots() {
         addSlotToContainer(additionSlot);

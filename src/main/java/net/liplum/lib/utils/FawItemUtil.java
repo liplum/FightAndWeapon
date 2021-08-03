@@ -268,7 +268,7 @@ public final class FawItemUtil {
     @LongSupport
     public static boolean heatWeaponType(@Nonnull EntityLivingBase player, @Nonnull WeaponType weaponType) {
         if (player instanceof EntityPlayer) {
-            return heatWeaponType((EntityPlayer) player,weaponType);
+            return heatWeaponType((EntityPlayer) player, weaponType);
         }
         return false;
     }

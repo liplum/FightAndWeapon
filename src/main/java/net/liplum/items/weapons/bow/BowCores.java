@@ -3,14 +3,12 @@ package net.liplum.items.weapons.bow;
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.passive.EntityCow;
 
 import javax.annotation.Nonnull;
 
 @LongSupport
 public final class BowCores {
-    public static final BowCore Empty = new BowCore(Names.Item.EmptyCore,false,false) {
+    public static final BowCore Empty = new BowCore(Names.Item.EmptyCore, false, false) {
         @Override
         public float computeDamage(float originalDamage, int tick) {
             return 0;

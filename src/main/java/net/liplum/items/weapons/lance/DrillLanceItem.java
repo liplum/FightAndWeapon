@@ -93,6 +93,6 @@ public class DrillLanceItem extends WeaponBaseItem {
         AttrCalculator calculator = FawUtil.toCalculator(args);
         args.calculator(calculator);
         core.onStopUsing(args, usedTicks, timeLeft);
-        FawItemUtil.heatWeaponType(entityLiving,getWeaponType());
+        FawItemUtil.heatWeaponType(entityLiving, getWeaponType());
     }
 }

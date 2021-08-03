@@ -5,6 +5,13 @@ import net.liplum.attributes.*;
 
 @LongSupport
 public final class Attributes {
+    public static final IAttribute KnockBack = new Attribute()
+            .setRegisterName(Names.Attribute.Bow.KnockBack)
+            .setDataType(DataType.Int)
+            .setDefaultValue(0)
+            .setComputeType(ComputeType.Full)
+            .setMinimum(0);
+
     //You must call it to load this class and all the static fields.
     public static void load() {
     }
@@ -224,11 +231,4 @@ public final class Attributes {
                 .setComputeType(ComputeType.Full)
                 .setMinimum(0F);
     }
-
-    public static final IAttribute KnockBack = new Attribute()
-            .setRegisterName(Names.Attribute.Bow.KnockBack)
-            .setDataType(DataType.Int)
-            .setDefaultValue(0)
-            .setComputeType(ComputeType.Full)
-            .setMinimum(0);
 }

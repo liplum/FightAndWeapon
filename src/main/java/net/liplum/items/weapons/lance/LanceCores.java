@@ -291,8 +291,8 @@ public final class LanceCores {
             PhysicsUtil.setMotion(player, sprintForce.x, 0, sprintForce.z);
             if (!world.isRemote) {
                 CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
-                    int tick = 0;
                     final Set<EntityLivingBase> damaged = new HashSet<>();
+                    int tick = 0;
 
                     @Override
                     protected void runTask() {

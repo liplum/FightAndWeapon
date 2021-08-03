@@ -9,7 +9,9 @@ import javax.annotation.Nonnull;
 
 @Developing
 public class ForgeTE extends TileEntity {
+    @Nonnull
     private static final String AdditionTagName = "Addition";
+    @Nonnull
     private static final String MaterialTagName = "Material";
     @Nonnull
     private final ItemStackHandler addition = new ForgeItemStackHandler(1);

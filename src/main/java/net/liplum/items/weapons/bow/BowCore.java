@@ -70,7 +70,7 @@ public abstract class BowCore extends WeaponCore {
 
     public abstract float computeDamage(float originalDamage, int tick);
 
-    public int fullPullingTime(){
+    public int fullPullingTime() {
         return 1;
     }
 
