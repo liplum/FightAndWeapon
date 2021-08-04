@@ -6,10 +6,7 @@ import net.liplum.api.weapon.WeaponType;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public final class WeaponTypeRegistry {
     private static final Map<String, WeaponType> WeaponTypesMap = new HashMap<>();
@@ -48,5 +45,11 @@ public final class WeaponTypeRegistry {
     private static void genNamesCache() {
         NamesCache = new ArrayList<>(WeaponTypesMap.keySet());
         IsChanged = false;
+    }
+
+    @Nonnull
+    @LongSupport
+    public static Collection<WeaponType> getAllWeaponTypes() {
+        return WeaponTypesMap.values();
     }
 }

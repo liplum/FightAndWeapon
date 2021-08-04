@@ -19,6 +19,7 @@ import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 
 import javax.annotation.Nonnull;
 import java.util.*;
@@ -89,6 +90,8 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     private ILeftClickEntityBehavior leftClickEntityBehavior = DefaultLeftClickEntityBehavior;
     @Nonnull
     private TooltipPipe tooltipPipe = TooltipPipe.Empty;
+
+    private boolean hasContinuousEffect = false;
 
     @LongSupport
     public WeaponCore(@Nonnull String registerName) {
@@ -229,14 +232,27 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      * @return whether the skill released successfully
      */
     @LongSupport
-    public abstract boolean releaseSkill(@Nonnull WeaponSkillArgs args);
-
-    public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int timeLeft) {
+    public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
         return false;
     }
 
-    public boolean onUsingEveryTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
+    public boolean hasContinuousEffect() {
+        return hasContinuousEffect;
+    }
+
+    @Developing
+    public boolean onContinuousEffectStop(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int timeLeft) {
         return false;
+    }
+
+    @Developing
+    @Nonnull
+    public ItemStack onContinuousEffectFinish(@Nonnull WeaponSkillArgs args) {
+        return args.itemStack();
+    }
+
+    @Developing
+    public void onContinuousEffectTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
     }
 
     @Nonnull
@@ -337,6 +353,13 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         @LongSupport
         public WeaponCoreBuilder add(@Nonnull ItemProperty itemProperty) {
             itemProperties.add(itemProperty);
+            return this;
+        }
+
+        @Nonnull
+        @LongSupport
+        public WeaponCoreBuilder setHasContinuousEffect(boolean has) {
+            hasContinuousEffect = has;
             return this;
         }
     }

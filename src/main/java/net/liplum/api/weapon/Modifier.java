@@ -89,11 +89,11 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
 
 
     public boolean onStopUsing(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args, int totalTimeUsed, int timeLeft) {
-        return core.onStopUsing(args, totalTimeUsed, timeLeft);
+        return core.onContinuousEffectStop(args, totalTimeUsed, timeLeft);
     }
 
-    public boolean onUsingEveryTick(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args, int usedDuration) {
-        return core.onUsingEveryTick(args, usedDuration);
+    public void onUsingEveryTick(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args, int usedDuration) {
+        core.onContinuousEffectTick(args, usedDuration);
     }
 
     public abstract WeaponCore getCore();

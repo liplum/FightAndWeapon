@@ -76,6 +76,7 @@ public final class Names {
             public static final String TypeName = "magick_wand";
             public static final String GemswordItem = "gemsword";
             public static final String MagickSwordItem = "magick_sword";
+            public static final String AthameItem = "athame";
         }
 
         public static final class Ranged {
@@ -129,6 +130,7 @@ public final class Names {
     public final static class Entity {
         public static final String StraightDamageEntity = "straight_damage";
         public static final String GemswordBeam = "gemsword_beam";
+        public static final String FlyingItem = "flying_item";
     }
 
     public final static class Capability {
@@ -160,7 +162,11 @@ public final class Names {
     public final static class Command {
         public static final String Inlay = "inlay";
         public static final String Mastery = "mastery";
+        public static final String ClearCD = "clearcd";
 
+        public final static class ClearCDSub {
+            public static final String All = "all";
+        }
         public final static class MasterySub {
             public static final String MasteryShow = "show";
             public static final String MasteryExp = "exp";

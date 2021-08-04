@@ -6,7 +6,6 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponSkillPredicatePrecast;
 import net.liplum.attributes.AttrCalculator;
-import net.liplum.attributes.BoolAttribute;
 import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.IWaitable;
 import net.liplum.coroutine.WaitForNextTick;
@@ -45,17 +44,9 @@ import static net.liplum.items.weapons.lance.PSkills.Unstoppable;
 @LongSupport
 public final class LanceCores {
     public static final LanceCore Empty = new LanceCore(Names.Item.EmptyCore, false) {
-        @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
-            return false;
-        }
     };
 
     public static final LanceCore TrainingLance = new LanceCore(Names.Item.Lance.TrainingLanceItem, false) {
-        @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
-            return false;
-        }
 
         @Override
         protected void build(@Nonnull WeaponCoreBuilder builder) {
@@ -243,7 +234,6 @@ public final class LanceCores {
             EntityLivingBase player = args.entity();
             EnumHand hand = args.hand();
             player.setActiveHand(hand);
-            startDrilling(args.itemStack());
             return true;
         }
 
@@ -254,7 +244,10 @@ public final class LanceCores {
                     new ItemProperty(Names.Item.Lance.DrillLanceItem_Property_Drilling) {
                         @Override
                         public float apply(@Nonnull ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
-                            return BoolAttribute.toInt(NbtUtil.getOrCreateFrom(stack).getBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling));
+                            if (entityIn == null) {
+                                return 0F;
+                            }
+                            return entityIn.getActiveItemStack() == stack ? 1F : 0F;
                         }
                     }
             ).set(
@@ -273,9 +266,10 @@ public final class LanceCores {
         }
 
         @Override
-        public boolean onStopUsing(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int tickLeft) {
+        public boolean onContinuousEffectStop(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int tickLeft) {
             //TODO:To be continued
             EntityLivingBase player = args.entity();
+            ItemStack itemStack = args.itemStack();
             player.resetActiveHand();
 
             AttrCalculator calculator = args.calculator();
@@ -283,7 +277,6 @@ public final class LanceCores {
             float sprintStrength = calculator.calcu(SprintStrength).getFloat();
             World world = args.world();
             WeaponBaseItem weapon = args.weapon();
-            ItemStack itemStack = args.itemStack();
             Vec3d playerFace = player.getLookVec();
             float rate = (float) totalTicksUsed / 60;
             rate = MathUtil.fixMax(rate, 1F);
@@ -292,30 +285,23 @@ public final class LanceCores {
             if (!world.isRemote) {
                 CoroutineSystem.Instance().attachCoroutine(player, new Yield<IWaitable>() {
                     final Set<EntityLivingBase> damaged = new HashSet<>();
-                    int tick = 0;
 
                     @Override
                     protected void runTask() {
-                        if (tick < 5) {
-                            AxisAlignedBB playerBox = player.getEntityBoundingBox();
-                            List<EntityLivingBase> allInRange = world
-                                    .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.8D, 0.25D, 0.8D));
-                            for (EntityLivingBase e : allInRange) {
-                                if (EntityUtil.canAttack(player, e)) {
-                                    if (!damaged.contains(e)) {
-                                        weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
-                                        damaged.add(e);
-                                        FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
-                                    }
-                                    EntityUtil.knockBackForward(player, e, 0.5F);
+                        AxisAlignedBB playerBox = player.getEntityBoundingBox();
+                        List<EntityLivingBase> allInRange = world
+                                .getEntitiesWithinAABB(EntityLivingBase.class, playerBox.grow(0.8D, 0.25D, 0.8D));
+                        for (EntityLivingBase e : allInRange) {
+                            if (EntityUtil.canAttack(player, e)) {
+                                if (!damaged.contains(e)) {
+                                    weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), e, strength);
+                                    damaged.add(e);
+                                    FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
                                 }
+                                EntityUtil.knockBackForward(player, e, 0.5F);
                             }
-                            PhysicsUtil.setMotion(player, player.motionX, MathUtil.fixMax(player.motionY, -2), player.motionZ);
                         }
-                        if (tick >= 5) {
-                            stopDrilling(itemStack);
-                        }
-                        tick++;
+                        PhysicsUtil.setMotion(player, player.motionX, MathUtil.fixMax(player.motionY, -2), player.motionZ);
                         yieldReturn(new WaitForNextTick());
                     }
                 }, 12);
@@ -324,8 +310,8 @@ public final class LanceCores {
         }
 
         @Override
-        public boolean onUsingEveryTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
-            if (totalTicksUsed % 5 == 0) {
+        public void onContinuousEffectTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
+            if (totalTicksUsed % 20 == 0) {
                 EntityLivingBase player = args.entity();
 
                 AttrCalculator calculator = args.calculator();
@@ -349,17 +335,6 @@ public final class LanceCores {
                     FawItemUtil.damageWeapon(weapon, itemStack, 1, player);
                 }
             }
-            return true;
-        }
-
-        private void startDrilling(@Nonnull ItemStack drillLance) {
-            NBTTagCompound root = NbtUtil.getOrCreateFrom(drillLance);
-            root.setBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling, true);
-        }
-
-        private void stopDrilling(@Nonnull ItemStack drillLance) {
-            NBTTagCompound root = NbtUtil.getOrCreateFrom(drillLance);
-            root.setBoolean(Names.Item.Lance.DrillLanceItem_Property_Drilling, false);
         }
     };
 

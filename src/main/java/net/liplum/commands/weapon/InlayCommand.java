@@ -1,4 +1,4 @@
-package net.liplum.commands;
+package net.liplum.commands.weapon;
 
 import net.liplum.I18ns;
 import net.liplum.Names;

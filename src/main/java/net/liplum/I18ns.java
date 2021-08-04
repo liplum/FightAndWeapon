@@ -40,7 +40,7 @@ public final class I18ns {
     }
 
     @LongSupport
-    public static String prefixCommandUnloc(String name) {
+    public static String prefixCommandUsageUnloc(String name) {
         return Vanilla.I18n.Command + '.' +
                 name + '.' +
                 Vanilla.I18n.Command_Usage;
@@ -107,16 +107,18 @@ public final class I18ns {
 
     @LongSupport
     public static final class Command {
-        public static final String Inlay = prefixCommandUnloc(Names.Command.Inlay);
+        public static final String ClearCD = prefixCommandUsageUnloc(Names.Command.ClearCD);
+
+        public static final String Inlay = prefixCommandUsageUnloc(Names.Command.Inlay);
         public static final String Inlay_Failure_NotFawWeapon = "commands.inlay.failure.notFawWeapon";
         public static final String Inlay_Failure_NoFawWeapon = "commands.inlay.failure.noGemstone";
         public static final String Inlay_Failure_NoSuchGemstone = "commands.inlay.failure.noSuchGemstone";
 
 
-        public static final String MasteryExp = prefixCommandUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryExp));
-        public static final String MasteryShow = prefixCommandUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryShow));
-        public static final String MasteryReset = prefixCommandUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryReset));
-        public static final String Mastery = prefixCommandUnloc(Names.Command.Mastery);
+        public static final String Mastery = prefixCommandUsageUnloc(Names.Command.Mastery);
+        public static final String MasteryExp = prefixCommandUsageUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryExp));
+        public static final String MasteryShow = prefixCommandUsageUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryShow));
+        public static final String MasteryReset = prefixCommandUsageUnloc(subCommand(Names.Command.Mastery, Names.Command.MasterySub.MasteryReset));
         public static final String Mastery_Failure_NotSuchWeaponType = "commands.mastery.failure.noSuchWeaponType";
         public static final String Mastery_Failure_NaN = "commands.mastery.failure.NaN";
         public static final String Mastery_Failure_NegativeNumber = "commands.mastery.failure.negativeNumber";

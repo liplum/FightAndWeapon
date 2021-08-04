@@ -2,6 +2,7 @@ package net.liplum.registeies;
 
 import net.liplum.MetaData;
 import net.liplum.Names;
+import net.liplum.entities.FlyingItemEntity;
 import net.liplum.entities.GemswordBeam;
 import net.liplum.entities.StraightDamageEntity;
 import net.minecraftforge.event.RegistryEvent;
@@ -17,12 +18,17 @@ import java.util.LinkedList;
 public final class EntityRegister {
     public static final LinkedList<EntityEntry> EntityEntries = new LinkedList<>();
     private static int ID = 0;
-    public static final EntityEntry STRAIGHT_DAMAGE_ENTITY = build(
+    public static final EntityEntry StraightDamage = build(
             with(EntityEntryBuilder.create().entity(StraightDamageEntity.class), Names.Entity.StraightDamageEntity, ID++)
                     .tracker(64, 10, true));
 
     public static final EntityEntry GemswordBeam = build(
             with(EntityEntryBuilder.create().entity(GemswordBeam.class), Names.Entity.GemswordBeam, ID++)
+                    .tracker(64, 10, true)
+    );
+
+    public static final EntityEntry FlyingItem = build(
+            with(EntityEntryBuilder.create().entity(FlyingItemEntity.class), Names.Entity.FlyingItem, ID++)
                     .tracker(64, 10, true)
     );
 

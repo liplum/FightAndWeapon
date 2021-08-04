@@ -2,6 +2,8 @@ package net.liplum.lib.utils;
 
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.IPassiveSkill;
+import net.liplum.api.registeies.WeaponRegistry;
+import net.liplum.api.registeies.WeaponTypeRegistry;
 import net.liplum.api.weapon.*;
 import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.FinalAttrValue;
@@ -21,6 +23,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.CooldownTracker;
 import net.minecraft.util.SoundEvent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
@@ -32,6 +35,7 @@ import javax.annotation.Nonnegative;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
+import java.util.Set;
 
 import static net.liplum.Attributes.Generic.*;
 
@@ -379,5 +383,23 @@ public final class FawItemUtil {
             return findAmmo(player, bow, itemStack, modifier);
         }
         return core.getDefaultAmmo(entity, itemStack);
+    }
+
+    public static void clearWeaponCoolDown(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
+        Set<WeaponBaseItem> weapons = WeaponRegistry.getWeaponsOf(weaponType);
+        CooldownTracker cooldownTracker = player.getCooldownTracker();
+        for (WeaponBaseItem weapon : weapons) {
+            cooldownTracker.removeCooldown(weapon);
+        }
+    }
+
+    public static void clearAllWeaponsCoolDown(@Nonnull EntityPlayer player) {
+        CooldownTracker cooldownTracker = player.getCooldownTracker();
+        for (WeaponType weaponType : WeaponTypeRegistry.getAllWeaponTypes()) {
+            Set<WeaponBaseItem> weapons = WeaponRegistry.getWeaponsOf(weaponType);
+            for (WeaponBaseItem weapon : weapons) {
+                cooldownTracker.removeCooldown(weapon);
+            }
+        }
     }
 }

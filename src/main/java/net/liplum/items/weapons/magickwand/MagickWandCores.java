@@ -2,7 +2,13 @@ package net.liplum.items.weapons.magickwand;
 
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
+import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.api.weapon.WeaponSkillArgs;
+import net.liplum.entities.FlyingItemEntity;
+import net.liplum.lib.utils.EntityUtil;
+import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.ItemStack;
+import net.minecraft.world.World;
 
 import javax.annotation.Nonnull;
 
@@ -29,6 +35,28 @@ public final class MagickWandCores {
             builder.add(
                     1, PSkills.AP2Strength
             );
+        }
+    };
+
+    public static final MagickWandCore Athame = new MagickWandCore(Names.Item.MagickWand.AthameItem) {
+        @Override
+        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+            World world = args.world();
+            if (!world.isRemote) {
+                ItemStack itemStack = args.itemStack();
+                WeaponBaseItem weapon = args.weapon();
+                EntityLivingBase player = args.entity();
+                FlyingItemEntity flyingItem = new FlyingItemEntity(world, player, itemStack,
+                        (weaponEntity, target, itemStack1) -> {
+                            weapon.dealDamage(EntityUtil.genFawDamage(player, itemStack), target, 10);
+                            if (!weaponEntity.world.isRemote) {
+                                weaponEntity.setDead();
+                            }
+                        });
+                flyingItem.shoot(player, player.rotationPitch, player.rotationYaw, 0F, 1F, 1F);
+                world.spawnEntity(flyingItem);
+            }
+            return true;
         }
     };
 }

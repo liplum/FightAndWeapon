@@ -1,7 +1,8 @@
 package net.liplum.registeies;
 
-import net.liplum.commands.InlayCommand;
 import net.liplum.commands.Mastery.MasteryCommand;
+import net.liplum.commands.weapon.ClearCoolDownCommand;
+import net.liplum.commands.weapon.InlayCommand;
 import net.minecraft.command.CommandBase;
 import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 import org.apache.logging.log4j.LogManager;
@@ -17,6 +18,7 @@ public class CommandRegistry {
     static {
         Commands.add(InlayCommand.class);
         Commands.add(MasteryCommand.class);
+        Commands.add(ClearCoolDownCommand.class);
     }
 
     public static void load(FMLServerStartingEvent event) {

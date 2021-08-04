@@ -244,7 +244,8 @@ public abstract class WeaponBaseItem extends FawItem {
 
     @Override
     public int getMaxDamage(@Nonnull ItemStack stack) {
-        AttrCalculator calculator = new AttrCalculator(this).modifier(GemUtil.getModifierFrom(stack));
+        AttrCalculator calculator = new AttrCalculator(this)
+                .modifier(GemUtil.getModifierFrom(stack));
         return calculator.calcu(Durability).getInt();
     }
 }

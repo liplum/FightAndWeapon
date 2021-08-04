@@ -3,6 +3,7 @@ package net.liplum.proxies;
 import net.liplum.eventhandlers.ClientHandler;
 import net.liplum.eventhandlers.HotkeyHandler;
 import net.liplum.registeies.HotkeyRegistry;
+import net.liplum.registeies.RenderRegistry;
 import net.liplum.renders.RenderManager;
 import net.liplum.renders.WeaponPartTextureCreator;
 import net.minecraft.client.Minecraft;
@@ -40,6 +41,7 @@ public class ClientProxy extends ProxyBase {
         MinecraftForge.EVENT_BUS.register(new HotkeyHandler());
         MinecraftForge.EVENT_BUS.register(new ClientHandler());
         RenderManager.init();
+        RenderRegistry.onRegister();
     }
 
     @Override

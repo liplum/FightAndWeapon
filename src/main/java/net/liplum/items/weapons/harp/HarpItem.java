@@ -124,6 +124,11 @@ public class HarpItem extends WeaponBaseItem {
         }
     }
 
+    @Override
+    public ItemStack onItemUseFinish(ItemStack stack, World worldIn, EntityLivingBase entityLiving) {
+        return super.onItemUseFinish(stack, worldIn, entityLiving);
+    }
+
     @Nonnull
     @Override
     public HarpCore getConcreteCore() {

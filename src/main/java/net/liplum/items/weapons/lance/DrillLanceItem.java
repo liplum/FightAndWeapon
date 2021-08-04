@@ -73,7 +73,7 @@ public class DrillLanceItem extends WeaponBaseItem {
                 .world(player.world);
         AttrCalculator calculator = FawUtil.toCalculator(args);
         args.calculator(calculator);
-        core.onUsingEveryTick(args, count);
+        core.onContinuousEffectTick(args, count);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class DrillLanceItem extends WeaponBaseItem {
                 .world(entityLiving.world);
         AttrCalculator calculator = FawUtil.toCalculator(args);
         args.calculator(calculator);
-        core.onStopUsing(args, usedTicks, timeLeft);
+        core.onContinuousEffectStop(args, usedTicks, timeLeft);
         FawItemUtil.heatWeaponType(entityLiving, getWeaponType());
     }
 }

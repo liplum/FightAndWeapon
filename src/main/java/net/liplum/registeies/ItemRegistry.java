@@ -97,6 +97,7 @@ public final class ItemRegistry {
 
     //Magick Wand
     public static final Item Gemsword_Item = weapon(new MagickWandItem(MagickWandCores.Gemsword));
+    public static final Item Athame_Item = weapon(new MagickWandItem(MagickWandCores.Athame));
 
     //Bow
     public static final Item Simple_Bow_Item = weapon(new BowItem(BowCores.SimpleBow));
