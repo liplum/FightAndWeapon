@@ -1,24 +1,38 @@
 package net.liplum.commands;
 
-import net.minecraft.command.CommandException;
-import net.minecraft.command.ICommandSender;
-import net.minecraft.server.MinecraftServer;
-
 import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.List;
 
-public class Task implements ITask {
+public abstract class Task implements ITask {
+    private final int argsCount;
+    private final boolean hasTabCompletion;
+    private final boolean isMutex;
+
+    public Task(int argsCount, boolean hasTabCompletion, boolean isMutex) {
+        this.argsCount = argsCount;
+        this.hasTabCompletion = hasTabCompletion;
+        this.isMutex = isMutex;
+    }
+
     @Override
     public int getArgsCount() {
-        return 0;
+        return argsCount;
     }
 
     @Override
-    public ValidInfo isValid(@Nonnull String parameter, int index) {
-        return null;
+    public boolean hasTabCompletion(int index) {
+        return hasTabCompletion;
+    }
+
+    @Nonnull
+    @Override
+    public List<String> getCompletions(int needBeCompetedIndex) {
+        return Collections.emptyList();
     }
 
     @Override
-    public void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException {
-
+    public boolean isMutex() {
+        return isMutex;
     }
 }

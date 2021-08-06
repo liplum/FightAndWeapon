@@ -6,8 +6,10 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
+import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
+import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -44,7 +46,7 @@ public class Command extends CommandBase {
 
     private void setMinMaxArgsSize(int checkedOne) {
         minArgsSize = Math.min(minArgsSize, checkedOne);
-        maxArgsSize = Math.min(maxArgsSize, checkedOne);
+        maxArgsSize = Math.max(maxArgsSize, checkedOne);
     }
 
     @Nonnull
@@ -108,5 +110,11 @@ public class Command extends CommandBase {
     @Override
     public int getRequiredPermissionLevel() {
         return requiredPermissionLevel;
+    }
+
+    @Nonnull
+    @Override
+    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+        return super.getTabCompletions(server, sender, args, targetPos);
     }
 }
