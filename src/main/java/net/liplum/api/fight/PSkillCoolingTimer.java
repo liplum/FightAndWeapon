@@ -4,7 +4,7 @@ import net.liplum.api.annotations.LongSupport;
 import net.liplum.capabilities.TimerCapability;
 import net.liplum.networks.CoolingMsg;
 import net.liplum.networks.MessageManager;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

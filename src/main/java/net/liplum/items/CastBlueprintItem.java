@@ -7,7 +7,7 @@ import net.liplum.api.weapon.WeaponPart;
 import net.liplum.capabilities.CastStudyCapability;
 import net.liplum.lib.nbt.FawNbtTool;
 import net.liplum.lib.utils.FawI18n;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;

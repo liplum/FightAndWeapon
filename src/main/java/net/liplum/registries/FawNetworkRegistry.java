@@ -1,4 +1,4 @@
-package net.liplum.registeies;
+package net.liplum.registries;
 
 import net.liplum.MetaData;
 import net.liplum.gui.FawGuiHandler;

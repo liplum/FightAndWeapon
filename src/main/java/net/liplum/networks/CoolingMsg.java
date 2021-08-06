@@ -5,7 +5,7 @@ import net.liplum.api.fight.CoolDown;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.SkillRegistry;
 import net.liplum.capabilities.TimerCapability;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.Tuple;

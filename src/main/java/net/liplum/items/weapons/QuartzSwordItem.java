@@ -3,7 +3,7 @@ package net.liplum.items.weapons;
 import com.google.common.collect.Multimap;
 import net.liplum.Names;
 import net.liplum.lib.utils.FawGenerator;
-import net.liplum.registeies.ItemRegistry;
+import net.liplum.registries.ItemRegistry;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;

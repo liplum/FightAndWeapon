@@ -1,7 +1,7 @@
 package net.liplum.capabilities;
 
 import net.liplum.api.annotations.LongSupport;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumFacing;
 import net.minecraftforge.common.capabilities.Capability;

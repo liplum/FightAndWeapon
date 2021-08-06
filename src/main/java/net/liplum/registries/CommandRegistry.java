@@ -1,4 +1,4 @@
-package net.liplum.registeies;
+package net.liplum.registries;
 
 import net.liplum.commands.Mastery.MasteryCommand;
 import net.liplum.commands.weapon.ClearCoolDownCommand;

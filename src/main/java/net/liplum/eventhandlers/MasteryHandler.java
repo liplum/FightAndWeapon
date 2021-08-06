@@ -7,7 +7,7 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.events.mastery.MasteryUpgradedEvent;
 import net.liplum.lib.FawDamage;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;

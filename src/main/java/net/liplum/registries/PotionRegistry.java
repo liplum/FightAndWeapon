@@ -1,4 +1,4 @@
-package net.liplum.registeies;
+package net.liplum.registries;
 
 import net.liplum.I18ns;
 import net.liplum.MetaData;

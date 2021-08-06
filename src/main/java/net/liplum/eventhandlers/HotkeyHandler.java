@@ -1,7 +1,7 @@
 package net.liplum.eventhandlers;
 
 import net.liplum.networks.MasteryGuiHandler;
-import net.liplum.registeies.HotkeyRegistry;
+import net.liplum.registries.HotkeyRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;

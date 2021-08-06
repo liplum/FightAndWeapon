@@ -1,7 +1,7 @@
 package net.liplum.eventhandlers;
 
 import net.liplum.MetaData;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.capabilities.ICapabilityProvider;
@@ -9,7 +9,7 @@ import net.minecraftforge.event.AttachCapabilitiesEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
-import static net.liplum.registeies.CapabilityRegistry.CapabilityEntry;
+import static net.liplum.registries.CapabilityRegistry.CapabilityEntry;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public final class AttachCapabilityHandler {

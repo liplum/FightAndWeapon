@@ -1,4 +1,4 @@
-package net.liplum.registeies;
+package net.liplum.registries;
 
 public class TextureRegistry {
 }

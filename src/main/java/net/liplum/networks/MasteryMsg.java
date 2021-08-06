@@ -4,7 +4,7 @@ import io.netty.buffer.ByteBuf;
 import net.liplum.api.registeies.MasteryRegistry;
 import net.liplum.capabilities.MasteryCapability;
 import net.liplum.masteries.LvExpPair;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.Tuple;

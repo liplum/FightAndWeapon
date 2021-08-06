@@ -6,7 +6,7 @@ import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.events.skill.LanceSprintEvent;
-import net.liplum.registeies.PotionRegistry;
+import net.liplum.registries.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
 

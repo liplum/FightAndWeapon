@@ -1,4 +1,4 @@
-package net.liplum.registeies;
+package net.liplum.registries;
 
 import net.liplum.Gemstones;
 import net.liplum.I18ns;

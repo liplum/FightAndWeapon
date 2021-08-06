@@ -10,7 +10,7 @@ import net.liplum.events.mastery.MasteryUpgradedEvent;
 import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.networks.MasteryMsg;
 import net.liplum.networks.MessageManager;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;

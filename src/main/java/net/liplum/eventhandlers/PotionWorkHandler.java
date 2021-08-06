@@ -2,7 +2,7 @@ package net.liplum.eventhandlers;
 
 import net.liplum.MetaData;
 import net.liplum.Vanilla;
-import net.liplum.registeies.PotionRegistry;
+import net.liplum.registries.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingAttackEvent;

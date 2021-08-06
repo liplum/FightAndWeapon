@@ -2,7 +2,7 @@ package net.liplum.eventhandlers;
 
 import net.liplum.MetaData;
 import net.liplum.capabilities.MasteryCapability;
-import net.liplum.registeies.CapabilityRegistry;
+import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;

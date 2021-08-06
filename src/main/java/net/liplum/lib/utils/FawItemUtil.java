@@ -65,7 +65,7 @@ public final class FawItemUtil {
     }
 
     public static boolean isGemstone(@Nonnull Item item) {
-        return item instanceof GemstoneItem;
+        return item instanceof IGemstoneItem;
     }
 
     public static boolean isInlayingTool(ItemStack itemStack) {

@@ -1,4 +1,4 @@
-package net.liplum.registeies;
+package net.liplum.registries;
 
 import net.liplum.entities.FlyingItemEntity;
 import net.liplum.renders.FlyingItemRender;
