@@ -1,5 +1,6 @@
 package net.liplum.lib.utils;
 
+import net.liplum.I18ns;
 import net.liplum.api.fight.IMastery;
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.fight.UnlockedPSkillList;
@@ -10,7 +11,9 @@ import net.liplum.masteries.IMasteryDetail;
 import net.liplum.masteries.LvExpPair;
 import net.liplum.masteries.Mastery;
 import net.liplum.masteries.MasteryDetail;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.util.text.TextComponentString;
 
 import javax.annotation.Nonnull;
 import java.util.Collection;
@@ -124,5 +127,33 @@ public final class MasteryUtil {
             return getPassiveSkills(player, mastery, weaponCore);
         }
         return Collections.emptyList();
+    }
+
+    public static void showAllMasteries(@Nonnull EntityPlayer player) {
+        IMasteryDetail detail = MasteryDetail.create(player);
+        String lvI18n = I18n.format(I18ns.Command.Mastery_Show_Level);
+        String expI18n = I18n.format(I18ns.Command.Mastery_Show_Exp);
+        for (IMastery mastery : MasteryRegistry.getAllMasteries()) {
+            int lv = detail.getLevel(mastery);
+            int exp = detail.getExp(mastery);
+            TextComponentString text = new TextComponentString(
+                    I18n.format(FawI18n.getNameI18nKey(mastery.getWeaponType())) + ": " +
+                            lvI18n + " " + lv + "," +
+                            expI18n + " " + exp
+            );
+            player.sendMessage(text);
+        }
+    }
+
+    public static void showMastery(@Nonnull EntityPlayer player, @Nonnull IMastery mastery) {
+        IMasteryDetail detail = MasteryDetail.create(player);
+        int lv = detail.getLevel(mastery);
+        int exp = detail.getExp(mastery);
+        TextComponentString text = new TextComponentString(
+                I18n.format(FawI18n.getNameI18nKey(mastery.getWeaponType())) + ": " +
+                        I18n.format(I18ns.Command.Mastery_Show_Level) + " " + lv + "," +
+                        I18n.format(I18ns.Command.Mastery_Show_Exp) + " " + exp
+        );
+        player.sendMessage(text);
     }
 }

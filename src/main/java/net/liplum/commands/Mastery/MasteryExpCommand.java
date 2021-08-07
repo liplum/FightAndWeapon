@@ -16,6 +16,7 @@ import net.minecraft.util.math.BlockPos;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
@@ -48,10 +49,16 @@ public class MasteryExpCommand extends CommandBase {
         }
         //mastery exp <Weapon Type> <Amount> <Player>
         EntityPlayer player = args.length == 3 ? getPlayer(server, sender, args[2]) : getCommandSenderAsPlayer(sender);
+        Collection<IMastery> masteries = new LinkedList<>();
         String weaponTypeName = args[0];
-        IMastery mastery = MasteryRegistry.getMasteryOf(weaponTypeName);
-        if (mastery == null) {
-            throw new CommandException(Mastery_Failure_NotSuchWeaponType, weaponTypeName);
+        if (weaponTypeName.equals(Names.Command.MasterySub.All)) {
+            masteries = MasteryRegistry.getAllMasteries();
+        } else {
+            IMastery mastery = MasteryRegistry.getMasteryOf(weaponTypeName);
+            if (mastery == null) {
+                throw new CommandException(Mastery_Failure_NotSuchWeaponType, weaponTypeName);
+            }
+            masteries.add(mastery);
         }
         String expCountStr = args[1];
         int exp;
@@ -63,7 +70,9 @@ public class MasteryExpCommand extends CommandBase {
         if (exp <= 0) {
             throw new CommandException(Mastery_Failure_NegativeNumber, weaponTypeName);
         }
-        MasteryUtil.addExp(player, mastery, exp * 10);
+        for (IMastery mastery : masteries) {
+            MasteryUtil.addExp(player, mastery, exp * 10);
+        }
     }
 
     @Override
@@ -75,7 +84,7 @@ public class MasteryExpCommand extends CommandBase {
     @Override
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
-            List<String> allMasteriesNames = new LinkedList<>(MasteryRegistry.getAllMasteriesNames());
+            List<String> allMasteriesNames = new LinkedList<>(MasteryRegistry.getAllMasteryNames());
             allMasteriesNames.add(Names.Command.MasterySub.All);
             return getListOfStringsMatchingLastWord(args, allMasteriesNames);
         }

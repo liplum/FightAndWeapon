@@ -27,7 +27,7 @@ public final class MasteryRegistry {
     }
 
     @Nonnull
-    public static List<String> getAllMasteriesNames() {
+    public static List<String> getAllMasteryNames() {
         return WeaponTypeRegistry.getAllWeaponTypeNames();
     }
 

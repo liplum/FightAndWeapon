@@ -5,7 +5,7 @@ import javax.annotation.Nullable;
 
 public class ValidInfo {
     @Nonnull
-    public final static ValidInfo AlwaysFalseAndNull = new ValidInfo(false, null);
+    public final static ValidInfo FalseAndNull = new ValidInfo(false, null);
 
     private final boolean isValid;
     @Nullable
@@ -23,5 +23,15 @@ public class ValidInfo {
     @Nullable
     public Object transformedArg() {
         return transformedArg;
+    }
+
+    @Nonnull
+    public static ValidInfo invalidWhenNull(@Nullable Object transformedArg) {
+        return new ValidInfo(transformedArg != null, transformedArg);
+    }
+
+    @Nonnull
+    public static ValidInfo nullTransformedArg(boolean isValid) {
+        return new ValidInfo(isValid, null);
     }
 }

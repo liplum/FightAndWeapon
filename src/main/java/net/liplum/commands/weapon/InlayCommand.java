@@ -1,5 +1,6 @@
 package net.liplum.commands.weapon;
 
+import com.google.common.collect.Lists;
 import net.liplum.I18ns;
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;

@@ -25,6 +25,8 @@ public class Command extends CommandBase {
     private final int requiredPermissionLevel;
     @Nonnull
     private final List<ITask> allTasks = new LinkedList<>();
+    @Nonnull
+    private final List<String> aliases = new LinkedList<>();
     private int minArgsSize = 0;
     private int maxArgsSize = 0;
 
@@ -38,6 +40,7 @@ public class Command extends CommandBase {
         this(name, requiredPermissionLevel, (s) -> usage);
     }
 
+    @Nonnull
     public Command addTask(@Nonnull ITask task) {
         allTasks.add(task);
         setMinMaxArgsSize(task.getArgsCount());
@@ -47,6 +50,18 @@ public class Command extends CommandBase {
     private void setMinMaxArgsSize(int checkedOne) {
         minArgsSize = Math.min(minArgsSize, checkedOne);
         maxArgsSize = Math.max(maxArgsSize, checkedOne);
+    }
+
+    @Nonnull
+    public Command addAlias(@Nonnull String alias) {
+        this.aliases.add(alias);
+        return this;
+    }
+
+    @Nonnull
+    @Override
+    public List<String> getAliases() {
+        return this.aliases;
     }
 
     @Nonnull
@@ -115,6 +130,31 @@ public class Command extends CommandBase {
     @Nonnull
     @Override
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
-        return super.getTabCompletions(server, sender, args, targetPos);
+        int length = args.length;
+        int index = length - 1;
+        List<String> result = new LinkedList<>();
+        ITask mutex = hasMutexTabCompletion(index);
+        if (mutex != null) {
+            List<String> completions = mutex.getCompletions(server, sender, index, targetPos);
+            result.addAll(completions);
+        } else {
+            for (ITask task : allTasks) {
+                if (task.hasTabCompletion(index)) {
+                    List<String> completions = task.getCompletions(server, sender, index, targetPos);
+                    result.addAll(completions);
+                }
+            }
+        }
+        return getListOfStringsMatchingLastWord(args, result);
+    }
+
+    @Nullable
+    private ITask hasMutexTabCompletion(int index) {
+        for (ITask task : allTasks) {
+            if (task.isTabCompletionMutex(index)) {
+                return task;
+            }
+        }
+        return null;
     }
 }

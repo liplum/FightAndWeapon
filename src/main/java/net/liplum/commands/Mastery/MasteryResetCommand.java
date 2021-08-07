@@ -72,7 +72,7 @@ public class MasteryResetCommand extends CommandBase {
     @Override
     public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
-            List<String> allMasteriesNames = new LinkedList<>(MasteryRegistry.getAllMasteriesNames());
+            List<String> allMasteriesNames = new LinkedList<>(MasteryRegistry.getAllMasteryNames());
             allMasteriesNames.add(Names.Command.MasterySub.All);
             return getListOfStringsMatchingLastWord(args, allMasteriesNames);
         }
@@ -80,5 +80,10 @@ public class MasteryResetCommand extends CommandBase {
             return getListOfStringsMatchingLastWord(args, server.getOnlinePlayerNames());
         }
         return Collections.emptyList();
+    }
+
+    @Override
+    public int getRequiredPermissionLevel() {
+        return 2;
     }
 }
