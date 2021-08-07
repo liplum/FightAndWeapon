@@ -1,5 +1,6 @@
 package net.liplum.commands;
 
+import net.liplum.api.annotations.LongSupport;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.server.command.CommandTreeBase;
@@ -10,6 +11,7 @@ import java.util.List;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
+@LongSupport
 public class CommandTree extends CommandTreeBase {
     @Nonnull
     private final String name;

@@ -20,12 +20,6 @@ public class FlyingItemEntity extends EntityThrowable {
     private IFlyingItemBehavior behavior = (weaponEntity, target, itemStack) -> {
     };
 
-    @Override
-    protected void entityInit() {
-        super.entityInit();
-        this.getDataManager().register(FlyingItem, ItemStack.EMPTY);
-    }
-
     public FlyingItemEntity(@Nonnull World worldIn) {
         super(worldIn);
     }
@@ -43,6 +37,12 @@ public class FlyingItemEntity extends EntityThrowable {
     }
 
     @Override
+    protected void entityInit() {
+        super.entityInit();
+        this.getDataManager().register(FlyingItem, ItemStack.EMPTY);
+    }
+
+    @Override
     protected void onImpact(@Nonnull RayTraceResult result) {
         Entity hitEntity = result.entityHit;
         if (hitEntity == null) {
@@ -56,14 +56,14 @@ public class FlyingItemEntity extends EntityThrowable {
         return getDataManager().get(FlyingItem);
     }
 
-    @Override
-    protected float getGravityVelocity() {
-        return 0.0001F;
-    }
-
     public void setFlyingItem(@Nonnull ItemStack flyingItem) {
         EntityDataManager dataManager = getDataManager();
         dataManager.set(FlyingItem, flyingItem);
         dataManager.setDirty(FlyingItem);
+    }
+
+    @Override
+    protected float getGravityVelocity() {
+        return 0.0001F;
     }
 }

@@ -10,7 +10,7 @@ import net.minecraft.item.ItemStack;
 import javax.annotation.Nonnull;
 
 public class FlyingItemRender extends RenderSnowball<FlyingItemEntity> {
-    public FlyingItemRender(@Nonnull RenderManager renderManagerIn,@Nonnull Item itemIn,@Nonnull RenderItem itemRendererIn) {
+    public FlyingItemRender(@Nonnull RenderManager renderManagerIn, @Nonnull Item itemIn, @Nonnull RenderItem itemRendererIn) {
         super(renderManagerIn, itemIn, itemRendererIn);
     }
 

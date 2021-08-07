@@ -16,15 +16,6 @@ public class ValidInfo {
         this.transformedArg = transformedArg;
     }
 
-    public boolean isValid() {
-        return isValid;
-    }
-
-    @Nullable
-    public Object transformedArg() {
-        return transformedArg;
-    }
-
     @Nonnull
     public static ValidInfo invalidWhenNull(@Nullable Object transformedArg) {
         return new ValidInfo(transformedArg != null, transformedArg);
@@ -33,5 +24,14 @@ public class ValidInfo {
     @Nonnull
     public static ValidInfo nullTransformedArg(boolean isValid) {
         return new ValidInfo(isValid, null);
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    @Nullable
+    public Object transformedArg() {
+        return transformedArg;
     }
 }

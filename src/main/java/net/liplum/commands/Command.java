@@ -1,5 +1,6 @@
 package net.liplum.commands;
 
+import net.liplum.api.annotations.LongSupport;
 import net.liplum.lib.math.MathUtil;
 import net.minecraft.command.CommandBase;
 import net.minecraft.command.CommandException;
@@ -17,6 +18,7 @@ import java.util.Map;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
+@LongSupport
 public class Command extends CommandBase {
     @Nonnull
     private final String name;

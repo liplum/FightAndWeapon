@@ -15,6 +15,7 @@ public class RepairTableTF extends TileEntity {
     private final ItemStackHandler weapon = new RepairTableItemStackHandler(1);
     @Nonnull
     private final ItemStackHandler material = new RepairTableItemStackHandler(1);
+
     public RepairTableTF() {
     }
 

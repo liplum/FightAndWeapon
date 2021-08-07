@@ -10,7 +10,6 @@ import net.liplum.attributes.FinalAttrValue;
 import net.liplum.events.weapon.FoundAmmoEvent;
 import net.liplum.events.weapon.WeaponAttackEvent;
 import net.liplum.events.weapon.WeaponDurabilityEvent;
-import net.liplum.items.GemstoneItem;
 import net.liplum.items.tools.InlayingToolItem;
 import net.liplum.items.weapons.bow.BowCore;
 import net.liplum.items.weapons.bow.BowItem;
