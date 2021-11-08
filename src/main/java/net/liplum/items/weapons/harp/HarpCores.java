@@ -75,7 +75,6 @@ public final class HarpCores {
                         target instanceof EntityVillager
                 ) {
                     target.addPotionEffect(new PotionEffect(MobEffects.REGENERATION, 60, 1));
-                    effectedEntityCount++;
                 }
                 //If enemy
                 else {
@@ -85,8 +84,8 @@ public final class HarpCores {
                     } else {
                         target.addPotionEffect(new PotionEffect(MobEffects.POISON, 40, 2));
                     }
-                    effectedEntityCount++;
                 }
+                effectedEntityCount++;
             }
 
             int weaponDamage = (int) MathUtil.castTo(1F, 5F, (float) effectedEntityCount / 3);

@@ -3,9 +3,10 @@ package net.liplum.registries;
 
 import net.liplum.Names;
 import net.liplum.api.weapon.GemQuality;
+import net.liplum.api.weapon.IGemstoneItem;
 import net.liplum.api.weapon.WeaponBaseItem;
-import net.liplum.items.GemstoneItem;
 import net.liplum.lib.ItemGroup;
+import net.liplum.lib.utils.FawItemUtil;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
@@ -23,9 +24,9 @@ public final class ItemGroupRegistry {
         @Override
         protected void sortDisplayedItems(@Nonnull NonNullList<ItemStack> currentItemGroupItems) {
             Map<GemQuality, List<ItemStack>> grouped = currentItemGroupItems.stream()
-                    .filter(itemStack -> itemStack.getItem() instanceof GemstoneItem)
+                    .filter(FawItemUtil::isGemstone)
                     .collect(Collectors.groupingBy(itemStack -> {
-                        GemstoneItem gemstone = (GemstoneItem) itemStack.getItem();
+                        IGemstoneItem gemstone = (IGemstoneItem) itemStack.getItem();
                         return gemstone.getGemstone().getQuality();
                     }));
             currentItemGroupItems.clear();
@@ -34,8 +35,8 @@ public final class ItemGroupRegistry {
             for (Map.Entry<GemQuality, List<ItemStack>> entry : entries) {
                 List<ItemStack> gemstones = entry.getValue();
                 gemstones.sort((o1, o2) -> {
-                    int g1 = ((GemstoneItem) o1.getItem()).getGemstone().getDisplayedOrderID();
-                    int g2 = ((GemstoneItem) o2.getItem()).getGemstone().getDisplayedOrderID();
+                    int g1 = ((IGemstoneItem) o1.getItem()).getGemstone().getDisplayedOrderID();
+                    int g2 = ((IGemstoneItem) o2.getItem()).getGemstone().getDisplayedOrderID();
                     if (g1 == g2) {
                         return 0;
                     }
