@@ -8,6 +8,7 @@ import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.Tuple;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
@@ -39,8 +40,8 @@ public class MasteryMsg implements IMessage {
     public void fromBytes(ByteBuf buf) {
         data = new LinkedList<>();
         while (buf.isReadable()) {
-            int strLength = buf.readInt();
-            String name = buf.readCharSequence(strLength, StandardCharsets.UTF_8).toString();
+            String name = ByteBufUtils.readUTF8String(buf);
+
             int lv = buf.readInt();
             int exp = buf.readInt();
             data.add(new Tuple<>(name, new LvExpPair(lv, exp)));
@@ -52,9 +53,9 @@ public class MasteryMsg implements IMessage {
         for (Tuple<String, LvExpPair> entry : data) {
             String name = entry.getFirst();
             if (MasteryRegistry.getMasteryOf(name) != null) {
+                ByteBufUtils.writeUTF8String(buf,name);
+
                 LvExpPair lvAndExp = entry.getSecond();
-                buf.writeInt(name.length());
-                buf.writeCharSequence(name, StandardCharsets.UTF_8);
                 buf.writeInt(lvAndExp.getLevel());
                 buf.writeInt(lvAndExp.getExp());
             }

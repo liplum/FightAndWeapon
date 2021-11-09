@@ -9,11 +9,11 @@ import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
 import net.minecraft.util.Tuple;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -39,8 +39,9 @@ public class CoolingMsg implements IMessage {
     public void fromBytes(ByteBuf buf) {
         data = new LinkedList<>();
         while (buf.isReadable()) {
-            int strLength = buf.readInt();
-            data.add(new Tuple<>(buf.readCharSequence(strLength, StandardCharsets.UTF_8).toString(), buf.readInt()));
+            String skillRegisterName = ByteBufUtils.readUTF8String(buf);
+            int cooldownTime = buf.readInt();
+            data.add(new Tuple<>(skillRegisterName, cooldownTime));
         }
     }
 
@@ -48,8 +49,7 @@ public class CoolingMsg implements IMessage {
     public void toBytes(ByteBuf buf) {
         for (Tuple<String, Integer> entry : data) {
             String registerName = entry.getFirst();
-            buf.writeInt(registerName.length());
-            buf.writeCharSequence(registerName, StandardCharsets.UTF_8);
+            ByteBufUtils.writeUTF8String(buf, registerName);
             buf.writeInt(entry.getSecond());
         }
     }

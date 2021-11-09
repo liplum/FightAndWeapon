@@ -1,9 +1,11 @@
 package net.liplum.networks;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufUtil;
 import io.netty.buffer.Unpooled;
 import net.liplum.MetaData;
 import net.liplum.gui.FawGuiHandler;
+import net.liplum.registries.FawNetworkRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -12,6 +14,7 @@ import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.server.management.PlayerList;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.ByteBufUtils;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
 
@@ -31,10 +34,8 @@ public class MasteryGuiHandler implements IDataPacketHandler {
         PacketBuffer buffer = new PacketBuffer(Unpooled.buffer());
         UUID uuid = player.getUniqueID();
         String uuidStr = uuid.toString();
-        int uuidLength = uuidStr.length();
-        buffer.writeInt(uuidLength);
-        buffer.writeString(uuidStr);
-        //FawNetworkRegistry.MasterGuiChannel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
+        ByteBufUtils.writeUTF8String(buffer,uuidStr);
+        FawNetworkRegistry.MasterGuiChannel.sendToServer(new FMLProxyPacket(buffer, ChannelName));
     }
 
     @Override
@@ -56,9 +57,7 @@ public class MasteryGuiHandler implements IDataPacketHandler {
     public void onServerReceivedPacket(FMLNetworkEvent.ServerCustomPacketEvent event) {
         FMLProxyPacket packet = event.getPacket();
         ByteBuf buffer = packet.payload();
-        int uuidLength = buffer.readInt();
-        CharSequence uuidRaw = buffer.readCharSequence(uuidLength + 1, StandardCharsets.UTF_8);
-        String uuidStr = uuidRaw.toString().substring(1);
+        String uuidStr =  ByteBufUtils.readUTF8String(buffer);
         UUID uuid = UUID.fromString(uuidStr);
 
         Minecraft mc = Minecraft.getMinecraft();
