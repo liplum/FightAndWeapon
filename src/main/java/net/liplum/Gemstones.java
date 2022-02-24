@@ -26,37 +26,37 @@ import static net.liplum.skills.gemstone.WindyGemstoneSkills.Levitation;
 @LongSupport
 public final class Gemstones {
     private static int ID = 0;
-    public final static IGemstone Ruby_Gemstone = new Gemstone(Ruby, Low, ID++)
+    public final static IGemstone Ruby = new Gemstone(RubyN, Low, ID++)
             .addModifier(RubyModifier.Light_Lance)
             .addPassiveSkillsToAll(FireResistance);
-    public final static IGemstone Aquamarine_Gemstone = new Gemstone(Aquamarine, Low, ID++);
-    public final static IGemstone Citrine_Gemstone = new Gemstone(Citrine, Low, ID++);
-    public final static IGemstone Jadeite_Gemstone = new Gemstone(Jadeite, Low, ID++);
-    public final static IGemstone Amethyst_Gemstone = new Gemstone(Amethyst, Low, ID++);
-    public final static IGemstone Rose_Quartz_Gemstone = new Gemstone(RoseQuartz, Low, ID++)
+    public final static IGemstone Aquamarine = new Gemstone(AquamarineN, Low, ID++);
+    public final static IGemstone Citrine = new Gemstone(CitrineN, Low, ID++);
+    public final static IGemstone Jadeite = new Gemstone(JadeiteN, Low, ID++);
+    public final static IGemstone Amethyst = new Gemstone(AmethystN, Low, ID++);
+    public final static IGemstone RoseQuartz = new Gemstone(RoseQuartzN, Low, ID++)
             .addPassiveSkillsToAll(MagicAttach);
-    public final static IGemstone Turquoise_Gemstone = new Gemstone(Turquoise, Low, ID++)
+    public final static IGemstone Turquoise = new Gemstone(TurquoiseN, Low, ID++)
             .addPassiveSkillsToAll(GentlyLand);
 
-    public final static IGemstone Flamegem_Gemstone = new Gemstone(Flamegem, Middle, ID++)
+    public final static IGemstone Flamegem = new Gemstone(FlamegemN, Middle, ID++)
             .addModifier(FlameGemModifier.Light_Lance)
             .addPassiveSkillsToAll(FireProof)
             .addPassiveSkillToWeaponTypes(ScorchingTouch, Lance, BattleAxe, Sword);
 
-    public final static IGemstone Marinegem_Gemstone = new Gemstone(Marinegem, Middle, ID++)
+    public final static IGemstone Marinegem = new Gemstone(MarinegemN, Middle, ID++)
             .addPassiveSkillsToAll(UndeterminedSkills.XpMending);
 
-    public final static IGemstone Earthgem_Gemstone = new Gemstone(Earthgem, Middle, ID++);
+    public final static IGemstone Earthgem = new Gemstone(EarthgemN, Middle, ID++);
 
-    public final static IGemstone Forestgem_Gemstone = new Gemstone(Forestgem, Middle, ID++)
+    public final static IGemstone Forestgem = new Gemstone(ForestgemN, Middle, ID++)
             .addPassiveSkillsToAll(NutrientAbsorption);
 
-    public final static IGemstone Endergem_Gemstone = new Gemstone(Endergem, Middle, ID++)
+    public final static IGemstone Endergem = new Gemstone(EndergemN, Middle, ID++)
             .addModifier(EnderGemModifier.Light_Lance);
 
-    public final static IGemstone Magic_Pearl_Gemstone = new Gemstone(MagicPearl, Middle, ID++)
+    public final static IGemstone MagicPearl = new Gemstone(MagicPearlN, Middle, ID++)
             .addPassiveSkillsToAll(Magicize);
-    public final static IGemstone Windy_Gemstone = new Gemstone(WindyGemstone, Middle, ID++)
+    public final static IGemstone Windy = new Gemstone(WindyGemstoneN, Middle, ID++)
             .addPassiveSkillsToAll(Levitation)
             .addPassiveSkillsToAll(Feather);
 

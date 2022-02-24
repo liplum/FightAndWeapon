@@ -5,7 +5,6 @@ import net.liplum.lib.utils.MasteryUtil;
 import net.liplum.proxies.ProxyBase;
 import net.liplum.registries.CapabilityRegistry;
 import net.liplum.registries.CommandRegistry;
-import net.liplum.registries.FawNetworkRegistry;
 import net.liplum.skills.mastery.MasteryPassiveSkills;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
@@ -37,7 +36,7 @@ public class FawMod {
     public void preInit(FMLPreInitializationEvent event) {
         CapabilityRegistry.init();
         Logger.info("Capability Component initialized successfully.");
-        FawNetworkRegistry.init();
+        Net.init();
         Logger.info("Network Component initialized successfully.");
         Attributes.load();
         Logger.info("Attribute Component initialized successfully.");

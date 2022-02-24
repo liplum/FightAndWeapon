@@ -186,21 +186,21 @@ public final class Names {
     }
 
     public final static class Gemstone {
-        public static final String Ruby = "ruby";
-        public static final String Aquamarine = "aquamarine";
-        public static final String Citrine = "citrine";
-        public static final String Jadeite = "jadeite";
-        public static final String Amethyst = "amethyst";
-        public static final String RoseQuartz = "rose_quartz";
-        public static final String Turquoise = "turquoise";
+        public static final String RubyN = "ruby";
+        public static final String AquamarineN = "aquamarine";
+        public static final String CitrineN = "citrine";
+        public static final String JadeiteN = "jadeite";
+        public static final String AmethystN = "amethyst";
+        public static final String RoseQuartzN = "rose_quartz";
+        public static final String TurquoiseN = "turquoise";
 
-        public static final String Flamegem = "flamegem";
-        public static final String Marinegem = "marinegem";
-        public static final String Earthgem = "earthgem";
-        public static final String Forestgem = "forestgem";
-        public static final String Endergem = "endergem";
-        public static final String MagicPearl = "magic_pearl";
-        public static final String WindyGemstone = "windy_gemstone";
+        public static final String FlamegemN = "flamegem";
+        public static final String MarinegemN = "marinegem";
+        public static final String EarthgemN = "earthgem";
+        public static final String ForestgemN = "forestgem";
+        public static final String EndergemN = "endergem";
+        public static final String MagicPearlN = "magic_pearl";
+        public static final String WindyGemstoneN = "windy_gemstone";
     }
 
     public final static class PassiveSkill {

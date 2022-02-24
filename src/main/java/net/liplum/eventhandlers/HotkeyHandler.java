@@ -1,6 +1,6 @@
 package net.liplum.eventhandlers;
 
-import net.liplum.networks.MasteryGuiHandler;
+import net.liplum.Net;
 import net.liplum.registries.HotkeyRegistry;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
@@ -17,7 +17,7 @@ public final class HotkeyHandler {
         if (HotkeyRegistry.Master_Hotkey.isPressed()) {
             Minecraft mc = Minecraft.getMinecraft();
             EntityPlayerSP player = mc.player;
-            MasteryGuiHandler.sendClientPacket(player);
+            Net.MasteryGui.send(player);
         }
     }
 }

@@ -1,5 +1,6 @@
 package net.liplum.networks;
 
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 
 import javax.annotation.Nonnull;
@@ -8,9 +9,17 @@ public interface IDataPacketHandler {
     @Nonnull
     String getChannelName();
 
-    // NOTE: DON'T ADD @SideOnly(Side.CLIENT) !!!!!!!!
+    /**
+     * This handles packet when receiving and will run on a physical client.
+     * @param event packet
+     */
+    @SubscribeEvent
     void onClientReceivedPacket(FMLNetworkEvent.ClientCustomPacketEvent event);
 
-    // NOTE: DON'T ADD @SideOnly(Side.SERVER) !!!!!!!!
+    /**
+     * This handles packet when receiving and may run on a physical sever so that you mustn't use any ClientOnly function/field.
+     * @param event packet
+     */
+    @SubscribeEvent
     void onServerReceivedPacket(FMLNetworkEvent.ServerCustomPacketEvent event);
 }
