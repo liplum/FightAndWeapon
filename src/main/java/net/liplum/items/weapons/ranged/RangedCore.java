@@ -19,8 +19,8 @@ import net.liplum.lib.utils.FawUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.EnumAction;
 import net.minecraft.util.math.AxisAlignedBB;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
@@ -32,9 +32,9 @@ public abstract class RangedCore extends WeaponCore {
 
     private static final IPassiveSkill<FawWeaponLeftClickEvent> RangedWeaponPS =
             new PassiveSkill<FawWeaponLeftClickEvent>(Names.PassiveSkill.WeaponCore.RangedWeaponPS, FawWeaponLeftClickEvent.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull FawWeaponLeftClickEvent event) {
+                public PSkillResult onTrigger(@NotNull FawWeaponLeftClickEvent event) {
                     EntityLivingBase attacker = event.entity();
                     AttrCalculator calculator = FawUtil.toCalculator(event);
                     float attackReach = calculator.calcu(AttackReach).getFloat();
@@ -74,22 +74,22 @@ public abstract class RangedCore extends WeaponCore {
                 }
             }.setShownInTooltip(false).setBanedWhenBroken(false);
 
-    public RangedCore(@Nonnull String registerName) {
+    public RangedCore(@NotNull String registerName) {
         super(registerName);
     }
 
-    public RangedCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+    public RangedCore(@NotNull String registerName, boolean hasWeaponSkill) {
         super(registerName, hasWeaponSkill);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponType getWeaponType() {
         return WeaponTypes.Ranged;
     }
 
     @Override
-    protected void build(@Nonnull WeaponCoreBuilder builder) {
+    protected void build(@NotNull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
                 Strength, Strength.newBasicAttrValue(5)

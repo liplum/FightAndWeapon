@@ -1,10 +1,11 @@
 package net.liplum.commands;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import javax.annotation.Nullable;
 
 public class ValidInfo {
-    @Nonnull
+    @NotNull
     public final static ValidInfo FalseAndNull = new ValidInfo(false, null);
 
     private final boolean isValid;
@@ -16,12 +17,12 @@ public class ValidInfo {
         this.transformedArg = transformedArg;
     }
 
-    @Nonnull
+    @NotNull
     public static ValidInfo invalidWhenNull(@Nullable Object transformedArg) {
         return new ValidInfo(transformedArg != null, transformedArg);
     }
 
-    @Nonnull
+    @NotNull
     public static ValidInfo nullTransformedArg(boolean isValid) {
         return new ValidInfo(isValid, null);
     }

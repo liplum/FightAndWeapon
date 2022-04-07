@@ -1,9 +1,9 @@
 package net.liplum.tooltips;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
 public interface IWeaponTooltipBuilder {
-    @Nonnull
+    @NotNull
     ITooltip build();
 }

@@ -7,16 +7,15 @@ import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
 import net.liplum.events.weapon.WeaponAttackEvent;
 import net.minecraft.entity.EntityLivingBase;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @Developing
 public final class ForestgemSkills {
     public static final IPassiveSkill<WeaponAttackEvent.Attacked> NutrientAbsorption =
             new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.NutrientAbsorption, WeaponAttackEvent.Attacked.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
+                public PSkillResult onTrigger(@NotNull WeaponAttackEvent.Attacked event) {
                     WeaponAttackEvent.Attacked.Args args = event.getArgs();
                     if (args.isHitSuccessfully() && args.isFullAttack()) {
                         EntityLivingBase attacker = args.attacker();

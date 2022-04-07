@@ -5,8 +5,8 @@ import net.liplum.api.weapon.MagickToolCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.IAttribute;
 import net.minecraft.item.EnumAction;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.MaxUseDuration;
@@ -15,16 +15,16 @@ import static net.liplum.Attributes.Harp.Radius;
 
 public abstract class HarpCore extends MagickToolCore {
 
-    public HarpCore(@Nonnull String registerName) {
+    public HarpCore(@NotNull String registerName) {
         super(registerName);
     }
 
-    public HarpCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+    public HarpCore(@NotNull String registerName, boolean hasWeaponSkill) {
         super(registerName, hasWeaponSkill);
     }
 
     @Override
-    protected void build(@Nonnull WeaponCoreBuilder builder) {
+    protected void build(@NotNull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
                 EnumAction.BOW
@@ -41,7 +41,7 @@ public abstract class HarpCore extends MagickToolCore {
 
     public abstract boolean continueSkill(ContinuousHarpArgs args);
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponType getWeaponType() {
         return WeaponTypes.Harp;

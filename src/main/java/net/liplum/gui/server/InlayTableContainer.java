@@ -19,13 +19,12 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.SlotItemHandler;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class InlayTableContainer extends ContainerBase {
     private static final int InlayTableSlotCount = 3;
     private static final int PlayerInventoryEndIndex = InlayTableSlotCount + Vanilla.PlayerMainInventorySlotCount;
-    @Nonnull
+    @NotNull
     public final Property<Boolean> canDo = new Property<>(true);
     private final InventoryPlayer playerInventory;
     private final World world;
@@ -33,10 +32,15 @@ public class InlayTableContainer extends ContainerBase {
     private final ItemStackHandler gemstoneItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler weaponItemHandler = new ItemStackHandler(1);
     private final ItemStackHandler outputItemHandler = new ItemStackHandler(1);
-    private final Slot gemstoneSlot =
+    public InlayTableContainer(EntityPlayer player, World world, int x, int y, int z) {
+        this.playerInventory = player.inventory;
+        this.world = world;
+        this.pos = new BlockPos(x, y, z);
+        addAllSlots();
+    }    private final Slot gemstoneSlot =
             new SlotItemHandler(gemstoneItemHandler, 0, 56, 17) {
                 @Override
-                public boolean isItemValid(@Nonnull ItemStack stack) {
+                public boolean isItemValid(@NotNull ItemStack stack) {
                     Item item = stack.getItem();
                     return FawItemUtil.isGemstone(item) || item instanceof InlayingToolItem;
                 }
@@ -47,10 +51,17 @@ public class InlayTableContainer extends ContainerBase {
                     onInputChanged();
                 }
             };
-    private final Slot weaponSlot =
+
+    private void addAllSlots() {
+        addSlotToContainer(gemstoneSlot);
+        addSlotToContainer(weaponSlot);
+        addSlotToContainer(outputSlot);
+
+        addPlayerInventorySlots(playerInventory, 8, 84);
+    }    private final Slot weaponSlot =
             new SlotItemHandler(weaponItemHandler, 0, 56, 55) {
                 @Override
-                public boolean isItemValid(@Nonnull ItemStack stack) {
+                public boolean isItemValid(@NotNull ItemStack stack) {
                     return FawItemUtil.isFawWeapon(stack);
                 }
 
@@ -59,36 +70,6 @@ public class InlayTableContainer extends ContainerBase {
                     onInputChanged();
                 }
             };
-    private final Slot outputSlot =
-            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
-                @Override
-                public boolean isItemValid(@Nonnull ItemStack stack) {
-                    return false;
-                }
-
-                @Override
-                public ItemStack onTake(@Nonnull EntityPlayer thePlayer, @Nonnull ItemStack stack) {
-                    ItemStack newWeapon = super.onTake(thePlayer, stack);
-                    onTookOutput();
-                    return newWeapon;
-                }
-            };
-
-    public InlayTableContainer(EntityPlayer player, World world, int x, int y, int z) {
-        this.playerInventory = player.inventory;
-        this.world = world;
-        this.pos = new BlockPos(x, y, z);
-        addAllSlots();
-    }
-
-
-    private void addAllSlots() {
-        addSlotToContainer(gemstoneSlot);
-        addSlotToContainer(weaponSlot);
-        addSlotToContainer(outputSlot);
-
-        addPlayerInventorySlots(playerInventory, 8, 84);
-    }
 
     private void onInputChanged() {
         ItemStack weaponStack = weaponSlot.getStack();
@@ -133,7 +114,20 @@ public class InlayTableContainer extends ContainerBase {
                 setCanDo(false);
             }
         }
-    }
+    }    private final Slot outputSlot =
+            new SlotItemHandler(outputItemHandler, 0, 134, 27) {
+                @Override
+                public boolean isItemValid(@NotNull ItemStack stack) {
+                    return false;
+                }
+
+                @Override
+                public ItemStack onTake(@NotNull EntityPlayer thePlayer, @NotNull ItemStack stack) {
+                    ItemStack newWeapon = super.onTake(thePlayer, stack);
+                    onTookOutput();
+                    return newWeapon;
+                }
+            };
 
     private void onTookOutput() {
         ItemStack weaponStack = weaponSlot.getStack();
@@ -145,9 +139,9 @@ public class InlayTableContainer extends ContainerBase {
         gemstoneStack.shrink(1);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ItemStack transferStackInSlot(@Nonnull EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(@NotNull EntityPlayer playerIn, int index) {
         Slot originalSlot = inventorySlots.get(index);
         if (originalSlot == null || !originalSlot.getHasStack()) {
             return ItemStack.EMPTY;
@@ -180,7 +174,7 @@ public class InlayTableContainer extends ContainerBase {
     }
 
     @Override
-    public void onContainerClosed(@Nonnull EntityPlayer playerIn) {
+    public void onContainerClosed(@NotNull EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
         if (!world.isRemote) {
             ItemStack gemstone = gemstoneSlot.getStack();
@@ -196,7 +190,7 @@ public class InlayTableContainer extends ContainerBase {
         return playerIn.world.equals(world);
     }
 
-    @Nonnull
+    @NotNull
     public Property<Boolean> getCanDo() {
         return canDo;
     }
@@ -204,4 +198,10 @@ public class InlayTableContainer extends ContainerBase {
     public void setCanDo(boolean canDo) {
         this.canDo.set(canDo);
     }
+
+
+
+
+
+
 }

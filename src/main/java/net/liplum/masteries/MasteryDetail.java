@@ -15,42 +15,42 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
 public class MasteryDetail implements IMasteryDetail {
-    @Nonnull
+    @NotNull
     private static final IMasteryDetail Empty = new IMasteryDetail() {
-        @Nonnull
+        @NotNull
         @Override
-        public LvExpPair getLvAndExp(@Nonnull IMastery mastery) {
+        public LvExpPair getLvAndExp(@NotNull IMastery mastery) {
             return LvExpPair.Empty;
         }
 
         @Override
-        public int addExp(@Nonnull IMastery mastery, int amount) {
+        public int addExp(@NotNull IMastery mastery, int amount) {
             return 0;
         }
 
-        @Nonnull
+        @NotNull
         @Override
-        public Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery) {
+        public Map<IAttribute, AttrDelta> getAttrAmp(@NotNull IMastery mastery) {
             return Collections.emptyMap();
         }
 
-        @Nonnull
+        @NotNull
         @Override
-        public UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery) {
+        public UnlockedPSkillList getUnlockedPSkills(@NotNull IMastery mastery) {
             return UnlockedPSkillList.Empty;
         }
 
-        @Nonnull
+        @NotNull
         @Override
-        public Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
+        public Set<IPassiveSkill<?>> getPassiveSkills(@NotNull IMastery mastery) {
             return Collections.emptySet();
         }
 
@@ -61,7 +61,7 @@ public class MasteryDetail implements IMasteryDetail {
         }
 
         @Override
-        public void resetMastery(@Nonnull IMastery mastery) {
+        public void resetMastery(@NotNull IMastery mastery) {
 
         }
 
@@ -70,17 +70,17 @@ public class MasteryDetail implements IMasteryDetail {
 
         }
     };
-    @Nonnull
+    @NotNull
     private final EntityPlayer player;
-    @Nonnull
+    @NotNull
     private final MasteryCapability masteryCapability;
 
-    private MasteryDetail(@Nonnull EntityPlayer player, @Nonnull MasteryCapability mastery) {
+    private MasteryDetail(@NotNull EntityPlayer player, @NotNull MasteryCapability mastery) {
         this.player = player;
         this.masteryCapability = mastery;
     }
 
-    @Nonnull
+    @NotNull
     public static IMasteryDetail create(@Nullable EntityLivingBase entity) {
         if (entity instanceof EntityPlayer) {
             return create((EntityPlayer) entity);
@@ -88,7 +88,7 @@ public class MasteryDetail implements IMasteryDetail {
         return Empty;
     }
 
-    @Nonnull
+    @NotNull
     public static IMasteryDetail create(@Nullable EntityPlayer player) {
         if (player == null) {
             return Empty;
@@ -100,9 +100,9 @@ public class MasteryDetail implements IMasteryDetail {
         return Empty;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public LvExpPair getLvAndExp(@Nonnull IMastery mastery) {
+    public LvExpPair getLvAndExp(@NotNull IMastery mastery) {
         return masteryCapability.getLevelAndExp(mastery.getRegisterName());
     }
 
@@ -111,7 +111,7 @@ public class MasteryDetail implements IMasteryDetail {
      * @return how many level it upgraded
      */
     @Override
-    public int addExp(@Nonnull IMastery mastery, int amount) {
+    public int addExp(@NotNull IMastery mastery, int amount) {
         if (amount <= 0) {
             return 0;
         }
@@ -135,32 +135,32 @@ public class MasteryDetail implements IMasteryDetail {
         }
     }
 
-    @Nonnull
-    public Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery) {
+    @NotNull
+    public Map<IAttribute, AttrDelta> getAttrAmp(@NotNull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
         return mastery.getAttributeAmplifiers(lv);
     }
 
-    @Nonnull
-    public UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery) {
+    @NotNull
+    public UnlockedPSkillList getUnlockedPSkills(@NotNull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
         return mastery.getUnlockedPassiveSkills(lv);
     }
 
-    @Nonnull
-    public Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery) {
+    @NotNull
+    public Set<IPassiveSkill<?>> getPassiveSkills(@NotNull IMastery mastery) {
         int lv = masteryCapability.getLevelAndExp(mastery.getRegisterName()).getLevel();
         return mastery.getPassiveSkills(lv);
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public Map<String, LvExpPair> getAllMasteries() {
         return masteryCapability.getAllMasteries();
     }
 
     @Override
-    public void resetMastery(@Nonnull IMastery mastery) {
+    public void resetMastery(@NotNull IMastery mastery) {
         LvExpPair levelAndExp = masteryCapability.getLevelAndExp(mastery.getRegisterName());
         levelAndExp.setLevel(LvExpPair.BaseLevel);
         levelAndExp.setExp(LvExpPair.BaseExp);

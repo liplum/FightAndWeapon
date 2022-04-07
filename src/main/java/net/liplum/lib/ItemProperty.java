@@ -2,22 +2,21 @@ package net.liplum.lib;
 
 import net.minecraft.item.IItemPropertyGetter;
 import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class ItemProperty implements IItemPropertyGetter {
-    @Nonnull
+    @NotNull
     private final ResourceLocation propertyName;
 
-    public ItemProperty(@Nonnull ResourceLocation propertyName) {
+    public ItemProperty(@NotNull ResourceLocation propertyName) {
         this.propertyName = propertyName;
     }
 
-    public ItemProperty(@Nonnull String propertyName) {
+    public ItemProperty(@NotNull String propertyName) {
         this(new ResourceLocation(propertyName));
     }
 
-    @Nonnull
+    @NotNull
     public ResourceLocation getPropertyName() {
         return propertyName;
     }

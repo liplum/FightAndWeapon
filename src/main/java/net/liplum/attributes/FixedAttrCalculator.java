@@ -6,13 +6,13 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @LongSupport
 public class FixedAttrCalculator implements IAttrCalculator {
-    @Nonnull
+    @NotNull
     private final WeaponBaseItem weapon;
     @Nullable
     private final Modifier modifier;
@@ -26,7 +26,7 @@ public class FixedAttrCalculator implements IAttrCalculator {
     private final boolean useSpecialValueWhenWeaponBroken;
 
     @LongSupport
-    public FixedAttrCalculator(@Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nullable EntityLivingBase entity, @Nullable ItemStack itemStack, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
+    public FixedAttrCalculator(@NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nullable EntityLivingBase entity, @Nullable ItemStack itemStack, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this.weapon = weapon;
         this.modifier = modifier;
         this.itemStack = itemStack;
@@ -36,21 +36,21 @@ public class FixedAttrCalculator implements IAttrCalculator {
     }
 
     @LongSupport
-    public FixedAttrCalculator(@Nonnull WeaponBaseItem weapon, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
+    public FixedAttrCalculator(@NotNull WeaponBaseItem weapon, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this(weapon, null, null, null, postEvent, useSpecialValueWhenWeaponBroken);
     }
 
     @LongSupport
-    public FixedAttrCalculator(@Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nullable ItemStack itemStack, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
+    public FixedAttrCalculator(@NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nullable ItemStack itemStack, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this(weapon, modifier, null, itemStack, postEvent, useSpecialValueWhenWeaponBroken);
     }
 
     @LongSupport
-    public FixedAttrCalculator(@Nonnull WeaponBaseItem weapon, @Nullable EntityPlayer player, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
+    public FixedAttrCalculator(@NotNull WeaponBaseItem weapon, @Nullable EntityPlayer player, boolean postEvent, boolean useSpecialValueWhenWeaponBroken) {
         this(weapon, null, player, null, postEvent, useSpecialValueWhenWeaponBroken);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponBaseItem weapon() {
         return weapon;
@@ -84,9 +84,9 @@ public class FixedAttrCalculator implements IAttrCalculator {
         return postEvent;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public FinalAttrValue calcu(@Nonnull IAttribute attribute) {
+    public FinalAttrValue calcu(@NotNull IAttribute attribute) {
         return AttrCalculator.calcuAttribute(attribute, weapon, modifier, player(), itemStack, true, true);
     }
 }

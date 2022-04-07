@@ -12,8 +12,8 @@ import net.minecraftforge.client.resource.IResourceType;
 import net.minecraftforge.client.resource.ISelectiveResourceReloadListener;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Predicate;
 
@@ -51,8 +51,8 @@ public class WeaponPartTextureCreator implements ISelectiveResourceReloadListene
 
     @Override
     public void onResourceManagerReload(
-            @Nonnull IResourceManager resourceManager,
-            @Nonnull Predicate<IResourceType> resourcePredicate) {
+            @NotNull IResourceManager resourceManager,
+            @NotNull Predicate<IResourceType> resourcePredicate) {
         System.out.println("!!!!!!!!onResourceManagerReload!!!!!!!!!!");
     }
 }

@@ -15,20 +15,19 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class LanceItem extends WeaponBaseItem {
     private final LanceCore core;
 
-    public LanceItem(@Nonnull LanceCore core) {
+    public LanceItem(@NotNull LanceCore core) {
         super(core);
         this.core = core;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, EntityPlayer playerIn, @NotNull EnumHand handIn) {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         //Player can't sprint in the sky.
@@ -61,7 +60,7 @@ public class LanceItem extends WeaponBaseItem {
         return ActionResult.newResult(result, held);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public LanceCore getConcreteCore() {
         return core;

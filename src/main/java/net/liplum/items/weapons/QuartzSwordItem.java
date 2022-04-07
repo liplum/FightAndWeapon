@@ -13,8 +13,8 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.UUID;
 
 public class QuartzSwordItem extends ItemSword {
@@ -33,18 +33,18 @@ public class QuartzSwordItem extends ItemSword {
         super(ToolMaterial.IRON);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, EntityPlayer playerIn, @NotNull EnumHand handIn) {
         playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.RubyN));
         playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.EndergemN));
         playerIn.addItemStackToInventory(FawGenerator.genWeaponWithGemstone(ItemRegistry.Light_Lance_Item, Names.Gemstone.FlamegemN));
         return new ActionResult<>(EnumActionResult.SUCCESS, playerIn.getHeldItem(handIn));
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public Multimap<String, AttributeModifier> getItemAttributeModifiers(@Nonnull EntityEquipmentSlot equipmentSlot) {
+    public Multimap<String, AttributeModifier> getItemAttributeModifiers(@NotNull EntityEquipmentSlot equipmentSlot) {
         Multimap<String, AttributeModifier> map = super.getItemAttributeModifiers(equipmentSlot);
         if (equipmentSlot == EntityEquipmentSlot.MAINHAND) {
             map.put(EntityPlayer.REACH_DISTANCE.getName(), new AttributeModifier(uuid, "Weapon modifier", 10, 0));

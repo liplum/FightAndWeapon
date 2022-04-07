@@ -6,21 +6,20 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @LongSupport
 public class ItemGroup extends CreativeTabs {
-    @Nonnull
+    @NotNull
     private ItemStack icon = ItemStack.EMPTY;
 
     @LongSupport
-    public ItemGroup(@Nonnull String registerName) {
+    public ItemGroup(@NotNull String registerName) {
         super(registerName);
     }
 
     @LongSupport
-    public boolean setIcon(@Nonnull ItemStack newIcon) {
+    public boolean setIcon(@NotNull ItemStack newIcon) {
         if (newIcon.isEmpty() && newIcon == this.icon) {
             return false;
         }
@@ -30,17 +29,17 @@ public class ItemGroup extends CreativeTabs {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void displayAllRelevantItems(@Nonnull NonNullList<ItemStack> currentItemGroupItems) {
+    public void displayAllRelevantItems(@NotNull NonNullList<ItemStack> currentItemGroupItems) {
         super.displayAllRelevantItems(currentItemGroupItems);
         sortDisplayedItems(currentItemGroupItems);
     }
 
     @SideOnly(Side.CLIENT)
-    protected void sortDisplayedItems(@Nonnull NonNullList<ItemStack> currentItemGroupItems) {
+    protected void sortDisplayedItems(@NotNull NonNullList<ItemStack> currentItemGroupItems) {
 
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack getTabIconItem() {
         return icon;

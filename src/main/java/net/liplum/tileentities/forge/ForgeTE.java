@@ -4,43 +4,42 @@ import net.liplum.api.annotations.Developing;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.ItemStackHandler;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @Developing
 public class ForgeTE extends TileEntity {
-    @Nonnull
+    @NotNull
     private static final String AdditionTagName = "Addition";
-    @Nonnull
+    @NotNull
     private static final String MaterialTagName = "Material";
-    @Nonnull
+    @NotNull
     private final ItemStackHandler addition = new ForgeItemStackHandler(1);
-    @Nonnull
+    @NotNull
     private final ItemStackHandler material = new ForgeItemStackHandler(1);
 
     public ForgeTE() {
     }
 
-    @Nonnull
+    @NotNull
     public ItemStackHandler getAdditionHandler() {
         return addition;
     }
 
-    @Nonnull
+    @NotNull
     public ItemStackHandler getMaterialHandler() {
         return material;
     }
 
     @Override
-    public void readFromNBT(@Nonnull NBTTagCompound compound) {
+    public void readFromNBT(@NotNull NBTTagCompound compound) {
         addition.deserializeNBT(compound.getCompoundTag(AdditionTagName));
         material.deserializeNBT(compound.getCompoundTag(MaterialTagName));
         super.readFromNBT(compound);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(@NotNull NBTTagCompound compound) {
         compound.setTag(AdditionTagName, addition.serializeNBT());
         compound.setTag(MaterialTagName, material.serializeNBT());
         return super.writeToNBT(compound);

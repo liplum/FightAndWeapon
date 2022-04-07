@@ -7,24 +7,24 @@ import net.liplum.items.weapons.bow.BowItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class FoundAmmoEvent extends Event implements FawArgsGetter {
 
-    @Nonnull
+    @NotNull
     private final BowItem bow;
     @Nullable
     private final Modifier modifier;
-    @Nonnull
+    @NotNull
     private final ItemStack itemStack;
-    @Nonnull
+    @NotNull
     private final EntityLivingBase entity;
-    @Nonnull
+    @NotNull
     private ItemStack ammo;
 
-    public FoundAmmoEvent(@Nonnull BowItem bow, @Nullable Modifier modifier, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity, @Nonnull ItemStack ammo) {
+    public FoundAmmoEvent(@NotNull BowItem bow, @Nullable Modifier modifier, @NotNull ItemStack itemStack, @NotNull EntityLivingBase entity, @NotNull ItemStack ammo) {
         this.bow = bow;
         this.modifier = modifier;
         this.itemStack = itemStack;
@@ -32,7 +32,7 @@ public class FoundAmmoEvent extends Event implements FawArgsGetter {
         this.ammo = ammo;
     }
 
-    public FoundAmmoEvent(@Nonnull BowItem bow, @Nullable Modifier modifier, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity) {
+    public FoundAmmoEvent(@NotNull BowItem bow, @Nullable Modifier modifier, @NotNull ItemStack itemStack, @NotNull EntityLivingBase entity) {
         this.bow = bow;
         this.modifier = modifier;
         this.itemStack = itemStack;
@@ -44,23 +44,23 @@ public class FoundAmmoEvent extends Event implements FawArgsGetter {
         return !ammo.isEmpty();
     }
 
-    public FoundAmmoEvent ammo(@Nonnull ItemStack ammo) {
+    public FoundAmmoEvent ammo(@NotNull ItemStack ammo) {
         this.ammo = ammo;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public BowItem weapon() {
         return bow;
     }
 
-    @Nonnull
+    @NotNull
     public BowCore weaponCore() {
         return bow.getConcreteCore();
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack ammo() {
         return ammo;
     }
@@ -70,7 +70,7 @@ public class FoundAmmoEvent extends Event implements FawArgsGetter {
         return modifier;
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack itemStack() {
         return itemStack;
     }

@@ -1,8 +1,8 @@
 package net.liplum.lib.gui;
 
 import net.liplum.lib.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Supplier;
 
@@ -18,7 +18,7 @@ public class Property<T> implements INotifyPropertyChanged<T>, Supplier<T> {
 
     }
 
-    @Nonnull
+    @NotNull
     public Event<IPropertySubscriber<T>> getPropertyChangedEvent() {
         return event;
     }

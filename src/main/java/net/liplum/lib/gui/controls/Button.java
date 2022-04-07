@@ -4,8 +4,7 @@ import net.liplum.lib.gui.Texture;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class Button extends GuiButton {
     protected Texture normalTexture;
@@ -74,7 +73,7 @@ public abstract class Button extends GuiButton {
     }
 
     @Override
-    public void drawButton(@Nonnull Minecraft mc, int mouseX, int mouseY, float partialTicks) {
+    public void drawButton(@NotNull Minecraft mc, int mouseX, int mouseY, float partialTicks) {
         if (visible) {
             hovered = checkHovered(mouseX, mouseY);
             Texture currentTexture = null;

@@ -1,14 +1,13 @@
 package net.liplum.lib.gui;
 
 import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class TextureFactory {
-    @Nonnull
+    @NotNull
     private final ResourceLocation textureLocation;
 
-    public TextureFactory(@Nonnull ResourceLocation textureLocation) {
+    public TextureFactory(@NotNull ResourceLocation textureLocation) {
         this.textureLocation = textureLocation;
     }
 
@@ -16,7 +15,7 @@ public class TextureFactory {
         return new Texture(textureLocation, view);
     }
 
-    @Nonnull
+    @NotNull
     public ResourceLocation getTextureLocation() {
         return textureLocation;
     }

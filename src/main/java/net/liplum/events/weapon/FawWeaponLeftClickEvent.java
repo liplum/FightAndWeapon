@@ -8,34 +8,34 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class FawWeaponLeftClickEvent extends Event implements FawArgsGetter {
-    @Nonnull
+    @NotNull
     protected final EntityPlayer player;
-    @Nonnull
+    @NotNull
     protected final WeaponBaseItem weapon;
     @Nullable
     protected final Modifier modifier;
-    @Nonnull
+    @NotNull
     protected final ItemStack itemStack;
 
-    public FawWeaponLeftClickEvent(@Nonnull EntityPlayer player, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nonnull ItemStack itemStack) {
+    public FawWeaponLeftClickEvent(@NotNull EntityPlayer player, @NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @NotNull ItemStack itemStack) {
         this.player = player;
         this.weapon = weapon;
         this.modifier = modifier;
         this.itemStack = itemStack;
     }
 
-    @Nonnull
+    @NotNull
     public World world() {
         return player.world;
     }
 
+    @NotNull
     @Override
-    @Nonnull
     public WeaponBaseItem weapon() {
         return weapon;
     }
@@ -47,12 +47,12 @@ public class FawWeaponLeftClickEvent extends Event implements FawArgsGetter {
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public ItemStack itemStack() {
         return itemStack;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public EntityLivingBase entity() {
         return player;

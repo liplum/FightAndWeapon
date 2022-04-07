@@ -3,8 +3,8 @@ package net.liplum.api.registeies;
 import net.liplum.api.annotations.Developing;
 import net.liplum.api.weapon.Cast;
 import net.liplum.api.weapon.WeaponPart;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,8 +18,8 @@ public final class WeaponPartRegistry {
     private static ArrayList<WeaponPart> WeaponPartsCache = new ArrayList<>();
     private static boolean IsChanged = true;
 
-    @Nonnull
-    public static WeaponPart register(@Nonnull WeaponPart weaponPart, @Nonnull RegisterType registerType) {
+    @NotNull
+    public static WeaponPart register(@NotNull WeaponPart weaponPart, @NotNull RegisterType registerType) {
         switch (registerType) {
             case Has_Cast:
                 CastRegistry.register(new Cast(weaponPart));
@@ -30,7 +30,7 @@ public final class WeaponPartRegistry {
     }
 
     @Nullable
-    public static WeaponPart getWeaponPart(@Nonnull String weaponPartName) {
+    public static WeaponPart getWeaponPart(@NotNull String weaponPartName) {
         return WeaponPartMap.get(weaponPartName);
     }
 

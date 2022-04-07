@@ -22,21 +22,21 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Consumer;
 
 public class EntityUtil {
-    public static boolean isUndead(@Nonnull EntityLivingBase e) {
+    public static boolean isUndead(@NotNull EntityLivingBase e) {
         return e.isEntityUndead();
     }
 
-    public static boolean isEnemy(@Nonnull EntityLivingBase e) {
+    public static boolean isEnemy(@NotNull EntityLivingBase e) {
         return e instanceof EntityMob || e instanceof EntitySlime || e instanceof EntityGhast || e instanceof EntityDragon || e instanceof EntityShulker;
     }
 
-    public static void ifLivingThenDO(@Nonnull Entity e, Consumer<EntityLivingBase> delegate) {
+    public static void ifLivingThenDO(@NotNull Entity e, Consumer<EntityLivingBase> delegate) {
         if (e instanceof EntityLivingBase) {
             delegate.accept((EntityLivingBase) e);
         }
@@ -46,7 +46,7 @@ public class EntityUtil {
         return player != null && player.isCreative();
     }
 
-    public static boolean spawnEntityIfServer(@Nonnull World world, @Nonnull Entity entity) {
+    public static boolean spawnEntityIfServer(@NotNull World world, @NotNull Entity entity) {
         if (!world.isRemote) {
             world.spawnEntity(entity);
             return true;
@@ -54,20 +54,20 @@ public class EntityUtil {
         return false;
     }
 
-    public static void knockBack(@Nonnull EntityLivingBase subject, @Nonnull EntityLivingBase object, float strength) {
+    public static void knockBack(@NotNull EntityLivingBase subject, @NotNull EntityLivingBase object, float strength) {
         object.knockBack(subject, strength,
                 MathHelper.sin(Angle.toRadian(subject.rotationYaw)),
                 -MathHelper.cos(Angle.toRadian(subject.rotationYaw)));
     }
 
-    public static void knockBackForward(@Nonnull EntityLivingBase subject, @Nonnull EntityLivingBase object, float strength) {
+    public static void knockBackForward(@NotNull EntityLivingBase subject, @NotNull EntityLivingBase object, float strength) {
         Point2D sub = P2D.toPosition(subject);
         Point2D obj = P2D.toPosition(object);
         Point2D v = obj.minus(sub);
         object.knockBack(subject, strength, v.x, v.y);
     }
 
-    public static void spawnSweepParticles(@Nonnull EntityLivingBase entity) {
+    public static void spawnSweepParticles(@NotNull EntityLivingBase entity) {
         //Copied from Vanilla
         World world = entity.world;
         if (world instanceof WorldServer) {
@@ -79,7 +79,7 @@ public class EntityUtil {
         }
     }
 
-    public static boolean spawnParticleIfServer(@Nonnull World world, @Nonnull Consumer<World> doSomething) {
+    public static boolean spawnParticleIfServer(@NotNull World world, @NotNull Consumer<World> doSomething) {
         if (!world.isRemote) {
             doSomething.accept(world);
             return true;
@@ -99,13 +99,13 @@ public class EntityUtil {
         return true;
     }
 
-    @Nonnull
+    @NotNull
     public static DamageSource genDamageSource(EntityLivingBase entity) {
         return entity instanceof EntityPlayer ? DamageSource.causePlayerDamage((EntityPlayer) entity) : DamageSource.causeMobDamage(entity);
     }
 
-    @Nonnull
-    public static FawDamage genFawDamage(@Nonnull EntityLivingBase attacker, @Nonnull ItemStack itemStack) {
+    @NotNull
+    public static FawDamage genFawDamage(@NotNull EntityLivingBase attacker, @NotNull ItemStack itemStack) {
         FawDamage damage;
         WeaponBaseItem weapon = (WeaponBaseItem) itemStack.getItem();
         Modifier modifier = GemUtil.getModifierFrom(itemStack);
@@ -118,12 +118,12 @@ public class EntityUtil {
     }
 
     @Developing
-    public static void setRooting(@Nonnull EntityLivingBase entity, double originX, double originY, double originZ) {
+    public static void setRooting(@NotNull EntityLivingBase entity, double originX, double originY, double originZ) {
         PhysicsUtil.setPosition(entity, originX, originY, originZ);
     }
 
     @Developing
-    public static void setRooting(@Nonnull EntityLivingBase entity) {
+    public static void setRooting(@NotNull EntityLivingBase entity) {
         entity.motionX = 0;
         entity.motionZ = 0;
     }

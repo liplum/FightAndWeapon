@@ -10,9 +10,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.eventhandler.Cancelable;
 import net.minecraftforge.fml.common.eventhandler.Event;
-
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 @LongSupport
 public abstract class WeaponSkillReleaseEvent extends Event implements FawArgsGetter {
@@ -23,9 +22,9 @@ public abstract class WeaponSkillReleaseEvent extends Event implements FawArgsGe
     protected final ItemStack itemStack;
     protected final EnumHand hand;
 
-    public WeaponSkillReleaseEvent(@Nonnull World world, @Nonnull EntityLivingBase entity,
-                                   @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier,
-                                   @Nonnull ItemStack itemStack, @Nonnull EnumHand hand) {
+    public WeaponSkillReleaseEvent(@NotNull World world, @NotNull EntityLivingBase entity,
+                                   @NotNull WeaponBaseItem weapon, @Nullable Modifier modifier,
+                                   @NotNull ItemStack itemStack, @NotNull EnumHand hand) {
         this.world = world;
         this.entity = entity;
         this.weapon = weapon;
@@ -34,18 +33,18 @@ public abstract class WeaponSkillReleaseEvent extends Event implements FawArgsGe
         this.hand = hand;
     }
 
-    @Nonnull
+    @NotNull
     public World world() {
         return world;
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public EntityLivingBase entity() {
         return entity;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponBaseItem weapon() {
         return weapon;
@@ -58,12 +57,12 @@ public abstract class WeaponSkillReleaseEvent extends Event implements FawArgsGe
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public ItemStack itemStack() {
         return itemStack;
     }
 
-    @Nonnull
+    @NotNull
     public EnumHand hand() {
         return hand;
     }
@@ -71,7 +70,7 @@ public abstract class WeaponSkillReleaseEvent extends Event implements FawArgsGe
     @LongSupport
     public static class Post extends WeaponSkillReleaseEvent {
 
-        public Post(@Nonnull World world, @Nonnull EntityLivingBase player, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nonnull ItemStack itemStack, @Nonnull EnumHand hand) {
+        public Post(@NotNull World world, @NotNull EntityLivingBase player, @NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @NotNull ItemStack itemStack, @NotNull EnumHand hand) {
             super(world, player, weapon, modifier, itemStack, hand);
         }
     }
@@ -83,7 +82,7 @@ public abstract class WeaponSkillReleaseEvent extends Event implements FawArgsGe
     @Cancelable
     public static class Pre extends WeaponSkillReleaseEvent {
 
-        public Pre(@Nonnull World world, @Nonnull EntityLivingBase player, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nonnull ItemStack itemStack, @Nonnull EnumHand hand) {
+        public Pre(@NotNull World world, @NotNull EntityLivingBase player, @NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @NotNull ItemStack itemStack, @NotNull EnumHand hand) {
             super(world, player, weapon, modifier, itemStack, hand);
         }
     }

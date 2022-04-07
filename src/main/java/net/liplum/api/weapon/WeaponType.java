@@ -2,15 +2,14 @@ package net.liplum.api.weapon;
 
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.registeies.WeaponTypeRegistry;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @LongSupport
 public class WeaponType {
-    @Nonnull
+    @NotNull
     private final String registerName;
 
-    @Nonnull
+    @NotNull
     private IWeaponSkillPredicate weaponSkillPredicate = (world, player, weapon) -> true;
 
     /**
@@ -18,25 +17,25 @@ public class WeaponType {
      *
      * @param registerName the name to register itself
      */
-    public WeaponType(@Nonnull String registerName) {
+    public WeaponType(@NotNull String registerName) {
         this.registerName = registerName;
         WeaponTypeRegistry.register(this);
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public String getRegisterName() {
         return registerName;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public IWeaponSkillPredicate getWeaponSkillPredicate() {
         return weaponSkillPredicate;
     }
 
     @LongSupport
-    public WeaponType setWeaponSkillPredicate(@Nonnull IWeaponSkillPredicate weaponSkillPredicate) {
+    public WeaponType setWeaponSkillPredicate(@NotNull IWeaponSkillPredicate weaponSkillPredicate) {
         this.weaponSkillPredicate = weaponSkillPredicate;
         return this;
     }

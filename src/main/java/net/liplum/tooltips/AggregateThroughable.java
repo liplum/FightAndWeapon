@@ -1,11 +1,12 @@
 package net.liplum.tooltips;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.Collections;
 import java.util.LinkedList;
 
 public class AggregateThroughable implements IThroughable {
-    @Nonnull
+    @NotNull
     private final LinkedList<IThroughable> allAggregated = new LinkedList<>();
 
     public AggregateThroughable(IThroughable... throughables) {
@@ -17,9 +18,9 @@ public class AggregateThroughable implements IThroughable {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public TooltipPart through(@Nonnull IPipeContext context) {
+    public TooltipPart through(@NotNull IPipeContext context) {
         TooltipPart res = new TooltipPart();
         for (IThroughable sub : allAggregated) {
             res.add(sub.through(context));

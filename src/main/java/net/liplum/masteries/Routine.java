@@ -1,28 +1,28 @@
 package net.liplum.masteries;
 
 import net.liplum.lib.utils.Utils;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
 public class Routine {
-    @Nonnull
+    @NotNull
     private ArrayList<Node> allNodes = new ArrayList<>();
 
     public Routine() {
     }
 
-    public Routine(@Nonnull ArrayList<Node> allNodes) {
+    public Routine(@NotNull ArrayList<Node> allNodes) {
         this.allNodes = allNodes;
     }
 
-    @Nonnull
+    @NotNull
     public ArrayList<Node> getAllNodes() {
         return allNodes;
     }
 
-    public Routine setAllNodes(@Nonnull ArrayList<Node> allNodes) {
+    public Routine setAllNodes(@NotNull ArrayList<Node> allNodes) {
         this.allNodes = allNodes;
         return this;
     }
@@ -31,7 +31,7 @@ public class Routine {
         return allNodes.size();
     }
 
-    @Nonnull
+    @NotNull
     public Map<String, Number> getAttributeAmplifiers(int level) {
         HashMap<String, Number> res = new HashMap<>();
         int index = 0;
@@ -64,7 +64,7 @@ public class Routine {
         return allNodes.get(index);
     }
 
-    @Nonnull
+    @NotNull
     public Set<String> getPassiveSkills(int level) {
         int index = 0;
         Set<String> res = new HashSet<>();
@@ -79,7 +79,7 @@ public class Routine {
         return res;
     }
 
-    @Nonnull
+    @NotNull
     public List<Integer> getLockedPassiveSkills(int level) {
         int index = 0;
         List<Integer> res = new LinkedList<>();

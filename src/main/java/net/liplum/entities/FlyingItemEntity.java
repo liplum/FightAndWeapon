@@ -11,26 +11,25 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class FlyingItemEntity extends EntityThrowable {
     private static final DataParameter<ItemStack> FlyingItem = EntityDataManager.createKey(FlyingItemEntity.class, DataSerializers.ITEM_STACK);
-    @Nonnull
+    @NotNull
     private IFlyingItemBehavior behavior = (weaponEntity, target, itemStack) -> {
     };
 
-    public FlyingItemEntity(@Nonnull World worldIn) {
+    public FlyingItemEntity(@NotNull World worldIn) {
         super(worldIn);
     }
 
-    public FlyingItemEntity(@Nonnull World worldIn, double x, double y, double z, @Nonnull ItemStack itemStack, @Nonnull IFlyingItemBehavior behavior) {
+    public FlyingItemEntity(@NotNull World worldIn, double x, double y, double z, @NotNull ItemStack itemStack, @NotNull IFlyingItemBehavior behavior) {
         super(worldIn, x, y, z);
         setFlyingItem(itemStack);
         this.behavior = behavior;
     }
 
-    public FlyingItemEntity(@Nonnull World worldIn, @Nonnull EntityLivingBase throwerIn, @Nonnull ItemStack itemStack, @Nonnull IFlyingItemBehavior behavior) {
+    public FlyingItemEntity(@NotNull World worldIn, @NotNull EntityLivingBase throwerIn, @NotNull ItemStack itemStack, @NotNull IFlyingItemBehavior behavior) {
         super(worldIn, throwerIn);
         setFlyingItem(itemStack);
         this.behavior = behavior;
@@ -43,7 +42,7 @@ public class FlyingItemEntity extends EntityThrowable {
     }
 
     @Override
-    protected void onImpact(@Nonnull RayTraceResult result) {
+    protected void onImpact(@NotNull RayTraceResult result) {
         Entity hitEntity = result.entityHit;
         if (hitEntity == null) {
             return;
@@ -51,12 +50,12 @@ public class FlyingItemEntity extends EntityThrowable {
         behavior.onImpact(this, hitEntity, getFlyingItem());
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack getFlyingItem() {
         return getDataManager().get(FlyingItem);
     }
 
-    public void setFlyingItem(@Nonnull ItemStack flyingItem) {
+    public void setFlyingItem(@NotNull ItemStack flyingItem) {
         EntityDataManager dataManager = getDataManager();
         dataManager.set(FlyingItem, flyingItem);
         dataManager.setDirty(FlyingItem);

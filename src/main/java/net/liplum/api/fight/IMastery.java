@@ -3,26 +3,26 @@ package net.liplum.api.fight;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.IAttribute;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Map;
 import java.util.Set;
 
 public interface IMastery {
-    @Nonnull
+    @NotNull
     default String getRegisterName() {
         return getWeaponType().getRegisterName();
     }
 
-    @Nonnull
+    @NotNull
     WeaponType getWeaponType();
 
-    @Nonnull
+    @NotNull
     Map<IAttribute, AttrDelta> getAttributeAmplifiers(int level);
 
-    @Nonnull
+    @NotNull
     Set<IPassiveSkill<?>> getPassiveSkills(int level);
 
-    @Nonnull
+    @NotNull
     UnlockedPSkillList getUnlockedPassiveSkills(int level);
 }

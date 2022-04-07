@@ -1,8 +1,8 @@
 package net.liplum.lib.gui;
 
 import net.liplum.lib.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -10,14 +10,14 @@ import java.util.List;
 public class ObservableCollection<T> implements INotifyPropertyChanged<List<T>> {
     private final Event<IPropertySubscriber<List<T>>> event = new ObservableCollectionEvent();
 
-    @Nonnull
+    @NotNull
     private final ArrayList<T> arrayList = new ArrayList<>();
 
     private ArrayList<T> getList() {
         return arrayList;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Event<IPropertySubscriber<List<T>>> getPropertyChangedEvent() {
         return event;

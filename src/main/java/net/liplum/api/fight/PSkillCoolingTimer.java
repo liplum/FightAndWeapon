@@ -8,20 +8,20 @@ import net.liplum.registries.CapabilityRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 
 public class PSkillCoolingTimer implements IPSkillCoolingTimer {
-    @Nonnull
+    @NotNull
     public static final IPSkillCoolingTimer Empty = new IPSkillCoolingTimer() {
         @Override
-        public void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
+        public void addNewCoolDown(@NotNull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
         }
 
         @Override
-        public boolean isInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill) {
+        public boolean isInCoolingDown(@NotNull IPassiveSkill<?> passiveSkill) {
             return false;
         }
 
@@ -36,19 +36,19 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
             return null;
         }
     };
-    @Nonnull
+    @NotNull
     private final EntityPlayer player;
-    @Nonnull
+    @NotNull
     private final TimerCapability timerDelegate;
 
-    private PSkillCoolingTimer(@Nonnull EntityPlayer player, @Nonnull TimerCapability timerCapability) {
+    private PSkillCoolingTimer(@NotNull EntityPlayer player, @NotNull TimerCapability timerCapability) {
         this.player = player;
         this.timerDelegate = timerCapability;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static IPSkillCoolingTimer create(@Nonnull EntityPlayer player) {
+    public static IPSkillCoolingTimer create(@NotNull EntityPlayer player) {
         TimerCapability timer = player.getCapability(CapabilityRegistry.Timer_Capability, null);
         if (timer == null) {
             return Empty;
@@ -56,9 +56,9 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
         return new PSkillCoolingTimer(player, timer);
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static IPSkillCoolingTimer create(@Nonnull EntityLivingBase livingEntity) {
+    public static IPSkillCoolingTimer create(@NotNull EntityLivingBase livingEntity) {
         if (livingEntity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) livingEntity;
             TimerCapability timer = player.getCapability(CapabilityRegistry.Timer_Capability, null);
@@ -71,12 +71,12 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
     }
 
     @Override
-    public void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
+    public void addNewCoolDown(@NotNull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
         timerDelegate.addNewCoolDown(passiveSkill, coolDownTicks);
     }
 
     @Override
-    public boolean isInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill) {
+    public boolean isInCoolingDown(@NotNull IPassiveSkill<?> passiveSkill) {
         return timerDelegate.isInCoolingDown(passiveSkill);
     }
 
@@ -88,7 +88,7 @@ public class PSkillCoolingTimer implements IPSkillCoolingTimer {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Map<IPassiveSkill<?>, CoolDown> getCoolingPassiveSkills() {
         return timerDelegate.getCoolingPassiveSkills();

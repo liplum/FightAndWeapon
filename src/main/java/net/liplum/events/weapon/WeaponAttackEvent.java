@@ -3,8 +3,8 @@ package net.liplum.events.weapon;
 import net.liplum.api.weapon.DamageArgs;
 import net.liplum.api.weapon.WeaponAttackArgs;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -15,7 +15,7 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
         this.args = args;
     }
 
-    @Nonnull
+    @NotNull
     public abstract WeaponAttackArgs<Args> getArgs();
 
     public static class Attacked extends WeaponAttackEvent<Attacked.Args> {
@@ -26,7 +26,7 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
             this.myArgs = args;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public Args getArgs() {
             return myArgs;
@@ -49,7 +49,7 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
                 return totalDamage;
             }
 
-            @Nonnull
+            @NotNull
             public Args setTotalDamage(float totalDamage) {
                 this.totalDamage = totalDamage;
                 return this;
@@ -65,7 +65,7 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
             this.myArgs = args;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public Args getArgs() {
             return myArgs;
@@ -74,14 +74,14 @@ public abstract class WeaponAttackEvent<Args extends WeaponAttackArgs<?>> extend
         public static class Args extends WeaponAttackArgs<Args> {
             private final List<DamageArgs> allDamages = new LinkedList<>();
 
-            @Nonnull
+            @NotNull
             public List<DamageArgs> getAllDamages() {
                 return allDamages;
             }
 
-            @Nonnull
+            @NotNull
             @Override
-            public Args initialDamage(@Nonnull DamageArgs initialDamage) {
+            public Args initialDamage(@NotNull DamageArgs initialDamage) {
                 super.initialDamage(initialDamage);
                 allDamages.clear();
                 allDamages.add(initialDamage);

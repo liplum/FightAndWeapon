@@ -18,22 +18,22 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Developing
 public class BowItem extends WeaponBaseItem {
     private final BowCore core;
 
-    public BowItem(@Nonnull BowCore weaponCore) {
+    public BowItem(@NotNull BowCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, @NotNull EntityPlayer playerIn, @NotNull EnumHand handIn) {
         EnumActionResult result = EnumActionResult.FAIL;
         ItemStack held = playerIn.getHeldItem(handIn);
         if (!FawItemUtil.isWeaponBroken(held)) {
@@ -51,7 +51,7 @@ public class BowItem extends WeaponBaseItem {
     }
 
     @Override
-    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull EntityLivingBase entityLiving, int useTime) {
+    public void onPlayerStoppedUsing(@NotNull ItemStack stack, @NotNull World worldIn, @NotNull EntityLivingBase entityLiving, int useTime) {
         @Nullable EntityPlayer player = null;
         if (entityLiving instanceof EntityPlayer) {
             player = (EntityPlayer) entityLiving;
@@ -94,7 +94,7 @@ public class BowItem extends WeaponBaseItem {
     }
 
     @Override
-    public void onUsingTick(@Nonnull ItemStack stack, @Nonnull EntityLivingBase player, int count) {
+    public void onUsingTick(@NotNull ItemStack stack, @NotNull EntityLivingBase player, int count) {
         if (core.isCheckPulling()) {
             EntityPlayer p = (EntityPlayer) player;
             EnumHand hand = ItemUtil.inWhichHand(p, stack);
@@ -114,7 +114,7 @@ public class BowItem extends WeaponBaseItem {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public BowCore getConcreteCore() {
         return core;

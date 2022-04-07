@@ -17,8 +17,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.world.World;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.Strength;
 import static net.liplum.Attributes.Sword.Sweep;
@@ -30,9 +29,9 @@ import static net.liplum.Attributes.Sword.Sweep;
 public final class MasteryPassiveSkills {
     public final static IPassiveSkill<WeaponAttackEvent.Attacked> Sweeping =
             new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.Sweeping, WeaponAttackEvent.Attacked.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
+                public PSkillResult onTrigger(@NotNull WeaponAttackEvent.Attacked event) {
                     WeaponAttackEvent.Attacked.Args args = event.getArgs();
                     if (args.isHitSuccessfully() && args.isFullAttack()) {
                         WeaponBaseItem weapon = args.weapon();
@@ -70,9 +69,9 @@ public final class MasteryPassiveSkills {
     //TODO:The KnockBack didn't work.
     public final static IPassiveSkill<LivingHurtEvent> ManaBarrier =
             new PassiveSkill<LivingHurtEvent>(Names.PassiveSkill.ManaBarrier, LivingHurtEvent.class, 100 * 20) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull LivingHurtEvent event) {
+                public PSkillResult onTrigger(@NotNull LivingHurtEvent event) {
                     EntityLivingBase entity = event.getEntityLiving();
                     if (entity instanceof EntityPlayer) {
                         event.setAmount(0);

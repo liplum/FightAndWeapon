@@ -3,8 +3,7 @@ package net.liplum.attributes;
 import net.liplum.api.annotations.Developing;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.FawArgsGetter;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @LongSupport
 public interface IAttrCalculator extends FawArgsGetter {
@@ -14,7 +13,7 @@ public interface IAttrCalculator extends FawArgsGetter {
     @LongSupport
     boolean isPostEvent();
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    FinalAttrValue calcu(@Nonnull IAttribute attribute);
+    FinalAttrValue calcu(@NotNull IAttribute attribute);
 }

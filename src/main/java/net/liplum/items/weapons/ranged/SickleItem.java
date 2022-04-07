@@ -4,24 +4,23 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class SickleItem extends WeaponBaseItem {
-    @Nonnull
+    @NotNull
     private final RangedCore core;
 
-    public SickleItem(@Nonnull RangedCore weaponCore) {
+    public SickleItem(@NotNull RangedCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
     }
 
     @Override
-    public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
+    public boolean onLeftClickEntity(@NotNull ItemStack stack, @NotNull EntityPlayer player, @NotNull Entity entity) {
         return true;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public RangedCore getConcreteCore() {
         return core;

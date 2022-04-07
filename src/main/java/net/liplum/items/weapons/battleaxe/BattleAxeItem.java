@@ -17,22 +17,21 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.CoolDown;
 
 public class BattleAxeItem extends WeaponBaseItem {
     private final BattleAxeCore core;
 
-    public BattleAxeItem(@Nonnull BattleAxeCore core) {
+    public BattleAxeItem(@NotNull BattleAxeCore core) {
         super(core);
         this.core = core;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, EntityPlayer playerIn, @NotNull EnumHand handIn) {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         ItemStack offHeld = playerIn.getHeldItemOffhand();
@@ -77,7 +76,7 @@ public class BattleAxeItem extends WeaponBaseItem {
         return ActionResult.newResult(result, held);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public BattleAxeCore getConcreteCore() {
         return core;

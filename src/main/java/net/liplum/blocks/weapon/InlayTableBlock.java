@@ -10,8 +10,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class InlayTableBlock extends Block {
     public InlayTableBlock() {
@@ -19,9 +18,9 @@ public class InlayTableBlock extends Block {
     }
 
     @Override
-    public boolean onBlockActivated(World worldIn, @Nonnull BlockPos pos, @Nonnull IBlockState state,
-                                    @Nonnull EntityPlayer playerIn,
-                                    @Nonnull EnumHand hand, @Nonnull EnumFacing facing,
+    public boolean onBlockActivated(World worldIn, @NotNull BlockPos pos, @NotNull IBlockState state,
+                                    @NotNull EntityPlayer playerIn,
+                                    @NotNull EnumHand hand, @NotNull EnumFacing facing,
                                     float hitX, float hitY, float hitZ) {
         if (!worldIn.isRemote) {
             playerIn.openGui(MetaData.MOD_ID,

@@ -79,6 +79,7 @@ dependencies {
     shadow 'com.github.liplum:Coroutine:v1.2'
     implementation 'colt:colt:1.2.0'
     implementation 'com.github.liplum:Coroutine:v1.2'
+    implementation 'org.jetbrains:annotations:23.0.0'
     // You may put jars on which you depend on in ./libs or you may define them like so..
     // compile "some.group:artifact:version:classifier"
     // compile "some.group:artifact:version"
@@ -142,6 +143,6 @@ shadowJar {
     shadowJar.finalizedBy('reobfShadowJar')
 
 }
-//If you are using the IntelliJ IDEA development, please keep it.
+//If you are using the Intellij IDEA development, please keep it.
 //If not -- such as wanting to make a *.jar file, just comment it, otherwise it'll copy your mod's codes into the *.jar file.
 sourceSets { main { output.resourcesDir = output.classesDir } }

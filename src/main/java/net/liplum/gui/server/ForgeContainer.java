@@ -11,8 +11,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.items.SlotItemHandler;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class ForgeContainer extends ContainerBase {
     public static final int AdditionIconXOffset = 108;
@@ -21,9 +20,9 @@ public class ForgeContainer extends ContainerBase {
     public static final int MaterialIconYOffset = 96;
     private static final int InlayTableSlotCount = 2;
     private static final int PlayerInventoryEndIndex = InlayTableSlotCount + Vanilla.PlayerMainInventorySlotCount;
-    @Nonnull
+    @NotNull
     public final Property<Boolean> materialSlotHasItem = new Property<>(false);
-    @Nonnull
+    @NotNull
     public final Property<Boolean> additionSlotHasItem = new Property<>(false);
     private final ForgeTE forgeTE;
     private final InventoryPlayer playerInventory;
@@ -41,7 +40,7 @@ public class ForgeContainer extends ContainerBase {
         this.additionSlot = new SlotItemHandler(forgeTE.getAdditionHandler(), 0,
                 AdditionIconXOffset, AdditionIconYOffset) {
             @Override
-            public boolean isItemValid(@Nonnull ItemStack stack) {
+            public boolean isItemValid(@NotNull ItemStack stack) {
                 return true;
             }
 
@@ -54,7 +53,7 @@ public class ForgeContainer extends ContainerBase {
         this.materialSlot = new SlotItemHandler(forgeTE.getMaterialHandler(), 0,
                 MaterialIconXOffset, MaterialIconYOffset) {
             @Override
-            public boolean isItemValid(@Nonnull ItemStack stack) {
+            public boolean isItemValid(@NotNull ItemStack stack) {
                 return stack.getItem() == Items.IRON_INGOT;
             }
 
@@ -78,7 +77,7 @@ public class ForgeContainer extends ContainerBase {
     }
 
     @Override
-    public void onContainerClosed(@Nonnull EntityPlayer playerIn) {
+    public void onContainerClosed(@NotNull EntityPlayer playerIn) {
         super.onContainerClosed(playerIn);
         materialSlotHasItem.getPropertyChangedEvent().clear();
         additionSlotHasItem.getPropertyChangedEvent().clear();
@@ -92,9 +91,9 @@ public class ForgeContainer extends ContainerBase {
         addPlayerInventorySlots(playerInventory, 8, 140);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ItemStack transferStackInSlot(@Nonnull EntityPlayer playerIn, int index) {
+    public ItemStack transferStackInSlot(@NotNull EntityPlayer playerIn, int index) {
         return ItemStack.EMPTY;
     }
 
@@ -103,7 +102,7 @@ public class ForgeContainer extends ContainerBase {
         return playerIn.world.equals(world);
     }
 
-    @Nonnull
+    @NotNull
     public Property<Boolean> getMaterialSlotHasItem() {
         return materialSlotHasItem;
     }
@@ -112,7 +111,7 @@ public class ForgeContainer extends ContainerBase {
         this.materialSlotHasItem.set(materialSlotHasItem);
     }
 
-    @Nonnull
+    @NotNull
     public Property<Boolean> getAdditionSlotHasItem() {
         return additionSlotHasItem;
     }

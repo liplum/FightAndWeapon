@@ -5,8 +5,7 @@ import net.liplum.api.weapon.Modifier;
 import net.liplum.items.weapons.lance.LanceCore;
 import net.liplum.items.weapons.lance.LanceCores;
 import net.liplum.items.weapons.lance.LanceModifier;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.Strength;
 
@@ -15,7 +14,7 @@ public final class RubyModifier {
     public final static LanceModifier Light_Lance = new LanceModifier() {
 
         @Override
-        protected void build(@Nonnull Modifier.ModifierBuilder builder) {
+        protected void build(@NotNull Modifier.ModifierBuilder builder) {
             super.build(builder);
             builder.set(
                     Strength, 2, 0.2F

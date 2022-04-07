@@ -8,14 +8,14 @@ import net.liplum.attributes.IAttribute;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class AttributeAccessEvent extends Event implements FawArgsGetter {
-    @Nonnull
+    @NotNull
     protected final IAttribute attribute;
-    @Nonnull
+    @NotNull
     protected final WeaponBaseItem weapon;
     @Nullable
     protected final Modifier modifier;
@@ -24,13 +24,13 @@ public class AttributeAccessEvent extends Event implements FawArgsGetter {
     @Nullable
     protected final ItemStack itemStack;
     private final boolean useSpecialValueWhenWeaponBroken;
-    @Nonnull
+    @NotNull
     protected FinalAttrValue finalAttrValue;
 
 
-    public AttributeAccessEvent(@Nonnull IAttribute attribute,
-                                @Nonnull FinalAttrValue finalAttrValue,
-                                @Nonnull WeaponBaseItem weapon,
+    public AttributeAccessEvent(@NotNull IAttribute attribute,
+                                @NotNull FinalAttrValue finalAttrValue,
+                                @NotNull WeaponBaseItem weapon,
                                 @Nullable Modifier modifier,
                                 @Nullable EntityLivingBase entity,
                                 @Nullable ItemStack itemStack,
@@ -44,21 +44,21 @@ public class AttributeAccessEvent extends Event implements FawArgsGetter {
         this.useSpecialValueWhenWeaponBroken = useSpecialValueWhenWeaponBroken;
     }
 
-    @Nonnull
+    @NotNull
     public IAttribute getAttribute() {
         return attribute;
     }
 
-    @Nonnull
+    @NotNull
     public FinalAttrValue getFinalAttrValue() {
         return finalAttrValue;
     }
 
-    public void setFinalAttrValue(@Nonnull FinalAttrValue finalAttrValue) {
+    public void setFinalAttrValue(@NotNull FinalAttrValue finalAttrValue) {
         this.finalAttrValue = finalAttrValue;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponBaseItem weapon() {
         return weapon;

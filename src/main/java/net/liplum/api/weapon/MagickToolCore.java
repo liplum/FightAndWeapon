@@ -1,13 +1,13 @@
 package net.liplum.api.weapon;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class MagickToolCore extends WeaponCore {
-    public MagickToolCore(@Nonnull String registerName) {
+    public MagickToolCore(@NotNull String registerName) {
         super(registerName);
     }
 
-    public MagickToolCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+    public MagickToolCore(@NotNull String registerName, boolean hasWeaponSkill) {
         super(registerName, hasWeaponSkill);
     }
 }

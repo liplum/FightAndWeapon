@@ -5,25 +5,25 @@ import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 public interface ITask {
     int getArgsCount();
 
-    @Nonnull
-    ValidInfo isValid(@Nonnull String parameter, int index);
+    @NotNull
+    ValidInfo isValid(@NotNull String parameter, int index);
 
 
-    void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException;
+    void run(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull Object[] transformedArgs) throws CommandException;
 
     boolean hasTabCompletion(int index);
 
-    @Nonnull
+    @NotNull
     @Require(func = "hasTabCompletion(int)", is = "true")
-    List<String> getCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, int needBeCompetedIndex, @Nullable BlockPos targetPos);
+    List<String> getCompletions(@NotNull MinecraftServer server, @NotNull ICommandSender sender, int needBeCompetedIndex, @Nullable BlockPos targetPos);
 
     boolean isTabCompletionMutex(int index);
 }

@@ -7,17 +7,16 @@ import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.Vec2f;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class QuartzAxeItem extends ItemAxe {
     public QuartzAxeItem(ToolMaterial material) {
         super(material);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, @NotNull EntityPlayer playerIn, @NotNull EnumHand handIn) {
         float cameraPitch = playerIn.cameraPitch;
         float cameraYaw = playerIn.cameraYaw;
         float rotationPitch = playerIn.rotationPitch;

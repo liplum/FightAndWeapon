@@ -9,8 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.init.Items;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.MaxUseDuration;
 
@@ -18,28 +17,28 @@ import static net.liplum.Attributes.Generic.MaxUseDuration;
 public abstract class BowCore extends WeaponCore {
     private final boolean checkPulling;
 
-    public BowCore(@Nonnull String registerName, boolean checkPulling) {
+    public BowCore(@NotNull String registerName, boolean checkPulling) {
         super(registerName);
         this.checkPulling = checkPulling;
     }
 
-    public BowCore(@Nonnull String registerName) {
+    public BowCore(@NotNull String registerName) {
         this(registerName, false);
     }
 
-    public BowCore(@Nonnull String registerName, boolean checkPulling, boolean hasWeaponSkill) {
+    public BowCore(@NotNull String registerName, boolean checkPulling, boolean hasWeaponSkill) {
         super(registerName, hasWeaponSkill);
         this.checkPulling = checkPulling;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponType getWeaponType() {
         return WeaponTypes.Bow;
     }
 
     @Override
-    protected void build(@Nonnull WeaponCoreBuilder builder) {
+    protected void build(@NotNull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
                 EnumAction.BOW
@@ -48,12 +47,12 @@ public abstract class BowCore extends WeaponCore {
         );
     }
 
-    public boolean isAmmo(@Nonnull ItemStack itemStack) {
+    public boolean isAmmo(@NotNull ItemStack itemStack) {
         return ItemUtil.isArrow(itemStack);
     }
 
-    @Nonnull
-    public ItemStack getDefaultAmmo(@Nonnull EntityLivingBase entity, @Nonnull ItemStack itemStack) {
+    @NotNull
+    public ItemStack getDefaultAmmo(@NotNull EntityLivingBase entity, @NotNull ItemStack itemStack) {
         return new ItemStack(Items.ARROW);
     }
 
@@ -61,7 +60,7 @@ public abstract class BowCore extends WeaponCore {
         return checkPulling;
     }
 
-    public void onPulling(@Nonnull PullingBowArgs args) {
+    public void onPulling(@NotNull PullingBowArgs args) {
     }
 
     public boolean canShoot(int ticks) {

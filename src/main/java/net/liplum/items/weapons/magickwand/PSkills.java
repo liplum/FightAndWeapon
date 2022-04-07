@@ -8,8 +8,7 @@ import net.liplum.attributes.AttrCalculator;
 import net.liplum.attributes.IAttribute;
 import net.liplum.events.AttributeAccessEvent;
 import net.liplum.lib.utils.FawUtil;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.AbilityPower;
 import static net.liplum.Attributes.Generic.Strength;
@@ -17,9 +16,9 @@ import static net.liplum.Attributes.Generic.Strength;
 public class PSkills {
     public static final IPassiveSkill<AttributeAccessEvent> AP2Strength =
             new PassiveSkill<AttributeAccessEvent>(Names.PassiveSkill.AP2Strength, AttributeAccessEvent.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull AttributeAccessEvent event) {
+                public PSkillResult onTrigger(@NotNull AttributeAccessEvent event) {
                     IAttribute attr = event.getAttribute();
                     if (attr == Strength) {
                         AttrCalculator calculator = FawUtil.toCalculator(event);

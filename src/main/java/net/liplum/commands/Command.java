@@ -8,8 +8,8 @@ import net.minecraft.command.ICommandSender;
 import net.minecraft.command.WrongUsageException;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -20,30 +20,30 @@ import java.util.stream.Collectors;
 
 @LongSupport
 public class Command extends CommandBase {
-    @Nonnull
+    @NotNull
     private final String name;
-    @Nonnull
+    @NotNull
     private final Function<ICommandSender, String> usageGetter;
     private final int requiredPermissionLevel;
-    @Nonnull
+    @NotNull
     private final List<ITask> allTasks = new LinkedList<>();
-    @Nonnull
+    @NotNull
     private final List<String> aliases = new LinkedList<>();
     private int minArgsSize = 0;
     private int maxArgsSize = 0;
 
-    public Command(@Nonnull String name, int requiredPermissionLevel, @Nonnull Function<ICommandSender, String> usageGetter) {
+    public Command(@NotNull String name, int requiredPermissionLevel, @NotNull Function<ICommandSender, String> usageGetter) {
         this.name = name;
         this.usageGetter = usageGetter;
         this.requiredPermissionLevel = requiredPermissionLevel;
     }
 
-    public Command(@Nonnull String name, int requiredPermissionLevel, @Nonnull String usage) {
+    public Command(@NotNull String name, int requiredPermissionLevel, @NotNull String usage) {
         this(name, requiredPermissionLevel, (s) -> usage);
     }
 
-    @Nonnull
-    public Command addTask(@Nonnull ITask task) {
+    @NotNull
+    public Command addTask(@NotNull ITask task) {
         allTasks.add(task);
         setMinMaxArgsSize(task.getArgsCount());
         return this;
@@ -54,32 +54,32 @@ public class Command extends CommandBase {
         maxArgsSize = Math.max(maxArgsSize, checkedOne);
     }
 
-    @Nonnull
-    public Command addAlias(@Nonnull String alias) {
+    @NotNull
+    public Command addAlias(@NotNull String alias) {
         this.aliases.add(alias);
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<String> getAliases() {
         return this.aliases;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return name;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender) {
+    public String getUsage(@NotNull ICommandSender sender) {
         return usageGetter.apply(sender);
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException {
+    public void execute(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull String[] args) throws CommandException {
         int length = args.length;
         if (!isArgsInValidRange(length)) {
             throw new WrongUsageException(getUsage(sender));
@@ -129,9 +129,9 @@ public class Command extends CommandBase {
         return requiredPermissionLevel;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+    public List<String> getTabCompletions(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull String[] args, @Nullable BlockPos targetPos) {
         int length = args.length;
         int index = length - 1;
         List<String> result = new LinkedList<>();

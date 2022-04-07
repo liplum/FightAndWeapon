@@ -4,13 +4,13 @@ import net.liplum.api.annotations.Developing;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.annotations.Require;
 import net.liplum.masteries.AttrAmp;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @LongSupport
 public interface IAttribute {
-    @Nonnull
+    @NotNull
     @LongSupport
     String getRegisterName();
 
@@ -54,12 +54,12 @@ public interface IAttribute {
         return getTooltipShownValue(input).floatValue();
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
     @LongSupport
     Number getTooltipShownValue(Number input);
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
     @LongSupport
     default Number getTooltipShownValue(FinalAttrValue input) {
@@ -76,7 +76,7 @@ public interface IAttribute {
     @LongSupport
     String getFormat();
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
     @LongSupport
     String getI18nKey();
@@ -94,74 +94,74 @@ public interface IAttribute {
     @LongSupport
     boolean isBasic();
 
-    @Nonnull
+    @NotNull
     @LongSupport
     DataType getDataType();
 
-    @Nonnull
+    @NotNull
     @LongSupport
     ComputeType getComputeType();
 
-    @Nonnull
+    @NotNull
     @LongSupport
     Number getDefaultValue();
 
-    @Nonnull
+    @NotNull
     BasicAttrValue emptyBasicAttrValue();
 
-    @Nonnull
-    BasicAttrValue newBasicAttrValue(@Nonnull Number value);
+    @NotNull
+    BasicAttrValue newBasicAttrValue(@NotNull Number value);
 
-    @Nonnull
+    @NotNull
     AttrModifier emptyAttrModifier();
 
-    @Nonnull
-    AttrModifier newAttrModifier(@Nonnull Number delta, float deltaRate);
+    @NotNull
+    AttrModifier newAttrModifier(@NotNull Number delta, float deltaRate);
 
-    @Nonnull
-    AttrAmp newAttributeAmplifier(@Nonnull Number value);
+    @NotNull
+    AttrAmp newAttributeAmplifier(@NotNull Number value);
 
-    @Nonnull
+    @NotNull
     AttrDelta emptyAttrDelta();
 
-    @Nonnull
-    AttrDelta newAttrDelta(@Nonnull Number delta);
+    @NotNull
+    AttrDelta newAttrDelta(@NotNull Number delta);
 
-    @Nonnull
+    @NotNull
     FinalAttrValue emptyFinalAttrValue();
 
-    @Nonnull
-    FinalAttrValue newFinalAttrValue(@Nonnull Number value);
+    @NotNull
+    FinalAttrValue newFinalAttrValue(@NotNull Number value);
 
 
     @LongSupport
-    boolean isDefaultValue(@Nonnull Number value);
+    boolean isDefaultValue(@NotNull Number value);
 
     @LongSupport
-    default boolean isDefaultValue(@Nonnull FinalAttrValue value) {
+    default boolean isDefaultValue(@NotNull FinalAttrValue value) {
         return isDefaultValue(value.getNumber());
     }
 
     @LongSupport
-    default boolean isNotDefaultValue(@Nonnull Number value) {
+    default boolean isNotDefaultValue(@NotNull Number value) {
         return !isDefaultValue(value);
     }
 
     @LongSupport
-    default boolean isNotDefaultValue(@Nonnull FinalAttrValue value) {
+    default boolean isNotDefaultValue(@NotNull FinalAttrValue value) {
         return isNotDefaultValue(value.getNumber());
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery);
+    FinalAttrValue compute(@NotNull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery);
 
-    @Nonnull
+    @NotNull
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     @LongSupport
     FinalAttrValue getValueWhenWeaponBroken(Number former);
 
-    @Nonnull
+    @NotNull
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     @LongSupport
     default FinalAttrValue getValueWhenWeaponBroken(FinalAttrValue former) {

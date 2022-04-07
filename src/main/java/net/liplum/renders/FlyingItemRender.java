@@ -6,17 +6,16 @@ import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.entity.RenderSnowball;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class FlyingItemRender extends RenderSnowball<FlyingItemEntity> {
-    public FlyingItemRender(@Nonnull RenderManager renderManagerIn, @Nonnull Item itemIn, @Nonnull RenderItem itemRendererIn) {
+    public FlyingItemRender(@NotNull RenderManager renderManagerIn, @NotNull Item itemIn, @NotNull RenderItem itemRendererIn) {
         super(renderManagerIn, itemIn, itemRendererIn);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ItemStack getStackToRender(@Nonnull FlyingItemEntity flyingItem) {
+    public ItemStack getStackToRender(@NotNull FlyingItemEntity flyingItem) {
         return flyingItem.getFlyingItem();
     }
 }

@@ -1,10 +1,10 @@
 package net.liplum.lib.utils;
 
 import net.liplum.attributes.DataType;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.lwjgl.input.Keyboard;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.Random;
@@ -38,7 +38,7 @@ public class Utils {
      * @return the first object which is instance of this class. if there were no consistent one, return null.
      */
     @Nullable
-    public static <T> T getObjectWhichInstanceOf(@Nonnull Class<T> clz, Object... objs) {
+    public static <T> T getObjectWhichInstanceOf(@NotNull Class<T> clz, Object... objs) {
         for (Object obj : objs) {
             if (clz.isInstance(obj)) {
                 return (T) obj;
@@ -47,8 +47,7 @@ public class Utils {
         return null;
     }
 
-    @Nonnull
-    public static <T> int[] toIntArray(@Nonnull Collection<T> list, @Nonnull ToIntFunction<T> mapping) {
+    public static <T> int[] toIntArray(@NotNull Collection<T> list, @NotNull ToIntFunction<T> mapping) {
         int len = list.size();
         if (len == 0) {
             return new int[0];
@@ -159,18 +158,18 @@ public class Utils {
     }
 
     @SafeVarargs
-    @Nonnull
-    public static <T> Iterable<T> mergeIterator(@Nonnull Stream<T>... streams) {
+    @NotNull
+    public static <T> Iterable<T> mergeIterator(@NotNull Stream<T>... streams) {
         return () -> mergeStream(streams).iterator();
     }
 
     @SafeVarargs
-    @Nonnull
-    public static <T> Stream<T> mergeStream(@Nonnull Stream<T>... streams) {
+    @NotNull
+    public static <T> Stream<T> mergeStream(@NotNull Stream<T>... streams) {
         if (streams.length == 0) {
             return Stream.empty();
         }
-        Stream<T> firstStream = streams[0] != null ? streams[0] : Stream.empty();
+        Stream<T> firstStream = streams[0];
         if (streams.length == 1) {
             return firstStream;
         }
@@ -184,18 +183,18 @@ public class Utils {
     }
 
     @SafeVarargs
-    @Nonnull
-    public static <T> Iterable<T> mergeIterator(@Nonnull Collection<T>... collections) {
+    @NotNull
+    public static <T> Iterable<T> mergeIterator(@NotNull Collection<T>... collections) {
         return () -> mergeStream(collections).iterator();
     }
 
     @SafeVarargs
-    @Nonnull
-    public static <T> Stream<T> mergeStream(@Nonnull Collection<T>... collections) {
+    @NotNull
+    public static <T> Stream<T> mergeStream(@NotNull Collection<T>... collections) {
         if (collections.length == 0) {
             return Stream.empty();
         }
-        Stream<T> firstStream = collections[0] != null ? collections[0].stream() : Stream.empty();
+        Stream<T> firstStream = collections[0].stream();
         if (collections.length == 1) {
             return firstStream;
         }

@@ -4,8 +4,8 @@ import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.annotations.Require;
 import net.liplum.lib.math.MathUtil;
 import net.liplum.masteries.AttrAmp;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -16,28 +16,28 @@ import java.util.function.Predicate;
 
 @LongSupport
 public class Attribute implements IAttribute {
-    @Nonnull
+    @NotNull
     private static final Map<String, IAttribute> AttributesMap = new HashMap<>();
-    @Nonnull
+    @NotNull
     private static final LinkedList<IAttribute> BasicAttributes = new LinkedList<>();
-    @Nonnull
+    @NotNull
     private static final AttrModifier EmptyAttrModifierInt = new AttrModifier(DataType.Int, 0, 0);
-    @Nonnull
+    @NotNull
     private static final AttrModifier EmptyAttrModifierFloat = new AttrModifier(DataType.Float, 0, 0);
-    @Nonnull
+    @NotNull
     private static final AttrDelta EmptyAttrDeltaInt = new AttrDelta(DataType.Int, 0);
-    @Nonnull
+    @NotNull
     private static final AttrDelta EmptyAttrDeltaFloat = new AttrDelta(DataType.Float, 0);
-    @Nonnull
+    @NotNull
     private static final FinalAttrValue EmptyFinalAttrValueInt = new FinalAttrValue(DataType.Int, 0);
-    @Nonnull
+    @NotNull
     private static final FinalAttrValue EmptyFinalAttrValueFloat = new FinalAttrValue(DataType.Float, 0);
     private boolean isBasic = false;
-    @Nonnull
+    @NotNull
     private DataType dataType = DataType.Int;
-    @Nonnull
+    @NotNull
     private ComputeType computeType = ComputeType.Only_Rate;
-    @Nonnull
+    @NotNull
     private String registerName = "";
     private boolean shownInTooltip = true;
     private int displayPriority = 1;
@@ -46,27 +46,27 @@ public class Attribute implements IAttribute {
     private String unit;
     @Nullable
     private String format;
-    @Nonnull
+    @NotNull
     private Number defaultValue = 0;
     private boolean needMoreDetailsToShown = false;
     @Nullable
     private Number minimum;
     private boolean isStripTrailingZero = true;
     private boolean useSpecialValueWhenWeaponBroken = false;
-    @Nonnull
+    @NotNull
     private Function<Number, Number> tooltipShownMapping = n -> n;
-    @Nonnull
+    @NotNull
     private Predicate<Number> canTooltipShow = n -> {
         if (dataType == DataType.Int) {
             return n.intValue() > 0;
         }
         return n.floatValue() > 0;
     };
-    @Nonnull
+    @NotNull
     private Function<String, String> I18nKeyMapping = str -> str;
-    @Nonnull
+    @NotNull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(defaultValue);
-    @Nonnull
+    @NotNull
     private Function<Number, Number> valueWhenWeaponBrokenGetter = (former) -> defaultValue;
 
     @LongSupport
@@ -86,11 +86,11 @@ public class Attribute implements IAttribute {
 
     @Nullable
     @LongSupport
-    public static IAttribute getAttribute(@Nonnull String registerName) {
+    public static IAttribute getAttribute(@NotNull String registerName) {
         return AttributesMap.get(registerName);
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public static List<IAttribute> getAllBasicAttributes() {
         return BasicAttributes;
@@ -205,14 +205,14 @@ public class Attribute implements IAttribute {
         return base * (1 + rate);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getRegisterName() {
         return registerName;
     }
 
-    @Nonnull
-    public Attribute setRegisterName(@Nonnull String registerName) {
+    @NotNull
+    public Attribute setRegisterName(@NotNull String registerName) {
         String former = this.registerName;
         Attribute.remove(former);
 
@@ -226,28 +226,28 @@ public class Attribute implements IAttribute {
         return shownInTooltip;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
     public Attribute setShownInTooltip(boolean shownInTooltip) {
         this.shownInTooltip = shownInTooltip;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
     public Attribute setIsStripTrailingZero(boolean isStripTrailingZero) {
         this.isStripTrailingZero = isStripTrailingZero;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
     public Attribute setHowToGetI18nKey(Function<String, String> I18nKeyMapping) {
         this.I18nKeyMapping = I18nKeyMapping;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     @Require(func = "isShownInTooltip", is = "true")
     public String getI18nKey() {
@@ -287,24 +287,24 @@ public class Attribute implements IAttribute {
         return this.isStripTrailingZero;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
-    public Attribute setHasUnit(@Nonnull String unit) {
+    public Attribute setHasUnit(@NotNull String unit) {
         this.hasUnit = true;
         this.unit = unit;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
-    public Attribute setTooltipShownMapping(@Nonnull Function<Number, Number> mapping) {
+    public Attribute setTooltipShownMapping(@NotNull Function<Number, Number> mapping) {
         this.tooltipShownMapping = mapping;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
-    public Attribute setHowCanTooltipShow(@Nonnull Predicate<Number> predicate, boolean needAndPrevious) {
+    public Attribute setHowCanTooltipShow(@NotNull Predicate<Number> predicate, boolean needAndPrevious) {
         if (needAndPrevious) {
             this.canTooltipShow = this.canTooltipShow.and(predicate);
         } else {
@@ -313,20 +313,20 @@ public class Attribute implements IAttribute {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
-    public Attribute setHowCanTooltipShow(@Nonnull Predicate<Number> predicate) {
+    public Attribute setHowCanTooltipShow(@NotNull Predicate<Number> predicate) {
         return setHowCanTooltipShow(predicate, true);
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
     public Attribute setNeedIsNotDefaultValueCanTooltipShow() {
         return setHowCanTooltipShow(this::isNotDefaultValue, true);
     }
 
-    @Nonnull
-    public Attribute setMinimum(@Nonnull Number minimum) {
+    @NotNull
+    public Attribute setMinimum(@NotNull Number minimum) {
         this.minimum = minimum;
         this.defaultValue = fixMin(this.defaultValue);
         return this;
@@ -369,7 +369,7 @@ public class Attribute implements IAttribute {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     @Require(func = "isShownInTooltip", is = "true")
     public Number getTooltipShownValue(Number input) {
@@ -390,9 +390,9 @@ public class Attribute implements IAttribute {
         return format;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "isShownInTooltip", is = "true")
-    public Attribute setFormat(@Nonnull String format) {
+    public Attribute setFormat(@NotNull String format) {
         this.format = format;
         return this;
     }
@@ -402,103 +402,103 @@ public class Attribute implements IAttribute {
         return isBasic;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public DataType getDataType() {
         return dataType;
     }
 
-    public Attribute setDataType(@Nonnull DataType dataType) {
+    public Attribute setDataType(@NotNull DataType dataType) {
         this.dataType = dataType;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ComputeType getComputeType() {
         return computeType;
     }
 
-    public Attribute setComputeType(@Nonnull ComputeType computeType) {
+    public Attribute setComputeType(@NotNull ComputeType computeType) {
         this.computeType = computeType;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Number getDefaultValue() {
         return defaultValue;
     }
 
-    @Nonnull
-    public Attribute setDefaultValue(@Nonnull Number defaultValue) {
+    @NotNull
+    public Attribute setDefaultValue(@NotNull Number defaultValue) {
         this.defaultValue = defaultValue;
         this.emptyBasicAttrValue = newBasicAttrValue(defaultValue);
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public BasicAttrValue emptyBasicAttrValue() {
         return emptyBasicAttrValue;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public BasicAttrValue newBasicAttrValue(@Nonnull Number value) {
+    public BasicAttrValue newBasicAttrValue(@NotNull Number value) {
         return new BasicAttrValue(dataType, value);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public AttrModifier emptyAttrModifier() {
         return dataType == DataType.Int ? EmptyAttrModifierInt : EmptyAttrModifierFloat;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public AttrModifier newAttrModifier(@Nonnull Number delta, float deltaRate) {
+    public AttrModifier newAttrModifier(@NotNull Number delta, float deltaRate) {
         return new AttrModifier(dataType, delta, deltaRate);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public AttrAmp newAttributeAmplifier(@Nonnull Number value) {
+    public AttrAmp newAttributeAmplifier(@NotNull Number value) {
         return AttrAmp.create(this, value);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public AttrDelta emptyAttrDelta() {
         return dataType == DataType.Int ? EmptyAttrDeltaInt : EmptyAttrDeltaFloat;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public AttrDelta newAttrDelta(@Nonnull Number delta) {
+    public AttrDelta newAttrDelta(@NotNull Number delta) {
         return new AttrDelta(dataType, delta);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public FinalAttrValue emptyFinalAttrValue() {
         return dataType == DataType.Int ? EmptyFinalAttrValueInt : EmptyFinalAttrValueFloat;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public FinalAttrValue newFinalAttrValue(@Nonnull Number value) {
+    public FinalAttrValue newFinalAttrValue(@NotNull Number value) {
         return new FinalAttrValue(dataType, fixMin(value));
     }
 
     @Override
-    public boolean isDefaultValue(@Nonnull Number value) {
+    public boolean isDefaultValue(@NotNull Number value) {
         return value.equals(this.defaultValue);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery) {
+    public FinalAttrValue compute(@NotNull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery) {
         switch (computeType) {
             case Full:
                 if (mastery == null && modifier == null) {
@@ -536,7 +536,7 @@ public class Attribute implements IAttribute {
      * The default is returning the default value of this attribute.
      */
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
-    public Attribute setSpecialValueWhenWeaponBroken(@Nonnull Number valueWhenWeaponBroken) {
+    public Attribute setSpecialValueWhenWeaponBroken(@NotNull Number valueWhenWeaponBroken) {
         this.valueWhenWeaponBrokenGetter = (former) -> valueWhenWeaponBroken;
         return this;
     }
@@ -547,7 +547,7 @@ public class Attribute implements IAttribute {
      * @param former
      * @return the final value when weapon was broken
      */
-    @Nonnull
+    @NotNull
     @Override
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public FinalAttrValue getValueWhenWeaponBroken(Number former) {
@@ -565,14 +565,14 @@ public class Attribute implements IAttribute {
     /**
      * The default is false.
      */
-    @Nonnull
+    @NotNull
     public Attribute setUseSpecialValueWhenWeaponBroken() {
         this.useSpecialValueWhenWeaponBroken = true;
         return this;
     }
 
-    @Nonnull
-    private FinalAttrValue computeOnlyBase(@Nonnull BasicAttrValue base) {
+    @NotNull
+    private FinalAttrValue computeOnlyBase(@NotNull BasicAttrValue base) {
         switch (dataType) {
             case Int:
                 return this.newFinalAttrValue(
@@ -585,8 +585,8 @@ public class Attribute implements IAttribute {
         }
     }
 
-    @Nonnull
-    private FinalAttrValue computeFull(@Nonnull BasicAttrValue base, @Nonnull AttrModifier modifier, @Nonnull AttrDelta master) {
+    @NotNull
+    private FinalAttrValue computeFull(@NotNull BasicAttrValue base, @NotNull AttrModifier modifier, @NotNull AttrDelta master) {
         switch (dataType) {
             case Int:
                 return this.newFinalAttrValue(
@@ -599,8 +599,8 @@ public class Attribute implements IAttribute {
         }
     }
 
-    @Nonnull
-    private FinalAttrValue computeOnlyGemstone(@Nonnull BasicAttrValue base, @Nonnull AttrModifier modifier) {
+    @NotNull
+    private FinalAttrValue computeOnlyGemstone(@NotNull BasicAttrValue base, @NotNull AttrModifier modifier) {
         switch (dataType) {
             case Int:
                 return this.newFinalAttrValue(
@@ -613,8 +613,8 @@ public class Attribute implements IAttribute {
         }
     }
 
-    @Nonnull
-    private FinalAttrValue computeOnlyRate(@Nonnull BasicAttrValue base, @Nonnull AttrModifier modifier) {
+    @NotNull
+    private FinalAttrValue computeOnlyRate(@NotNull BasicAttrValue base, @NotNull AttrModifier modifier) {
         switch (dataType) {
             case Int:
                 return this.newFinalAttrValue(
@@ -627,8 +627,8 @@ public class Attribute implements IAttribute {
         }
     }
 
-    @Nonnull
-    private FinalAttrValue computeOnlyMastery(@Nonnull BasicAttrValue base, @Nonnull AttrDelta master) {
+    @NotNull
+    private FinalAttrValue computeOnlyMastery(@NotNull BasicAttrValue base, @NotNull AttrDelta master) {
         switch (dataType) {
             case Int:
                 return this.newFinalAttrValue(
@@ -641,7 +641,7 @@ public class Attribute implements IAttribute {
         }
     }
 
-    @Nonnull
+    @NotNull
     public Attribute setBasic() {
         if (!isBasic) {
             Attribute.setBasicAttribute(this);

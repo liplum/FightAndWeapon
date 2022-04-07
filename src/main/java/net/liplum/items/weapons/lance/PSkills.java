@@ -9,8 +9,7 @@ import net.liplum.events.skill.LanceSprintEvent;
 import net.liplum.registries.PotionRegistry;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.potion.PotionEffect;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public final class PSkills {
     /**
@@ -18,9 +17,9 @@ public final class PSkills {
      */
     public final static IPassiveSkill<LanceSprintEvent> Unstoppable =
             new PassiveSkill<LanceSprintEvent>(Names.PassiveSkill.Unstoppable, LanceSprintEvent.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull LanceSprintEvent event) {
+                public PSkillResult onTrigger(@NotNull LanceSprintEvent event) {
                     WeaponSkillArgs args = event.getArgs();
                     EntityLivingBase player = args.entity();
                     player.addPotionEffect(new PotionEffect(PotionRegistry.Unstoppable_Potion, 15, 0, false, false));

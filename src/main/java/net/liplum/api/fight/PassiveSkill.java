@@ -3,15 +3,15 @@ package net.liplum.api.fight;
 import net.liplum.api.annotations.Require;
 import net.liplum.api.registeies.SkillRegistry;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
 
 public abstract class PassiveSkill<EventType extends Event> implements IPassiveSkill<EventType> {
-    @Nonnull
+    @NotNull
     private final String registerName;
-    @Nonnull
+    @NotNull
     private final EventTypeArgs eventTypeArgs;
     private final boolean hasCoolDown;
     private final int coolDownTicks;
@@ -25,7 +25,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
      * @param registerName the name to register itself
      * @param eventTypeClz the class of the event which you want to subscribe
      */
-    public PassiveSkill(@Nonnull String registerName, Class<EventType> eventTypeClz, int coolDownTicks) {
+    public PassiveSkill(@NotNull String registerName, Class<EventType> eventTypeClz, int coolDownTicks) {
         this.registerName = registerName;
         this.eventTypeArgs = new EventTypeArgs((Class<Event>) eventTypeClz);
         SkillRegistry.register(this);
@@ -33,7 +33,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         this.coolDownTicks = hasCoolDown ? coolDownTicks : 0;
     }
 
-    public PassiveSkill(@Nonnull String registerName, Class<EventType> eventTypeClz) {
+    public PassiveSkill(@NotNull String registerName, Class<EventType> eventTypeClz) {
         this(registerName, eventTypeClz, 0);
     }
 
@@ -43,7 +43,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         return triggerPriority;
     }
 
-    @Nonnull
+    @NotNull
     public PassiveSkill<EventType> setTriggerPriority(int triggerPriority) {
         this.triggerPriority = triggerPriority;
         return this;
@@ -54,19 +54,19 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         return isBannedWhenBroken;
     }
 
-    @Nonnull
+    @NotNull
     public PassiveSkill<EventType> setBanedWhenBroken(boolean banedWhenBroken) {
         this.isBannedWhenBroken = banedWhenBroken;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public IEventTypeArgs getEventTypeArgs() {
         return eventTypeArgs;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getRegisterName() {
         return registerName;
@@ -77,7 +77,7 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
         return isShownInTooltip;
     }
 
-    @Nonnull
+    @NotNull
     public PassiveSkill<EventType> setShownInTooltip(boolean isShownInTooltip) {
         this.isShownInTooltip = isShownInTooltip;
         return this;
@@ -95,12 +95,12 @@ public abstract class PassiveSkill<EventType extends Event> implements IPassiveS
     }
 
     public static class EventTypeArgs implements IEventTypeArgs {
-        @Nonnull
+        @NotNull
         private final Class<Event> clz;
-        @Nonnull
+        @NotNull
         private final LinkedList<Class<Event>> eventType;
 
-        public EventTypeArgs(@Nonnull Class<Event> clz) {
+        public EventTypeArgs(@NotNull Class<Event> clz) {
             this.clz = clz;
             this.eventType = new LinkedList<>();
             this.eventType.add(clz);

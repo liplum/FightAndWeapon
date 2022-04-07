@@ -13,7 +13,6 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessageHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 
-import java.nio.charset.StandardCharsets;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -53,7 +52,7 @@ public class MasteryMsg implements IMessage {
         for (Tuple<String, LvExpPair> entry : data) {
             String name = entry.getFirst();
             if (MasteryRegistry.getMasteryOf(name) != null) {
-                ByteBufUtils.writeUTF8String(buf,name);
+                ByteBufUtils.writeUTF8String(buf, name);
 
                 LvExpPair lvAndExp = entry.getSecond();
                 buf.writeInt(lvAndExp.getLevel());

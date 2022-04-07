@@ -13,43 +13,43 @@ import net.liplum.masteries.MasteryDetail;
 import net.liplum.masteries.MasteryNotFoundByWeaponTypeException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
 
 public class TooltipContext {
-    @Nonnull
+    @NotNull
     public final ItemStack itemStack;
-    @Nonnull
+    @NotNull
     public final WeaponBaseItem weapon;
-    @Nonnull
+    @NotNull
     public final WeaponCore weaponCore;
-    @Nonnull
+    @NotNull
     public final WeaponType weaponType;
-    @Nonnull
+    @NotNull
     public final AttrCalculator calculator;
-    @Nonnull
+    @NotNull
     public final TooltipOption tooltipOption;
     @Nullable
     public final IGemstone gemstone;
     @Nullable
     public final Modifier modifier;
-    @Nonnull
+    @NotNull
     public final Collection<IPassiveSkill<?>> gemstonePSkills;
-    @Nonnull
+    @NotNull
     public final Collection<IPassiveSkill<?>> unlockedPSkills;
-    @Nonnull
+    @NotNull
     public final Collection<IPassiveSkill<?>> masteryPSkills;
-    @Nonnull
+    @NotNull
     public final EntityPlayer player;
-    @Nonnull
+    @NotNull
     public final IMasteryDetail masteryDetails;
-    @Nonnull
+    @NotNull
     public final IMastery mastery;
 
-    public TooltipContext(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weapon, @Nonnull AttrCalculator calculator, @Nonnull TooltipOption tooltipOption, @Nonnull EntityPlayer player) {
+    public TooltipContext(@NotNull ItemStack itemStack, @NotNull WeaponBaseItem weapon, @NotNull AttrCalculator calculator, @NotNull TooltipOption tooltipOption, @NotNull EntityPlayer player) {
         this.itemStack = itemStack;
         this.weapon = weapon;
         this.calculator = calculator;

@@ -5,8 +5,8 @@ import net.liplum.lib.FawLocation;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class GemswordBeamRender extends Render<GemswordBeam> {
@@ -19,7 +19,7 @@ public class GemswordBeamRender extends Render<GemswordBeam> {
 
     @Nullable
     @Override
-    protected ResourceLocation getEntityTexture(@Nonnull GemswordBeam entity) {
+    protected ResourceLocation getEntityTexture(@NotNull GemswordBeam entity) {
         return Texture;
     }
 }

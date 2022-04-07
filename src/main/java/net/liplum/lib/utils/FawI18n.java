@@ -7,54 +7,53 @@ import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponPart;
 import net.liplum.api.weapon.WeaponType;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @LongSupport
 public final class FawI18n {
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static String getNameI18nKey(@Nonnull WeaponPart weaponPart) {
+    public static String getNameI18nKey(@NotNull WeaponPart weaponPart) {
         return I18ns.endWithName(I18ns.prefixItem(weaponPart.getRegisterName()));
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static String getNameI18nKey(@Nonnull WeaponType weaponType) {
+    public static String getNameI18nKey(@NotNull WeaponType weaponType) {
         return I18ns.prefixWeaponType(weaponType.getRegisterName());
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static String getNameI18nKey(@Nonnull IPassiveSkill<?> passiveSkill) {
+    public static String getNameI18nKey(@NotNull IPassiveSkill<?> passiveSkill) {
         return I18ns.prefixPSkill(passiveSkill.getRegisterName());
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static String getDescriptionI18nKey(@Nonnull IPassiveSkill<?> passiveSkill) {
+    public static String getDescriptionI18nKey(@NotNull IPassiveSkill<?> passiveSkill) {
         return I18ns.endWithDescription(I18ns.prefixPSkill(passiveSkill.getRegisterName()));
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static String getNameI18nKey(@Nonnull IGemstone gemstone) {
+    public static String getNameI18nKey(@NotNull IGemstone gemstone) {
         return I18ns.endWithName(I18ns.prefixItem(gemstone.getRegisterName()));
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static String getWeaponSkillTipI18nKey(@Nonnull WeaponCore weaponCore) {
+    public static String getWeaponSkillTipI18nKey(@NotNull WeaponCore weaponCore) {
         return I18ns.Tooltip.skill(
                 weaponCore.getWeaponType().getRegisterName(),
                 weaponCore.getRegisterName()
         );
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static String getGemstoneSkillTipI18nKey(@Nonnull WeaponCore weaponCore, @Nonnull IGemstone gemstone) {
+    public static String getGemstoneSkillTipI18nKey(@NotNull WeaponCore weaponCore, @NotNull IGemstone gemstone) {
         return I18ns.Tooltip.skill(
                 weaponCore.getWeaponType().getRegisterName(),
                 weaponCore.getRegisterName(),

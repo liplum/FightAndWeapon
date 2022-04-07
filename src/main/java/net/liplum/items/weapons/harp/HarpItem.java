@@ -20,8 +20,7 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.MaxUseDuration;
 import static net.liplum.Attributes.Harp.Frequency;
@@ -29,14 +28,14 @@ import static net.liplum.Attributes.Harp.Frequency;
 public class HarpItem extends WeaponBaseItem {
     private final HarpCore core;
 
-    public HarpItem(@Nonnull HarpCore core) {
+    public HarpItem(@NotNull HarpCore core) {
         super(core);
         this.core = core;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, EntityPlayer playerIn, @NotNull EnumHand handIn) {
         ItemStack held = playerIn.getHeldItem(handIn);
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
             Modifier modifier = GemUtil.getModifierFrom(held);
@@ -70,7 +69,7 @@ public class HarpItem extends WeaponBaseItem {
     }
 
     @Override
-    public void onUsingTick(@Nonnull ItemStack stack, @Nonnull EntityLivingBase player, int count) {
+    public void onUsingTick(@NotNull ItemStack stack, @NotNull EntityLivingBase player, int count) {
         Modifier modifier = GemUtil.getModifierFrom(stack);
         EntityPlayer p = (EntityPlayer) player;
         EnumHand hand = ItemUtil.inWhichHand(p, stack);
@@ -114,7 +113,7 @@ public class HarpItem extends WeaponBaseItem {
 
 
     @Override
-    public void onPlayerStoppedUsing(ItemStack stack, @Nonnull World worldIn, @Nonnull EntityLivingBase entityLiving, int timeLeft) {
+    public void onPlayerStoppedUsing(ItemStack stack, @NotNull World worldIn, @NotNull EntityLivingBase entityLiving, int timeLeft) {
         Item held = stack.getItem();
         //I'm not quite sure that the entityLiving is truly a EntityPlayer.
         if (entityLiving instanceof EntityPlayer) {
@@ -129,7 +128,7 @@ public class HarpItem extends WeaponBaseItem {
         return super.onItemUseFinish(stack, worldIn, entityLiving);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public HarpCore getConcreteCore() {
         return core;

@@ -1,10 +1,10 @@
 package net.liplum.api.weapon;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class MagicToolModifier extends Modifier {
     @Override
-    protected void build(@Nonnull ModifierBuilder builder) {
+    protected void build(@NotNull ModifierBuilder builder) {
         super.build(builder);
     }
 }

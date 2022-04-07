@@ -13,9 +13,9 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nonnull;
-import javax.annotation.Nullable;
 
 @LongSupport
 public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSetter<AttrCalculator> {
@@ -52,9 +52,9 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
      * @param postAccessedEvent Whether it posts the {@link AttributeAccessEvent}. NOTE:Set false when you subscribe this event and call this function again to prevent the recursive attribute access.
      * @return the final value(NOTE:It may be changed by the {@link AttributeAccessEvent}.)
      */
-    @Nonnull
-    public static FinalAttrValue calcuAttribute(@Nonnull IAttribute attribute,
-                                                @Nonnull WeaponBaseItem weapon,
+    @NotNull
+    public static FinalAttrValue calcuAttribute(@NotNull IAttribute attribute,
+                                                @NotNull WeaponBaseItem weapon,
                                                 @Nullable Modifier modifier,
                                                 @Nullable EntityPlayer player,
                                                 @Nullable ItemStack itemStack,
@@ -85,7 +85,7 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
         return finalAttrValue;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponBaseItem weapon() {
         return weapon;
@@ -97,14 +97,14 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
         return modifier;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public AttrCalculator weapon(@Nonnull WeaponBaseItem weapon) {
+    public AttrCalculator weapon(@NotNull WeaponBaseItem weapon) {
         this.weapon = weapon;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public AttrCalculator modifier(@Nullable Modifier modifier) {
         this.modifier = modifier;
@@ -117,7 +117,7 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
         return entity;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public AttrCalculator entity(@Nullable EntityLivingBase entity) {
         this.entity = entity;
@@ -131,7 +131,7 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
     }
 
     @Override
-    @Nonnull
+    @NotNull
     public AttrCalculator itemStack(@Nullable ItemStack itemStack) {
         this.itemStack = itemStack;
         return this;
@@ -142,7 +142,7 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
         return useSpecialValueWhenWeaponBroken;
     }
 
-    @Nonnull
+    @NotNull
     public AttrCalculator setUseSpecialValueWhenWeaponBroken(boolean useSpecialValueWhenWeaponBroken) {
         this.useSpecialValueWhenWeaponBroken = useSpecialValueWhenWeaponBroken;
         return this;
@@ -156,15 +156,15 @@ public class AttrCalculator implements IAttrCalculator, FawArgsGetter, FawArgsSe
         return postEvent;
     }
 
-    @Nonnull
+    @NotNull
     public AttrCalculator setNotPostEvent() {
         this.postEvent = false;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public FinalAttrValue calcu(@Nonnull IAttribute attribute) {
+    public FinalAttrValue calcu(@NotNull IAttribute attribute) {
         if (weapon == null) {
             throw new IllegalArgumentException("Weapon Core is Null");
         }

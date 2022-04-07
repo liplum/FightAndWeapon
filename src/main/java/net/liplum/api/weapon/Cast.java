@@ -1,20 +1,20 @@
 package net.liplum.api.weapon;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class Cast {
     private final WeaponPart weaponPart;
 
-    public Cast(@Nonnull WeaponPart weaponPart) {
+    public Cast(@NotNull WeaponPart weaponPart) {
         this.weaponPart = weaponPart;
     }
 
-    @Nonnull
+    @NotNull
     public String getRegisterName() {
         return weaponPart.getRegisterName();
     }
 
-    @Nonnull
+    @NotNull
     public WeaponPart getWeaponPart() {
         return weaponPart;
     }

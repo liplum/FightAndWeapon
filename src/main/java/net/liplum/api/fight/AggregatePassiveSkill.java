@@ -3,8 +3,8 @@ package net.liplum.api.fight;
 import net.liplum.api.annotations.Require;
 import net.liplum.api.registeies.SkillRegistry;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -12,13 +12,13 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class AggregatePassiveSkill implements IPassiveSkill<Event> {
-    @Nonnull
+    @NotNull
     private final String registerName;
-    @Nonnull
+    @NotNull
     private final Map<Class<Event>, Function<Event, PSkillResult>> allSkills = new HashMap<>();
-    @Nonnull
+    @NotNull
     private final LinkedList<Class<Event>> allEventTypes = new LinkedList<>();
-    @Nonnull
+    @NotNull
     private final AggregatedEventTypeArgs eventTypeArgs = new AggregatedEventTypeArgs();
     private boolean isShownInTooltip = true;
     private boolean built = false;
@@ -27,19 +27,19 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
     private int coolDownTicks = 0;
     private boolean hasCoolDown = false;
 
-    public AggregatePassiveSkill(@Nonnull String registerName) {
+    public AggregatePassiveSkill(@NotNull String registerName) {
         this.registerName = registerName;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public IEventTypeArgs getEventTypeArgs() {
         return eventTypeArgs;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public PSkillResult onTrigger(@Nonnull Event event) {
+    public PSkillResult onTrigger(@NotNull Event event) {
         Function<Event, PSkillResult> trigger = allSkills.get(event.getClass());
         if (trigger == null) {
             return PSkillResult.Fail;
@@ -88,7 +88,7 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
         return coolDownTicks;
     }
 
-    @Nonnull
+    @NotNull
     public AggregatePassiveSkill setCoolDownTicks(int coolDownTicks) {
         this.coolDownTicks = coolDownTicks;
         return this;
@@ -103,7 +103,7 @@ public class AggregatePassiveSkill implements IPassiveSkill<Event> {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getRegisterName() {
         return registerName;

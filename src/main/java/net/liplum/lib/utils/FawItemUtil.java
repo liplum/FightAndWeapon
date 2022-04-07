@@ -29,9 +29,9 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.Set;
@@ -51,19 +51,19 @@ public final class FawItemUtil {
         return false;
     }
 
-    public static boolean isFawWeapon(@Nonnull ItemStack itemStack) {
+    public static boolean isFawWeapon(@NotNull ItemStack itemStack) {
         return isFawWeapon(itemStack.getItem());
     }
 
-    public static boolean isGemstone(@Nonnull ItemStack itemStack) {
+    public static boolean isGemstone(@NotNull ItemStack itemStack) {
         return isGemstone(itemStack.getItem());
     }
 
-    public static boolean isFawWeapon(@Nonnull Item item) {
+    public static boolean isFawWeapon(@NotNull Item item) {
         return item instanceof WeaponBaseItem;
     }
 
-    public static boolean isGemstone(@Nonnull Item item) {
+    public static boolean isGemstone(@NotNull Item item) {
         return item instanceof IGemstoneItem;
     }
 
@@ -87,7 +87,7 @@ public final class FawItemUtil {
      * @return whether this attack is successful
      */
     @LongSupport
-    public static boolean attackEntity(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weapon, EntityLivingBase attacker, Entity target) {
+    public static boolean attackEntity(@NotNull ItemStack itemStack, @NotNull WeaponBaseItem weapon, EntityLivingBase attacker, Entity target) {
         //Nobody did and nobody was hit.
         if (attacker == null || target == null ||
                 //the target can't be hit by item
@@ -225,25 +225,25 @@ public final class FawItemUtil {
 
 
     @SideOnly(Side.CLIENT)
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,
+    public static void addAttributeTooltip(@NotNull List<String> tooltip, @NotNull String attrTranslateKey, Number value,
                                            @Nullable String format, @Nullable String unit) {
         addAttributeTooltip(tooltip, attrTranslateKey, value, format, true, unit);
     }
 
     @SideOnly(Side.CLIENT)
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,
+    public static void addAttributeTooltip(@NotNull List<String> tooltip, @NotNull String attrTranslateKey, Number value,
                                            @Nullable String format) {
         addAttributeTooltip(tooltip, attrTranslateKey, value, format, null);
     }
 
     @SideOnly(Side.CLIENT)
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value) {
+    public static void addAttributeTooltip(@NotNull List<String> tooltip, @NotNull String attrTranslateKey, Number value) {
         addAttributeTooltip(tooltip, attrTranslateKey, value, null);
     }
 
     @SideOnly(Side.CLIENT)
     @LongSupport
-    public static void addAttributeTooltip(@Nonnull List<String> tooltip, @Nonnull String attrTranslateKey, Number value,
+    public static void addAttributeTooltip(@NotNull List<String> tooltip, @NotNull String attrTranslateKey, Number value,
                                            @Nullable String format, boolean isStripTrailingZero, @Nullable String unit) {
         String valueContent = format != null ? String.format(format, value) : value.toString();
         if (isStripTrailingZero) {
@@ -258,18 +258,18 @@ public final class FawItemUtil {
     }
 
     @SideOnly(Side.CLIENT)
-    public static void addPassiveSkillTooltip(@Nonnull List<String> tooltip, @Nonnull IPassiveSkill<?> passiveSkill) {
+    public static void addPassiveSkillTooltip(@NotNull List<String> tooltip, @NotNull IPassiveSkill<?> passiveSkill) {
         tooltip.add(TextFormatting.BLUE +
                 I18n.format(FawI18n.getNameI18nKey(passiveSkill)));
     }
 
-    @Nonnull
-    public static Iterable<ItemStack> getAllFawWeaponSlotsFormPlayerInventory(@Nonnull EntityPlayer player) {
+    @NotNull
+    public static Iterable<ItemStack> getAllFawWeaponSlotsFormPlayerInventory(@NotNull EntityPlayer player) {
         return ItemUtil.getMainAndOffHandSlots(player, FawItemUtil::isFawWeapon);
     }
 
     @LongSupport
-    public static boolean heatWeaponType(@Nonnull EntityLivingBase player, @Nonnull WeaponType weaponType) {
+    public static boolean heatWeaponType(@NotNull EntityLivingBase player, @NotNull WeaponType weaponType) {
         if (player instanceof EntityPlayer) {
             return heatWeaponType((EntityPlayer) player, weaponType);
         }
@@ -277,7 +277,7 @@ public final class FawItemUtil {
     }
 
     @LongSupport
-    public static boolean heatWeaponType(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
+    public static boolean heatWeaponType(@NotNull EntityPlayer player, @NotNull WeaponType weaponType) {
         if (player.isCreative()) {
             return false;
         }
@@ -299,7 +299,7 @@ public final class FawItemUtil {
         return hasOneSucceed;
     }
 
-    public static boolean releaseWeaponSkill(@Nonnull WeaponCore core, @Nullable Modifier modifier, @Nonnull WeaponSkillArgs args) {
+    public static boolean releaseWeaponSkill(@NotNull WeaponCore core, @Nullable Modifier modifier, @NotNull WeaponSkillArgs args) {
         if (modifier != null) {
             return modifier.releaseSkill(core, args);
         } else {
@@ -307,8 +307,8 @@ public final class FawItemUtil {
         }
     }
 
-    public static void applyAttrModifier(@Nonnull WeaponCore core, @Nullable Modifier modifier,
-                                         @Nonnull WeaponAttrModifierContext context) {
+    public static void applyAttrModifier(@NotNull WeaponCore core, @Nullable Modifier modifier,
+                                         @NotNull WeaponAttrModifierContext context) {
         if (modifier != null) {
             modifier.applyAttrModifier(core, context);
         } else {
@@ -316,7 +316,7 @@ public final class FawItemUtil {
         }
     }
 
-    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount, @Nonnull EntityLivingBase entity) {
+    public static void damageWeapon(WeaponBaseItem weapon, ItemStack itemStack, @Nonnegative int amount, @NotNull EntityLivingBase entity) {
         if (amount == 0) {
             return;
         }
@@ -346,15 +346,15 @@ public final class FawItemUtil {
         }
     }
 
-    public static boolean isWeaponBroken(@Nonnull ItemStack itemStack) {
+    public static boolean isWeaponBroken(@NotNull ItemStack itemStack) {
         return (itemStack.getItem() instanceof WeaponBaseItem) && itemStack.getItemDamage() == itemStack.getMaxDamage();
     }
 
-    public static boolean hasAmmo(@Nonnull EntityPlayer player, @Nonnull BowCore bowCore) {
+    public static boolean hasAmmo(@NotNull EntityPlayer player, @NotNull BowCore bowCore) {
         return ItemUtil.hasAmmo(player, bowCore::isAmmo);
     }
 
-    public static boolean hasAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowCore bowCore) {
+    public static boolean hasAmmo(@NotNull EntityLivingBase entity, @NotNull BowCore bowCore) {
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
             return ItemUtil.hasAmmo(player, bowCore::isAmmo);
@@ -362,8 +362,8 @@ public final class FawItemUtil {
         return true;
     }
 
-    @Nonnull
-    public static ItemStack findAmmo(@Nonnull EntityPlayer player, @Nonnull BowItem bow, @Nonnull ItemStack itemStack, @Nullable Modifier modifier) {
+    @NotNull
+    public static ItemStack findAmmo(@NotNull EntityPlayer player, @NotNull BowItem bow, @NotNull ItemStack itemStack, @Nullable Modifier modifier) {
         BowCore core = bow.getConcreteCore();
         ItemStack res = ItemUtil.findAmmo(player, core::isAmmo);
         if (res.isEmpty() && player.isCreative()) {
@@ -374,8 +374,8 @@ public final class FawItemUtil {
         return event.ammo();
     }
 
-    @Nonnull
-    public static ItemStack findAmmo(@Nonnull EntityLivingBase entity, @Nonnull BowItem bow, @Nonnull ItemStack itemStack, @Nullable Modifier modifier) {
+    @NotNull
+    public static ItemStack findAmmo(@NotNull EntityLivingBase entity, @NotNull BowItem bow, @NotNull ItemStack itemStack, @Nullable Modifier modifier) {
         BowCore core = bow.getConcreteCore();
         if (entity instanceof EntityPlayer) {
             EntityPlayer player = (EntityPlayer) entity;
@@ -384,7 +384,7 @@ public final class FawItemUtil {
         return core.getDefaultAmmo(entity, itemStack);
     }
 
-    public static void clearWeaponCoolDown(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType) {
+    public static void clearWeaponCoolDown(@NotNull EntityPlayer player, @NotNull WeaponType weaponType) {
         Set<WeaponBaseItem> weapons = WeaponRegistry.getWeaponsOf(weaponType);
         CooldownTracker cooldownTracker = player.getCooldownTracker();
         for (WeaponBaseItem weapon : weapons) {
@@ -392,7 +392,7 @@ public final class FawItemUtil {
         }
     }
 
-    public static void clearAllWeaponsCoolDown(@Nonnull EntityPlayer player) {
+    public static void clearAllWeaponsCoolDown(@NotNull EntityPlayer player) {
         CooldownTracker cooldownTracker = player.getCooldownTracker();
         for (WeaponType weaponType : WeaponTypeRegistry.getAllWeaponTypes()) {
             Set<WeaponBaseItem> weapons = WeaponRegistry.getWeaponsOf(weaponType);

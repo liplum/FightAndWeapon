@@ -3,19 +3,18 @@ package net.liplum.events.mastery;
 import net.liplum.api.fight.IMastery;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.fml.common.eventhandler.Event;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class MasteryUpgradedEvent extends Event {
-    @Nonnull
+    @NotNull
     public final EntityPlayer player;
-    @Nonnull
+    @NotNull
     public final IMastery mastery;
     public final int formerLevel;
     public final int newLevel;
     public final int upgraded;
 
-    public MasteryUpgradedEvent(@Nonnull EntityPlayer player, @Nonnull IMastery mastery, int formerLevel, int upgraded) {
+    public MasteryUpgradedEvent(@NotNull EntityPlayer player, @NotNull IMastery mastery, int formerLevel, int upgraded) {
         this.player = player;
         this.mastery = mastery;
         this.formerLevel = formerLevel;

@@ -1,17 +1,16 @@
 package net.liplum.attributes;
 
 import net.liplum.api.annotations.LongSupport;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public interface IBasicAttrValueBuilder {
-    @Nonnull
+    @NotNull
     @LongSupport
-    IBasicAttrValueBuilder set(@Nonnull IAttribute attribute, @Nonnull BasicAttrValue value);
+    IBasicAttrValueBuilder set(@NotNull IAttribute attribute, @NotNull BasicAttrValue value);
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    default IBasicAttrValueBuilder set(@Nonnull IAttribute attribute, @Nonnull Number value) {
+    default IBasicAttrValueBuilder set(@NotNull IAttribute attribute, @NotNull Number value) {
         return this.set(attribute, attribute.newBasicAttrValue(value));
     }
 }

@@ -1,16 +1,17 @@
 package net.liplum.lib.gui;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.function.Function;
 
 public class Binding<T> {
-    @Nonnull
+    @NotNull
     private final Property<T> source;
-    @Nonnull
+    @NotNull
     private final Property<T> target;
-    @Nonnull
+    @NotNull
     private final BindingMode mode;
-    @Nonnull
+    @NotNull
     private Function<T, T> map = v -> v;
 
     private final IPropertySubscriber<T> onSourceChanged = new IPropertySubscriber<T>() {
@@ -28,7 +29,7 @@ public class Binding<T> {
     };
 
 
-    public Binding(@Nonnull Property<T> source, @Nonnull Property<T> target, @Nonnull BindingMode mode) {
+    public Binding(@NotNull Property<T> source, @NotNull Property<T> target, @NotNull BindingMode mode) {
         this.mode = mode;
         this.source = source;
         this.target = target;
@@ -40,27 +41,27 @@ public class Binding<T> {
         }
     }
 
-    public Binding(@Nonnull Property<T> source, @Nonnull Property<T> target, @Nonnull BindingMode mode, @Nonnull Function<T, T> map) {
+    public Binding(@NotNull Property<T> source, @NotNull Property<T> target, @NotNull BindingMode mode, @NotNull Function<T, T> map) {
         this(source, target, mode);
         this.map = map;
     }
 
-    @Nonnull
+    @NotNull
     public Property<T> getSource() {
         return source;
     }
 
-    @Nonnull
+    @NotNull
     public Property<T> getTarget() {
         return target;
     }
 
-    @Nonnull
+    @NotNull
     public BindingMode getMode() {
         return mode;
     }
 
-    @Nonnull
+    @NotNull
     public Function<T, T> getMap() {
         return map;
     }

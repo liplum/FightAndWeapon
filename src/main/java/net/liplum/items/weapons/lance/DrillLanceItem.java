@@ -17,20 +17,19 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class DrillLanceItem extends WeaponBaseItem {
     private final LanceCore core;
 
-    public DrillLanceItem(@Nonnull LanceCore weaponCore) {
+    public DrillLanceItem(@NotNull LanceCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, @NotNull EntityPlayer playerIn, @NotNull EnumHand handIn) {
         EnumActionResult result = EnumActionResult.FAIL;
         ItemStack held = playerIn.getHeldItem(handIn);
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {
@@ -54,14 +53,14 @@ public class DrillLanceItem extends WeaponBaseItem {
         return new ActionResult<>(result, held);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public LanceCore getConcreteCore() {
         return core;
     }
 
     @Override
-    public void onUsingTick(@Nonnull ItemStack stack, @Nonnull EntityLivingBase player, int count) {
+    public void onUsingTick(@NotNull ItemStack stack, @NotNull EntityLivingBase player, int count) {
         EnumHand hand = ItemUtil.inWhichHand(player, stack);
         hand = hand == null ? EnumHand.MAIN_HAND : hand;
         WeaponSkillArgs args = new WeaponSkillArgs()
@@ -77,8 +76,8 @@ public class DrillLanceItem extends WeaponBaseItem {
     }
 
     @Override
-    public void onPlayerStoppedUsing(@Nonnull ItemStack stack, @Nonnull World worldIn,
-                                     @Nonnull EntityLivingBase entityLiving, int timeLeft) {
+    public void onPlayerStoppedUsing(@NotNull ItemStack stack, @NotNull World worldIn,
+                                     @NotNull EntityLivingBase entityLiving, int timeLeft) {
         EnumHand hand = ItemUtil.inWhichHand(entityLiving, stack);
         hand = hand == null ? EnumHand.MAIN_HAND : hand;
         int maxUseDuration = getMaxItemUseDuration(stack);

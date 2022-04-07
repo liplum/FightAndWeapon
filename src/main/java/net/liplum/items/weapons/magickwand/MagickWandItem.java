@@ -14,27 +14,26 @@ import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class MagickWandItem extends WeaponBaseItem {
-    @Nonnull
+    @NotNull
     private final MagickWandCore core;
 
-    public MagickWandItem(@Nonnull MagickWandCore weaponCore) {
+    public MagickWandItem(@NotNull MagickWandCore weaponCore) {
         super(weaponCore);
         this.core = weaponCore;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public MagickWandCore getConcreteCore() {
         return core;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, @NotNull EntityPlayer playerIn, @NotNull EnumHand handIn) {
         EnumActionResult result = EnumActionResult.PASS;
         ItemStack held = playerIn.getHeldItem(handIn);
         if (core.getWeaponSkillPredicate().canRelease(worldIn, playerIn, held)) {

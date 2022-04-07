@@ -19,17 +19,17 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.math.BlockPos;
 import net.minecraftforge.event.entity.player.PlayerPickupXpEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 @Developing
 public class UndeterminedSkills {
     public final static IPassiveSkill<PlayerPickupXpEvent> XpMending =
             new PassiveSkill<PlayerPickupXpEvent>(Names.PassiveSkill.ExpMending, PlayerPickupXpEvent.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull PlayerPickupXpEvent event) {
+                public PSkillResult onTrigger(@NotNull PlayerPickupXpEvent event) {
                     EntityXPOrb orb = event.getOrb();
                     EntityPlayer player = event.getEntityPlayer();
                     List<ItemStack> weapons = ItemUtil.getItemStacks(this::hasXpMending,
@@ -61,9 +61,9 @@ public class UndeterminedSkills {
 
     public static final IPassiveSkill<TickEvent.PlayerTickEvent> FrostWalker =
             new PassiveSkill<TickEvent.PlayerTickEvent>(Names.PassiveSkill.FrostWalker, TickEvent.PlayerTickEvent.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull TickEvent.PlayerTickEvent event) {
+                public PSkillResult onTrigger(@NotNull TickEvent.PlayerTickEvent event) {
                     EntityPlayer player = event.player;
                     EnchantmentFrostWalker.freezeNearby(player, player.world, new BlockPos(player), 2);
                     return PSkillResult.Complete;

@@ -8,23 +8,23 @@ import net.liplum.api.weapon.WeaponType;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @LongSupport
 public interface FawArgsGetter {
-    @Nonnull
+    @NotNull
     @LongSupport
     WeaponBaseItem weapon();
 
-    @Nonnull
+    @NotNull
     @LongSupport
     default WeaponCore weaponCore() {
         return weapon().getCore();
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     default WeaponType weaponType() {
         return weapon().getWeaponType();

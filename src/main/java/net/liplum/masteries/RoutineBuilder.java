@@ -1,8 +1,8 @@
 package net.liplum.masteries;
 
 import net.liplum.api.annotations.Developing;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
@@ -11,12 +11,12 @@ import static net.liplum.masteries.Mastery.MaxLevel;
 
 @Developing
 public class RoutineBuilder implements IRoutineReader {
-    @Nonnull
+    @NotNull
     public final static Consumer<Node> Empty = (n) -> {
     };
-    @Nonnull
+    @NotNull
     private final LinkedList<Node> nodes = new LinkedList<>();
-    @Nonnull
+    @NotNull
     private final ListIterator<Node> iterator = nodes.listIterator();
     private int level = 1;
 
@@ -33,7 +33,7 @@ public class RoutineBuilder implements IRoutineReader {
         }
     }
 
-    public RoutineBuilder node(@Nonnull Consumer<Node> nodeBuilder) {
+    public RoutineBuilder node(@NotNull Consumer<Node> nodeBuilder) {
         Node node = new Node();
         nodeBuilder.accept(node);
         iterator.add(node);

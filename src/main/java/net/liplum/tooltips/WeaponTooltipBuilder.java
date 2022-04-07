@@ -1,20 +1,20 @@
 package net.liplum.tooltips;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class WeaponTooltipBuilder implements IWeaponTooltipBuilder {
-    @Nonnull
+    @NotNull
     private final TooltipContext context;
 
-    @Nonnull
+    @NotNull
     private final TooltipPipe pipe;
 
-    public WeaponTooltipBuilder(@Nonnull TooltipContext context) {
+    public WeaponTooltipBuilder(@NotNull TooltipContext context) {
         this.context = context;
         this.pipe = context.weaponCore.getTooltipPipe();
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ITooltip build() {
         return pipe.stream(context);

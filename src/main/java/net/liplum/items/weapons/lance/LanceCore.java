@@ -6,19 +6,19 @@ import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.IAttribute;
 import net.minecraft.item.EnumAction;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.AttackSpeed;
 
 public abstract class LanceCore extends WeaponCore {
 
-    public LanceCore(@Nonnull String registerName) {
+    public LanceCore(@NotNull String registerName) {
         super(registerName);
     }
 
-    public LanceCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+    public LanceCore(@NotNull String registerName, boolean hasWeaponSkill) {
         super(registerName, hasWeaponSkill);
     }
 
@@ -29,7 +29,7 @@ public abstract class LanceCore extends WeaponCore {
     }
 
     @Override
-    protected void build(@Nonnull WeaponCoreBuilder builder) {
+    protected void build(@NotNull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
                 AttackSpeed, 2F
@@ -38,7 +38,7 @@ public abstract class LanceCore extends WeaponCore {
         );
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponType getWeaponType() {
         return WeaponTypes.Lance;

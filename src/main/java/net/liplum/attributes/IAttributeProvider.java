@@ -1,8 +1,8 @@
 package net.liplum.attributes;
 
 import net.liplum.api.annotations.LongSupport;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @LongSupport
@@ -16,5 +16,5 @@ public interface IAttributeProvider<T extends AttrValue> {
      */
     @Nullable
     @LongSupport
-    T getValue(@Nonnull IAttribute attribute);
+    T getValue(@NotNull IAttribute attribute);
 }

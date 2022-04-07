@@ -3,32 +3,31 @@ package net.liplum.tileentities.weapon;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraftforge.items.ItemStackHandler;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class RepairTableTF extends TileEntity {
-    @Nonnull
+    @NotNull
     private static final String WeaponTagName = "Weapon";
-    @Nonnull
+    @NotNull
     private static final String MaterialTagName = "Material";
-    @Nonnull
+    @NotNull
     private final ItemStackHandler weapon = new RepairTableItemStackHandler(1);
-    @Nonnull
+    @NotNull
     private final ItemStackHandler material = new RepairTableItemStackHandler(1);
 
     public RepairTableTF() {
     }
 
     @Override
-    public void readFromNBT(@Nonnull NBTTagCompound compound) {
+    public void readFromNBT(@NotNull NBTTagCompound compound) {
         weapon.deserializeNBT(compound.getCompoundTag(WeaponTagName));
         material.deserializeNBT(compound.getCompoundTag(MaterialTagName));
         super.readFromNBT(compound);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public NBTTagCompound writeToNBT(@Nonnull NBTTagCompound compound) {
+    public NBTTagCompound writeToNBT(@NotNull NBTTagCompound compound) {
         compound.setTag(WeaponTagName, weapon.serializeNBT());
         compound.setTag(MaterialTagName, material.serializeNBT());
         return super.writeToNBT(compound);

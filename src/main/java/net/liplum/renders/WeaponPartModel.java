@@ -12,8 +12,8 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.IModel;
 import net.minecraftforge.client.model.ItemLayerModel;
 import net.minecraftforge.common.model.IModelState;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 import java.util.function.Function;
@@ -28,9 +28,9 @@ public class WeaponPartModel implements IModel {
         this.texture = ImmutableList.of(texture);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public IBakedModel bake(@Nonnull IModelState state, @Nonnull VertexFormat format, @Nonnull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
+    public IBakedModel bake(@NotNull IModelState state, @NotNull VertexFormat format, @NotNull Function<ResourceLocation, TextureAtlasSprite> bakedTextureGetter) {
         IBakedModel base = new ItemLayerModel(texture).bake(state, format, bakedTextureGetter);
 
         return null;
@@ -38,7 +38,7 @@ public class WeaponPartModel implements IModel {
 
     public static class BakedCastModel implements IBakedModel {
 
-        @Nonnull
+        @NotNull
         @Override
         public List<BakedQuad> getQuads(@Nullable IBlockState state, @Nullable EnumFacing side, long rand) {
             return null;
@@ -59,13 +59,13 @@ public class WeaponPartModel implements IModel {
             return false;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public TextureAtlasSprite getParticleTexture() {
             return null;
         }
 
-        @Nonnull
+        @NotNull
         @Override
         public ItemOverrideList getOverrides() {
             return null;

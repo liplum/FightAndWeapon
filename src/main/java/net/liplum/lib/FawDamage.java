@@ -9,22 +9,23 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EntityDamageSource;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @Developing
 public class FawDamage extends EntityDamageSource implements FawArgsGetter {
-    @Nonnull
+    @NotNull
     private final WeaponBaseItem weapon;
-    @Nonnull
+    @NotNull
     private final EntityLivingBase attacker;
     @Nullable
     private final Modifier modifier;
-    @Nonnull
+    @NotNull
     private final ItemStack itemStack;
 
-    private FawDamage(String damageType, @Nonnull EntityLivingBase attacker, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nonnull ItemStack itemStack) {
+    private FawDamage(String damageType, @NotNull EntityLivingBase attacker, @NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @NotNull ItemStack itemStack) {
         super(damageType, attacker);
         this.attacker = attacker;
         this.weapon = weapon;
@@ -32,13 +33,13 @@ public class FawDamage extends EntityDamageSource implements FawArgsGetter {
         this.modifier = modifier;
     }
 
-    @Nonnull
-    public static FawDamage byPlayer(@Nonnull EntityPlayer playerAttacker, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nonnull ItemStack itemStack) {
+    @NotNull
+    public static FawDamage byPlayer(@NotNull EntityPlayer playerAttacker, @NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @NotNull ItemStack itemStack) {
         return new FawDamage(Vanilla.DamageType.Player, playerAttacker, weapon, modifier, itemStack);
     }
 
-    @Nonnull
-    public static FawDamage byMob(@Nonnull EntityLivingBase entityAttacker, @Nonnull WeaponBaseItem weapon, @Nullable Modifier modifier, @Nonnull ItemStack itemStack) {
+    @NotNull
+    public static FawDamage byMob(@NotNull EntityLivingBase entityAttacker, @NotNull WeaponBaseItem weapon, @Nullable Modifier modifier, @NotNull ItemStack itemStack) {
         return new FawDamage(Vanilla.DamageType.Mob, entityAttacker, weapon, modifier, itemStack);
     }
 
@@ -54,19 +55,19 @@ public class FawDamage extends EntityDamageSource implements FawArgsGetter {
         return modifier;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack itemStack() {
         return itemStack;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public EntityLivingBase entity() {
         return attacker;
     }
 
-    @Nonnull
+    @NotNull
     public EntityLivingBase attacker() {
         return attacker;
     }

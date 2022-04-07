@@ -13,8 +13,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityLargeFireball;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.DropsFireproof;
 
@@ -27,7 +26,7 @@ public class FlameGemModifier {
         }
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponCore core, @NotNull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
 
@@ -39,7 +38,7 @@ public class FlameGemModifier {
         }
 
         @Override
-        protected void build(@Nonnull ModifierBuilder builder) {
+        protected void build(@NotNull ModifierBuilder builder) {
             super.build(builder);
             builder.set(
                     DropsFireproof, BoolAttribute.TrueAttrModifier

@@ -8,22 +8,22 @@ import net.liplum.api.weapon.WeaponType;
 import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.IAttribute;
 import net.liplum.lib.math.MathUtil;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
 public interface IMasteryDetail {
-    @Nonnull
-    LvExpPair getLvAndExp(@Nonnull IMastery mastery);
+    @NotNull
+    LvExpPair getLvAndExp(@NotNull IMastery mastery);
 
-    default int getLevel(@Nonnull IMastery mastery) {
+    default int getLevel(@NotNull IMastery mastery) {
         return getLvAndExp(mastery).getLevel();
     }
 
-    default int getLevel(@Nonnull WeaponType weaponType) {
+    default int getLevel(@NotNull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getLevel(mastery);
@@ -31,11 +31,11 @@ public interface IMasteryDetail {
         return LvExpPair.BaseLevel;
     }
 
-    default int getExp(@Nonnull IMastery mastery) {
+    default int getExp(@NotNull IMastery mastery) {
         return MathUtil.removeDigit(getLvAndExp(mastery).getExp(), 1);
     }
 
-    default int getExp(@Nonnull WeaponType weaponType) {
+    default int getExp(@NotNull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getExp(mastery);
@@ -46,12 +46,12 @@ public interface IMasteryDetail {
     /**
      * @return how many level it upgraded
      */
-    int addExp(@Nonnull IMastery mastery, int amount);
+    int addExp(@NotNull IMastery mastery, int amount);
 
     /**
      * @return how many level it upgraded
      */
-    default int addExp(@Nonnull WeaponType weaponType, int amount) {
+    default int addExp(@NotNull WeaponType weaponType, int amount) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return addExp(mastery, amount);
@@ -59,17 +59,17 @@ public interface IMasteryDetail {
         return 0;
     }
 
-    @Nonnull
-    Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull IMastery mastery);
+    @NotNull
+    Map<IAttribute, AttrDelta> getAttrAmp(@NotNull IMastery mastery);
 
-    @Nonnull
-    UnlockedPSkillList getUnlockedPSkills(@Nonnull IMastery mastery);
+    @NotNull
+    UnlockedPSkillList getUnlockedPSkills(@NotNull IMastery mastery);
 
-    @Nonnull
-    Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull IMastery mastery);
+    @NotNull
+    Set<IPassiveSkill<?>> getPassiveSkills(@NotNull IMastery mastery);
 
-    @Nonnull
-    default Map<IAttribute, AttrDelta> getAttrAmp(@Nonnull WeaponType weaponType) {
+    @NotNull
+    default Map<IAttribute, AttrDelta> getAttrAmp(@NotNull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getAttrAmp(mastery);
@@ -77,8 +77,8 @@ public interface IMasteryDetail {
         return Collections.emptyMap();
     }
 
-    @Nonnull
-    default UnlockedPSkillList getUnlockedPSkills(@Nonnull WeaponType weaponType) {
+    @NotNull
+    default UnlockedPSkillList getUnlockedPSkills(@NotNull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getUnlockedPSkills(mastery);
@@ -86,8 +86,8 @@ public interface IMasteryDetail {
         return UnlockedPSkillList.Empty;
     }
 
-    @Nonnull
-    default Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull WeaponType weaponType) {
+    @NotNull
+    default Set<IPassiveSkill<?>> getPassiveSkills(@NotNull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getPassiveSkills(mastery);
@@ -95,15 +95,15 @@ public interface IMasteryDetail {
         return Collections.emptySet();
     }
 
-    @Nonnull
-    default AttrDelta getAttrAmpValue(@Nonnull IMastery mastery, @Nonnull IAttribute attribute) {
+    @NotNull
+    default AttrDelta getAttrAmpValue(@NotNull IMastery mastery, @NotNull IAttribute attribute) {
         Map<IAttribute, AttrDelta> map = this.getAttrAmp(mastery);
         AttrDelta res = map.get(attribute);
         return res == null ? attribute.emptyAttrDelta() : res;
     }
 
-    @Nonnull
-    default AttrDelta getAttrAmpValue(@Nonnull WeaponType weaponType, @Nonnull IAttribute attribute) {
+    @NotNull
+    default AttrDelta getAttrAmpValue(@NotNull WeaponType weaponType, @NotNull IAttribute attribute) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             return getAttrAmpValue(mastery, attribute);
@@ -114,9 +114,9 @@ public interface IMasteryDetail {
     @Nullable
     Map<String, LvExpPair> getAllMasteries();
 
-    void resetMastery(@Nonnull IMastery mastery);
+    void resetMastery(@NotNull IMastery mastery);
 
-    default void resetMastery(@Nonnull WeaponType weaponType) {
+    default void resetMastery(@NotNull WeaponType weaponType) {
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
             resetMastery(mastery);

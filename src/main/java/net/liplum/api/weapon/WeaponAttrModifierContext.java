@@ -5,20 +5,19 @@ import net.liplum.attributes.AttrCalculator;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class WeaponAttrModifierContext {
-    @Nonnull
+    @NotNull
     public final ItemStack itemStack;
-    @Nonnull
+    @NotNull
     public final AttrCalculator calculator;
-    @Nonnull
+    @NotNull
     public final EntityEquipmentSlot slot;
-    @Nonnull
+    @NotNull
     public final Multimap<String, AttributeModifier> attrModifierMap;
 
-    public WeaponAttrModifierContext(@Nonnull ItemStack itemStack, @Nonnull AttrCalculator calculator, @Nonnull EntityEquipmentSlot slot, @Nonnull Multimap<String, AttributeModifier> attrModifierMap) {
+    public WeaponAttrModifierContext(@NotNull ItemStack itemStack, @NotNull AttrCalculator calculator, @NotNull EntityEquipmentSlot slot, @NotNull Multimap<String, AttributeModifier> attrModifierMap) {
         this.itemStack = itemStack;
         this.calculator = calculator;
         this.slot = slot;

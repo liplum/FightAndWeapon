@@ -1,8 +1,8 @@
 package net.liplum.api.registeies;
 
 import net.liplum.api.weapon.Cast;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,8 +16,8 @@ public final class CastRegistry {
     private static ArrayList<String> NamesCache = new ArrayList<>();
     private static boolean IsChanged = true;
 
-    @Nonnull
-    public static Cast register(@Nonnull Cast cast) {
+    @NotNull
+    public static Cast register(@NotNull Cast cast) {
         CastMap.put(cast.getRegisterName(), cast);
         IDMap.put(cast.getID(), cast);
         return cast;

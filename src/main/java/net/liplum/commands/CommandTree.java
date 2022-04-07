@@ -4,8 +4,8 @@ import net.liplum.api.annotations.LongSupport;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
 import net.minecraftforge.server.command.CommandTreeBase;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.function.Function;
@@ -13,54 +13,54 @@ import java.util.function.Supplier;
 
 @LongSupport
 public class CommandTree extends CommandTreeBase {
-    @Nonnull
+    @NotNull
     private final String name;
-    @Nonnull
+    @NotNull
     private final Function<ICommandSender, String> usageGetter;
-    @Nonnull
+    @NotNull
     private final List<String> aliases = new LinkedList<>();
 
-    public CommandTree(@Nonnull String name, @Nonnull Function<ICommandSender, String> usageGetter) {
+    public CommandTree(@NotNull String name, @NotNull Function<ICommandSender, String> usageGetter) {
         this.name = name;
         this.usageGetter = usageGetter;
     }
 
-    public CommandTree(@Nonnull String name, @Nonnull String usage) {
+    public CommandTree(@NotNull String name, @NotNull String usage) {
         this(name, (s) -> usage);
     }
 
-    @Nonnull
+    @NotNull
     public CommandTree addSub(ICommand subCommand) {
         this.addSubcommand(subCommand);
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public CommandTree addSub(Supplier<ICommand> subCommandGetter) {
         return this.addSub(subCommandGetter.get());
     }
 
-    @Nonnull
-    public CommandTree addAlias(@Nonnull String alias) {
+    @NotNull
+    public CommandTree addAlias(@NotNull String alias) {
         this.aliases.add(alias);
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public List<String> getAliases() {
         return this.aliases;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return name;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender) {
+    public String getUsage(@NotNull ICommandSender sender) {
         return usageGetter.apply(sender);
     }
 }

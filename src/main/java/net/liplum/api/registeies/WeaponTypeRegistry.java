@@ -3,8 +3,8 @@ package net.liplum.api.registeies;
 import net.liplum.FawMod;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponType;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -16,9 +16,9 @@ public final class WeaponTypeRegistry {
     /**
      * Mustn't register a Weapon Type named "all"
      */
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static WeaponType register(@Nonnull WeaponType weapon) {
+    public static WeaponType register(@NotNull WeaponType weapon) {
         String name = weapon.getRegisterName();
         if (WeaponTypesMap.containsKey(name)) {
             FawMod.Logger.warn("Weapon Type " + name + " has been already registered! Notice whether it override another one unexpectedly.");
@@ -29,12 +29,12 @@ public final class WeaponTypeRegistry {
 
     @Nullable
     @LongSupport
-    public static WeaponType getWeaponTypeOf(@Nonnull String name) {
+    public static WeaponType getWeaponTypeOf(@NotNull String name) {
         return WeaponTypesMap.get(name);
     }
 
     @LongSupport
-    @Nonnull
+    @NotNull
     public static List<String> getAllWeaponTypeNames() {
         if (IsChanged) {
             genNamesCache();
@@ -47,7 +47,7 @@ public final class WeaponTypeRegistry {
         IsChanged = false;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public static Collection<WeaponType> getAllWeaponTypes() {
         return WeaponTypesMap.values();

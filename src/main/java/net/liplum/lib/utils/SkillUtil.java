@@ -14,15 +14,15 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public final class SkillUtil {
 
-    private static void addPassiveSkills(@Nonnull Class<Event> eventType, @Nonnull Set<IPassiveSkill<Event>> allSkills, @Nonnull ItemStack itemStack, @Nonnull EntityLivingBase entity) {
+    private static void addPassiveSkills(@NotNull Class<Event> eventType, @NotNull Set<IPassiveSkill<Event>> allSkills, @NotNull ItemStack itemStack, @NotNull EntityLivingBase entity) {
         Item item = itemStack.getItem();
         if (item instanceof WeaponBaseItem) {
 
@@ -58,9 +58,9 @@ public final class SkillUtil {
         }
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static Collection<IPassiveSkill<Event>> getAvailablePassiveSkills(@Nonnull Class<? extends Event> eventType, @Nonnull EntityLivingBase entity) {
+    public static Collection<IPassiveSkill<Event>> getAvailablePassiveSkills(@NotNull Class<? extends Event> eventType, @NotNull EntityLivingBase entity) {
         Set<IPassiveSkill<Event>> mainHandSkills = new HashSet<>();
         ItemStack mainHandHeld = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
         addPassiveSkills((Class<Event>) eventType, mainHandSkills, mainHandHeld, entity);
@@ -77,17 +77,17 @@ public final class SkillUtil {
     }
 
     @LongSupport
-    public static void onTrigger(@Nonnull EntityLivingBase entity, @Nonnull IPassiveSkill<?> passiveSkill, @Nonnull PSkillResult result) {
+    public static void onTrigger(@NotNull EntityLivingBase entity, @NotNull IPassiveSkill<?> passiveSkill, @NotNull PSkillResult result) {
         if (result.succeed) {
             onCompete(entity, passiveSkill);
         }
     }
 
-    private static void onCompete(@Nonnull EntityLivingBase entity, @Nonnull IPassiveSkill<?> passiveSkill) {
+    private static void onCompete(@NotNull EntityLivingBase entity, @NotNull IPassiveSkill<?> passiveSkill) {
         heatSkill(entity, passiveSkill);
     }
 
-    private static void heatSkill(@Nonnull EntityLivingBase entity, IPassiveSkill<?> passiveSkill) {
+    private static void heatSkill(@NotNull EntityLivingBase entity, IPassiveSkill<?> passiveSkill) {
         IPSkillCoolingTimer timer = PSkillCoolingTimer.create(entity);
         if (passiveSkill.hasCoolDown()) {
             timer.addNewCoolDown(passiveSkill, passiveSkill.getCoolDownTicks());

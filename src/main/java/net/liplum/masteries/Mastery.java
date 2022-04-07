@@ -10,21 +10,21 @@ import net.liplum.attributes.AttrDelta;
 import net.liplum.attributes.Attribute;
 import net.liplum.attributes.IAttribute;
 import net.liplum.lib.math.MathUtil;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 
 public class Mastery implements IMastery {
     public static final int MaxLevel = 99;
-    @Nonnull
+    @NotNull
     private final WeaponType weaponType;
-    @Nonnull
+    @NotNull
     private final HashSet<Map<IAttribute, AttrDelta>> attrAmpsPool = new HashSet<>();
-    @Nonnull
+    @NotNull
     private final HashSet<Set<IPassiveSkill<?>>> pSkillsPool = new HashSet<>();
-    @Nonnull
+    @NotNull
     private final HashSet<UnlockedPSkillList> unlockedPSkillsPool = new HashSet<>();
-    @Nonnull
+    @NotNull
     private Routine routine;
     private ArrayList<Map<IAttribute, AttrDelta>> attrAmpsCache;
     private ArrayList<Set<IPassiveSkill<?>>> pSkillsCache;
@@ -35,20 +35,20 @@ public class Mastery implements IMastery {
      *
      * @param weaponType the corresponding weapon type of this master
      */
-    public Mastery(@Nonnull WeaponType weaponType) {
+    public Mastery(@NotNull WeaponType weaponType) {
         this.weaponType = weaponType;
         this.routine = new Routine();
         genCache();
         MasteryRegistry.register(this);
     }
 
-    @Nonnull
+    @NotNull
     public Routine getRoutine() {
         return routine;
     }
 
-    @Nonnull
-    public Mastery setRoutine(@Nonnull Routine routine) {
+    @NotNull
+    public Mastery setRoutine(@NotNull Routine routine) {
         this.routine = routine;
         genCache();
         return this;
@@ -140,13 +140,13 @@ public class Mastery implements IMastery {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponType getWeaponType() {
         return weaponType;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Map<IAttribute, AttrDelta> getAttributeAmplifiers(int level) {
         if (level < 1) {
@@ -168,7 +168,7 @@ public class Mastery implements IMastery {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Set<IPassiveSkill<?>> getPassiveSkills(int level) {
         if (level < 1) {
@@ -189,7 +189,7 @@ public class Mastery implements IMastery {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public UnlockedPSkillList getUnlockedPassiveSkills(int level) {
         if (level < 1) {

@@ -7,10 +7,11 @@ import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
+@SuppressWarnings("unchecked")
 public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> implements FawArgsGetter, FawArgsSetter<This> {
     private World world;
     private EntityLivingBase attacker;
@@ -23,13 +24,13 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> implements FawAr
     private AttrCalculator calculator;
     private boolean isFullAttack;
 
-    @Nonnull
+    @NotNull
     public World world() {
         return world;
     }
 
-    @Nonnull
-    public This world(@Nonnull World world) {
+    @NotNull
+    public This world(@NotNull World world) {
         this.world = world;
         return (This) this;
     }
@@ -43,35 +44,35 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> implements FawAr
         return attacker;
     }
 
-    @Nonnull
+    @NotNull
     public EntityLivingBase attacker() {
         return attacker;
     }
 
-    @Nonnull
-    public This attacker(@Nonnull EntityLivingBase attacker) {
+    @NotNull
+    public This attacker(@NotNull EntityLivingBase attacker) {
         this.attacker = attacker;
         return (This) this;
     }
 
-    @Nonnull
+    @NotNull
     public Entity target() {
         return target;
     }
 
-    @Nonnull
-    public This target(@Nonnull Entity target) {
+    @NotNull
+    public This target(@NotNull Entity target) {
         this.target = target;
         return (This) this;
     }
 
-    @Nonnull
+    @NotNull
     public WeaponBaseItem weapon() {
         return weapon;
     }
 
-    @Nonnull
-    public This weapon(@Nullable WeaponBaseItem weapon) {
+    @NotNull
+    public This weapon(@NotNull WeaponBaseItem weapon) {
         this.weapon = weapon;
         return (This) this;
     }
@@ -81,37 +82,37 @@ public class WeaponAttackArgs<This extends WeaponAttackArgs<?>> implements FawAr
         return modifier;
     }
 
-    @Nonnull
+    @NotNull
     public This modifier(@Nullable Modifier modifier) {
         this.modifier = modifier;
         return (This) this;
     }
 
-    @Nonnull
+    @NotNull
     public ItemStack itemStack() {
         return itemStack;
     }
 
-    @Nonnull
-    public This itemStack(@Nonnull ItemStack itemStack) {
+    @NotNull
+    public This itemStack(@NotNull ItemStack itemStack) {
         this.itemStack = itemStack;
         return (This) this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public This entity(@Nonnull EntityLivingBase entity) {
+    public This entity(@NotNull EntityLivingBase entity) {
         this.attacker = entity;
         return (This) this;
     }
 
-    @Nonnull
+    @NotNull
     public DamageArgs initialDamage() {
         return initialDamage;
     }
 
-    @Nonnull
-    public This initialDamage(@Nonnull DamageArgs initialDamage) {
+    @NotNull
+    public This initialDamage(@NotNull DamageArgs initialDamage) {
         this.initialDamage = initialDamage;
         return (This) this;
     }

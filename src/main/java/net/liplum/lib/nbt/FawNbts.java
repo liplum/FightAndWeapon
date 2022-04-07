@@ -5,8 +5,7 @@ import net.liplum.lib.utils.Utils;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 //TODO:Complete these notes
 public final class FawNbts {
@@ -122,15 +121,15 @@ public final class FawNbts {
          * @param base
          * @param durability
          */
-        public static void setDurability(@Nonnull NBTTagCompound base, int durability) {
+        public static void setDurability(@NotNull NBTTagCompound base, int durability) {
             Utils.notNullThenDo(base, obj -> obj.setInteger(Tags.BaseSub.Durability, durability));
         }
 
         /**
          * Durability(Durability)-int<br/>
          */
-        @Nonnull
-        public static NBTTagCompound getDurability(@Nonnull NBTTagCompound base) {
+        @NotNull
+        public static NBTTagCompound getDurability(@NotNull NBTTagCompound base) {
             return NbtUtil.getSubCompoundOrCreate(base, Tags.BaseSub.Durability);
         }
     }
@@ -140,15 +139,15 @@ public final class FawNbts {
          * @param base
          * @param weaponPart
          */
-        public static void setWeaponPart(@Nonnull NBTTagCompound base, @Nonnull String weaponPart) {
+        public static void setWeaponPart(@NotNull NBTTagCompound base, @NotNull String weaponPart) {
             Utils.notNullThenDo(base, obj -> obj.setString(Tags.BaseSub.WeaponPart, weaponPart));
         }
 
         /**
          * Durability(Durability)-int<br/>
          */
-        @Nonnull
-        public static String getWeaponPart(@Nonnull NBTTagCompound base) {
+        @NotNull
+        public static String getWeaponPart(@NotNull NBTTagCompound base) {
             return base.getString(Tags.BaseSub.WeaponPart);
         }
     }

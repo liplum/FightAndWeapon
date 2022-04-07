@@ -21,8 +21,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.I18ns.Command.*;
 
@@ -33,7 +32,7 @@ public final class CommandTasks {
 
     public static final ITask ClearOneWeaponTypeCoolDown = new Task() {
         @Override
-        public void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException {
+        public void run(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull Object[] transformedArgs) throws CommandException {
             if (sender instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) sender;
                 WeaponType weaponType = (WeaponType) transformedArgs[0];
@@ -48,7 +47,7 @@ public final class CommandTasks {
 
     public static final ITask ClearAllWeaponTypeCoolDown = new Task() {
         @Override
-        public void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException {
+        public void run(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull Object[] transformedArgs) throws CommandException {
             if (sender instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) sender;
                 FawItemUtil.clearAllWeaponsCoolDown(player);
@@ -62,7 +61,7 @@ public final class CommandTasks {
 
     public static final ITask InlayGemstone = new Task() {
         @Override
-        public void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException {
+        public void run(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull Object[] transformedArgs) throws CommandException {
             if (sender instanceof EntityLivingBase) {
                 EntityLivingBase entity = (EntityLivingBase) sender;
                 IGemstone gemstone = (IGemstone) transformedArgs[0];
@@ -85,7 +84,7 @@ public final class CommandTasks {
 
     public static final ITask RemoveGemstone = new Task() {
         @Override
-        public void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException {
+        public void run(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull Object[] transformedArgs) throws CommandException {
             if (sender instanceof EntityLivingBase) {
                 EntityLivingBase entity = (EntityLivingBase) sender;
                 ItemStack held = entity.getItemStackFromSlot(EntityEquipmentSlot.MAINHAND);
@@ -106,7 +105,7 @@ public final class CommandTasks {
 
     public static final ITask ShowOneMasteryInfo = new Task() {
         @Override
-        public void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException {
+        public void run(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull Object[] transformedArgs) throws CommandException {
             if (sender instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) sender;
                 IMastery mastery = (IMastery) transformedArgs[0];
@@ -121,7 +120,7 @@ public final class CommandTasks {
 
     public static final ITask ShowAllMasteryInfo = new Task() {
         @Override
-        public void run(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull Object[] transformedArgs) throws CommandException {
+        public void run(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull Object[] transformedArgs) throws CommandException {
             if (sender instanceof EntityPlayer) {
                 EntityPlayer player = (EntityPlayer) sender;
                 MasteryUtil.showAllMasteries(player);

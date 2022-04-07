@@ -1,18 +1,18 @@
 package net.liplum.tooltips;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class MiddlewareThroughInArgs {
-    @Nonnull
+    @NotNull
     public final IMiddleware middleware;
 
-    @Nonnull
+    @NotNull
     public final TooltipPart thisResult;
 
-    @Nonnull
+    @NotNull
     public final IPipeContext pipeContext;
 
-    public MiddlewareThroughInArgs(@Nonnull IMiddleware middleware, @Nonnull TooltipPart thisResult, @Nonnull IPipeContext pipeContext) {
+    public MiddlewareThroughInArgs(@NotNull IMiddleware middleware, @NotNull TooltipPart thisResult, @NotNull IPipeContext pipeContext) {
         this.middleware = middleware;
         this.thisResult = thisResult;
         this.pipeContext = pipeContext;

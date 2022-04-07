@@ -2,24 +2,24 @@ package net.liplum.api.fight;
 
 import net.liplum.api.annotations.Developing;
 import net.liplum.api.annotations.LongSupport;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Map;
 
 @LongSupport
 public interface IPSkillCoolingTimer {
     @LongSupport
-    void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks);
+    void addNewCoolDown(@NotNull IPassiveSkill<?> passiveSkill, int coolDownTicks);
 
     @LongSupport
-    boolean isInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill);
+    boolean isInCoolingDown(@NotNull IPassiveSkill<?> passiveSkill);
 
     @LongSupport
     void tick();
 
     @LongSupport
-    default boolean isNotInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill) {
+    default boolean isNotInCoolingDown(@NotNull IPassiveSkill<?> passiveSkill) {
         return !isInCoolingDown(passiveSkill);
     }
 

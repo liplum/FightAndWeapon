@@ -1,9 +1,9 @@
 package net.liplum.tooltips;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public interface IPipeContext {
-    @Nonnull
+    @NotNull
     TooltipContext getContext();
 
     int getAllMiddlewareCount();

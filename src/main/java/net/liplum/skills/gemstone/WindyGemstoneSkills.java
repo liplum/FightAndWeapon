@@ -10,16 +10,15 @@ import net.liplum.lib.utils.EntityUtil;
 import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraftforge.event.entity.living.LivingFallEvent;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @Developing
 public final class WindyGemstoneSkills {
     public final static IPassiveSkill<WeaponAttackEvent.Attacked> Levitation =
             new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.Levitation, WeaponAttackEvent.Attacked.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
+                public PSkillResult onTrigger(@NotNull WeaponAttackEvent.Attacked event) {
                     WeaponAttackEvent.Attacked.Args args = event.getArgs();
                     if (args.attacker().isServerWorld() && args.isHitSuccessfully() && args.isFullAttack()) {
                         EntityUtil.ifLivingThenDO(args.target(), e ->
@@ -33,9 +32,9 @@ public final class WindyGemstoneSkills {
     public final static IPassiveSkill<LivingFallEvent> Feather =
             new PassiveSkill<LivingFallEvent>(Names.PassiveSkill.Feather, LivingFallEvent.class) {
 
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull LivingFallEvent event) {
+                public PSkillResult onTrigger(@NotNull LivingFallEvent event) {
                     event.setCanceled(true);
                     return PSkillResult.CancelTrigger;
                 }

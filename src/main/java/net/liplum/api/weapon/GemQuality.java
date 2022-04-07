@@ -1,15 +1,15 @@
 package net.liplum.api.weapon;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class GemQuality implements Comparable<GemQuality> {
-    @Nonnull
+    @NotNull
     public static final GemQuality None = new GemQuality(Integer.MIN_VALUE, 64);
-    @Nonnull
+    @NotNull
     public static final GemQuality Low = new GemQuality(-500, 16);
-    @Nonnull
+    @NotNull
     public static final GemQuality Middle = new GemQuality(0, 1);
-    @Nonnull
+    @NotNull
     public static final GemQuality High = new GemQuality(500, 1);
     private final int number;
     private final int maxItemStackSize;

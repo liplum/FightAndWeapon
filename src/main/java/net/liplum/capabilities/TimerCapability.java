@@ -17,15 +17,15 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 @LongSupport
 public class TimerCapability implements INBTSerializable<NBTTagCompound> {
-    @Nonnull
+    @NotNull
     private Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills = new HashMap<>();
 
     private boolean dirty = false;
@@ -65,21 +65,21 @@ public class TimerCapability implements INBTSerializable<NBTTagCompound> {
         return needSync;
     }
 
-    public void addNewCoolDown(@Nonnull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
+    public void addNewCoolDown(@NotNull IPassiveSkill<?> passiveSkill, int coolDownTicks) {
         coolingPassiveSkills.put(passiveSkill, new CoolDown(coolDownTicks));
         markDirty();
     }
 
-    @Nonnull
+    @NotNull
     public Map<IPassiveSkill<?>, CoolDown> getCoolingPassiveSkills() {
         return coolingPassiveSkills;
     }
 
-    public void setCoolingPassiveSkills(@Nonnull Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills) {
+    public void setCoolingPassiveSkills(@NotNull Map<IPassiveSkill<?>, CoolDown> coolingPassiveSkills) {
         this.coolingPassiveSkills = coolingPassiveSkills;
     }
 
-    public boolean isInCoolingDown(@Nonnull IPassiveSkill<?> passiveSkill) {
+    public boolean isInCoolingDown(@NotNull IPassiveSkill<?> passiveSkill) {
         CoolDown coolDown = coolingPassiveSkills.get(passiveSkill);
         if (coolDown != null) {
             return coolDown.isInCoolingDown();

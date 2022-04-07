@@ -1,9 +1,9 @@
 package net.liplum.commands;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class AmbiguityCommandException extends RuntimeException {
-    public AmbiguityCommandException(@Nonnull String commandName, int allMatchedTasks) {
+    public AmbiguityCommandException(@NotNull String commandName, int allMatchedTasks) {
         super(commandName + " has " + allMatchedTasks + " matches");
     }
 }

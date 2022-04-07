@@ -8,16 +8,15 @@ import cern.colt.matrix.linalg.Algebra;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class P2D {
 
     public static final Vector2D iY = new Vector2D(0, 1);
     public static final Vector2D iX = new Vector2D(1, 0);
 
-    @Nonnull
-    public static Vector2D toV2D(@Nonnull Vec3d v3d) {
+    @NotNull
+    public static Vector2D toV2D(@NotNull Vec3d v3d) {
         return new Vector2D(v3d.x, v3d.z);
     }
 
@@ -94,11 +93,11 @@ public class P2D {
         });
     }
 
-    public static Point3D toPoint(@Nonnull Vec3d v3d) {
+    public static Point3D toPoint(@NotNull Vec3d v3d) {
         return new Point3D(v3d.x, v3d.y, v3d.z);
     }
 
-    public static Point2D toPosition(@Nonnull Entity e) {
+    public static Point2D toPosition(@NotNull Entity e) {
         return new Point2D(e.posX, e.posZ);
     }
 }

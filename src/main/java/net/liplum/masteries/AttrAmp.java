@@ -2,31 +2,31 @@ package net.liplum.masteries;
 
 import net.liplum.attributes.DataType;
 import net.liplum.attributes.IAttribute;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashSet;
 import java.util.Set;
 
 public class AttrAmp {
     private static final Set<AttrAmp> Pool = new HashSet<>();
-    @Nonnull
+    @NotNull
     private String attributeName = "";
-    @Nonnull
+    @NotNull
     private DataType type = DataType.Int;
-    @Nonnull
+    @NotNull
     private Number value = 0;
 
     private AttrAmp() {
     }
 
-    public AttrAmp(@Nonnull String attributeName, @Nonnull DataType type, @Nonnull Number value) {
+    public AttrAmp(@NotNull String attributeName, @NotNull DataType type, @NotNull Number value) {
         this.attributeName = attributeName;
         this.type = type;
         this.value = value;
     }
 
-    @Nonnull
-    public static AttrAmp create(@Nonnull IAttribute attribute, @Nonnull Number number) {
+    @NotNull
+    public static AttrAmp create(@NotNull IAttribute attribute, @NotNull Number number) {
         AttrAmp amp = new AttrAmp(attribute.getRegisterName(), attribute.getDataType(), number);
         if (Pool.stream().noneMatch(amp::equals)) {
             Pool.add(amp);
@@ -38,32 +38,32 @@ public class AttrAmp {
         Pool.clear();
     }
 
-    @Nonnull
+    @NotNull
     public String getAttributeName() {
         return attributeName;
     }
 
-    public AttrAmp setAttributeName(@Nonnull String attributeName) {
+    public AttrAmp setAttributeName(@NotNull String attributeName) {
         this.attributeName = attributeName;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public DataType getType() {
         return type;
     }
 
-    public AttrAmp setType(@Nonnull DataType type) {
+    public AttrAmp setType(@NotNull DataType type) {
         this.type = type;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public Number getValue() {
         return value;
     }
 
-    public AttrAmp setValue(@Nonnull Number value) {
+    public AttrAmp setValue(@NotNull Number value) {
         this.value = value;
         return this;
     }

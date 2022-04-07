@@ -7,16 +7,15 @@ import net.liplum.api.fight.PSkillResult;
 import net.liplum.api.fight.PassiveSkill;
 import net.minecraft.util.DamageSource;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @Developing
 public final class RubySkills {
     public final static IPassiveSkill<LivingHurtEvent> FireResistance =
             new PassiveSkill<LivingHurtEvent>(Names.PassiveSkill.FireResistance, LivingHurtEvent.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull LivingHurtEvent event) {
+                public PSkillResult onTrigger(@NotNull LivingHurtEvent event) {
                     DamageSource source = event.getSource();
                     if (source.isFireDamage()) {
                         float dmg = event.getAmount();

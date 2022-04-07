@@ -28,8 +28,8 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.common.MinecraftForge;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashSet;
 import java.util.List;
@@ -47,7 +47,7 @@ public final class LanceCores {
     public static final LanceCore TrainingLance = new LanceCore(Names.Item.Lance.TrainingLanceItem, false) {
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     Strength, 5
@@ -57,7 +57,7 @@ public final class LanceCores {
 
     public static final LanceCore LightLance = new LanceCore(Names.Item.Lance.LightLanceItem) {
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             boolean canceled = MinecraftForge.EVENT_BUS.post(new LanceSprintEvent(args));
             if (canceled) {
                 return false;
@@ -99,7 +99,7 @@ public final class LanceCores {
         }
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     //  It means you can dash 4 units.
@@ -119,7 +119,7 @@ public final class LanceCores {
     public static final LanceCore KnightLance = new LanceCore(Names.Item.Lance.KnightLanceItem) {
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             WeaponBaseItem weapon = args.weapon();
@@ -147,7 +147,7 @@ public final class LanceCores {
         }
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     SprintStrength, 4F
@@ -161,7 +161,7 @@ public final class LanceCores {
 
     public static final LanceCore ArenaLance = new LanceCore(Names.Item.Lance.ArenaLanceItem) {
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
             World world = args.world();
             double x = player.posX,
@@ -216,7 +216,7 @@ public final class LanceCores {
 
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     CoolDown, 10 * 20
@@ -228,7 +228,7 @@ public final class LanceCores {
 
     public static final LanceCore DrillLance = new LanceCore(Names.Item.Lance.DrillLanceItem) {
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
             EnumHand hand = args.hand();
             player.setActiveHand(hand);
@@ -236,12 +236,12 @@ public final class LanceCores {
         }
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.add(
                     new ItemProperty(Names.Item.Lance.DrillLanceItem_Property_Drilling) {
                         @Override
-                        public float apply(@Nonnull ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
+                        public float apply(@NotNull ItemStack stack, @Nullable World worldIn, @Nullable EntityLivingBase entityIn) {
                             if (entityIn == null) {
                                 return 0F;
                             }
@@ -264,7 +264,7 @@ public final class LanceCores {
         }
 
         @Override
-        public boolean onContinuousEffectStop(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int tickLeft) {
+        public boolean onContinuousEffectStop(@NotNull WeaponSkillArgs args, int totalTicksUsed, int tickLeft) {
             //TODO:To be continued
             EntityLivingBase player = args.entity();
             ItemStack itemStack = args.itemStack();
@@ -308,7 +308,7 @@ public final class LanceCores {
         }
 
         @Override
-        public void onContinuousEffectTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
+        public void onContinuousEffectTick(@NotNull WeaponSkillArgs args, int totalTicksUsed) {
             if (totalTicksUsed % 20 == 0) {
                 EntityLivingBase player = args.entity();
 
@@ -338,7 +338,7 @@ public final class LanceCores {
 
     public static final LanceCore TestLance = new LanceCore(Names.Item.EmptyCore) {
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
 
             AttrCalculator calculator = args.calculator();
@@ -355,7 +355,7 @@ public final class LanceCores {
         }
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     SprintStrength, 10F

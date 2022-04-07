@@ -2,17 +2,16 @@ package net.liplum.api.fight;
 
 import net.liplum.api.annotations.Require;
 import net.minecraftforge.fml.common.eventhandler.Event;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public interface IPassiveSkill<EventType extends Event> {
-    @Nonnull
+    @NotNull
     IEventTypeArgs getEventTypeArgs();
 
-    @Nonnull
-    PSkillResult onTrigger(@Nonnull EventType event);
+    @NotNull
+    PSkillResult onTrigger(@NotNull EventType event);
 
-    @Nonnull
+    @NotNull
     String getRegisterName();
 
     default boolean isShownInTooltip() {

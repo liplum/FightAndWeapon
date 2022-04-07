@@ -5,8 +5,8 @@ import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.fight.IEventTypeArgs;
 import net.liplum.api.fight.IPassiveSkill;
 import net.minecraftforge.fml.common.eventhandler.Event;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -18,9 +18,9 @@ public final class SkillRegistry {
     private static final Map<Class<?>, Set<IPassiveSkill<?>>> EventTypePassiveSkillMap = new HashMap<>();
     private static final Map<String, IPassiveSkill<?>> AllPassiveSkills = new HashMap<>();
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    public static <T extends IPassiveSkill<? extends Event>> T register(@Nonnull T passiveSkill) {
+    public static <T extends IPassiveSkill<? extends Event>> T register(@NotNull T passiveSkill) {
         String name = passiveSkill.getRegisterName();
         if (AllPassiveSkills.containsKey(name)) {
             FawMod.Logger.warn("Passive Skill " + name + " has been already registered! Notice whether it override another one unexpectedly.");
@@ -48,7 +48,7 @@ public final class SkillRegistry {
      */
     @Nullable
     @LongSupport
-    public static IPassiveSkill<?> getPassiveSkillsFromName(@Nonnull String registerName) {
+    public static IPassiveSkill<?> getPassiveSkillsFromName(@NotNull String registerName) {
         if (AllPassiveSkills.containsKey(registerName)) {
             return AllPassiveSkills.get(registerName);
         }
@@ -60,7 +60,7 @@ public final class SkillRegistry {
      * @return all the passive skills or null if there's no responding passive skill registered of this event.
      */
     @Nullable
-    public static IPassiveSkill<?>[] getPassiveSkillsFromEvent(@Nonnull Class<? extends Event> eventType) {
+    public static IPassiveSkill<?>[] getPassiveSkillsFromEvent(@NotNull Class<? extends Event> eventType) {
         if (EventTypePassiveSkillMap.containsKey(eventType)) {
             return EventTypePassiveSkillMap.get(eventType).toArray(new IPassiveSkill[0]);
         }

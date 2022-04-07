@@ -12,8 +12,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +22,7 @@ import java.util.stream.Collectors;
 public final class ItemGroupRegistry {
     public static ItemGroup FawGemstones = new ItemGroup(Names.ItemGroup.FawGemstones) {
         @Override
-        protected void sortDisplayedItems(@Nonnull NonNullList<ItemStack> currentItemGroupItems) {
+        protected void sortDisplayedItems(@NotNull NonNullList<ItemStack> currentItemGroupItems) {
             Map<GemQuality, List<ItemStack>> grouped = currentItemGroupItems.stream()
                     .filter(FawItemUtil::isGemstone)
                     .collect(Collectors.groupingBy(itemStack -> {
@@ -49,7 +49,7 @@ public final class ItemGroupRegistry {
     public static ItemGroup FawWeapons = new ItemGroup(Names.ItemGroup.FawWeapons) {
         @Override
         @SideOnly(Side.CLIENT)
-        protected void sortDisplayedItems(@Nonnull NonNullList<ItemStack> currentItemGroupItems) {
+        protected void sortDisplayedItems(@NotNull NonNullList<ItemStack> currentItemGroupItems) {
             Map<Object, List<ItemStack>> grouped = currentItemGroupItems.stream()
                     .collect(Collectors.groupingBy(itemStack -> {
                         Item item = itemStack.getItem();

@@ -35,8 +35,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
@@ -45,15 +45,15 @@ import static net.liplum.Attributes.Generic.MaxUseDuration;
 
 @LongSupport
 public abstract class WeaponBaseItem extends FawItem {
-    @Nonnull
+    @NotNull
     protected final FixedAttrCalculator onlyCoreCalculator;
-    @Nonnull
+    @NotNull
     private final WeaponCore weaponCore;
-    @Nonnull
+    @NotNull
     private final WeaponType weaponType;
 
     @LongSupport
-    public WeaponBaseItem(@Nonnull WeaponCore weaponCore) {
+    public WeaponBaseItem(@NotNull WeaponCore weaponCore) {
         super();
         this.weaponCore = weaponCore;
         this.weaponType = weaponCore.getWeaponType();
@@ -75,7 +75,7 @@ public abstract class WeaponBaseItem extends FawItem {
     }
 
     @Override
-    public boolean showDurabilityBar(@Nonnull ItemStack stack) {
+    public boolean showDurabilityBar(@NotNull ItemStack stack) {
         return super.showDurabilityBar(stack);
     }
 
@@ -86,7 +86,7 @@ public abstract class WeaponBaseItem extends FawItem {
 
     @SideOnly(Side.CLIENT)
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(@NotNull ItemStack stack, @Nullable World worldIn, @NotNull List<String> tooltip, @NotNull ITooltipFlag flagIn) {
         EntityPlayerSP player = Minecraft.getMinecraft().player;
         if (player == null) {
             return;
@@ -117,7 +117,7 @@ public abstract class WeaponBaseItem extends FawItem {
     }
 
     @Override
-    public int getMaxItemUseDuration(@Nonnull ItemStack stack) {
+    public int getMaxItemUseDuration(@NotNull ItemStack stack) {
         return onlyCoreCalculator.calcu(MaxUseDuration).getInt();
     }
 
@@ -130,7 +130,7 @@ public abstract class WeaponBaseItem extends FawItem {
      * @param damage
      * @return true if the target was hit.
      */
-    public boolean dealDamage(@Nonnull FawDamage fawDamage, @Nonnull Entity target, float damage) {
+    public boolean dealDamage(@NotNull FawDamage fawDamage, @NotNull Entity target, float damage) {
         FawBehaviors.onCauseDamageWithWeapon(fawDamage.attacker(), this, fawDamage.itemStack(), target, damage);
         return target.attackEntityFrom(fawDamage, damage);
     }
@@ -145,17 +145,17 @@ public abstract class WeaponBaseItem extends FawItem {
      * @param damage
      * @return true if the target was hit.
      */
-    public boolean dealDamage(@Nonnull ItemStack stack, @Nonnull EntityLivingBase attacker, @Nonnull Entity target, @Nonnull DamageSource damageSource, float damage) {
+    public boolean dealDamage(@NotNull ItemStack stack, @NotNull EntityLivingBase attacker, @NotNull Entity target, @NotNull DamageSource damageSource, float damage) {
         FawBehaviors.onCauseDamageWithWeapon(attacker, this, stack, target, damage);
         return target.attackEntityFrom(damageSource, damage);
     }
 
-    public boolean attackEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
+    public boolean attackEntity(@NotNull ItemStack stack, @NotNull EntityPlayer player, @NotNull Entity entity) {
         return FawItemUtil.attackEntity(stack, this, player, entity);
     }
 
     @Override
-    public boolean onLeftClickEntity(@Nonnull ItemStack stack, @Nonnull EntityPlayer player, @Nonnull Entity entity) {
+    public boolean onLeftClickEntity(@NotNull ItemStack stack, @NotNull EntityPlayer player, @NotNull Entity entity) {
         return weaponCore.getLeftClickEntityBehavior().onLeftClickEntity(this, stack, player, entity);
     }
 
@@ -176,16 +176,16 @@ public abstract class WeaponBaseItem extends FawItem {
     }
 
     @Override
-    public boolean onBlockDestroyed(@Nonnull ItemStack stack, @Nonnull World worldIn, @Nonnull IBlockState state, @Nonnull BlockPos pos, @Nonnull EntityLivingBase entityLiving) {
+    public boolean onBlockDestroyed(@NotNull ItemStack stack, @NotNull World worldIn, @NotNull IBlockState state, @NotNull BlockPos pos, @NotNull EntityLivingBase entityLiving) {
         if ((int) state.getBlockHardness(worldIn, pos) != 0) {
             stack.damageItem(2, entityLiving);
         }
         return true;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public Multimap<String, AttributeModifier> getAttributeModifiers(@Nonnull EntityEquipmentSlot slot, @Nonnull ItemStack stack) {
+    public Multimap<String, AttributeModifier> getAttributeModifiers(@NotNull EntityEquipmentSlot slot, @NotNull ItemStack stack) {
         Multimap<String, AttributeModifier> map = super.getAttributeModifiers(slot, stack);
         Modifier modifier = GemUtil.getModifierFrom(stack);
         WeaponAttrModifierContext context = new WeaponAttrModifierContext(stack, new AttrCalculator()
@@ -201,36 +201,36 @@ public abstract class WeaponBaseItem extends FawItem {
      *
      * @return A core of this weapon.
      */
-    @Nonnull
+    @NotNull
     @LongSupport
     public final WeaponCore getCore() {
         return weaponCore;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public abstract WeaponCore getConcreteCore();
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public WeaponType getWeaponType() {
         return weaponType;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public EnumAction getItemUseAction(@Nonnull ItemStack stack) {
+    public EnumAction getItemUseAction(@NotNull ItemStack stack) {
         return weaponCore.getRightClickUseAction();
     }
 
     @Override
-    public boolean hasCustomEntity(@Nonnull ItemStack stack) {
+    public boolean hasCustomEntity(@NotNull ItemStack stack) {
         return true;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public Entity createEntity(@Nonnull World world, Entity location, @Nonnull ItemStack itemstack) {
+    public Entity createEntity(@NotNull World world, Entity location, @NotNull ItemStack itemstack) {
         EntityItem entity = new FawWeaponItemEntity(world, location.posX, location.posY, location.posZ, itemstack);
         if (location instanceof EntityItem) {
             EntityItem item = (EntityItem) location;
@@ -243,7 +243,7 @@ public abstract class WeaponBaseItem extends FawItem {
     }
 
     @Override
-    public int getMaxDamage(@Nonnull ItemStack stack) {
+    public int getMaxDamage(@NotNull ItemStack stack) {
         AttrCalculator calculator = new AttrCalculator(this)
                 .modifier(GemUtil.getModifierFrom(stack));
         return calculator.calcu(Durability).getInt();

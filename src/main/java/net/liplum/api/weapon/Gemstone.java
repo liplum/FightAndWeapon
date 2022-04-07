@@ -2,8 +2,8 @@ package net.liplum.api.weapon;
 
 import net.liplum.api.fight.IPassiveSkill;
 import net.liplum.api.registeies.GemstoneRegistry;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 import java.util.stream.Stream;
@@ -23,7 +23,7 @@ public class Gemstone implements IGemstone {
      *
      * @param registerName the name to register itself
      */
-    public Gemstone(@Nonnull String registerName) {
+    public Gemstone(@NotNull String registerName) {
         this(registerName, GemQuality.None, Integer.MAX_VALUE);
     }
 
@@ -32,7 +32,7 @@ public class Gemstone implements IGemstone {
      *
      * @param registerName the name to register itself
      */
-    public Gemstone(@Nonnull String registerName, int displayedOrderID) {
+    public Gemstone(@NotNull String registerName, int displayedOrderID) {
         this(registerName, GemQuality.None, displayedOrderID);
     }
 
@@ -41,7 +41,7 @@ public class Gemstone implements IGemstone {
      *
      * @param registerName the name to register itself
      */
-    public Gemstone(@Nonnull String registerName, @Nonnull GemQuality quality) {
+    public Gemstone(@NotNull String registerName, @NotNull GemQuality quality) {
         this(registerName, quality, Integer.MAX_VALUE);
     }
 
@@ -50,7 +50,7 @@ public class Gemstone implements IGemstone {
      *
      * @param registerName the name to register itself
      */
-    public Gemstone(@Nonnull String registerName, @Nonnull GemQuality quality, int displayedOrderID) {
+    public Gemstone(@NotNull String registerName, @NotNull GemQuality quality, int displayedOrderID) {
         this.registerName = registerName;
         this.gemQuality = quality;
         this.displayedOrderID = displayedOrderID;
@@ -111,7 +111,7 @@ public class Gemstone implements IGemstone {
 
     /**
      * @param core
-     * @return the modifier or null if it didn't has a corresponding modifier of the core in this gemstone.
+     * @return the modifier or null if it didn't have a corresponding modifier of the core in this gemstone.
      */
     @Override
     @Nullable
@@ -119,7 +119,7 @@ public class Gemstone implements IGemstone {
         return amplifierOfCores.getModifierOf(core);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponCore core) {
         Collection<IPassiveSkill<?>> psFromAll = amplifierOfAllWeaponTypes.getPassiveSkills();
@@ -224,7 +224,7 @@ public class Gemstone implements IGemstone {
         return displayedOrderID;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public GemQuality getQuality() {
         return gemQuality;
@@ -249,7 +249,7 @@ public class Gemstone implements IGemstone {
             return false;
         }
 
-        @Nonnull
+        @NotNull
         public Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponCore core) {
             if (this.amplifiers.containsKey(core)) {
                 return this.amplifiers.get(core).getPassiveSkills();
@@ -303,7 +303,7 @@ public class Gemstone implements IGemstone {
                 this.modifier = modifier;
             }
 
-            @Nonnull
+            @NotNull
             public Collection<IPassiveSkill<?>> getPassiveSkills() {
                 return passiveSkills;
             }
@@ -329,7 +329,7 @@ public class Gemstone implements IGemstone {
     private static class AmplifierOfWeaponTypes {
         private final Map<WeaponType, Set<IPassiveSkill<?>>> amplifiers = new HashMap<>();
 
-        @Nonnull
+        @NotNull
         public Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponType weaponType) {
             if (amplifiers.containsKey(weaponType)) {
                 return amplifiers.get(weaponType);
@@ -361,7 +361,7 @@ public class Gemstone implements IGemstone {
     private static class AmplifierOfAllWeaponTypes {
         private final Set<IPassiveSkill<?>> amplifiers = new HashSet<>();
 
-        @Nonnull
+        @NotNull
         public Collection<IPassiveSkill<?>> getPassiveSkills() {
             return amplifiers;
         }

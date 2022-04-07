@@ -8,8 +8,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.event.entity.item.ItemExpireEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
 public class IndestructibleItemEntity extends EntityItem {
@@ -36,7 +35,7 @@ public class IndestructibleItemEntity extends EntityItem {
     }
 
     @Override
-    public boolean attackEntityFrom(@Nonnull DamageSource source, float amount) {
+    public boolean attackEntityFrom(@NotNull DamageSource source, float amount) {
         if (source.getDamageType().equals(DamageSource.OUT_OF_WORLD.getDamageType())) {
             return true;
         }

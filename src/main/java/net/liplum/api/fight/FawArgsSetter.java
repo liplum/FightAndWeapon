@@ -5,24 +5,23 @@ import net.liplum.api.weapon.Modifier;
 import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @LongSupport
 public interface FawArgsSetter<T extends FawArgsSetter<?>> {
-    @Nonnull
+    @NotNull
     @LongSupport
-    T weapon(@Nonnull WeaponBaseItem weaponz);
+    T weapon(@NotNull WeaponBaseItem weaponz);
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    T modifier(@Nonnull Modifier modifier);
+    T modifier(@NotNull Modifier modifier);
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    T itemStack(@Nonnull ItemStack itemStack);
+    T itemStack(@NotNull ItemStack itemStack);
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    T entity(@Nonnull EntityLivingBase entity);
+    T entity(@NotNull EntityLivingBase entity);
 }

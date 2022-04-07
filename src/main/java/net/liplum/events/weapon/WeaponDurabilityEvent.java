@@ -4,27 +4,26 @@ import net.liplum.api.weapon.WeaponBaseItem;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.common.eventhandler.Event;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public abstract class WeaponDurabilityEvent extends Event {
-    @Nonnull
+    @NotNull
     public final ItemStack itemStack;
-    @Nonnull
+    @NotNull
     public final WeaponBaseItem weaponItem;
-    @Nonnull
+    @NotNull
     public final EntityLivingBase entity;
 
     private int amount;
 
-    public WeaponDurabilityEvent(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem,
-                                 @Nonnull EntityLivingBase entity) {
+    public WeaponDurabilityEvent(@NotNull ItemStack itemStack, @NotNull WeaponBaseItem weaponItem,
+                                 @NotNull EntityLivingBase entity) {
         this(itemStack, weaponItem, entity, 0);
     }
 
-    public WeaponDurabilityEvent(@Nonnull ItemStack itemStack,
-                                 @Nonnull WeaponBaseItem weaponItem,
-                                 @Nonnull EntityLivingBase entity, int amount) {
+    public WeaponDurabilityEvent(@NotNull ItemStack itemStack,
+                                 @NotNull WeaponBaseItem weaponItem,
+                                 @NotNull EntityLivingBase entity, int amount) {
         this.itemStack = itemStack;
         this.weaponItem = weaponItem;
         this.entity = entity;
@@ -41,11 +40,11 @@ public abstract class WeaponDurabilityEvent extends Event {
 
     public static class Healed extends WeaponDurabilityEvent {
 
-        public Healed(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem, @Nonnull EntityLivingBase entity) {
+        public Healed(@NotNull ItemStack itemStack, @NotNull WeaponBaseItem weaponItem, @NotNull EntityLivingBase entity) {
             super(itemStack, weaponItem, entity);
         }
 
-        public Healed(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem, @Nonnull EntityLivingBase entity, int amount) {
+        public Healed(@NotNull ItemStack itemStack, @NotNull WeaponBaseItem weaponItem, @NotNull EntityLivingBase entity, int amount) {
             super(itemStack, weaponItem, entity, amount);
         }
 
@@ -53,11 +52,11 @@ public abstract class WeaponDurabilityEvent extends Event {
 
     public static class Damaged extends WeaponDurabilityEvent {
 
-        public Damaged(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem, @Nonnull EntityLivingBase entity) {
+        public Damaged(@NotNull ItemStack itemStack, @NotNull WeaponBaseItem weaponItem, @NotNull EntityLivingBase entity) {
             super(itemStack, weaponItem, entity);
         }
 
-        public Damaged(@Nonnull ItemStack itemStack, @Nonnull WeaponBaseItem weaponItem, @Nonnull EntityLivingBase entity, int amount) {
+        public Damaged(@NotNull ItemStack itemStack, @NotNull WeaponBaseItem weaponItem, @NotNull EntityLivingBase entity, int amount) {
             super(itemStack, weaponItem, entity, amount);
         }
     }

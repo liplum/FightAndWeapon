@@ -16,8 +16,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.*;
@@ -33,7 +33,7 @@ public final class HarpCores {
         }
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             return false;
         }
     };
@@ -41,7 +41,7 @@ public final class HarpCores {
     public static final HarpCore Normal = new HarpCore(Names.Item.Harp.HarpItem) {
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     AbilityPower, 5F
@@ -107,7 +107,7 @@ public final class HarpCores {
         }
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             AttrCalculator calculator = args.calculator();

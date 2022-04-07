@@ -20,8 +20,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.EnumAction;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.*;
 import java.util.function.Function;
 
@@ -30,7 +30,7 @@ import static net.liplum.TooltipMiddlewares.*;
 
 @LongSupport
 public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
-    @Nonnull
+    @NotNull
     public static final Function<WeaponAttrModifierContext, AttributeModifier> AttackReachModifier = context -> {
         float attackSpeed = context.calculator.calcu(AttackSpeed).getFloat();
         if (AttackSpeed.isNotDefaultValue(attackSpeed)) {
@@ -42,7 +42,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         }
         return null;
     };
-    @Nonnull
+    @NotNull
     private static final ILeftClickEntityBehavior DefaultLeftClickEntityBehavior = (weapon, stack, attacker, target) -> {
         AttrCalculator calculator = new AttrCalculator(weapon);
         if (BoolAttribute.toBool(calculator.calcu(SpecialAttackReachJudgment))) {
@@ -59,47 +59,47 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
             return weapon.attackEntity(stack, attacker, target);
         }
     };
-    @Nonnull
+    @NotNull
     private static final TooltipPipe DefaultPipe = new TooltipPipe()
             .addMiddleware(AutoAddSpaceLine)
             .addMiddleware(new AggregateThroughable(ShowWeaponType, ShowGemstone, ShowWeaponSkillTip))
             .addMiddleware(ShowAttributes)
             .addMiddleware(ShowPassiveSkills);
-    @Nonnull
+    @NotNull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
-    @Nonnull
+    @NotNull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
-    @Nonnull
+    @NotNull
     private final Map<IAttribute, BasicAttrValue> AttributeValueMap = new HashMap<>();
-    @Nonnull
+    @NotNull
     private final List<IAttribute> allAttributes = new LinkedList<>();
-    @Nonnull
+    @NotNull
     private final List<IPassiveSkill<?>> weaponPassiveSkills = new LinkedList<>();
-    @Nonnull
+    @NotNull
     private final Map<Integer, IPassiveSkill<?>> lockedPassiveSkills = new HashMap<>();
-    @Nonnull
+    @NotNull
     private final List<ItemProperty> itemProperties = new LinkedList<>();
-    @Nonnull
+    @NotNull
     private final String registerName;
     private final boolean hasWeaponSkill;
-    @Nonnull
+    @NotNull
     private IWeaponSkillPredicate weaponSkillPredicate;
-    @Nonnull
+    @NotNull
     private EnumAction rightClickUseAction = EnumAction.NONE;
-    @Nonnull
+    @NotNull
     private ILeftClickEntityBehavior leftClickEntityBehavior = DefaultLeftClickEntityBehavior;
-    @Nonnull
+    @NotNull
     private TooltipPipe tooltipPipe = TooltipPipe.Empty;
 
     private boolean hasContinuousEffect = false;
 
     @LongSupport
-    public WeaponCore(@Nonnull String registerName) {
+    public WeaponCore(@NotNull String registerName) {
         this(registerName, true);
     }
 
     @LongSupport
-    public WeaponCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+    public WeaponCore(@NotNull String registerName, boolean hasWeaponSkill) {
         this.registerName = registerName;
         this.hasWeaponSkill = hasWeaponSkill;
         weaponSkillPredicate = getWeaponType().getWeaponSkillPredicate();
@@ -112,13 +112,13 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         build(builder);
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public List<IPassiveSkill<?>> getWeaponPassiveSkills() {
         return weaponPassiveSkills;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public ILeftClickEntityBehavior getLeftClickEntityBehavior() {
         return leftClickEntityBehavior;
@@ -133,7 +133,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         attributes.addAll(Attribute.getAllBasicAttributes());
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public List<IAttribute> getAllAttributes() {
         return allAttributes;
@@ -144,21 +144,21 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
         return hasWeaponSkill;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public EnumAction getRightClickUseAction() {
         return rightClickUseAction;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public List<ItemProperty> getItemProperties() {
         return itemProperties;
     }
 
-    @Nonnull
+    @NotNull
     @Developing
-    public Set<IPassiveSkill<?>> unlockPassiveSkills(@Nonnull UnlockedPSkillList list) {
+    public Set<IPassiveSkill<?>> unlockPassiveSkills(@NotNull UnlockedPSkillList list) {
         Set<IPassiveSkill<?>> skills = new HashSet<>();
         for (int slot : list.getSlots()) {
             IPassiveSkill<?> skill = lockedPassiveSkills.get(slot);
@@ -176,9 +176,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      * @return the value or delta which can be used to compute final attribute value.<br/>
      * If this didn't contain any attribute value which can match the attribute type, it would throw {@link NotHasSuchAttributeException}.
      */
-    @Nonnull
+    @NotNull
     @Override
-    public BasicAttrValue getValue(@Nonnull IAttribute attribute) {
+    public BasicAttrValue getValue(@NotNull IAttribute attribute) {
         BasicAttrValue basicAttrValue = AttributeValueMap.get(attribute);
         if (basicAttrValue == null) {
             throw new NotHasSuchAttributeException(attribute);
@@ -187,7 +187,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @LongSupport
-    public void applyAttrModifier(@Nonnull WeaponAttrModifierContext context) {
+    public void applyAttrModifier(@NotNull WeaponAttrModifierContext context) {
         EntityEquipmentSlot slot = context.slot;
         Multimap<String, AttributeModifier> map = context.attrModifierMap;
         switch (slot) {
@@ -218,9 +218,9 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      * @param builder the weapon core builder
      */
     @LongSupport
-    protected void build(@Nonnull WeaponCoreBuilder builder) {
+    protected void build(@NotNull WeaponCoreBuilder builder) {
         builder.addMainHand(
-                SharedMonsterAttributes.ATTACK_SPEED, AttackReachModifier)
+                        SharedMonsterAttributes.ATTACK_SPEED, AttackReachModifier)
                 .set(Durability, 100)
                 .set(DefaultPipe);
     }
@@ -232,7 +232,7 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
      * @return whether the skill released successfully
      */
     @LongSupport
-    public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+    public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
         return false;
     }
 
@@ -241,122 +241,122 @@ public abstract class WeaponCore implements IAttributeProvider<BasicAttrValue> {
     }
 
     @Developing
-    public boolean onContinuousEffectStop(@Nonnull WeaponSkillArgs args, int totalTicksUsed, int timeLeft) {
+    public boolean onContinuousEffectStop(@NotNull WeaponSkillArgs args, int totalTicksUsed, int timeLeft) {
         return false;
     }
 
     @Developing
-    @Nonnull
-    public ItemStack onContinuousEffectFinish(@Nonnull WeaponSkillArgs args) {
+    @NotNull
+    public ItemStack onContinuousEffectFinish(@NotNull WeaponSkillArgs args) {
         return args.itemStack();
     }
 
     @Developing
-    public void onContinuousEffectTick(@Nonnull WeaponSkillArgs args, int totalTicksUsed) {
+    public void onContinuousEffectTick(@NotNull WeaponSkillArgs args, int totalTicksUsed) {
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public IWeaponSkillPredicate getWeaponSkillPredicate() {
         return weaponSkillPredicate;
     }
 
-    @Nonnull
+    @NotNull
     public TooltipPipe getTooltipPipe() {
         return tooltipPipe;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public String getRegisterName() {
         return registerName;
     }
 
-    @Nonnull
+    @NotNull
     @LongSupport
     public abstract WeaponType getWeaponType();
 
     @LongSupport
     protected class WeaponCoreBuilder implements IBasicAttrValueBuilder {
         @Override
-        @Nonnull
-        public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull BasicAttrValue value) {
+        @NotNull
+        public WeaponCoreBuilder set(@NotNull IAttribute attribute, @NotNull BasicAttrValue value) {
             AttributeValueMap.put(attribute, value);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @Override
-        public WeaponCoreBuilder set(@Nonnull IAttribute attribute, @Nonnull Number value) {
+        public WeaponCoreBuilder set(@NotNull IAttribute attribute, @NotNull Number value) {
             return (WeaponCoreBuilder) IBasicAttrValueBuilder.super.set(attribute, value);
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder add(@Nonnull IPassiveSkill<?> passiveSkill) {
+        public WeaponCoreBuilder add(@NotNull IPassiveSkill<?> passiveSkill) {
             weaponPassiveSkills.add(passiveSkill);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder set(@Nonnull IWeaponSkillPredicate newWeaponSkillPredicate) {
+        public WeaponCoreBuilder set(@NotNull IWeaponSkillPredicate newWeaponSkillPredicate) {
             weaponSkillPredicate = newWeaponSkillPredicate;
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder addMainHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr,
-                                             @Nonnull Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public WeaponCoreBuilder addMainHand(@NotNull net.minecraft.entity.ai.attributes.IAttribute attr,
+                                             @NotNull Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder addOffHand(@Nonnull net.minecraft.entity.ai.attributes.IAttribute attr,
-                                            @Nonnull Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
+        public WeaponCoreBuilder addOffHand(@NotNull net.minecraft.entity.ai.attributes.IAttribute attr,
+                                            @NotNull Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder set(@Nonnull ILeftClickEntityBehavior behavior) {
+        public WeaponCoreBuilder set(@NotNull ILeftClickEntityBehavior behavior) {
             leftClickEntityBehavior = behavior;
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder set(@Nonnull EnumAction action) {
+        public WeaponCoreBuilder set(@NotNull EnumAction action) {
             rightClickUseAction = action;
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder set(@Nonnull TooltipPipe pipe) {
+        public WeaponCoreBuilder set(@NotNull TooltipPipe pipe) {
             tooltipPipe = pipe;
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder add(int number, @Nonnull IPassiveSkill<?> passiveSkill) {
+        public WeaponCoreBuilder add(int number, @NotNull IPassiveSkill<?> passiveSkill) {
             lockedPassiveSkills.put(number, passiveSkill);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
-        public WeaponCoreBuilder add(@Nonnull ItemProperty itemProperty) {
+        public WeaponCoreBuilder add(@NotNull ItemProperty itemProperty) {
             itemProperties.add(itemProperty);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @LongSupport
         public WeaponCoreBuilder setHasContinuousEffect(boolean has) {
             hasContinuousEffect = has;

@@ -12,8 +12,8 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedList;
 
 @Mod.EventBusSubscriber(modid = MetaData.MOD_ID)
@@ -34,7 +34,7 @@ public final class TileEntityRegistry {
         }
     }
 
-    private static void with(@Nonnull Class<? extends TileEntity> tileEntity, @Nonnull String name) {
+    private static void with(@NotNull Class<? extends TileEntity> tileEntity, @NotNull String name) {
         TileEntities.addLast(new Tuple<>(tileEntity, new FawLocation(name)));
     }
 }

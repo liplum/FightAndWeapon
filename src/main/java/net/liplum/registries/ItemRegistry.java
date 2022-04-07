@@ -41,8 +41,8 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.registries.IForgeRegistry;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.LinkedList;
 import java.util.Objects;
 
@@ -137,7 +137,7 @@ public final class ItemRegistry {
     }
 
     @SideOnly(Side.CLIENT)
-    private static void registerModel(@Nonnull Item item) {
+    private static void registerModel(@NotNull Item item) {
         ModelResourceLocation modelResourceLocation = new ModelResourceLocation(Objects.requireNonNull(item.getRegistryName()), "inventory");
         ModelLoader.setCustomModelResourceLocation(item, 0, modelResourceLocation);
     }

@@ -3,9 +3,8 @@ package net.liplum.api.fight;
 import net.liplum.entities.FlyingItemEntity;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemStack;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public interface IFlyingItemBehavior {
-    void onImpact(@Nonnull FlyingItemEntity weaponEntity, @Nonnull Entity target, @Nonnull ItemStack itemStack);
+    void onImpact(@NotNull FlyingItemEntity weaponEntity, @NotNull Entity target, @NotNull ItemStack itemStack);
 }

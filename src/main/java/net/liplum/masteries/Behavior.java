@@ -1,33 +1,32 @@
 package net.liplum.masteries;
 
 import net.liplum.Names;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class Behavior {
-    @Nonnull
+    @NotNull
     public static final Behavior KillEntity = new Behavior(Names.Behavior.KillEntity);
-    @Nonnull
+    @NotNull
     public static final Behavior HealWeapon = new Behavior(Names.Behavior.HealWeapon);
-    @Nonnull
+    @NotNull
     public static final Behavior DamageWeapon = new Behavior(Names.Behavior.DamageWeapon);
-    @Nonnull
+    @NotNull
     public static final Behavior CauseDamage = new Behavior(Names.Behavior.CauseDamage);
-    @Nonnull
+    @NotNull
     public static final Behavior DestroyBlock = new Behavior(Names.Behavior.DestroyBlock);
-    @Nonnull
+    @NotNull
     public static final Behavior ReleaseWeaponSkill = new Behavior(Names.Behavior.ReleaseWeaponSkill);
-    @Nonnull
+    @NotNull
     public static final Behavior UseWeapon = new Behavior(Names.Behavior.UseWeapon);
-    @Nonnull
+    @NotNull
     public static final Behavior TriggerPassiveSkill = new Behavior(Names.Behavior.TriggerPassiveSkill);
-    @Nonnull
+    @NotNull
     public static final Behavior Injury = new Behavior(Names.Behavior.Injury);
 
-    @Nonnull
+    @NotNull
     public final String registerName;
 
-    public Behavior(@Nonnull String registerName) {
+    public Behavior(@NotNull String registerName) {
         this.registerName = registerName;
     }
 }

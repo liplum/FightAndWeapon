@@ -7,8 +7,8 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class WeaponSkillArgs implements FawArgsGetter, FawArgsSetter<WeaponSkillArgs> {
@@ -29,78 +29,78 @@ public class WeaponSkillArgs implements FawArgsGetter, FawArgsSetter<WeaponSkill
         return modifier;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponSkillArgs modifier(@Nullable Modifier modifier) {
         this.modifier = modifier;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public World world() {
         return world;
     }
 
-    @Nonnull
-    public WeaponSkillArgs world(@Nonnull World world) {
+    @NotNull
+    public WeaponSkillArgs world(@NotNull World world) {
         this.world = world;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public EntityLivingBase entity() {
         return entity;
     }
 
-    @Nonnull
-    public WeaponSkillArgs entity(@Nonnull EntityLivingBase entity) {
+    @NotNull
+    public WeaponSkillArgs entity(@NotNull EntityLivingBase entity) {
         this.entity = entity;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ItemStack itemStack() {
         return itemStack;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public WeaponSkillArgs itemStack(@Nonnull ItemStack itemStack) {
+    public WeaponSkillArgs itemStack(@NotNull ItemStack itemStack) {
         this.itemStack = itemStack;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public EnumHand hand() {
         return hand;
     }
 
-    @Nonnull
-    public WeaponSkillArgs hand(@Nonnull EnumHand hand) {
+    @NotNull
+    public WeaponSkillArgs hand(@NotNull EnumHand hand) {
         this.hand = hand;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public WeaponBaseItem weapon() {
         return weapon;
     }
 
+    @NotNull
     @Override
-    @Nonnull
-    public WeaponSkillArgs weapon(@Nonnull WeaponBaseItem weapon) {
+    public WeaponSkillArgs weapon(@NotNull WeaponBaseItem weapon) {
         this.weapon = weapon;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     public AttrCalculator calculator() {
         return calculator;
     }
 
-    @Nonnull
+    @NotNull
     public WeaponSkillArgs calculator(AttrCalculator calculator) {
         this.calculator = calculator;
         return this;

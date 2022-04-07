@@ -6,8 +6,8 @@ import net.liplum.masteries.IBehaviorHandler;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -16,7 +16,7 @@ import java.util.Map;
 public class WeaponActionHook {
     private static final Map<Behavior, List<IBehaviorHandler>> BehaviorHandlers = new HashMap<>();
 
-    public static void onBehaved(@Nonnull Behavior behavior, @Nonnull EntityLivingBase player, @Nonnull WeaponBaseItem weapon, @Nonnull ItemStack itemStack, Object... args) {
+    public static void onBehaved(@NotNull Behavior behavior, @NotNull EntityLivingBase player, @NotNull WeaponBaseItem weapon, @NotNull ItemStack itemStack, Object... args) {
         if (!(player instanceof EntityPlayer)) {
             return;
         }
@@ -29,7 +29,7 @@ public class WeaponActionHook {
         }
     }
 
-    public static IBehaviorHandler register(@Nonnull IBehaviorHandler handler) {
+    public static IBehaviorHandler register(@NotNull IBehaviorHandler handler) {
         List<IBehaviorHandler> handlers = BehaviorHandlers.computeIfAbsent(handler.getBehavior(), k -> new LinkedList<>());
         handlers.add(handler);
         return handler;

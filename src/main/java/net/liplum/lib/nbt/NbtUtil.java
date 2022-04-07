@@ -4,8 +4,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public final class NbtUtil {
     private NbtUtil() {
@@ -16,8 +15,8 @@ public final class NbtUtil {
      * @param itemStack
      * @return
      */
-    @Nonnull
-    public static NBTTagCompound getOrCreateFrom(@Nonnull ItemStack itemStack) {
+    @NotNull
+    public static NBTTagCompound getOrCreateFrom(@NotNull ItemStack itemStack) {
         NBTTagCompound tag = itemStack.getTagCompound();
         if (tag == null) {
             NBTTagCompound root = new NBTTagCompound();
@@ -32,8 +31,8 @@ public final class NbtUtil {
      * @param subkey a key in the NBT map
      * @return
      */
-    @Nonnull
-    public static NBTTagCompound getSubCompoundOrCreate(@Nonnull NBTTagCompound nbt, @Nonnull String subkey) {
+    @NotNull
+    public static NBTTagCompound getSubCompoundOrCreate(@NotNull NBTTagCompound nbt, @NotNull String subkey) {
         if (nbt.hasKey(subkey)) {
             return nbt.getCompoundTag(subkey);
         }
@@ -42,8 +41,8 @@ public final class NbtUtil {
         return newOne;
     }
 
-    @Nonnull
-    public static NBTTagList getSubListOrCreate(@Nonnull NBTTagCompound nbt, @Nonnull String subkey, int type) {
+    @NotNull
+    public static NBTTagList getSubListOrCreate(@NotNull NBTTagCompound nbt, @NotNull String subkey, int type) {
         if (nbt.hasKey(subkey)) {
             return nbt.getTagList(subkey, type);
         }
@@ -52,7 +51,7 @@ public final class NbtUtil {
         return newOne;
     }
 
-    public static void setFirstOrAdd(@Nonnull NBTTagList nbtList, @Nonnull NBTBase nbt) {
+    public static void setFirstOrAdd(@NotNull NBTTagList nbtList, @NotNull NBTBase nbt) {
         if (nbtList.tagCount() == 0) {
             nbtList.appendTag(nbt);
         } else {

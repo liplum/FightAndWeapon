@@ -1,8 +1,8 @@
 package net.liplum.api.weapon;
 
 import net.liplum.api.fight.IPassiveSkill;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 
@@ -74,7 +74,7 @@ public interface IGemstone {
     @Nullable
     Modifier getModifierOf(WeaponCore core);
 
-    @Nonnull
+    @NotNull
     Collection<IPassiveSkill<?>> getPassiveSkillsOf(WeaponCore core);
 
     IGemstone addModifier(Modifier newModifier);
@@ -117,7 +117,7 @@ public interface IGemstone {
 
     int getDisplayedOrderID();
 
-    @Nonnull
+    @NotNull
     GemQuality getQuality();
 
 }

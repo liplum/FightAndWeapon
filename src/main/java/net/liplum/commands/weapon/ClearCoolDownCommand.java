@@ -12,28 +12,28 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
 public class ClearCoolDownCommand extends CommandBase {
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return Names.Command.ClearCD;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender) {
+    public String getUsage(@NotNull ICommandSender sender) {
         return I18ns.Command.ClearCD;
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args) throws CommandException {
+    public void execute(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull String[] args) throws CommandException {
         if (args.length > 1) {
             throw new WrongUsageException(getUsage(sender));
         }
@@ -56,9 +56,9 @@ public class ClearCoolDownCommand extends CommandBase {
     }
 
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, @Nonnull String[] args, @Nullable BlockPos targetPos) {
+    public List<String> getTabCompletions(@NotNull MinecraftServer server, @NotNull ICommandSender sender, @NotNull String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 0) {
             List<String> allWeaponTypeNames = new LinkedList<>(WeaponTypeRegistry.getAllWeaponTypeNames());
             allWeaponTypeNames.add(Names.Command.ClearCDSub.All);

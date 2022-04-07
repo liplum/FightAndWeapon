@@ -7,43 +7,43 @@ import net.minecraftforge.fml.common.network.FMLEventChannel;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.minecraftforge.fml.common.network.internal.FMLProxyPacket;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 public class DataPacketHandler implements IDataPacketHandler {
-    @Nonnull
+    @NotNull
     private final String channelName;
-    private FMLEventChannel eventChannel;
     @Nullable
     public ClientHandler clientHandler;
     @Nullable
     public ServerHandler serverHandler;
     @Nullable
     public PacketWriter writer;
+    private FMLEventChannel eventChannel;
 
-    public DataPacketHandler(@Nonnull String channelName) {
+    public DataPacketHandler(@NotNull String channelName) {
         this.channelName = channelName;
         this.clientHandler = null;
         this.serverHandler = null;
         registerSelf();
     }
 
-    public DataPacketHandler(@Nonnull String channelName, @Nonnull ClientHandler clientHandler) {
+    public DataPacketHandler(@NotNull String channelName, @NotNull ClientHandler clientHandler) {
         this.channelName = channelName;
         this.clientHandler = clientHandler;
         this.serverHandler = null;
         registerSelf();
     }
 
-    public DataPacketHandler(@Nonnull String channelName, @Nonnull ServerHandler serverHandler) {
+    public DataPacketHandler(@NotNull String channelName, @NotNull ServerHandler serverHandler) {
         this.channelName = channelName;
         this.clientHandler = null;
         this.serverHandler = serverHandler;
         registerSelf();
     }
 
-    public DataPacketHandler(@Nonnull String channelName, @Nullable ClientHandler clientHandler, @Nullable ServerHandler serverHandler) {
+    public DataPacketHandler(@NotNull String channelName, @Nullable ClientHandler clientHandler, @Nullable ServerHandler serverHandler) {
         this.channelName = channelName;
         this.clientHandler = clientHandler;
         this.serverHandler = serverHandler;
@@ -82,7 +82,7 @@ public class DataPacketHandler implements IDataPacketHandler {
         eventChannel.sendToServer(new FMLProxyPacket(buffer, channelName));
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getChannelName() {
         return channelName;

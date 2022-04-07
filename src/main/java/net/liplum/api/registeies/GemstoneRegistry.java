@@ -3,8 +3,8 @@ package net.liplum.api.registeies;
 import net.liplum.FawMod;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.IGemstone;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.*;
 
@@ -50,7 +50,7 @@ public final class GemstoneRegistry {
     }
 
     @LongSupport
-    @Nonnull
+    @NotNull
     public static Collection<IGemstone> getAllGemstones() {
         return GemstoneMap.values();
     }

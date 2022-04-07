@@ -12,17 +12,17 @@ import net.liplum.lib.utils.EntityUtil;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 @Developing
 public final class MagicPearlSkills {
     public static final IPassiveSkill<WeaponAttackEvent.Attacking> Magicize =
             new PassiveSkill<WeaponAttackEvent.Attacking>(Names.PassiveSkill.Magicize, WeaponAttackEvent.Attacking.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacking event) {
+                public PSkillResult onTrigger(@NotNull WeaponAttackEvent.Attacking event) {
                     WeaponAttackEvent.Attacking.Args args = event.getArgs();
                     EntityLivingBase attacker = args.attacker();
                     ItemStack itemStack = args.itemStack();

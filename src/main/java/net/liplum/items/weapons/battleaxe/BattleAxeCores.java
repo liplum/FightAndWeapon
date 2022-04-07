@@ -18,8 +18,8 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.BattleAxe.SweepRange;
@@ -31,7 +31,7 @@ public final class BattleAxeCores {
     public static final BattleAxeCore Empty = new BattleAxeCore(Names.Item.EmptyCore, false) {
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             return false;
         }
 
@@ -40,7 +40,7 @@ public final class BattleAxeCores {
     public static final BattleAxeCore Normal = new BattleAxeCore(Names.Item.BattleAxe.BattleAxeItem) {
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             WeaponBaseItem weapon = args.weapon();
@@ -82,7 +82,7 @@ public final class BattleAxeCores {
         }
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     SweepRange, 3F
@@ -96,7 +96,7 @@ public final class BattleAxeCores {
 
     public static final BattleAxeCore BerserkerAxe = new BattleAxeCore(Names.Item.BattleAxe.BerserkerAxeItem) {
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             EntityLivingBase player = args.entity();
             player.addPotionEffect(new PotionEffect(MobEffects.HASTE, 8 * 20, 1));
             FawItemUtil.damageWeapon(args.weapon(), args.itemStack(), 3, player);
@@ -104,7 +104,7 @@ public final class BattleAxeCores {
         }
 
         @Override
-        protected void build(@Nonnull WeaponCoreBuilder builder) {
+        protected void build(@NotNull WeaponCoreBuilder builder) {
             super.build(builder);
             builder.set(
                     Strength, Strength.newBasicAttrValue(7F)

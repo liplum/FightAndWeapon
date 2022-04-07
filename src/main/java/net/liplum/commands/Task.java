@@ -3,8 +3,8 @@ package net.liplum.commands;
 import net.minecraft.command.ICommandSender;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -12,22 +12,22 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class Task implements ITask {
-    @Nonnull
-    private final Map<Integer, IsValid> validChecks = new HashMap<>();
-    @Nonnull
+    @NotNull
+    private final Map<Integer, IValidation> validChecks = new HashMap<>();
+    @NotNull
     private final Map<Integer, TabCompletionProvider> tabCompletionProviders = new HashMap<>();
 
     public Task() {
     }
 
-    @Nonnull
-    public Task addValidRequirement(int index, @Nonnull IsValid isValid) {
+    @NotNull
+    public Task addValidRequirement(int index, @NotNull IValidation isValid) {
         validChecks.put(index, isValid);
         return this;
     }
 
-    @Nonnull
-    public Task addTabCompletion(int needBeCompetedIndex, @Nonnull TabCompletionProvider provider) {
+    @NotNull
+    public Task addTabCompletion(int needBeCompetedIndex, @NotNull TabCompletionProvider provider) {
         tabCompletionProviders.put(needBeCompetedIndex, provider);
         return this;
     }
@@ -42,9 +42,9 @@ public abstract class Task implements ITask {
         return tabCompletionProviders.size() > 0;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<String> getCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, int needBeCompetedIndex, @Nullable BlockPos targetPos) {
+    public List<String> getCompletions(@NotNull MinecraftServer server, @NotNull ICommandSender sender, int needBeCompetedIndex, @Nullable BlockPos targetPos) {
         TabCompletionProvider provider = tabCompletionProviders.get(needBeCompetedIndex);
         if (provider != null) {
             return provider.getCompletions(server, sender, needBeCompetedIndex, targetPos);
@@ -52,10 +52,10 @@ public abstract class Task implements ITask {
         return Collections.emptyList();
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ValidInfo isValid(@Nonnull String parameter, int index) {
-        IsValid isValid = validChecks.get(index);
+    public ValidInfo isValid(@NotNull String parameter, int index) {
+        IValidation isValid = validChecks.get(index);
         if (isValid != null) {
             return isValid.isValid(parameter);
         }

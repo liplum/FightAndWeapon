@@ -1,10 +1,9 @@
 package net.liplum.lib.gui;
 
 import net.liplum.lib.Event;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public interface INotifyPropertyChanged<T> {
-    @Nonnull
+    @NotNull
     Event<IPropertySubscriber<T>> getPropertyChangedEvent();
 }

@@ -1,23 +1,23 @@
 package net.liplum.api.fight;
 
 import net.liplum.api.annotations.Developing;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collections;
 import java.util.List;
 
 @Developing
 public class UnlockedPSkillList {
     public static final UnlockedPSkillList Empty = new UnlockedPSkillList(Collections.emptyList());
-    @Nonnull
+    @NotNull
     private final List<Integer> slots;
 
     @Developing
-    public UnlockedPSkillList(@Nonnull List<Integer> slots) {
+    public UnlockedPSkillList(@NotNull List<Integer> slots) {
         this.slots = slots;
     }
 
-    @Nonnull
+    @NotNull
     @Developing
     public List<Integer> getSlots() {
         return slots;

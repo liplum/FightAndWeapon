@@ -1,17 +1,16 @@
 package net.liplum.attributes;
 
 import net.liplum.api.annotations.LongSupport;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public interface IAttrModifierBuilder {
-    @Nonnull
+    @NotNull
     @LongSupport
-    IAttrModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull AttrModifier modifier);
+    IAttrModifierBuilder set(@NotNull IAttribute attribute, @NotNull AttrModifier modifier);
 
-    @Nonnull
+    @NotNull
     @LongSupport
-    default IAttrModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull Number delta, float rate) {
+    default IAttrModifierBuilder set(@NotNull IAttribute attribute, @NotNull Number delta, float rate) {
         return this.set(attribute, attribute.newAttrModifier(delta, rate));
     }
 }

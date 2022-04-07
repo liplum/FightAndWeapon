@@ -13,8 +13,8 @@ import net.minecraft.command.WrongUsageException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collection;
 import java.util.Collections;
@@ -30,20 +30,20 @@ import static net.liplum.I18ns.Command.*;
 @LongSupport
 public class MasteryExpCommand extends CommandBase {
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return Names.Command.MasterySub.MasteryExp;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender) {
+    public String getUsage(@NotNull ICommandSender sender) {
         return I18ns.Command.MasteryExp;
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) throws CommandException {
+    public void execute(@NotNull MinecraftServer server, @NotNull ICommandSender sender, String[] args) throws CommandException {
         if (args.length != 2 && args.length != 3) {
             throw new WrongUsageException(getUsage(sender));
         }
@@ -80,9 +80,9 @@ public class MasteryExpCommand extends CommandBase {
         return 2;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    public List<String> getTabCompletions(@NotNull MinecraftServer server, @NotNull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             List<String> allMasteriesNames = new LinkedList<>(MasteryRegistry.getAllMasteryNames());
             allMasteriesNames.add(Names.Command.MasterySub.All);

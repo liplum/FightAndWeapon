@@ -1,18 +1,19 @@
 package net.liplum.tooltips;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
+
 import java.util.LinkedList;
 import java.util.List;
 
 public class TooltipPart {
-    @Nonnull
+    @NotNull
     private final LinkedList<String> tooltips = new LinkedList<>();
 
-    public TooltipPart(@Nonnull List<String> tooltips) {
+    public TooltipPart(@NotNull List<String> tooltips) {
         this.tooltips.addAll(tooltips);
     }
 
-    public TooltipPart(@Nonnull String tooltip) {
+    public TooltipPart(@NotNull String tooltip) {
         this.tooltips.add(tooltip);
     }
 
@@ -31,44 +32,44 @@ public class TooltipPart {
         return tooltips.size() > 0;
     }
 
-    @Nonnull
+    @NotNull
     public List<String> getTooltips() {
         return tooltips;
     }
 
-    @Nonnull
-    public TooltipPart add(@Nonnull List<String> content) {
+    @NotNull
+    public TooltipPart add(@NotNull List<String> content) {
         tooltips.addAll(content);
         return this;
     }
 
-    @Nonnull
-    public TooltipPart add(@Nonnull String content) {
+    @NotNull
+    public TooltipPart add(@NotNull String content) {
         tooltips.add(content);
         return this;
     }
 
-    @Nonnull
-    public TooltipPart add(@Nonnull TooltipPart other) {
+    @NotNull
+    public TooltipPart add(@NotNull TooltipPart other) {
         List<String> otherTooltips = other.getTooltips();
         return this.add(otherTooltips);
     }
 
-    @Nonnull
-    public TooltipPart addHead(@Nonnull String content) {
+    @NotNull
+    public TooltipPart addHead(@NotNull String content) {
         tooltips.addFirst(content);
         return this;
     }
 
-    @Nonnull
-    public TooltipPart addHead(@Nonnull List<String> contents) {
+    @NotNull
+    public TooltipPart addHead(@NotNull List<String> contents) {
         tooltips.addAll(0, contents);
         return this;
     }
 
 
-    @Nonnull
-    public TooltipPart addHead(@Nonnull TooltipPart other) {
+    @NotNull
+    public TooltipPart addHead(@NotNull TooltipPart other) {
         List<String> otherTooltips = other.getTooltips();
         return this.addHead(otherTooltips);
     }

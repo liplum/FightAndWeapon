@@ -13,8 +13,8 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.io.IOException;
 
 public class MasteryGui extends GuiContainer {
@@ -120,7 +120,7 @@ public class MasteryGui extends GuiContainer {
     }
 
     @Override
-    protected void actionPerformed(@Nonnull GuiButton button) throws IOException {
+    protected void actionPerformed(@NotNull GuiButton button) throws IOException {
         if (button instanceof Button) {
             Button b = (Button) button;
             b.onTrigger();

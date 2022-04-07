@@ -3,16 +3,15 @@ package net.liplum.lib.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.ResourceLocation;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class Texture {
-    @Nonnull
+    @NotNull
     private final ResourceLocation texture;
-    @Nonnull
+    @NotNull
     private final View view;
 
-    public Texture(@Nonnull ResourceLocation textureLocation, @Nonnull View view) {
+    public Texture(@NotNull ResourceLocation textureLocation, @NotNull View view) {
         this.texture = textureLocation;
         this.view = view;
     }

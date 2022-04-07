@@ -22,8 +22,8 @@ import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.List;
 
 import static net.liplum.Attributes.Generic.Strength;
@@ -38,7 +38,7 @@ public final class EnderGemModifier {
         }
 
         @Override
-        protected void build(@Nonnull Modifier.ModifierBuilder builder) {
+        protected void build(@NotNull Modifier.ModifierBuilder builder) {
             super.build(builder);
             builder.set(
                     SprintStrength, 2F, 0
@@ -46,7 +46,7 @@ public final class EnderGemModifier {
         }
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponCore core, @NotNull WeaponSkillArgs args) {
             World world = args.world();
             EntityLivingBase player = args.entity();
             AttrCalculator calculator = args.calculator();

@@ -9,8 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Generic.DropsFireproof;
 
@@ -31,7 +30,7 @@ public class FawWeaponItemEntity extends IndestructibleItemEntity {
     }
 
     @Override
-    public boolean attackEntityFrom(@Nonnull DamageSource source, float amount) {
+    public boolean attackEntityFrom(@NotNull DamageSource source, float amount) {
         boolean res = super.attackEntityFrom(source, amount);
         ItemStack itemStack = this.getItem();
         Item item = itemStack.getItem();

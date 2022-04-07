@@ -4,8 +4,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.projectile.EntityThrowable;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class GemswordBeam extends EntityThrowable {
 
@@ -30,7 +29,7 @@ public class GemswordBeam extends EntityThrowable {
     }
 
     @Override
-    protected void onImpact(@Nonnull RayTraceResult result) {
+    protected void onImpact(@NotNull RayTraceResult result) {
 
     }
 

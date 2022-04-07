@@ -8,15 +8,14 @@ import net.liplum.events.weapon.WeaponAttackEvent;
 import net.liplum.lib.utils.ItemUtil;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class PSkills {
     public static final IPassiveSkill<WeaponAttackEvent.Attacked> Combo =
             new PassiveSkill<WeaponAttackEvent.Attacked>(Names.PassiveSkill.Combo, WeaponAttackEvent.Attacked.class) {
-                @Nonnull
+                @NotNull
                 @Override
-                public PSkillResult onTrigger(@Nonnull WeaponAttackEvent.Attacked event) {
+                public PSkillResult onTrigger(@NotNull WeaponAttackEvent.Attacked event) {
                     WeaponAttackEvent.Attacked.Args args = event.getArgs();
                     EntityLivingBase attacker = args.attacker();
                     if (attacker instanceof EntityPlayer) {

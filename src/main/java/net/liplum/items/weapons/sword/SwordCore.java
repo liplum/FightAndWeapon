@@ -5,33 +5,32 @@ import net.liplum.api.weapon.WeaponCore;
 import net.liplum.api.weapon.WeaponSkillArgs;
 import net.liplum.api.weapon.WeaponType;
 import net.minecraft.item.EnumAction;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 import static net.liplum.Attributes.Sword.Sweep;
 
 public class SwordCore extends WeaponCore {
-    public SwordCore(@Nonnull String registerName) {
+    public SwordCore(@NotNull String registerName) {
         super(registerName);
     }
 
-    public SwordCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+    public SwordCore(@NotNull String registerName, boolean hasWeaponSkill) {
         super(registerName, hasWeaponSkill);
     }
 
     @Override
-    public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+    public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponType getWeaponType() {
         return WeaponTypes.Sword;
     }
 
     @Override
-    protected void build(@Nonnull WeaponCoreBuilder builder) {
+    protected void build(@NotNull WeaponCoreBuilder builder) {
         super.build(builder);
         builder.set(
                 EnumAction.BLOCK

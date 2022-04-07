@@ -5,8 +5,8 @@ import com.google.common.collect.Multimap;
 import net.liplum.attributes.*;
 import net.minecraft.entity.ai.attributes.AttributeModifier;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -15,13 +15,13 @@ import java.util.Map;
 import java.util.function.Function;
 
 public abstract class Modifier implements IAttributeProvider<AttrModifier> {
-    @Nonnull
+    @NotNull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> mainHandAttributeModifierMap = HashMultimap.create();
-    @Nonnull
+    @NotNull
     protected final Multimap<String, Function<WeaponAttrModifierContext, AttributeModifier>> offHandAttributeModifierMap = HashMultimap.create();
-    @Nonnull
+    @NotNull
     private final Map<IAttribute, AttrModifier> AttributeModifierMap = new HashMap<>();
-    @Nonnull
+    @NotNull
     protected List<IAttribute> allAttributes = new LinkedList<>();
     private boolean applyCoreAttrModifier = true;
 
@@ -39,8 +39,8 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
         attributes.addAll(Attribute.getAllBasicAttributes());
     }
 
-    public void applyAttrModifier(@Nonnull WeaponCore weaponCore,
-                                  @Nonnull WeaponAttrModifierContext context) {
+    public void applyAttrModifier(@NotNull WeaponCore weaponCore,
+                                  @NotNull WeaponAttrModifierContext context) {
         EntityEquipmentSlot slot = context.slot;
         Multimap<String, AttributeModifier> map = context.attrModifierMap;
         if (applyCoreAttrModifier) {
@@ -75,56 +75,56 @@ public abstract class Modifier implements IAttributeProvider<AttrModifier> {
      */
     @Nullable
     @Override
-    public AttrModifier getValue(@Nonnull IAttribute attribute) {
+    public AttrModifier getValue(@NotNull IAttribute attribute) {
         return AttributeModifierMap.get(attribute);
     }
 
-    protected void build(@Nonnull ModifierBuilder builder) {
+    protected void build(@NotNull ModifierBuilder builder) {
 
     }
 
-    public boolean releaseSkill(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args) {
+    public boolean releaseSkill(@NotNull WeaponCore core, @NotNull WeaponSkillArgs args) {
         return core.releaseSkill(args);
     }
 
 
-    public boolean onStopUsing(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args, int totalTimeUsed, int timeLeft) {
+    public boolean onStopUsing(@NotNull WeaponCore core, @NotNull WeaponSkillArgs args, int totalTimeUsed, int timeLeft) {
         return core.onContinuousEffectStop(args, totalTimeUsed, timeLeft);
     }
 
-    public void onUsingEveryTick(@Nonnull WeaponCore core, @Nonnull WeaponSkillArgs args, int usedDuration) {
+    public void onUsingEveryTick(@NotNull WeaponCore core, @NotNull WeaponSkillArgs args, int usedDuration) {
         core.onContinuousEffectTick(args, usedDuration);
     }
 
     public abstract WeaponCore getCore();
 
     protected class ModifierBuilder implements IAttrModifierBuilder {
+        @NotNull
         @Override
-        @Nonnull
-        public ModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull AttrModifier modifier) {
+        public ModifierBuilder set(@NotNull IAttribute attribute, @NotNull AttrModifier modifier) {
             AttributeModifierMap.put(attribute, modifier);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         @Override
-        public ModifierBuilder set(@Nonnull IAttribute attribute, @Nonnull Number delta, float rate) {
+        public ModifierBuilder set(@NotNull IAttribute attribute, @NotNull Number delta, float rate) {
             return (ModifierBuilder) IAttrModifierBuilder.super.set(attribute, delta, rate);
         }
 
-        @Nonnull
+        @NotNull
         public ModifierBuilder addMainHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             mainHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         public ModifierBuilder addOffHand(net.minecraft.entity.ai.attributes.IAttribute attr, Function<WeaponAttrModifierContext, AttributeModifier> modifierGetter) {
             offHandAttributeModifierMap.put(attr.getName(), modifierGetter);
             return this;
         }
 
-        @Nonnull
+        @NotNull
         public ModifierBuilder setNotApplyCoreAttrModifier() {
             applyCoreAttrModifier = false;
             return this;

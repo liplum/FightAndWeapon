@@ -3,25 +3,24 @@ package net.liplum.items.weapons.magickwand;
 import net.liplum.WeaponTypes;
 import net.liplum.api.weapon.MagickToolCore;
 import net.liplum.api.weapon.WeaponType;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 abstract class MagickWandCore extends MagickToolCore {
 
-    public MagickWandCore(@Nonnull String registerName) {
+    public MagickWandCore(@NotNull String registerName) {
         super(registerName);
     }
 
-    public MagickWandCore(@Nonnull String registerName, boolean hasWeaponSkill) {
+    public MagickWandCore(@NotNull String registerName, boolean hasWeaponSkill) {
         super(registerName, hasWeaponSkill);
     }
 
     @Override
-    protected void build(@Nonnull WeaponCoreBuilder builder) {
+    protected void build(@NotNull WeaponCoreBuilder builder) {
         super.build(builder);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public WeaponType getWeaponType() {
         return WeaponTypes.MagickWand;

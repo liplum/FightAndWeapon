@@ -2,8 +2,8 @@ package net.liplum.attributes;
 
 import net.liplum.api.annotations.Require;
 import net.liplum.masteries.AttrAmp;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.function.Function;
 
@@ -26,13 +26,13 @@ public class BoolAttribute implements IAttribute {
     private ComputeType computeType;
     private int defaultValueInt = FalseInt;
     private boolean defaultValueBool = false;
-    @Nonnull
+    @NotNull
     private BasicAttrValue emptyBasicAttrValue = newBasicAttrValue(FalseInt);
     private IFullCompute fullCompute;
     private IOnlyGemstoneCompute onlyGemstoneCompute;
     private IOnlyMasteryCompute onlyMasteryCompute;
     private boolean useSpecialValueWhenWeaponBroken = false;
-    @Nonnull
+    @NotNull
     private Function<Boolean, Boolean> valueWhenWeaponBrokenGetter = (former) -> defaultValueBool;
 
     public static BasicAttrValue genBasicAttrValue(boolean b) {
@@ -51,11 +51,11 @@ public class BoolAttribute implements IAttribute {
         return new FinalAttrValue(DataType.Int, toInt(b));
     }
 
-    public static boolean toBool(@Nonnull Number value) {
+    public static boolean toBool(@NotNull Number value) {
         return value.intValue() != 0;
     }
 
-    public static boolean toBool(@Nonnull FinalAttrValue value) {
+    public static boolean toBool(@NotNull FinalAttrValue value) {
         return value.getInt() != 0;
     }
 
@@ -63,39 +63,39 @@ public class BoolAttribute implements IAttribute {
         return bool ? 1 : 0;
     }
 
-    public static int toBoolInt(@Nonnull Number value) {
+    public static int toBoolInt(@NotNull Number value) {
         return value.intValue() != 0 ? 1 : 0;
     }
 
-    @Nonnull
+    @NotNull
     private static FinalAttrValue newFinalAttrValue(boolean value) {
         return new FinalAttrValue(DataType.Int, toInt(value));
     }
 
-    @Nonnull
+    @NotNull
     public BoolAttribute setBasic() {
         this.isBasic = true;
         Attribute.setBasicAttribute(this);
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "getComputeType", is = "ComputeType.Full")
-    public BoolAttribute setFullCompute(@Nonnull IFullCompute fullCompute) {
+    public BoolAttribute setFullCompute(@NotNull IFullCompute fullCompute) {
         this.fullCompute = fullCompute;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "getComputeType", is = "ComputeType.Only_Gemstone")
-    public BoolAttribute setOnlyGemstoneCompute(@Nonnull IOnlyGemstoneCompute onlyGemstoneCompute) {
+    public BoolAttribute setOnlyGemstoneCompute(@NotNull IOnlyGemstoneCompute onlyGemstoneCompute) {
         this.onlyGemstoneCompute = onlyGemstoneCompute;
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Require(func = "getComputeType", is = "ComputeType.Only_Mastery")
-    public BoolAttribute setOnlyMasteryCompute(@Nonnull IOnlyMasteryCompute onlyMasteryCompute) {
+    public BoolAttribute setOnlyMasteryCompute(@NotNull IOnlyMasteryCompute onlyMasteryCompute) {
         this.onlyMasteryCompute = onlyMasteryCompute;
         return this;
     }
@@ -105,14 +105,14 @@ public class BoolAttribute implements IAttribute {
         return isBasic;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getRegisterName() {
         return registerName;
     }
 
-    @Nonnull
-    public BoolAttribute setRegisterName(@Nonnull String registerName) {
+    @NotNull
+    public BoolAttribute setRegisterName(@NotNull String registerName) {
         String former = this.registerName;
         Attribute.remove(former);
 
@@ -121,13 +121,13 @@ public class BoolAttribute implements IAttribute {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public ComputeType getComputeType() {
         return computeType;
     }
 
-    @Nonnull
+    @NotNull
     public BoolAttribute setComputeType(ComputeType type) {
         ComputeType finalType = type;
         switch (type) {
@@ -146,13 +146,13 @@ public class BoolAttribute implements IAttribute {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public Number getDefaultValue() {
         return 0;
     }
 
-    @Nonnull
+    @NotNull
     public BoolAttribute setDefaultValue(boolean defaultValue) {
         this.defaultValueBool = defaultValue;
         this.defaultValueInt = toInt(defaultValue);
@@ -160,68 +160,68 @@ public class BoolAttribute implements IAttribute {
         return this;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public BasicAttrValue emptyBasicAttrValue() {
         return emptyBasicAttrValue;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public BasicAttrValue newBasicAttrValue(@Nonnull Number value) {
+    public BasicAttrValue newBasicAttrValue(@NotNull Number value) {
         return new BasicAttrValue(DataType.Int, toBoolInt(value));
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public AttrModifier emptyAttrModifier() {
         return EmptyAttrModifier;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public AttrModifier newAttrModifier(@Nonnull Number delta, float deltaRate) {
+    public AttrModifier newAttrModifier(@NotNull Number delta, float deltaRate) {
         return new AttrModifier(DataType.Int, toBoolInt(delta), 0);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public AttrAmp newAttributeAmplifier(@Nonnull Number value) {
+    public AttrAmp newAttributeAmplifier(@NotNull Number value) {
         return AttrAmp.create(this, value);
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public AttrDelta emptyAttrDelta() {
         return EmptyAttrDelta;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public AttrDelta newAttrDelta(@Nonnull Number delta) {
+    public AttrDelta newAttrDelta(@NotNull Number delta) {
         return new AttrDelta(DataType.Int, toBoolInt(delta));
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public FinalAttrValue emptyFinalAttrValue() {
         return EmptyFinalAttrValue;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public FinalAttrValue newFinalAttrValue(@Nonnull Number value) {
+    public FinalAttrValue newFinalAttrValue(@NotNull Number value) {
         return new FinalAttrValue(DataType.Int, toBoolInt(value));
     }
 
     @Override
-    public boolean isDefaultValue(@Nonnull Number value) {
+    public boolean isDefaultValue(@NotNull Number value) {
         return defaultValueBool == toBool(value);
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public FinalAttrValue compute(@Nonnull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery) {
+    public FinalAttrValue compute(@NotNull BasicAttrValue base, @Nullable AttrModifier modifier, @Nullable AttrDelta mastery) {
         boolean boolBase = toBool(base.getNumber());
         switch (computeType) {
             case Full:
@@ -285,7 +285,7 @@ public class BoolAttribute implements IAttribute {
     /*
      * The default is returning the default value of this attribute.
      */
-    @Nonnull
+    @NotNull
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public BoolAttribute setSpecialValueWhenWeaponBroken(boolean boolWhenWeaponBroken) {
         this.valueWhenWeaponBrokenGetter = (former) -> boolWhenWeaponBroken;
@@ -298,7 +298,7 @@ public class BoolAttribute implements IAttribute {
      * @param former
      * @return the final value when weapon was broken
      */
-    @Nonnull
+    @NotNull
     @Override
     @Require(func = "useSpecialValueWhenWeaponBroken", is = "true")
     public FinalAttrValue getValueWhenWeaponBroken(Number former) {
@@ -316,7 +316,7 @@ public class BoolAttribute implements IAttribute {
     /**
      * The default is false.
      */
-    @Nonnull
+    @NotNull
     public BoolAttribute setUseSpecialValueWhenWeaponBroken() {
         this.useSpecialValueWhenWeaponBroken = true;
         return this;
@@ -329,7 +329,7 @@ public class BoolAttribute implements IAttribute {
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     @Require(func = "isShownInTooltip", is = "true")
     public Number getTooltipShownValue(Number input) {
@@ -350,7 +350,7 @@ public class BoolAttribute implements IAttribute {
         return null;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getI18nKey() {
         return "";
@@ -362,7 +362,7 @@ public class BoolAttribute implements IAttribute {
         return false;
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public DataType getDataType() {
         return DataType.Int;

@@ -20,14 +20,14 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.List;
 
 public class CastBlueprintItem extends Item {
     @Override
-    public void getSubItems(@Nonnull CreativeTabs tab, @Nonnull NonNullList<ItemStack> items) {
+    public void getSubItems(@NotNull CreativeTabs tab, @NotNull NonNullList<ItemStack> items) {
         if (this.isInCreativeTab(tab)) {
             for (String name : CastRegistry.getAllCastNames()) {
                 ItemStack itemStack = new ItemStack(this);
@@ -37,9 +37,9 @@ public class CastBlueprintItem extends Item {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public ActionResult<ItemStack> onItemRightClick(@Nonnull World worldIn, @Nonnull EntityPlayer playerIn, @Nonnull EnumHand handIn) {
+    public ActionResult<ItemStack> onItemRightClick(@NotNull World worldIn, @NotNull EntityPlayer playerIn, @NotNull EnumHand handIn) {
         ItemStack heldItem = playerIn.getHeldItem(handIn);
         String weaponPartName = FawNbtTool.getWeaponPart(heldItem);
         CastStudyCapability castStudyCapability = playerIn.getCapability(CapabilityRegistry.CastStudy_Capability, null);
@@ -53,7 +53,7 @@ public class CastBlueprintItem extends Item {
     }
 
     @Override
-    public void addInformation(@Nonnull ItemStack stack, @Nullable World worldIn, @Nonnull List<String> tooltip, @Nonnull ITooltipFlag flagIn) {
+    public void addInformation(@NotNull ItemStack stack, @Nullable World worldIn, @NotNull List<String> tooltip, @NotNull ITooltipFlag flagIn) {
         super.addInformation(stack, worldIn, tooltip, flagIn);
         String weaponPartName = FawNbtTool.getWeaponPart(stack);
         WeaponPart weaponPart = WeaponPartRegistry.getWeaponPart(weaponPartName);

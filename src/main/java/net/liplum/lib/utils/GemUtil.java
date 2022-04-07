@@ -15,8 +15,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 
 @LongSupport
@@ -132,7 +132,7 @@ public final class GemUtil {
     }
 
     @OnlyWhenInitialization
-    public static void addPassivesSkillToWeaponCoreInAllGemstones(@Nonnull WeaponCore weaponCore, @Nonnull IPassiveSkill<?>... passiveSkills) {
+    public static void addPassivesSkillToWeaponCoreInAllGemstones(@NotNull WeaponCore weaponCore, @NotNull IPassiveSkill<?>... passiveSkills) {
         for (IGemstone gemstone : GemstoneRegistry.getAllGemstones()) {
             for (IPassiveSkill<?> passiveSkill : passiveSkills) {
                 gemstone.addPassiveSkillsToCore(weaponCore, passiveSkill);

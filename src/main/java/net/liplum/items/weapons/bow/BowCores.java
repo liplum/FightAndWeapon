@@ -3,8 +3,7 @@ package net.liplum.items.weapons.bow;
 import net.liplum.Names;
 import net.liplum.api.annotations.LongSupport;
 import net.liplum.api.weapon.WeaponSkillArgs;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @LongSupport
 public final class BowCores {
@@ -15,7 +14,7 @@ public final class BowCores {
         }
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             return false;
         }
 
@@ -33,7 +32,7 @@ public final class BowCores {
         }
 
         @Override
-        public boolean releaseSkill(@Nonnull WeaponSkillArgs args) {
+        public boolean releaseSkill(@NotNull WeaponSkillArgs args) {
             return false;
         }
     };

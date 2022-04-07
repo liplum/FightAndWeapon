@@ -1,8 +1,7 @@
 package net.liplum.items.weapons.bow;
 
 import net.liplum.api.weapon.WeaponSkillArgs;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class PullingBowArgs extends WeaponSkillArgs {
     private int pullingTick;
@@ -11,7 +10,7 @@ public class PullingBowArgs extends WeaponSkillArgs {
         return pullingTick;
     }
 
-    @Nonnull
+    @NotNull
     public PullingBowArgs setPullingTick(int pullingTick) {
         this.pullingTick = pullingTick;
         return this;

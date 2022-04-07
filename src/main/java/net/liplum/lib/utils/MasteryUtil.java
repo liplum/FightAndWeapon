@@ -14,8 +14,8 @@ import net.liplum.masteries.MasteryDetail;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.text.TextComponentString;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashSet;
@@ -88,19 +88,19 @@ public final class MasteryUtil {
     /**
      * @return how many level it upgraded
      */
-    public static int addExp(@Nonnull EntityPlayer player, @Nonnull WeaponType weaponType, int amount) {
+    public static int addExp(@NotNull EntityPlayer player, @NotNull WeaponType weaponType, int amount) {
         return MasteryDetail.create(player).addExp(weaponType, amount);
     }
 
     /**
      * @return how many level it upgraded
      */
-    public static int addExp(@Nonnull EntityPlayer player, @Nonnull IMastery mastery, int amount) {
+    public static int addExp(@NotNull EntityPlayer player, @NotNull IMastery mastery, int amount) {
         return MasteryDetail.create(player).addExp(mastery, amount);
     }
 
-    @Nonnull
-    private static Set<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull IMastery mastery, @Nonnull WeaponCore weaponCore) {
+    @NotNull
+    private static Set<IPassiveSkill<?>> getPassiveSkills(@NotNull EntityPlayer player, @NotNull IMastery mastery, @NotNull WeaponCore weaponCore) {
         HashSet<IPassiveSkill<?>> res = new HashSet<>();
         IMasteryDetail detail = MasteryDetail.create(player);
         addPassiveSkillsFromMasteryGiven(res, detail, mastery);
@@ -108,19 +108,19 @@ public final class MasteryUtil {
         return res;
     }
 
-    private static void addPassiveSkillsFromMasteryGiven(@Nonnull Set<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery) {
+    private static void addPassiveSkillsFromMasteryGiven(@NotNull Set<IPassiveSkill<?>> result, @NotNull IMasteryDetail detail, @NotNull IMastery mastery) {
         Set<IPassiveSkill<?>> fromGiven = detail.getPassiveSkills(mastery);
         result.addAll(fromGiven);
     }
 
-    private static void addPassiveSkillsFromUnlock(@Nonnull Set<IPassiveSkill<?>> result, @Nonnull IMasteryDetail detail, @Nonnull IMastery mastery, @Nonnull WeaponCore weaponCore) {
+    private static void addPassiveSkillsFromUnlock(@NotNull Set<IPassiveSkill<?>> result, @NotNull IMasteryDetail detail, @NotNull IMastery mastery, @NotNull WeaponCore weaponCore) {
         UnlockedPSkillList unlock = detail.getUnlockedPSkills(mastery);
         Set<IPassiveSkill<?>> fromUnlock = weaponCore.unlockPassiveSkills(unlock);
         result.addAll(fromUnlock);
     }
 
-    @Nonnull
-    public static Collection<IPassiveSkill<?>> getPassiveSkills(@Nonnull EntityPlayer player, @Nonnull WeaponCore weaponCore) {
+    @NotNull
+    public static Collection<IPassiveSkill<?>> getPassiveSkills(@NotNull EntityPlayer player, @NotNull WeaponCore weaponCore) {
         WeaponType weaponType = weaponCore.getWeaponType();
         IMastery mastery = MasteryRegistry.getMasteryOf(weaponType);
         if (mastery != null) {
@@ -129,7 +129,7 @@ public final class MasteryUtil {
         return Collections.emptyList();
     }
 
-    public static void showAllMasteries(@Nonnull EntityPlayer player) {
+    public static void showAllMasteries(@NotNull EntityPlayer player) {
         IMasteryDetail detail = MasteryDetail.create(player);
         String lvI18n = I18n.format(I18ns.Command.Mastery_Show_Level);
         String expI18n = I18n.format(I18ns.Command.Mastery_Show_Exp);
@@ -145,7 +145,7 @@ public final class MasteryUtil {
         }
     }
 
-    public static void showMastery(@Nonnull EntityPlayer player, @Nonnull IMastery mastery) {
+    public static void showMastery(@NotNull EntityPlayer player, @NotNull IMastery mastery) {
         IMasteryDetail detail = MasteryDetail.create(player);
         int lv = detail.getLevel(mastery);
         int exp = detail.getExp(mastery);

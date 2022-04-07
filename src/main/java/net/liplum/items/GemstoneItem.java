@@ -4,19 +4,18 @@ package net.liplum.items;
 import net.liplum.api.weapon.IGemstone;
 import net.liplum.api.weapon.IGemstoneItem;
 import net.minecraft.item.Item;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class GemstoneItem extends Item implements IGemstoneItem {
-    @Nonnull
+    @NotNull
     private final IGemstone gemstone;
 
-    public GemstoneItem(@Nonnull IGemstone gemstone) {
+    public GemstoneItem(@NotNull IGemstone gemstone) {
         this.gemstone = gemstone;
         this.maxStackSize = gemstone.getQuality().getMaxItemStackSize();
     }
 
-    @Nonnull
+    @NotNull
     public IGemstone getGemstone() {
         return gemstone;
     }

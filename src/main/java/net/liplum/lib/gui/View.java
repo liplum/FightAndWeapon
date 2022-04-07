@@ -1,8 +1,7 @@
 package net.liplum.lib.gui;
 
 import net.liplum.lib.math.MathUtil;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public class View {
     private final int width;
@@ -70,7 +69,7 @@ class SubView extends View {
     private final int right;
     private final int bottom;
 
-    public SubView(@Nonnull View parent, int xOffset, int yOffset, int width, int height) {
+    public SubView(@NotNull View parent, int xOffset, int yOffset, int width, int height) {
         super(width, height);
         if (xOffset < 0 || yOffset < 0) {
             throw new ViewSizeOutOfRangeException();
@@ -87,7 +86,7 @@ class SubView extends View {
         this.bottom = MathUtil.fixMax(this.top + height, parent.getBottom());
     }
 
-    public SubView(@Nonnull View parent, int width, int height) {
+    public SubView(@NotNull View parent, int width, int height) {
         super(width, height);
 
         this.left = parent.getLeft();

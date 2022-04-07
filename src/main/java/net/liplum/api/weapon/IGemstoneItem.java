@@ -1,8 +1,8 @@
 package net.liplum.api.weapon;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 public interface IGemstoneItem {
-    @Nonnull
+    @NotNull
     IGemstone getGemstone();
 }

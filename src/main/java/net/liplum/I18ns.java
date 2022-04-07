@@ -1,8 +1,7 @@
 package net.liplum;
 
 import net.liplum.api.annotations.LongSupport;
-
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @LongSupport
 public final class I18ns {
@@ -130,7 +129,7 @@ public final class I18ns {
         public static final String Mastery_Reset_Successfully = "commands.mastery.resetSuccessfully";
         public static final String Mastery_Reset_Yours_Successfully = "commands.mastery.resetYourSuccessfully";
 
-        public static String subCommand(@Nonnull String parent, @Nonnull String sub) {
+        public static String subCommand(@NotNull String parent, @NotNull String sub) {
             return parent + "." + sub;
         }
     }

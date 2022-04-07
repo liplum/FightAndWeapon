@@ -4,14 +4,14 @@ import net.liplum.coroutine.Coroutine;
 import net.liplum.coroutine.CoroutineManager;
 import net.liplum.enumerator.IEnumerable;
 import net.minecraft.entity.EntityLivingBase;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 
 public final class CoroutineSystem {
-    @Nonnull
+    @NotNull
     private static final CoroutineSystem instance = new CoroutineSystem();
-    @Nonnull
+    @NotNull
     private final HashMap<EntityLivingBase, CoroutineManager> playerCoroutines = new HashMap<>();
 
     private CoroutineSystem() {
@@ -22,7 +22,7 @@ public final class CoroutineSystem {
         return instance;
     }
 
-    public Coroutine attachCoroutine(@Nonnull EntityLivingBase entity, Coroutine coroutine) {
+    public Coroutine attachCoroutine(@NotNull EntityLivingBase entity, Coroutine coroutine) {
         CoroutineManager cm;
         if (playerCoroutines.containsKey(entity)) {
             cm = playerCoroutines.get(entity);
@@ -33,7 +33,7 @@ public final class CoroutineSystem {
         return cm.startCoroutine(coroutine);
     }
 
-    public Coroutine[] attachCoroutines(@Nonnull EntityLivingBase entity, Coroutine[] coroutines) {
+    public Coroutine[] attachCoroutines(@NotNull EntityLivingBase entity, Coroutine[] coroutines) {
         CoroutineManager cm;
         if (playerCoroutines.containsKey(entity)) {
             cm = playerCoroutines.get(entity);
@@ -48,7 +48,7 @@ public final class CoroutineSystem {
      * @param entity
      * @return true if it stops any coroutine of this entity. False if there's no given entity.
      */
-    public boolean stopAll(@Nonnull EntityLivingBase entity) {
+    public boolean stopAll(@NotNull EntityLivingBase entity) {
         if (playerCoroutines.containsKey(entity)) {
             playerCoroutines.get(entity).stopAll();
             return true;
@@ -56,7 +56,7 @@ public final class CoroutineSystem {
         return false;
     }
 
-    public boolean clear(@Nonnull EntityLivingBase entity) {
+    public boolean clear(@NotNull EntityLivingBase entity) {
         if (playerCoroutines.containsKey(entity)) {
             playerCoroutines.get(entity).stopAll();
             playerCoroutines.remove(entity);
@@ -65,8 +65,8 @@ public final class CoroutineSystem {
         return false;
     }
 
-    @Nonnull
-    public Coroutine attachCoroutine(@Nonnull EntityLivingBase entity, @Nonnull IEnumerable<?> task, int lifeSpan) {
+    @NotNull
+    public Coroutine attachCoroutine(@NotNull EntityLivingBase entity, @NotNull IEnumerable<?> task, int lifeSpan) {
         return attachCoroutine(entity, new Coroutine(task, lifeSpan));
     }
 

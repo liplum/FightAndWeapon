@@ -14,8 +14,8 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -26,7 +26,7 @@ import static net.liplum.I18ns.Command.*;
 @LongSupport
 public class InlayCommand extends CommandBase {
 
-    public static void removeCurrentGemstone(@Nonnull EntityLivingBase entity, @Nonnull ItemStack held) throws CommandException {
+    public static void removeCurrentGemstone(@NotNull EntityLivingBase entity, @NotNull ItemStack held) throws CommandException {
         GemUtil.RemoveResult removeResult = GemUtil.removeGemstone(held);
         switch (removeResult) {
             case NotFawWeapon:
@@ -36,7 +36,7 @@ public class InlayCommand extends CommandBase {
         }
     }
 
-    public static void inlayNewGemstone(@Nonnull EntityLivingBase entity, @Nonnull ItemStack held, @Nonnull String gemstoneName) throws CommandException {
+    public static void inlayNewGemstone(@NotNull EntityLivingBase entity, @NotNull ItemStack held, @NotNull String gemstoneName) throws CommandException {
         GemUtil.InlayResult inlayResult = GemUtil.inlayGemstone(held, gemstoneName);
         switch (inlayResult) {
             case NotFawWeapon:
@@ -46,20 +46,20 @@ public class InlayCommand extends CommandBase {
         }
     }
 
-    @Nonnull
+    @NotNull
     @Override
     public String getName() {
         return Names.Command.Inlay;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public String getUsage(@Nonnull ICommandSender sender) {
+    public String getUsage(@NotNull ICommandSender sender) {
         return I18ns.Command.Inlay;
     }
 
     @Override
-    public void execute(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args) throws CommandException {
+    public void execute(@NotNull MinecraftServer server, @NotNull ICommandSender sender, String[] args) throws CommandException {
         if (args.length != 1) {
             throw new WrongUsageException(getUsage(sender));
         }
@@ -85,9 +85,9 @@ public class InlayCommand extends CommandBase {
         return 2;
     }
 
-    @Nonnull
+    @NotNull
     @Override
-    public List<String> getTabCompletions(@Nonnull MinecraftServer server, @Nonnull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
+    public List<String> getTabCompletions(@NotNull MinecraftServer server, @NotNull ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
         if (args.length == 1) {
             List<String> allGemstoneNames = new LinkedList<>(GemstoneRegistry.getAllGemstoneNames());
             allGemstoneNames.add(Names.Command.InlaySub.Remove);

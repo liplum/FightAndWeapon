@@ -1,9 +1,9 @@
 package net.liplum.tooltips;
 
-import javax.annotation.Nonnull;
+import org.jetbrains.annotations.NotNull;
 
 @FunctionalInterface
 public interface IThroughable extends IMiddleware {
-    @Nonnull
-    TooltipPart through(@Nonnull IPipeContext context);
+    @NotNull
+    TooltipPart through(@NotNull IPipeContext context);
 }

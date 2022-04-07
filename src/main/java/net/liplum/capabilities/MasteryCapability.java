@@ -18,8 +18,8 @@ import net.minecraftforge.common.util.INBTSerializable;
 import net.minecraftforge.event.entity.EntityJoinWorldEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import org.jetbrains.annotations.NotNull;
 
-import javax.annotation.Nonnull;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -61,7 +61,7 @@ public class MasteryCapability implements INBTSerializable<NBTTagCompound> {
      * @param masterName
      * @return the level and exp. If this didn't have the master, it would return a new {@link LvExpPair} object and put it into this.
      */
-    @Nonnull
+    @NotNull
     public LvExpPair getLevelAndExp(String masterName) {
         if (allMasteries.containsKey(masterName)) {
             return allMasteries.get(masterName);
